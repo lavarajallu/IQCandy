@@ -36,9 +36,9 @@ const MyCourses = (props) => {
       const reqPayload = {
         boardId: user?.userOrg.boardId,
         gradeId: user?.userOrg.gradeId,
-        universityId: user?.userOrg?.universityId,
-        branchId: user?.userOrg?.branchId,
-        semesterId: user?.userOrg?.semesterId,
+      //  universityId: user?.userOrg?.universityId,
+        // branchId: user?.userOrg?.branchId,
+        // semesterId: user?.userOrg?.semesterId,
         offset: 0,
         limit: 1000,
       };

@@ -121,12 +121,15 @@ const Register = ({ navigation }) => {
       showErrorMessage: false,
       errorMessage: '',
     });
+    
     getBranches({
-      universityId: uniId,
+      boardId: uniId,
       dispatch,
     });
   };
-
+  useEffect(()=>{
+   // alert("hkjhkjhjk"+JSON.stringify(branches))
+  },[branches])
   const onChangeBranch = (branchId) => {
     setSelectedBranch(branchId);
     // Clear dropdown validation error when branch changes
@@ -134,21 +137,22 @@ const Register = ({ navigation }) => {
       showErrorMessage: false,
       errorMessage: '',
     });
-    getSemesters({
-      universityId: selectedUniversity,
-      branchId,
-      dispatch,
-    });
+    // getSemesters({
+    //   boardId: selectedUniversity,
+
+    //   gradeId:branchId,
+    //   dispatch,
+    // });
   };
 
-  const onChangeSemister = (semesterId) => {
-    setselectedSemester(semesterId);
-    // Clear dropdown validation error when semester changes
-    setSelectedSemesterValidation({
-      showErrorMessage: false,
-      errorMessage: '',
-    });
-  };
+  // const onChangeSemister = (semesterId) => {
+  //   setselectedSemester(semesterId);
+  //   // Clear dropdown validation error when semester changes
+  //   setSelectedSemesterValidation({
+  //     showErrorMessage: false,
+  //     errorMessage: '',
+  //   });
+  // };
 
   const onChangeState = (state) => {
     setSelectedState(state);
@@ -360,10 +364,7 @@ const Register = ({ navigation }) => {
       selectedBranch,
       setSelectedBranchValidation
     );
-    const semesterValid = validateDropdown(
-      selectedSemester,
-      setSelectedSemesterValidation
-    );
+   
     const stateValid = validateDropdown(
       selectedState,
       setSelectedStateValidation
@@ -400,7 +401,6 @@ const Register = ({ navigation }) => {
       !iszipcodevalid ||
       !universityValid ||
       !branchValid ||
-      !semesterValid ||
       !stateValid ||
       !genderValid
     ) {
@@ -417,9 +417,8 @@ const Register = ({ navigation }) => {
       confirmPassword: confirmPassword,
       mobile: mobileNumber,
       inviteCode: referralCode,
-      universityId: selectedUniversity,
-      semesterId: selectedSemester,
-      branchId: selectedBranch,
+      boardId: selectedUniversity,
+      gradeId: selectedBranch,
       gender: selectedGender,
       state: selectedState,
       zipCode: zipCode,
@@ -544,7 +543,7 @@ const Register = ({ navigation }) => {
                     />
 
                     <DropDownSearch
-                      placeholderText={'Select University'}
+                      placeholderText={'Select Board'}
                       data={universities?.map((uni) => ({
                         label: uni.name,
                         value: uni.id,
@@ -559,7 +558,7 @@ const Register = ({ navigation }) => {
                     />
 
                     <DropDownSearch
-                      placeholderText={'Select Branch'}
+                      placeholderText={'Select Grade'}
                       label={''}
                       width={width * 0.89}
                       labelField={'label'}
@@ -572,7 +571,7 @@ const Register = ({ navigation }) => {
                       selectedValue={selectedBranch}
                       validation={selectedBranchValidation}
                     />
-                    <DropDownSearch
+                   {/* <DropDownSearch
                       placeholderText={'Select Semester'}
                       data={semesters?.map((sem) => ({
                         label: sem.name,
@@ -585,7 +584,7 @@ const Register = ({ navigation }) => {
                       handleChange={onChangeSemister}
                       selectedValue={selectedSemester}
                       validation={selectedSemesterValidation}
-                    />
+                    />*/}
                   </View>
                   <ValidatedTextInput
                     label='Zip Code'

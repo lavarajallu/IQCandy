@@ -103,12 +103,7 @@ const getQuestionPapers = async (payload) => {
 const getLeaderBoardData = async (payload) => {
   const { userId, universityId, collegeId, role } = payload;
   const { myLearning } = apiEndPoints;
-  const endpoint = myLearning.getLeaderBoardData(
-    userId,
-    universityId,
-    collegeId,
-    role
-  );
+  const endpoint = myLearning.getLeaderBoardData(payload);
   const method = 'GET';
   const body = payload.data;
   const response = await makeApiCall(endpoint, method, body);

@@ -108,11 +108,13 @@ const ActivityResources = ({ route, navigation }) => {
         dispatch,
         userId: user?.userInfo?.userId,
       });
+
       if (user?.role.roleName === 'Student') {
         getprofessorresources({
           dispatch,
           userId: user?.userInfo?.userId,
           topicId: topicItem?.topicId,
+          resourceType: 'teacher'
         });
       }
       var scheduleTypeId = topicItem?.topicId;
@@ -192,7 +194,6 @@ const ActivityResources = ({ route, navigation }) => {
         scheduleTypeId: topicItem.topicId,
         scheduleDate: dateformar,
         additionalInfo: JSON.stringify({
-          semesterId: user?.userOrg.semesterId,
           subjectId: subjectId,
           chapterId: chapterId,
           title: topicItem?.topicName,
@@ -234,7 +235,6 @@ const ActivityResources = ({ route, navigation }) => {
       scheduleTypeId: topicItem.topicId,
       scheduleDate: dateformar,
       additionalInfo: JSON.stringify({
-        semesterId: user?.userOrg.semesterId,
         subjectId: subjectId,
         chapterId: chapterId,
         title: topicItem?.topicName,
@@ -283,8 +283,8 @@ const ActivityResources = ({ route, navigation }) => {
         }
 
         const payload = {
-          universityId: user.userOrg.universityId,
-          branchId: user.userOrg.branchId,
+          boardId: user.userOrg.boardId,
+          gradeId: user.userOrg.gradeId,
           semesterId: user.userOrg.semesterId,
           subjectId: subjectId,
           chapterId: chapterId,
@@ -573,7 +573,7 @@ const ActivityResources = ({ route, navigation }) => {
       }}
     />
   );
-  const handleSave = () => {};
+  const handleSave = () => { };
   showDatePicker = () => {
     this.setState({ showpicker: true });
   };
@@ -726,7 +726,7 @@ const ActivityResources = ({ route, navigation }) => {
                 style={styles.button}
                 title={'Activity Resources'}
                 textStyle={styles.buttonText}
-                onPress={() => {}}
+                onPress={() => { }}
               />
 
               {/* Icon */}
@@ -751,7 +751,7 @@ const ActivityResources = ({ route, navigation }) => {
             />
           </>
         )}
-        {recommendedarray && recommendedarray?.length > 0 ? (
+        {/* {recommendedarray && recommendedarray?.length > 0 ? (
           <>
             <Text
               style={{
@@ -772,7 +772,7 @@ const ActivityResources = ({ route, navigation }) => {
               ItemSeparatorComponent={ItemSeparator}
             />
           </>
-        ) : null}
+        ) : null} */}
 
         <Modal isVisible={showmodal}>
           <View

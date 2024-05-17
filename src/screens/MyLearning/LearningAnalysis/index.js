@@ -60,9 +60,9 @@ const LearningAnalysis = ({ navigation }) => {
   useEffect(() => {
     if (user) {
       const payload = {
-        universityId: user.userOrg.universityId,
+        boardId: user.userOrg.boardId,
         branchId: user.userOrg.branchId,
-        semesterId: user.userOrg.semesterId,
+        gradeId: user.userOrg.gradeId,
       };
 
       getAssessmentSubjects({
@@ -84,7 +84,7 @@ const LearningAnalysis = ({ navigation }) => {
         dispatch,
         userId: user?.userInfo?.userId,
         subjectId: subjectsInfo.items[selectedTab].subjectId,
-        universityId: user.userOrg.universityId,
+        boardId: user.userOrg.boardId,
       });
       getChapterData({
         dispatch,
@@ -259,7 +259,7 @@ const LearningAnalysis = ({ navigation }) => {
         dispatch,
         userId: user?.userInfo?.userId,
         subjectId: subjectsInfo.items[index].subjectId,
-        universityId: user.userOrg.universityId,
+        boardId: user.userOrg.boardId,
       });
       getChapterData({
         dispatch,

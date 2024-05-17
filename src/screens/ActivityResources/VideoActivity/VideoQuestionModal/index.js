@@ -59,7 +59,7 @@ class VideoQuestionModal extends Component {
     var activityDimId = this.props.activitydata.activityDimId;
     var questionId = this.props.data.questionId;
     if (token) {
-      const url = `http://myprofessor-lb-1079580533.ap-south-1.elb.amazonaws.com/api/my-professor/analytics/users/${userId}/activities/${activityDimId}/videos/test-questions/${questionId}/validate`;
+      const url = `https://api.iqcandy.com/api/iqcandy/analytics/users/${userId}/activities/${activityDimId}/videos/test-questions/${questionId}/validate`;
 
       console.log('ur,l', url);
       fetch(url, {

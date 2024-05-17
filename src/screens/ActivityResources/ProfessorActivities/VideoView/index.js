@@ -27,6 +27,8 @@ import {
   updateanalyticsNotes,
 } from '../../../../api/myCourses';
 import moment from 'moment';
+import getVideoId from 'get-video-id';
+
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
 const VideoActivityPro = ({ route, navigation }) => {
@@ -43,6 +45,10 @@ const VideoActivityPro = ({ route, navigation }) => {
   const [newdata, setdata] = useState({});
   const [activityStartTime, setactivityStartTime] = useState(null);
   const [showfullscreen, setfullscreen] = useState(false);
+  const [vimeothumbnailurl, setvimeothumbnailurl] = useState('')
+  const [vimeourl, setvimeourl] = useState('')
+
+  const [vimeovideo, setvimeovideo] = useState('')
   const backAction = () => {
      //updateAnalytics();
     navigation.navigate('ActivityResources', {
@@ -57,9 +63,8 @@ const VideoActivityPro = ({ route, navigation }) => {
     if (data.activityType)
       var body = {
         //activityDimId: data.activityDimId,
-        universityId: user?.userOrg.universityId,
-        branchId: user?.userOrg.branchId,
-        semesterId: user?.userOrg.semesterId,
+        boardId: user.userOrg.boardId,
+        gradeId: user.userOrg.gradeId,
         gradeId: user?.userOrg.gradeId,
 
         subjectId: subjectItem?.subjectId
@@ -123,7 +128,43 @@ const VideoActivityPro = ({ route, navigation }) => {
   }, [user]);
   useEffect(() => {
     if (videoActivityDataPro && Object.keys(videoActivityDataPro).length > 0) {
-      setnormalvideodata(videoActivityDataPro);
+     
+      
+        if (data.activityType === 'conceptual_video') {
+          var VIMEO_ID = getVideoId(videoActivityData.url);
+          console.log("...........lll", VIMEO_ID)
+          console.log("vimeooourll", `https://player.vimeo.com/video/${VIMEO_ID.id}/config`)
+          fetch(`https://player.vimeo.com/video/${VIMEO_ID.id}/config`, {
+            method: 'GET',
+            headers: {
+              'Referer': 'https://login.iqcandy.com/'
+            }
+          })
+            .then(res => res.json())
+            .then(res => {
+              console.log("ddjf", res);
+              if (res.title === 'Sorry') {
+                setnormalvideodata(videoActivityDataPro);
+              } else {
+                setnormalvideodata(videoActivityDataPro);
+                setvimeothumbnailurl(res.video.thumbs['640'])
+                setvimeourl(res.request.files.hls.cdns[res.request.files.hls.default_cdn].url)
+                setvimeovideo(res.video)
+              
+              }
+            }
+  
+            ).catch((err) => {
+              setnormalvideodata(videoActivityDataPro);
+  
+              console.log("dnflkdf", err)
+            })
+        } else {
+          setnormalvideodata(videoActivityDataPro);
+        }
+  
+        // setnormalvideodata(videoActivityData);
+      
     }
   }, [videoActivityDataPro]);
   const onActivityNext = (currentTime, duration) => {
@@ -365,6 +406,8 @@ const VideoActivityPro = ({ route, navigation }) => {
             onBack={onNewBack}
             onPause={onPause}
             data={normalvideodata}
+            vimeourl={vimeourl}
+            activityType={data.activityType}
           />
         ) : (
           <View

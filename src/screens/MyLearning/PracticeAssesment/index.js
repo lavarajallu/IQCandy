@@ -82,7 +82,7 @@ const PracticeAssesment = ({ route, navigation }) => {
   useEffect(() => {
     var userId = user?.userInfo.userId;
 
-    var universityId = user?.userOrg.universityId;
+    var boardId = user?.userOrg.boardId;
     var branchId = user?.userOrg.branchId;
     var semesterId = user?.userOrg.semesterId;
 
@@ -100,15 +100,14 @@ const PracticeAssesment = ({ route, navigation }) => {
         route.params.data.testType === 'chapter' ||
         route.params.data.testType === 'Chapter'
       ) {
-        url = `/universities/${universityId}/subjects/${subjectId}/practice-tests/${userTestId}/questions?userId=${userId}&testType=${route.params.data.testType}&chapterId=${chapterId}`;
+        url = `/boards/${boardId}/subjects/${subjectId}/practice-tests/${userTestId}/questions?userId=${userId}&testType=${route.params.data.testType}&chapterId=${chapterId}`;
       } else {
-        url = `/universities/${universityId}/subjects/${subjectId}/practice-tests/${userTestId}/questions?userId=${userId}&testType=${route.params.data.testType}`;
-        //  `/universities/${universityId}/subjects/${subjectId}/practice-tests?userId=${userId}`,
+        url = `/boards/${boardId}/subjects/${subjectId}/practice-tests/${userTestId}/questions?userId=${userId}&testType=${route.params.data.testType}`;
       }
     } else {
       method = 'POST';
 
-      url = `/universities/${universityId}/subjects/${subjectId}/practice-test/${route.params.data.testType}/re-attempt`;
+      url = `/boards/${boardId}/subjects/${subjectId}/practice-test/${route.params.data.testType}/re-attempt`;
       body = {
         userId,
         chapterId,
@@ -212,7 +211,7 @@ const PracticeAssesment = ({ route, navigation }) => {
     var index = newquestionid;
     var userId = user?.userInfo.userId;
 
-    var universityId = user?.userOrg.universityId;
+    var boardId = user?.userOrg.boardId;
 
     var subjectId = route.params.data.subjectId;
 
@@ -220,7 +219,7 @@ const PracticeAssesment = ({ route, navigation }) => {
     var questionId = restestQuestionsDataa?.[questionindex].questionId;
     var testId = restestQuestionsDataa?.[questionindex].userTestId;
 
-    var url = `/universities/${universityId}/subjects/${subjectId}/practice-tests/${testId}/questions/${index}?questionId=${questionId}&userId=${userId}&testType=${testType}`;
+    var url = `/boards/${boardId}/subjects/${subjectId}/practice-tests/${testId}/questions/${index}?questionId=${questionId}&userId=${userId}&testType=${testType}`;
     getQuestionByIdPractice({
       dispatch,
       url,
@@ -285,13 +284,13 @@ const PracticeAssesment = ({ route, navigation }) => {
     //   userAnswer: obj.user_answer,
     //   userTestId: testQuestionsDataa[newquestionid - 1].userTestId,
     // };
-    var universityId = user?.userOrg.universityId;
+    var boardId = user?.userOrg.boardId;
 
     var subjectId = route.params.data.subjectId;
     var userTestId = testQuestionsDataa[newquestionid - 1].userTestId;
     //    var timeTaken = this.state.secondstime - this.state.seconds;
     // var index = this.state.getquestionsdata[this.state.newquestionid - 1].index;
-    var url = `/universities/${universityId}/subjects/${subjectId}/practice-tests/${userTestId}/questions/${index}/validate`;
+    var url = `/boards/${boardId}/subjects/${subjectId}/practice-tests/${userTestId}/questions/${index}/validate`;
     var data = {
       attemptStartedAt: moment().format('YYYY-MM-DD HH:mm:ss'), //this.state.activityStartTime, // YYY-MM-DD HH:MM:SS
       attemptEndedAt: moment()
@@ -411,7 +410,7 @@ const PracticeAssesment = ({ route, navigation }) => {
     setVisiblemodal(false);
   };
   const onSubmit = () => {
-    var universityId = user?.userOrg.universityId;
+    var boardId = user?.userOrg.boardId;
 
     var subjectId = route.params.data.subjectId;
     //  var questionPaperId = this.props.item.questionPaperId
@@ -420,7 +419,7 @@ const PracticeAssesment = ({ route, navigation }) => {
     var userId = user?.userInfo.userId;
 
     var testId = testQuestionsDataa[newquestionid - 1].userTestId;
-    var url = `/universities/${universityId}/subjects/${subjectId}/practice-tests/${testId}/end`;
+    var url = `/boards/${boardId}/subjects/${subjectId}/practice-tests/${testId}/end`;
     clearInterval(interval);
     setVisiblemodal(false);
     setfinalload(true);

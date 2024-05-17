@@ -77,6 +77,7 @@ const NotesActivity = ({ route, navigation }) => {
     setactivityStartTime(activityStartTime);
   }, [route]);
   useEffect(() => {
+   // alert(JSON.stringify(notesActivityData)))
     if (notesActivityData && Object.keys(notesActivityData).length > 0) {
       const data = notesActivityData;
       if (notesActivityData.activityType === 'pdf') {
@@ -143,9 +144,8 @@ const NotesActivity = ({ route, navigation }) => {
     if (data.activityType)
       var body = {
         activityDimId: data.activityDimId,
-        universityId: user?.userOrg.universityId,
-        branchId: user?.userOrg.branchId,
-        semesterId: user?.userOrg.semesterId,
+        boardId: user.userOrg.boardId,
+        gradeId:  user.userOrg.gradeId,
 
         subjectId: subjectItem?.subjectId
           ? subjectItem.subjectId

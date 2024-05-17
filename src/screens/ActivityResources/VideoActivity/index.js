@@ -22,6 +22,8 @@ import NormalVideoViewComponent from './NormalVideoViewComponent';
 import { textContent } from '../../../constants/content';
 import { selectUser } from '../../../store/authManagement/selector';
 import { selectMyCourses } from '../../../store/student/myCourses/selector';
+import getVideoId from 'get-video-id';
+
 import {
   getVideoActivityData,
   updateanalyticsNotes,
@@ -43,6 +45,10 @@ const VideoActivity = ({ route, navigation }) => {
   const [newdata, setdata] = useState({});
   const [activityStartTime, setactivityStartTime] = useState(null);
   const [showfullscreen, setfullscreen] = useState(false);
+  const [vimeothumbnailurl, setvimeothumbnailurl] = useState('')
+  const [vimeourl, setvimeourl] = useState('')
+
+  const [vimeovideo, setvimeovideo] = useState('')
 
   const backAction = () => {
     updateAnalytics();
@@ -58,21 +64,19 @@ const VideoActivity = ({ route, navigation }) => {
     if (data.activityType)
       var body = {
         activityDimId: data.activityDimId,
-        universityId: user?.userOrg.universityId,
-        branchId: user?.userOrg.branchId,
-        semesterId: user?.userOrg.semesterId,
-        gradeId: user?.userOrg.gradeId,
+        boardId: user.userOrg.boardId,
+        gradeId: user.userOrg.gradeId,
 
         subjectId: subjectItem?.subjectId
           ? subjectItem.subjectId
           : chapterItem?.subjectId
-          ? chapterItem.subjectId
-          : null,
+            ? chapterItem.subjectId
+            : null,
         chapterId: chapterItem?.chapterId
           ? chapterItem.chapterId
           : topicItem?.chapterId
-          ? topicItem.chapterId
-          : null,
+            ? topicItem.chapterId
+            : null,
         topicId: route.params.topicItem?.topicId
           ? route.params.topicItem.topicId
           : null,
@@ -113,6 +117,7 @@ const VideoActivity = ({ route, navigation }) => {
   };
   useEffect(() => {
     var activityDimId = data.activityDimId;
+
     getVideoActivityData({
       dispatch,
       userId: user?.userInfo?.userId,
@@ -123,7 +128,41 @@ const VideoActivity = ({ route, navigation }) => {
   }, [user]);
   useEffect(() => {
     if (videoActivityData && Object.keys(videoActivityData).length > 0) {
-      setnormalvideodata(videoActivityData);
+      alert(JSON.stringify(videoActivityData))
+      if (data.activityType === 'conceptual_video') {
+        var VIMEO_ID = getVideoId(videoActivityData.url);
+        console.log("...........lll", VIMEO_ID)
+        console.log("vimeooourll", `https://player.vimeo.com/video/${VIMEO_ID.id}/config`)
+        fetch(`https://player.vimeo.com/video/${VIMEO_ID.id}/config`, {
+          method: 'GET',
+          headers: {
+            'Referer': 'https://login.iqcandy.com/'
+          }
+        })
+          .then(res => res.json())
+          .then(res => {
+            console.log("ddjf", res);
+            if (res.title === 'Sorry') {
+              setnormalvideodata(videoActivityData);
+            } else {
+              setnormalvideodata(videoActivityData);
+              setvimeothumbnailurl(res.video.thumbs['640'])
+              setvimeourl(res.request.files.hls.cdns[res.request.files.hls.default_cdn].url)
+              setvimeovideo(res.video)
+            
+            }
+          }
+
+          ).catch((err) => {
+            setnormalvideodata(videoActivityData);
+
+            console.log("dnflkdf", err)
+          })
+      } else {
+        setnormalvideodata(videoActivityData);
+      }
+
+      // setnormalvideodata(videoActivityData);
     }
   }, [videoActivityData]);
   const onActivityNext = (currentTime, duration) => {
@@ -406,6 +445,8 @@ const VideoActivity = ({ route, navigation }) => {
             onBack={onNewBack}
             onPause={onPause}
             data={normalvideodata}
+            vimeourl={vimeourl}
+            activityType={data.activityType}
           />
         ) : (
           <View

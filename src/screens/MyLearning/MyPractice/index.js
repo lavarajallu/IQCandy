@@ -28,9 +28,8 @@ const MyPractice = ({ navigation }) => {
   useEffect(() => {
     if (user) {
       const payload = {
-        universityId: user.userOrg.universityId,
-        branchId: user.userOrg.branchId,
-        semesterId: user.userOrg.semesterId,
+        boardId: user?.userOrg.boardId,
+        gradeId: user?.userOrg.gradeId,
       };
       getAssessmentSubjects({
         data: payload,

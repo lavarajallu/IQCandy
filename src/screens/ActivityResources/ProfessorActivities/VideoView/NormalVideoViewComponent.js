@@ -322,10 +322,10 @@ const NormalVideoViewComponent = (props) => {
           <View style={{ flex: 1 }}>
             <Video
               source={{
-                uri: normaldata.url,
-                headers: {
+                uri: props.activityType === 'conceptual_video' ? props.vimeourl  :  normaldata.url,
+                 headers: {
                   Referer:
-                    'http://my-professor-ui-test.s3-website.ap-south-1.amazonaws.com/',
+                  'https://login.iqcandy.com/',
                 },
               }} // Can be a URL or a local file.
               ref={playerRef}

@@ -149,9 +149,8 @@ const ProfPdfViewNew = ({ route, navigation }) => {
     if (data.activityType)
       var body = {
         activityDimId: data?.activityDimId ? data?.activityDimId : "",
-        universityId: user?.userOrg.universityId,
-        branchId: user?.userOrg.branchId,
-        semesterId: user?.userOrg.semesterId,
+        boardId: user.userOrg.boardId,
+        gradeId:  user.userOrg.gradeId,
 
         subjectId: subjectItem?.subjectId
           ? subjectItem.subjectId

@@ -9,11 +9,10 @@ const apiEndPoints = {
     verifyOtp: (userId) => `/users/${userId}/validate-web-account`,
     changePassword: '/users/change-password',
     updateProfile: (userId) => `/users/${userId}/update`,
-    allUniversities: `/universities?offset=0&limit=1000`,
-    allBranches: (universityId) =>
-      `/universities/${universityId}/branches?offset=0&limit=1000`,
+    allUniversities: `/boards?offset=0&limit=1000`,
+    allBranches: (boardId) => `/boards/${boardId}/grades?offset=0&limit=1000`,
     allSemesters: (universityId, branchId) =>
-      `/universities/${universityId}/branches/${branchId}/semesters?offset=0&limit=1000`,
+      `/boards/${universityId}/grades?offset=0&limit=1000`,
   },
   calender: {
     getschedulefiltered: (payload) => `/user-schedules/filtered`,
@@ -51,7 +50,7 @@ const apiEndPoints = {
     updateanalyticsNotes: (payload) =>
       `/users/${payload.userId}/analytics/capture-activity`,
     getprofessorresources: (payload) =>
-      `/topics/${payload.topicId}/activities?resourceType=professor`,
+      `/topics/${payload.topicId}/activities?resourceType=teacher`,
     getreviewsolutions: (payload) =>
       `/analytics/users/${payload.userId}/assessments/${payload.userTestId}/review-questions?activityDimId=${payload.activityDimId}`,
     //getrecommendedtopics: (payload = `/recommended-topics/${payload.topicId}`),
@@ -69,12 +68,12 @@ const apiEndPoints = {
     getAssessmentSubjects: (userId) => `/analytics/users/${userId}/subjects`,
     // `/analytics/users/${userId}/assessment/subjects`,
     getPracticeChapters: (payload) =>
-      `/universities/${payload.universityId}/subjects/${payload.subjectId}/practice-tests?userId=${payload.userId}`,
+      `/boards/${payload.boardId}/subjects/${payload.subjectId}/practice-tests?userId=${payload.userId}`,
     getPreviousQuesPaperTypes: (userId) =>
       `/users/${userId}/questionPaperTypes`,
     getQuestionPapers: (userId) => `/users/${userId}/questionPapers`,
-    getLeaderBoardData: (userId, universityId, collegeId, role) =>
-      `/users/${userId}/leader-board?universityId=${universityId}&collegeId=${collegeId}&role=${role}`,
+    getLeaderBoardData: (payload) =>
+      `/users/${payload.userId}/leader-board?boardId=${payload.boardId}&schoolId=${payload.schoolId}&role=${payload.role}`,
     getHeatMapData: (userId, subjectId) =>
       `/subjects/${subjectId}/knowledge-map?userId=${userId}`,
     getTopicsBySubjectId: (payload) => `/subjects/${payload.subjectId}/topics`,
@@ -82,7 +81,7 @@ const apiEndPoints = {
     getPieChartData: (payload) =>
       `/subjects/${payload.subjectId}/learning-analysis/averages?userId=${payload.userId}`,
     getprevioustestdata: (payload) =>
-      `/universities/${payload.universityId}/subjects/${payload.subjectId}/practice-tests?userId=${payload.userId}`,
+      `/boards/${payload.boardId}/subjects/${payload.subjectId}/practice-tests?userId=${payload.userId}`,
     getChapterData: (payload) =>
       `/subjects/${payload.subjectId}/learning-analysis?userId=${payload.userId}`,
     getPrPaperTestQuestionsData: (payload) =>

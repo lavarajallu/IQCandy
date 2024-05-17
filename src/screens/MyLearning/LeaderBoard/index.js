@@ -34,13 +34,15 @@ const LeaderBoard = ({ navigation }) => {
   const [ruleVisible, setRuleVisible] = useState(false);
   const { leaderBoardData, rulBookCriteria } = useSelector(selectMyLearning);
 
+
   useEffect(() => {
     if (user) {
+      //alert(JSON.stringify(user.userOrg.boardId))
       getLeaderBoardData({
         dispatch,
         userId: user.userInfo.userId,
-        universityId: user.userOrg.universityId,
-        collegeId: user.userOrg.collegeId,
+        boardId: user.userOrg?.boardId,
+        schoolId: user.userOrg?.schoolId,
         role: user.role.roleName,
       });
     }
@@ -162,7 +164,7 @@ const LeaderBoard = ({ navigation }) => {
         </>
       ) : (
         <View style={[styles.loadingView, { backgroundColor: 'white' }]}>
-          <Text>Loading..</Text>
+          <Text>No Data</Text>
         </View>
       )}
       {rulBookCriteria ? (

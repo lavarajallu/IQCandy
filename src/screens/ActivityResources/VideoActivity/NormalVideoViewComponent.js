@@ -28,6 +28,7 @@ const NormalVideoViewComponent = (props) => {
   const { questionsArray } = props;
   // let [spinner, setSpinner] = useState(true);
   let [normaldata, setNormlaData] = useState(props.data);
+  let [vimeourl,setvimeourl] = useState(props.vimeourl)
   // let [visisted, setVisited] = useState(false);
   let [pausedtime, setPausedTime] = useState(null);
 
@@ -320,10 +321,10 @@ const NormalVideoViewComponent = (props) => {
           <View style={{ flex: 1 }}>
             <Video
               source={{
-                uri: normaldata.url,
+                uri: props.activityType === 'conceptual_video' ? props.vimeourl  :  normaldata.url,
                 headers: {
                   Referer:
-                    'http://my-professor-ui-test.s3-website.ap-south-1.amazonaws.com/',
+                    'https://login.iqcandy.com/',
                 },
               }} // Can be a URL or a local file.
               ref={playerRef}

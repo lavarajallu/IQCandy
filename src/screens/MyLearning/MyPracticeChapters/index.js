@@ -47,7 +47,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
       getPracticeChapters({
         dispatch,
         userId: user?.userInfo?.userId,
-        universityId: user?.userOrg?.universityId,
+        boardId: user?.userOrg?.boardId,
         subjectId: subjectItem?.subjectId,
       });
     }

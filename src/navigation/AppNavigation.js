@@ -383,8 +383,7 @@ function AppNavigation() {
           <Stack.Screen
             name='Summary'
             component={Summary}
-            opti
-            ons={{ headerShown: false }}
+            options={{ headerShown: false }}
           />
             <Stack.Screen
             name='ReferEarn'

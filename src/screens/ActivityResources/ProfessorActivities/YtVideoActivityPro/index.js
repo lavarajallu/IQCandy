@@ -60,10 +60,8 @@ const YtVideoActivityPro = ({ route, navigation }) => {
     if (data.activityType)
       var body = {
         activityDimId: data.activityDimId,
-        universityId: user?.userOrg.universityId,
-        branchId: user?.userOrg.branchId,
-        semesterId: user?.userOrg.semesterId,
-        gradeId: user?.userOrg.gradeId,
+        boardId: user.userOrg.boardId,
+        gradeId:  user.userOrg.gradeId,
 
         subjectId: subjectItem?.subjectId
           ? subjectItem.subjectId

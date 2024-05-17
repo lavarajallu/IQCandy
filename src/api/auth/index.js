@@ -204,11 +204,10 @@ const getUniversities = async (payload) => {
 
 const getBranches = async (payload) => {
   const { auth } = apiEndPoints;
-  const endpoint = auth.allBranches(payload.universityId);
+  const endpoint = auth.allBranches(payload.boardId);
   const method = 'GET';
   const body = payload.data;
   const response = await makeApiCall(endpoint, method, body);
-
   // Check for success and handle accordingly
   if (response) {
     const { data } = response;

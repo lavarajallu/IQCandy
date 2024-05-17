@@ -60,19 +60,17 @@ const KnowledgeMap = ({ route, navigation }) => {
       const payload = {
         boardId: user.userOrg.boardId,
         gradeId: user.userOrg.gradeId,
-        universityId: user.userOrg.universityId,
       //  branchId: user.userOrg.branchId,
-        semesterId: user.userOrg.semesterId,
       };
       getAssessmentSubjects({
         data: payload,
         dispatch,
         userId: user?.userInfo?.userId,
       });
-      getValidaPackages({
-        dispatch,
-        userId: user?.userInfo?.userId,
-      });
+      // getValidaPackages({
+      //   dispatch,
+      //   userId: user?.userInfo?.userId,
+      // });
     }
   }, [route]);
   useEffect(() => {
