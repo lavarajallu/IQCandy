@@ -245,7 +245,7 @@ const KnowledgeMap = ({ route, navigation }) => {
       navigatetopage(item);
     } else {
       Alert.alert(
-        'My Professor',
+        'IQ Candy',
         'You are not subscribed to view this chapter, Do you want to subscribe?',
         [
           {

@@ -36,10 +36,10 @@ const Search = (props) => {
     useSelector(selectSearch);
   const { navigation } = props;
   useEffect(() => {
-    getValidaPackages({
-      dispatch,
-      userId: user?.userInfo?.userId,
-    });
+    // getValidaPackages({
+    //   dispatch,
+    //   userId: user?.userInfo?.userId,
+    // });
   }, [user]);
 
   const onChangeText = (text) => {
@@ -97,12 +97,11 @@ const Search = (props) => {
       getTopicDetails({
         dispatch,
         userId: user?.userInfo?.userId,
-        universityId: user?.userOrg?.universityId,
+        boardId: user?.userOrg?.boardId,
         subjectId: item.subjectId,
         chapterId: item.chapterId,
         topicId: item.topicId,
-        branchId: user?.userOrg?.branchId,
-        semesterId: user?.userOrg?.semesterId,
+        gradeId: user?.userOrg?.gradeId,
       });
       //   Actions.push('topicmainview', { from: 'searchpage', data: item });
     } else if (item.searchEntity === 'chapter') {
@@ -110,11 +109,10 @@ const Search = (props) => {
       getChapterDetails({
         dispatch,
         userId: user?.userInfo?.userId,
-        universityId: user?.userOrg?.universityId,
+        boardId: user?.userOrg?.boardId,
         subjectId: item.subjectId,
         chapterId: item.chapterId,
-        branchId: user?.userOrg?.branchId,
-        semesterId: user?.userOrg?.semesterId,
+        gradeId: user?.userOrg?.gradeId,
       });
     }
   };

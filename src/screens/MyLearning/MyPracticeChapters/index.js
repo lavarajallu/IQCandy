@@ -282,7 +282,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
           }
         } else {
           Alert.alert(
-            'My Professor',
+            'IQ Candy',
             'You are not subscribed to access this chapter, Do you want to subscribe?',
             [
               {

@@ -24,7 +24,7 @@ const TopicsList = (props) => {
     onChange(item);
   };
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item ,index}) => {
     var percent = parseInt(item.progress);
     //  console.log('progressss', item);
     let color;
@@ -59,7 +59,6 @@ const TopicsList = (props) => {
       }
 
     }
-
     return (
       <View style={{
        borderWidth: 1, width: windowWidth / 2.15,
@@ -115,72 +114,7 @@ const TopicsList = (props) => {
 
           </TouchableOpacity>
         </View>
-        <View style={{ flex: 0.1,justifyContent:"center" ,alingItems:"center"}}>
-          <View style={{ flex: 1, justifyContent: "space-around",}}>
-            {parseInt(questionPaperCount) > 0 ?
-              <TouchableOpacity
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  // marginLeft: 10, 
-                  alingItems: 'center',
-
-                  paddingVertical: 10
-                }}
-                onPress={() => getQuestionPapers(item, props.PreviousQuestionPaperByCount, "acadamics")}
-              >
-                <Text
-                  style={{
-                    color: '#2E2E2E',
-                    fontWeight: '500',
-                    fontSize: 13,
-                    textAlign: 'center',
-                  }}
-                >
-                  Acadamics:
-                </Text>
-                <StarRating
-                  disabled={true}
-                  maxStars={5}
-                  rating={parseInt(questionPaperCount)}
-                  starSize={15}
-                  fullStarColor={COLORS.appSecondaryColor}
-                  starStyle={{ width: 20, }}
-                />
-              </TouchableOpacity> :null}
-            {parseInt(gatequestionPaperCount) > 0 ?
-              <TouchableOpacity
-                style={{
-                  paddingVertical: 10,
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  // marginLeft: 10,
-                  // marginTop: 5,
-                  alingItems: 'center',
-                }}
-                onPress={() => getQuestionPapers(item, props.GatePreviousQuestionPaperByCount, "gate")}
-              >
-                <Text
-                  style={{
-                    color: '#2E2E2E',
-                    fontWeight: '500',
-                    fontSize: 13,
-                    textAlign: 'center',
-                  }}
-                >
-                  Gate:
-                </Text>
-                <StarRating
-                  disabled={true}
-                  maxStars={5}
-                  rating={parseInt(gatequestionPaperCount)}
-                  starSize={15}
-                  fullStarColor={COLORS.appSecondaryColor}
-                  starStyle={{ width: 20, }}
-                />
-              </TouchableOpacity> : null}
-          </View>
-        </View>
+       
 
 
       </View>

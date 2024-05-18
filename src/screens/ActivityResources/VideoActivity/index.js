@@ -128,11 +128,8 @@ const VideoActivity = ({ route, navigation }) => {
   }, [user]);
   useEffect(() => {
     if (videoActivityData && Object.keys(videoActivityData).length > 0) {
-      alert(JSON.stringify(videoActivityData))
       if (data.activityType === 'conceptual_video') {
         var VIMEO_ID = getVideoId(videoActivityData.url);
-        console.log("...........lll", VIMEO_ID)
-        console.log("vimeooourll", `https://player.vimeo.com/video/${VIMEO_ID.id}/config`)
         fetch(`https://player.vimeo.com/video/${VIMEO_ID.id}/config`, {
           method: 'GET',
           headers: {

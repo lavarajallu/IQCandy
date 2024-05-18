@@ -5,7 +5,7 @@ import { goBack } from '../../utils/navigationUtils';
 import { COLORS } from '../../constants/colors';
 const REACT_APP_RAZORPAY_URL = 'https://secure.payu.in/_payment';
 const REACT_APP_RAZORPAY_KEY = 'rzp_live_TOvkgnISWcCcke'; //"rzp_test_4p2cFlw7vaotvb"
-const REACT_APP_RAZORPAY_NAME = 'My Professor';
+const REACT_APP_RAZORPAY_NAME = 'IQ Candy';
 const REACT_APP_RAZORPAY_DESCRIPTION = 'SmartGen Technologies Pvt Ltd';
 import RazorpayCheckout from 'react-native-razorpay';
 
@@ -90,7 +90,7 @@ const BuyPackages = ({ route, navigation }) => {
   useEffect(() => {
     if (activatioapidata?.code === 201) {
       setactivationcode('');
-      Alert.alert('My Professor', 'Activation code applied successfully.', [
+      Alert.alert('IQ Candy', 'Activation code applied successfully.', [
         {
           text: 'OK',
           onPress: () => {
@@ -220,12 +220,12 @@ const BuyPackages = ({ route, navigation }) => {
 
     //  var amount = 1
     var options = {
-      description: 'My Professor',
+      description: 'IQ Candy',
       image: require('../../../assets/images/Logo.jpg'),
       currency,
       key: REACT_APP_RAZORPAY_KEY,
       amount: amount.toString(),
-      name: 'My Professor',
+      name: 'IQ Candy',
       order_id: orderId, //Replace this with an order_id created using Orders API. Learn more at https://razorpay.com/docs/api/orders.
       prefill: {
         name: user?.userInfo.firstName + ' ' + user?.userInfo.lastName,
@@ -257,7 +257,7 @@ const BuyPackages = ({ route, navigation }) => {
   useState(() => {
     if (razorpaydata?.data) {
       if (razorpaydata?.data?.paymentStatus === 'payment_success') {
-        Alert.alert('My Professor', 'Payment is done successfully.', [
+        Alert.alert('IQ Candy', 'Payment is done successfully.', [
           {
             text: 'OK',
             onPress: () => {
@@ -266,7 +266,7 @@ const BuyPackages = ({ route, navigation }) => {
           },
         ]);
       } else {
-        Alert.alert('My Professor', 'Payment is not done please try agian.', [
+        Alert.alert('IQ Candy', 'Payment is not done please try agian.', [
           {
             text: 'OK',
             onPress: () => {
@@ -317,7 +317,7 @@ const BuyPackages = ({ route, navigation }) => {
     //         this.setState({
     //           activationcode: '',
     //         });
-    //         Alert.alert('My Professor', 'Activation code applied successfully.', [
+    //         Alert.alert('IQ Candy', 'Activation code applied successfully.', [
     //           {
     //             text: 'OK',
     //             onPress: () => {

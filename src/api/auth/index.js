@@ -129,7 +129,7 @@ const resetPassword = async (payload) => {
 
   // Check for success and handle accordingly
   if (response) {
-    Alert.alert('My Professor', 'Password Updated Successfully', [
+    Alert.alert('IQ Candy', 'Password Updated Successfully', [
       {
         text: 'OK',
         onPress: () => {
@@ -150,7 +150,7 @@ const verifyOtp = async (payload) => {
 
   // Check for success and handle accordingly
   if (response) {
-    Alert.alert('My Professor', 'User Registered successfully');
+    Alert.alert('IQ Candy', 'User Registered successfully');
     payload.navigation.navigate('Login');
   }
 };
@@ -180,7 +180,7 @@ const changePassword = async (payload) => {
   if (response) {
     const { data } = response;
     payload.dispatch(setChnagePassword(data));
-    Alert.alert('My Professor', 'Password updated successfully');
+    Alert.alert('IQ Candy', 'Password updated successfully');
     payload.navigation.navigate('Home');
   }
 };

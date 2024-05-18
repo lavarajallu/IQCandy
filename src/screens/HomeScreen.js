@@ -241,7 +241,7 @@ const HomeScreen = ({ route, navigation }) => {
             <View style={styles.referview}>
               <View style={styles.referleftview}>
                 <Text style={{ fontSize: 15 }}><Text style={{ fontSize: 20 }}>Invite</Text> your Friends</Text>
-                <Text style={{ marginTop: 5, fontSize: 15 }}>Refer your friends to the <Text style={{ fontSize: 15, color: COLORS.appSecondaryColor }}>My Professor </Text>App by sharing your unique referral code</Text>
+                <Text style={{ marginTop: 5, fontSize: 15 }}>Refer your friends to the <Text style={{ fontSize: 15, color: COLORS.appSecondaryColor }}>IQ Candy </Text>App by sharing your unique referral code</Text>
                 <TouchableOpacity
                   onPress={() => navigation.navigate('ReferEarn', { from: "dashboard" })}
                   style={styles.referbutton}>

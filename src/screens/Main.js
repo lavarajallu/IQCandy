@@ -32,7 +32,7 @@ const Main = () => {
           tabBarIcon: ({ color, size }) => (
             <Icon name='home' size={size} color={color} />
           ),
-          title: 'My Professor',
+          title: 'IQ Candy',
           headerTitleAlign: 'center',
           headerStyle: {
             backgroundColor: COLORS.tabBarLabelActiveColor, // Set your desired background color here

@@ -4,9 +4,9 @@ export const textContent = {
   buttonLabels: {
     getStarted: 'GET STARTED',
   },
-  introductionTitle: 'Join My Professor and learn Online',
+  introductionTitle: 'Join IQ Candy and learn Online',
   introductionDescription:
-    'My Professor is an interesting platform that will teach you in more an interactive way.',
+    'IQ Candy is an interesting platform that will teach you in more an interactive way.',
   // Add more text variables as needed
   homeScreenData: {
     data: [

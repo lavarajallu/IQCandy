@@ -77,7 +77,6 @@ const NotesActivity = ({ route, navigation }) => {
     setactivityStartTime(activityStartTime);
   }, [route]);
   useEffect(() => {
-   // alert(JSON.stringify(notesActivityData)))
     if (notesActivityData && Object.keys(notesActivityData).length > 0) {
       const data = notesActivityData;
       if (notesActivityData.activityType === 'pdf') {

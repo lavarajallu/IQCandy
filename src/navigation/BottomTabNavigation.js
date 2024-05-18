@@ -32,7 +32,7 @@ const BottomTabNavigation = ({route}) => {
   return (
     <Tab.Navigator
       initialRouteName='Home'
-      screenOptions={{ tabBarActiveTintColor: COLORS.tabBarLabelActiveColor }}
+      screenOptions={{ tabBarActiveTintColor: COLORS.appSecondaryColor }}
     >
       <Tab.Screen
         name='Home'

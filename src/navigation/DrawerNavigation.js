@@ -136,7 +136,7 @@ const DrawerNavigation = ({ route,navigation }) => {
             fontSize: 14,
           },
           drawerLabel: 'Home',
-          title: 'My Professor',
+          title: 'IQ Candy',
           headerTitleAlign: 'center', // Align title in the center
           headerTintColor: COLORS.whiteColor,
           headerStyle: {
@@ -201,7 +201,7 @@ const DrawerNavigation = ({ route,navigation }) => {
             >
               <Image
                 source={require('../../assets/images/editicon.png')}
-                style={{ width: 10, height: 10 }}
+                style={{ width: 10, height: 10 , tintColor:COLORS.appSecondaryColor}}
               />
             </TouchableOpacity>
           ),

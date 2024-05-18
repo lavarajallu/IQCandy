@@ -30,7 +30,7 @@ const ReferAndEarn = (props) => {
   });
   const onRefer = async () => {
     const options = {
-      title: 'My Professor',
+      title: 'IQ Candy',
       subject: 'Referal Invite',
       message:
         'HI Your Referal code is  ' +

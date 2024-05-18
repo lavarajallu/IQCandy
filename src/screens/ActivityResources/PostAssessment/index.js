@@ -528,7 +528,7 @@ const PostAssessment = ({ route, navigation }) => {
   const onNext = () => {
     const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
     if (answerobj.user_answer === null) {
-      Alert.alert('My Professor', 'please select option');
+      Alert.alert('IQ Candy', 'please select option');
     } else {
       setSpinner(true);
       setnewquestionid((newquestionid) => newquestionid + 1);

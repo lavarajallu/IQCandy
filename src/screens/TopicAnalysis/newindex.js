@@ -397,7 +397,7 @@ class TopicAnalysis extends Component {
           }
         } else if (json.error?.code === 400) {
           //alert("dknkdf")
-          Alert.alert('My Professor', json.error.message, [
+          Alert.alert('IQ Candy', json.error.message, [
             { text: 'OK', onPress: () => this.logout() },
           ]);
         }

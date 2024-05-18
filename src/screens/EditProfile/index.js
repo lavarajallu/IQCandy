@@ -104,7 +104,7 @@ const EditProfile = ({ navigation }) => {
         navigation,
         userId: user?.userInfo?.userId,
       });
-      Alert.alert('My Professor', 'Profile Updated successfully.', [
+      Alert.alert('IQ Candy', 'Profile Updated successfully.', [
         {
           text: 'OK',
           onPress: () => {
@@ -134,9 +134,9 @@ const EditProfile = ({ navigation }) => {
       setLastName(user.userInfo.lastName);
       setMobileNumber(user.userInfo.mobileNumber);
       setEmail(user.userInfo.email);
-      setUniversityNamae(user.userOrg.universityName);
-      setBoardName(user.userOrg.branchName);
-      setSemisterName(user.userOrg.semesterName);
+      setUniversityNamae(user.userOrg.boardName);
+      //setBoardName(user.userOrg.schoolName);
+      setSemisterName(user.userOrg.gradeName);
       setProfilepic(user.userInfo.profilePic);
     }
   });
@@ -285,7 +285,7 @@ const EditProfile = ({ navigation }) => {
                 <ValidatedTextInput
                   editable={false}
                   label='University Name'
-                  placeholder='Enter your University name'
+                  placeholder='Enter your Board name'
                   value={universityName}
                   onChangeText={setUniversityNamae}
                   validation={{
@@ -294,7 +294,7 @@ const EditProfile = ({ navigation }) => {
                   }}
                   iconName='person-outline'
                 />
-                <ValidatedTextInput
+               {/*} <ValidatedTextInput
                   editable={false}
                   label='Board Name'
                   placeholder='Enter your board name'
@@ -305,11 +305,11 @@ const EditProfile = ({ navigation }) => {
                     errorMessage: 'Email cannot be empty',
                   }}
                   iconName='call-outline'
-                />
+                />*/}
                 <ValidatedTextInput
                   editable={false}
                   label='Semister Name'
-                  placeholder='Enter your Semister'
+                  placeholder='Enter your Grade'
                   value={semisterName}
                   validation={{
                     showErrorMessage: semisterName === '',

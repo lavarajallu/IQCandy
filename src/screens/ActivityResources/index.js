@@ -269,7 +269,7 @@ const ActivityResources = ({ route, navigation }) => {
       //  this.setState({ showmodal: false }, () => {
       setshowmodal(false);
       // this.getsavelaterdata();
-      Alert.alert('My Professor', 'Scheduled Successfully');
+      Alert.alert('IQ Candy', 'Scheduled Successfully');
       if (user) {
         if (chapterItem?.chapterId) {
           chapterId = chapterItem?.chapterId;
@@ -371,7 +371,7 @@ const ActivityResources = ({ route, navigation }) => {
         item.activityType !== 'pre' &&
         newarray.find((activity) => activity.activityType === 'pre')
       ) {
-        Alert.alert('My Professor', 'Please complete Pre Assesment first');
+        Alert.alert('IQ Candy', 'Please complete Pre Assesment first');
       } else {
         if (item.activityType === 'pre') {
           navigation.navigate('PreAssessment', {

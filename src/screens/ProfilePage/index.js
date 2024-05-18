@@ -17,6 +17,7 @@ import ValidatedTextInput from '../../components/ValidatedTextInput';
 import styles from './styles';
 import { getUserData } from '../../api/profile';
 import { selectMyProfile } from '../../store/student/MyProfile/selector';
+import { COLORS } from '../../constants/colors';
 // import { setBranches } from '../../store/authManagement/slice';
 
 const ProfilePage = () => {
@@ -67,15 +68,16 @@ const ProfilePage = () => {
         // })
 
         var profileprcent = count / 8;
-        setProfilePercent(profileprcent.toFixed(2));
+       // alert(profileprcent)
+        setProfilePercent(profileprcent);
       }
       setFirstName(data.userInfo.firstName);
       setLastName(data.userInfo.lastName);
       setEmail(data.userInfo.email);
       setMobileNumber(data.userInfo.mobileNumber);
-      setUniversityNamae(data.userOrg.universityName);
+      setUniversityNamae(data.userOrg.boardName);
       setBoardName(data.userOrg.branchName);
-      setSemisterName(data.userOrg.semesterName);
+      setSemisterName(data.userOrg.gradeName);
     }
   }, [user]);
   return (
@@ -101,7 +103,7 @@ const ProfilePage = () => {
             <View style={styles.headingview}>
               <Text style={styles.headingtext}>{firstName}</Text>
               <Progress.Bar
-                progress={parseInt(profilePercent)}
+                progress={(profilePercent)}
                 width={width / 1.8}
                 color={'white'}
                 unfilledColor={'rgba(255,255,255,0.6)'}
@@ -174,7 +176,7 @@ const ProfilePage = () => {
                 <ValidatedTextInput
                   editable={false}
                   label='University Name'
-                  placeholder='Enter your University name'
+                  placeholder='Enter your Board name'
                   value={universityName}
                   onChangeText={setUniversityNamae}
                   validation={{
@@ -183,7 +185,7 @@ const ProfilePage = () => {
                   }}
                   iconName='person-outline'
                 />
-                <ValidatedTextInput
+                {/* <ValidatedTextInput
                   editable={false}
                   label='Board Name'
                   placeholder='Enter your board name'
@@ -194,11 +196,11 @@ const ProfilePage = () => {
                     errorMessage: 'Email cannot be empty',
                   }}
                   iconName='call-outline'
-                />
+                /> */}
                 <ValidatedTextInput
                   editable={false}
                   label='Semister Name'
-                  placeholder='Enter your Semister'
+                  placeholder='Enter your Grade'
                   value={semisterName}
                   validation={{
                     showErrorMessage: semisterName === '',

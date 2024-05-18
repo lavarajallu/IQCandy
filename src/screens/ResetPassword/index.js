@@ -55,15 +55,15 @@ const ResetPassword = ({ route, navigation }) => {
   //Inside the component where you handle ResetPassword Logic
   const handleResetPassword = async () => {
     if (otp === '' || otp === null || otp === undefined) {
-      Alert.alert('My Professor', 'Please enter OTP');
+      Alert.alert('IQ Candy', 'Please enter OTP');
     } else if (password === '' || password === null || password === undefined) {
-      Alert.alert('My Professor', 'Please enter password');
+      Alert.alert('IQ Candy', 'Please enter password');
     } else if (
       confirmPassword === '' ||
       confirmPassword === null ||
       confirmPassword === undefined
     ) {
-      Alert.alert('My Professor', 'Please enter password');
+      Alert.alert('IQ Candy', 'Please enter password');
     } else {
       const payload = {
         otp: otp,

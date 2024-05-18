@@ -130,10 +130,11 @@ const apiEndPoints = {
   searchPage: {
     getSearchData: (payload) =>
       `/global-search?userId=${payload.userId}&searchValue=${payload.searchValue}`,
+    
     getTopicDetails: (payload) =>
-      `/universities/${payload.universityId}/branches/${payload.branchId}/semesters/${payload.semesterId}/subjects/${payload.subjectId}/chapters/${payload.chapterId}/topics/${payload.topicId}`,
+      `/boards/${payload.boardId}/grades/${payload.gradeId}/subjects/${payload.subjectId}/chapters/${payload.chapterId}/topics/${payload.topicId}`,
     getChapterDetails: (payload) =>
-      `/universities/${payload.universityId}/branches/${payload.branchId}/semesters/${payload.semesterId}/subjects/${payload.subjectId}/chapters/${payload.chapterId}`,
+      `/boards/${payload.boardId}/grades/${payload.gradeId}/subjects/${payload.subjectId}/chapters/${payload.chapterId}`,
   },
 };
 

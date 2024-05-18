@@ -256,7 +256,7 @@ const PracticeSolutions = ({ route, navigation }) => {
   const onNext = () => {
     //scrollToIndex(questionno);
     if (questionno + 1 === questionsarray.length) {
-      Alert.alert('My Professor', 'Are you sure you want to quit?', [
+      Alert.alert('IQ Candy', 'Are you sure you want to quit?', [
         {
           text: 'Cancel',
           onPress: () => {

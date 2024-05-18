@@ -404,7 +404,7 @@ const Register = ({ navigation }) => {
       !stateValid ||
       !genderValid
     ) {
-      Alert.alert('My Professor', 'Please fill in all required fields');
+      Alert.alert('IQ Candy', 'Please fill in all required fields');
       return;
     }
 

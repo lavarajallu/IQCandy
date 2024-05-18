@@ -24,7 +24,7 @@ const ForgotPassword = ({ navigation }) => {
   //Inside the component where you handle login logic
   const handleForgotPassword = async () => {
     if (emailorPhoneValue === '' || emailorPhoneValue === null) {
-      Alert.alert('My Professor', 'Please enter Email or Phone');
+      Alert.alert('IQ Candy', 'Please enter Email or Phone');
     } else {
       let payload = {
         emailOrMobile: emailorPhoneValue,
