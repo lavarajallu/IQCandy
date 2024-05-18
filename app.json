@@ -1,0 +1,65 @@
+{
+  "expo": {
+    "name": "IQ Candy",
+    "slug": "IQ Cand",
+    "version": "25.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "assetBundlePatterns": ["assets/fonts/*", "assets/images/*"],
+    "ios": {
+      "requireFullScreen": true,
+      "supportsTablet": true,
+      "bundleIdentifier": "com.iqcandy",
+      "buildNumber": "25.4",
+      "CFBundleShortVersionString": "25.0.0"
+     
+    },
+    "android": {
+      "softwareKeyboardLayoutMode": "pan",
+      "googleServicesFile": "./google-services.json",
+      "package": "com.iqcandy",
+      "config": {
+        "usesCleartextTraffic": true
+      },
+      "permissions": ["android.permission.INTERNET"]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3243a81c-fe1b-4e79-ab8a-fc71b4e0a6d2"
+      }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow $(PRODUCT_NAME) to access your photo",
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera"
+        }
+      ],
+      [
+        "expo-screen-orientation",
+        {
+          "initialOrientation": "DEFAULT"
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true,
+            "kotlinVersion": "1.9.0"
+          }
+        }
+      ],
+      [
+        "@config-plugins/react-native-blob-util",
+        "@config-plugins/react-native-pdf"
+      ],
+      "expo-font"
+    ],
+    "owner": "smartgen"
+  }
+}
