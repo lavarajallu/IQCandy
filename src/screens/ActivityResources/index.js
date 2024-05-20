@@ -640,7 +640,7 @@ const ActivityResources = ({ route, navigation }) => {
           // Handle back button press
           if (
             route.params.from === 'heatmap' ||
-            route.params.from === 'calender'
+            route.params.from === 'calender' || route.params.from ==='search'
           ) {
             goBack(navigation);
           } else if (route.params.from === 'progresstopics') {

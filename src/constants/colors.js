@@ -10,8 +10,8 @@ export const COLORS = {
   dark: '#343a40',
   appPrimaryColor: '#E23843',
   appSecondaryColor:"#6a5177",// '#E21E2B',
-  tabBarLabelColor: '#E21E2B', // Custom color for tabBar label
-  tabBarLabelActiveColor: '#E21E2B', // Active label color
+  tabBarLabelColor: "#6a5177",// '#E21E2B',
+  tabBarLabelActiveColor: "#6a5177",// '#E21E2B',
   tabBarLabelInactiveColor: '#999999', // Inactive label color
   coursesColor: `#43969F`,
   titleColor: `#D4E4FF`,
@@ -20,8 +20,8 @@ export const COLORS = {
   mediumGray: '#F5F5F7',
   lightWhite: `#F8F8F8`,
   submitButtonColor: '#43969F',
-  nextButtonColor: '#E21E2B',
-  previousButtonColor: '#E21E2B',
+  nextButtonColor:"#6a5177",// '#E21E2B',
+  previousButtonColor: "#6a5177",// '#E21E2B',
   rightInfo: '#A0B566',
   wrongInfo: '#DD2834',
   segmentColors: ['#c44921', '#d88414', '#a3ba6d', '#016313'],

@@ -230,38 +230,14 @@ const KnowledgeMap = ({ route, navigation }) => {
   }, [topicDetails]);
   const gotoActivity = (item) => {
     var validpackages = validatePackage;
-    const isSubscribed =
-      user?.role?.roleName === 'General Student' &&
-      validpackages &&
-      validpackages.subscriptionStatus === 'active'
-        ? true
-        : false;
-    // alert(item.chapterId + "     "+JSON.stringify( chapters?.items?.[0]?.chapterId))
+   
     if (item.chapterId === chapters?.items?.[0]?.chapterId) {
       setonClick(true);
       navigatetopage(item);
-    } else if (isSubscribed || user?.role?.roleName === 'Student') {
+    } else {
       setonClick(true);
       navigatetopage(item);
-    } else {
-      Alert.alert(
-        'IQ Candy',
-        'You are not subscribed to view this chapter, Do you want to subscribe?',
-        [
-          {
-            text: 'No',
-            onPress: () => console.log('Cancel Pressed'),
-            style: 'cancel',
-          },
-          {
-            text: 'Yes',
-            onPress: () => {
-              navigation.navigate('BuyPackages');
-            },
-          },
-        ]
-      );
-    }
+    } 
   };
 
   return (

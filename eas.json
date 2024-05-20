@@ -1,12 +1,11 @@
 {
   "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal"
-    },
     "preview": {
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+        "API_URL": "https://api.iqcandy.com/api/iqcandy"
       }
     },
     "preview2": {
@@ -16,9 +15,6 @@
     },
     "preview3": {
       "developmentClient": true
-    },
-    "preview4": {
-      "distribution": "internal"
     },
     "production": {}
   }

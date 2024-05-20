@@ -78,8 +78,14 @@ const MyChapters = ({ route, navigation }) => {
       <DynamicHeader
         title={subjectItem?.name}
         backAction={() => {
+          if(route.params.from === 'search'){
+            navigation.navigate('DrawerNavigation', {from:"mychapters",navigation:navigation});
+          
+          }else{
+            navigation.navigate('DrawerNavigation', {from:"mychapters",navigation:navigation});
+            
+          }
           // Handle back button press
-          navigation.navigate('DrawerNavigation', {from:"mychapters",navigation:navigation});
         }}
         imageSource={{ uri: subjectItem?.image }}
         labels={[chapters?.items?.length + ' Chapters']}
@@ -90,7 +96,7 @@ const MyChapters = ({ route, navigation }) => {
         user={user}
         onChange={(item) => goToTopics(item)}
         onlockmodal={onlockmodal}
-        validatePackage={validatePackage ? validatePackage : null}
+       // validatePackage={validatePackage ? validatePackage : null}
       />
       <Modal isVisible={isvisible}>
         <View style={styles.modalview}>

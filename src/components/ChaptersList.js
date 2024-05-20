@@ -42,219 +42,54 @@ const ChaptersList = (props) => {
     } else {
       color = 'orange';
     }
-    return index === 0 ? (
+    return (
       <TouchableOpacity
-        style={styles.card}
-        onPress={() => onSelectItem(item)}
+      style={styles.card}
+      onPress={() => onSelectItem(item)}
 
+    >
+      <View
+        style={{ flex: 1 }}
       >
-        <View
-          style={{ flex: 1 }}
-        >
-          <Image
-            source={{ uri: item?.image }}
-            style={styles.image}
-            resizeMode={'cover'}
-          />
-          <View style={styles.absview}>
-            <Text style={styles.textstyle}>
-              {` ${item?.chapterName}`}
-            </Text>
-          </View>
-
-          <View>
-            {item.progress ? (
-              <Progress.Bar
-                progress={parseInt(item.progress) / 100}
-                width={progresswidth}
-                color={color}
-                height={2}
-                unfilledColor={'lightgrey'}
-                borderColor={'transparent'}
-              />
-            ) : (
-              <Progress.Bar
-                progress={0}
-                width={progresswidth}
-                color={color}
-                height={2}
-                unfilledColor={'lightgrey'}
-                borderColor={'transparent'}
-              />
-            )}
-          </View>
-
-
-
+        <Image
+          source={{ uri: item?.image }}
+          style={styles.image}
+          resizeMode={'cover'}
+        />
+        <View style={styles.absview}>
+          <Text style={styles.textstyle}>
+            {` ${item?.chapterName}`}
+          </Text>
         </View>
 
-      </TouchableOpacity>
-    ) : user?.role?.roleName === 'General Student' ? (
-      validatePackage && validatePackage.subscriptionStatus === 'active' ? (
-        <TouchableOpacity
-          style={[styles.card]}
-
-
-          onPress={() => onSelectItem(item)}
-
-        >
-          <View
-            style={{ flex: 1, }}
-          >
-            <Image
-              source={{ uri: item?.image }}
-              style={styles.image}
-              resizeMode={'cover'}
+        <View>
+          {item.progress ? (
+            <Progress.Bar
+              progress={parseInt(item.progress) / 100}
+              width={progresswidth}
+              color={color}
+              height={2}
+              unfilledColor={'lightgrey'}
+              borderColor={'transparent'}
             />
-            <View style={styles.absview}>
-              <Text style={styles.textstyle}>
-                {`(${item?.idx}). ${item?.chapterName}`}
-              </Text>
-            </View>
-
-            <View>
-              {item.progress ? (
-                <Progress.Bar
-                  progress={parseInt(item.progress) / 100}
-                  width={progresswidth}
-                  color={color}
-                  height={2}
-                  unfilledColor={'lightgrey'}
-                  borderColor={'transparent'}
-                />
-              ) : (
-                <Progress.Bar
-                  progress={0}
-                  width={progresswidth}
-                  color={color}
-                  height={2}
-                  unfilledColor={'lightgrey'}
-                  borderColor={'transparent'}
-                />
-              )}
-            </View>
-
-
-
-          </View>
-
-        </TouchableOpacity>
-      ) : (
-        <>
-          <TouchableOpacity
-            style={[styles.card,]}
-
-            onPress={() => onSelectItemlock(item)}
-
-          >
-            <View
-              style={{ flex: 1, }}
-            >
-              <Image
-                source={{ uri: item?.image }}
-                style={styles.image}
-                resizeMode={'cover'}
-              />
-              <View style={{
-                width: "100%", height: height / 6, justifyContent: "center",
-                backgroundColor: "rgba(0,0,0,0.8)", position: "absolute", bottom: 0
-              }}>
-                <Text style={styles.textstyle}>
-                  {`${item?.chapterName}`}
-                </Text>
-                <Image
-                  source={require('../../assets/images/padlock.png')}
-                  style={{
-                    width: 20,
-                    height: 20,
-                    alignSelf: 'center',
-                    tintColor: 'grey',
-                  }}
-                />
-              </View>
-
-              <View>
-                {item.progress ? (
-                  <Progress.Bar
-                    progress={parseInt(item.progress) / 100}
-                    width={progresswidth}
-                    color={color}
-                    height={2}
-                    unfilledColor={'lightgrey'}
-                    borderColor={'transparent'}
-                  />
-                ) : (
-                  <Progress.Bar
-                    progress={0}
-                    width={progresswidth}
-                    color={color}
-                    height={2}
-                    unfilledColor={'lightgrey'}
-                    borderColor={'transparent'}
-                  />
-                )}
-              </View>
-
-
-
-            </View>
-
-          </TouchableOpacity>
-
-
-        </>
-      )
-    ) : (
-      <>
-        <TouchableOpacity
-          style={[styles.card]}
-
-          onPress={() => onSelectItem(item)}
-
-        >
-          <View
-            style={{ flex: 1 }}
-          >
-            <Image
-              source={{ uri: item?.image }}
-              style={styles.image}
-              resizeMode={'cover'}
+          ) : (
+            <Progress.Bar
+              progress={0}
+              width={progresswidth}
+              color={color}
+              height={2}
+              unfilledColor={'lightgrey'}
+              borderColor={'transparent'}
             />
-            <View style={styles.absview}>
-              <Text style={styles.textstyle}>
-                {` ${item?.chapterName}`}
-              </Text>
-            </View>
-
-            <View>
-              {item.progress ? (
-                <Progress.Bar
-                  progress={parseInt(item.progress) / 100}
-                  width={progresswidth}
-                  color={color}
-                  height={2}
-                  unfilledColor={'lightgrey'}
-                  borderColor={'transparent'}
-                />
-              ) : (
-                <Progress.Bar
-                  progress={0}
-                  width={progresswidth}
-                  color={color}
-                  height={2}
-                  unfilledColor={'lightgrey'}
-                  borderColor={'transparent'}
-                />
-              )}
-            </View>
+          )}
+        </View>
 
 
 
-          </View>
+      </View>
 
-        </TouchableOpacity>
-      </>
-    );
+    </TouchableOpacity>
+    )
   };
   return (
     <>

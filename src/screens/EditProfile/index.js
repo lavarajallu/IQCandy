@@ -183,7 +183,7 @@ const EditProfile = ({ navigation }) => {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <SafeAreaView style={{ flex: 0, backgroundColor: '#E21E2B' }} />
+      <SafeAreaView style={{ flex: 0, backgroundColor: COLORS.appSecondaryColor }} />
       <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <Header
           backAction={backAction}
