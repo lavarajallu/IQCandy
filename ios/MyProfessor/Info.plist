@@ -27,7 +27,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.iqcandy</string>
+				<string>iqcandy.learn.com</string>
 			</array>
 		</dict>
 		<dict>

@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "IQ Candy",
-    "slug": "IQ Cand",
+    "slug": "iq-candy-vddoa4b-jwwpeomh-jxks",
     "version": "10.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "automatic",
@@ -9,14 +9,14 @@
     "ios": {
       "requireFullScreen": true,
       "supportsTablet": true,
-      "bundleIdentifier": "com.iqcandy",
+      "bundleIdentifier": "iqcandy.learn.com",
       "buildNumber": "10.4",
       "CFBundleShortVersionString": "10.0.0"
     },
     "android": {
       "softwareKeyboardLayoutMode": "pan",
       "googleServicesFile": "./google-services.json",
-      "package": "com.iqcandy",
+      "package": "iqcandy.learn.com",
       "config": {
         "usesCleartextTraffic": true
       },
@@ -27,7 +27,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "3243a81c-fe1b-4e79-ab8a-fc71b4e0a6d2"
+        "projectId": "d431c888-d54e-4297-9ee0-131959b67ee7"
       }
     },
     "plugins": [

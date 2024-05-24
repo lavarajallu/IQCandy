@@ -1,4 +1,4 @@
-package com.iqcandy
+package iqcandy.learn.com
 
 import android.os.Build
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.iqcandy
+package iqcandy.learn.com
 
 import android.app.Application
 import android.content.res.Configuration
