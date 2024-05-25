@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 import { COLORS } from '../../constants/colors';
 
 const { width, height } = Dimensions.get('window');
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     marginTop: height * 0.16,
   },
   logoContainer: {
-    flex: 0.25,
+    flex: Platform.OS === 'ios' ? 0.22 : 0.25,
     justifyContent: 'flex-end',
     alignItems: 'center',
   },

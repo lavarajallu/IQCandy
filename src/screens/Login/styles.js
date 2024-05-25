@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 import { COLORS } from '../../constants/colors';
 
 const { width, height } = Dimensions.get('window');
@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   imageContainer: {
-    flex: 0.25,
+    flex: 0.26,
   },
   imageBackground: {
     flex: 1,
@@ -19,12 +19,12 @@ const styles = StyleSheet.create({
   },
   curvedLine: {
     flex: 1,
-    marginTop: height * 0.2,
+    marginTop: Platform.OS === 'android' ? height * 0.2 : height * 0.18,
   },
   logoContainer: {
     flex: 0.2,
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   inputContainer: {
     flex: 0.35,

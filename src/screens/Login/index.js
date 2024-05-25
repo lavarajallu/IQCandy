@@ -82,8 +82,8 @@ const Login = ({ navigation }) => {
       setPasswordValidation({
         showErrorMessage: true,
         errorMessage:
-        'Password must contain at least 8 different characters and can include letters, numbers, and special characters',
-         // 'Password must be at least 8 characters with at least one number and one letter',
+          'Password must contain at least 8 different characters and can include letters, numbers, and special characters',
+        // 'Password must be at least 8 characters with at least one number and one letter',
       });
       return;
     }
