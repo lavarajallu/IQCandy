@@ -1,7 +1,7 @@
 // coursesSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
-const myCoursesSlice = createSlice({
+var myCoursesSlice = createSlice({
   name: 'myCourses',
   initialState: {
     subjects: {},
@@ -30,7 +30,11 @@ const myCoursesSlice = createSlice({
     notesActivityDataProf:{},
     videoActivityDataPro:{},
     recommtopicActivities:{},
-    ytvideoActivityData:{}
+    ytvideoActivityData:{},
+    validatevideoquestiona:{},
+    videoquestionsdata:[],
+    Videoquestionassesdata:{},
+    Videoquestionsvideopro:{}
   },
   reducers: {
     setSubjects: (state, action) => {
@@ -45,6 +49,10 @@ const myCoursesSlice = createSlice({
     setTopics: (state, action) => {
       state.topics = action.payload;
     },
+    setvideoquestionsdata: (state, action) => {
+      state.videoquestionsdata = action.payload;
+      state.Videoquestionassesdata = {};
+    },
     setrecommendedTopics: (state, action) => {
       state.recommendedtopics = action.payload;
     },
@@ -53,6 +61,12 @@ const myCoursesSlice = createSlice({
     },
     setGatePreviousQuestionPaperByCount: (state, action) => {
       state.GatePreviousQuestionPaperByCount = action.payload;
+    },
+    setvideoquestionassesdata:(state, action) => {
+      state.Videoquestionassesdata = action.payload;
+    },
+    setvalidatevideoquestiona:(state, action) => {
+      state.validatevideoquestiona = action.payload;
     },
     setgetcalenderdataapi: (state, action) => {
       state.getcalenderdata = action.payload;
@@ -63,6 +77,9 @@ const myCoursesSlice = createSlice({
     },
     setProfActivities: (state, action) => {
       state.Profactivities = action.payload;
+    },
+    setVideoquestionsvideopro:(state, action) => {
+      state.Videoquestionsvideopro = action.payload;
     },
     setrecommtopicActivities: (state, action) => {
       state.recommtopicActivities = action.payload;
@@ -119,6 +136,8 @@ const myCoursesSlice = createSlice({
     },
     setupdateanalyticsNotes: (state, action) => {
       state.getupdateanalyticsNotes = action.payload;
+      state. videoquestionsdata = []
+      state.Videoquestionassesdata ={}
     },
     setQuestionPaperByTopicIdRequest: (state, action) => {
       state.QuestionPaperByTopicIdRequest = action.payload;
@@ -149,6 +168,7 @@ export const {
   setNotestActivitydata,
   setQuestionByIdReattempt,
   setCalenderData,
+  setvideoquestionassesdata,
   setaddtocalenderPut,
   setgetcalenderdataapi,
   setupdateanalyticsNotes,
@@ -157,6 +177,8 @@ export const {
   setrecommendedTopics,
   setNotestActivitydataProf,
   setvideoActivitydataPro,
-  setytvideoActivitydata
+  setvideoquestionsdata,
+  setytvideoActivitydata,
+  setVideoquestionsvideopro
 } = myCoursesSlice.actions;
 export default myCoursesSlice.reducer;

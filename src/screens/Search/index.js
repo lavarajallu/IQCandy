@@ -61,6 +61,7 @@ const Search = (props) => {
     });
   };
   useEffect(() => {
+    
     if (searchData && searchData.length > 0) {
       setSearchList(searchData);
       setSpinner(false);
@@ -117,19 +118,28 @@ const Search = (props) => {
     }
   };
   useEffect(() => {
-    if (topicDetails && Object.keys(topicDetails).length > 0) {
-      navigation.navigate('ActivityResources', {
-        topicItem: { ...selectedItem, ['image']: topicDetails.image },
-        chapterItem: {},
-      });
+    if(searchList && searchList.length > 0){
+      if (topicDetails && Object.keys(topicDetails).length > 0) {
+        setSearchList([]);
+        setSearchValue('');
+        navigation.navigate('ActivityResources', { from : 'search',
+          topicItem: { ...selectedItem, ['image']: topicDetails.image },
+          chapterItem: {},
+        });
+      }
     }
+  
   }, [topicDetails]);
   useEffect(() => {
+    if(searchList && searchList.length > 0){
     if (chapterDetails && Object.keys(chapterDetails).length > 0) {
-      navigation.navigate('MyTopics', {
+      setSearchList([]);
+      setSearchValue('');
+      navigation.navigate('MyTopics', { from : 'search',
         chapterItem: { ...selectedItem, ['image']: chapterDetails.image },
       });
     }
+  }
   }, [chapterDetails]);
   const onYes = () => {
     navigation.navigate('BuyPackages');
@@ -140,13 +150,13 @@ const Search = (props) => {
         <View style={styles.searchbar}>
           <TextInput
             value={searchvalue}
-            editable={
-              (user?.role?.roleName === 'General Student' &&
-                validatePackage?.subscriptionStatus === 'active') ||
-              user?.role?.roleName === 'Student'
-                ? true
-                : false
-            }
+            // editable={
+            //   (user?.role?.roleName === 'General Student' &&
+            //     validatePackage?.subscriptionStatus === 'active') ||
+            //   user?.role?.roleName === 'Student'
+            //     ? true
+            //     : false
+            // }
             placeholder={'Search for Chapters and Topics...'}
             placeholderTextColor={'grey'}
             style={styles.searchtext}
@@ -167,9 +177,8 @@ const Search = (props) => {
           <View style={styles.spinnerview}>
             <ActivityIndicator />
           </View>
-        ) : (user?.role?.roleName === 'General Student' &&
-            validatePackage?.subscriptionStatus === 'active') ||
-          user?.role?.roleName === 'Student' ? (
+        ) : 
+       
           searchList?.length > 0 ? (
             <FlatList
               data={searchList}
@@ -182,19 +191,7 @@ const Search = (props) => {
               <Text>No Data</Text>
             </View>
           ) : null
-        ) : (
-          <View style={styles.spinnerview}>
-            <Text style={styles.subscribeText}>
-              You need to subscribe to access this feature of searching
-            </Text>
-            <Text style={styles.boldText}> Please subscribe now </Text>
-            <TouchableOpacity onPress={onYes}>
-              <View style={styles.subscibebutton}>
-                <Text style={{ color: 'white' }}>Subscribe</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        )}
+        }
       </View>
     </View>
   );

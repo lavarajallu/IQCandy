@@ -48,10 +48,7 @@ const NormalVideoViewComponent = (props) => {
   let [newarr, setnewarr] = useState([]);
 
   useEffect(() => {
-    //  Orientation.addOrientationListener(handleOrientation);
-    // console.log("PRopssss.......",questionsArray)
     if (questionsArray.length > 0) {
-      //   console.log("hhhhhhh")
       let orders = questionsArray;
       orders.sort(function (a, b) {
         let dateA = parseInt(a.question.timeinsec);
@@ -64,7 +61,6 @@ const NormalVideoViewComponent = (props) => {
         return 0;
       });
 
-      // console.log("ordersordersorders",orders)
       setquestionsarray(orders);
       setQuestionDisplay(orders[0]);
       // setPausedTime(parseInt(orders[0].question.timeinsec))
@@ -74,7 +70,6 @@ const NormalVideoViewComponent = (props) => {
       orders.map((res, i) => {
         var time = parseInt(res.question.timeinsec);
         newarr.push(time);
-        console.log('vvvvv', newarr);
         setnewarr(newarr);
       });
     } else {
@@ -97,58 +92,28 @@ const NormalVideoViewComponent = (props) => {
     }
   });
   onquestionSubmit = (time) => {
-    console.log('ddddd', questionsarray[index + 1]);
     setisplaying(false);
-    //setShow(false);
-    // if(questionsarray[index+1]){
-    //     setPausedTime(parseInt(questionsarray[index+1].question.timeinsec));
-    //     setQuestionDisplay(questionsarray[index+1]);
-    //     setShow(false);
-    //     setIndex(index+1)
-    //     setTimeout(()=>{
-    //         setisplaying(false)
-    //       },500)
-
-    // }else{
-    //     setPausedTime(null);
-    //     setQuestionDisplay(null);
-    //     setShow(false);
-    //     setTimeout(()=>{
-    //         setisplaying(false)
-    //       },500)
-    // }
+   
   };
   onLoad = (data) => {
-    console.log('onloaddd', data.duration);
     //this.setInteractiveAxis(data);
     setDuration(parseInt(data.duration));
     if (normaldata.videoPausedAt) {
-      console.log('onloaddd', normaldata.videoPausedAt);
-      //setCurrentTime(parseInt(normaldata.videoPausedAt));
-      //playerRef.current.seek(parseInt(normaldata.videoPausedAt));
+   
     } else {
       setCurrentTime(0);
     }
   };
   const getcurrentTime = async () => {
     if (playerRef) {
-      // if (DeviceConstants.isTablet) {
-      //   Orientation.lockToLandscape();
-      // } else {
-      //   Orientation.lockToPortrait();
-      // }
+      
       ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-      console.log('fff', currentTime);
       props.onBackNew(currentTime, duration);
     }
   };
   onNext = async () => {
     if (playerRef) {
-      // if (DeviceConstants.isTablet) {
-      //   Orientation.lockToLandscape();
-      // } else {
-      //   Orientation.lockToPortrait();
-      // }
+    
       ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
 
       props.onActivityNext(currentTime, duration);
@@ -156,24 +121,17 @@ const NormalVideoViewComponent = (props) => {
   };
   onPrevious = async () => {
     if (playerRef) {
-      // if (DeviceConstants.isTablet) {
-      //   Orientation.lockToLandscape();
-      // } else {
-      //   Orientation.lockToPortrait();
-      // }
+      
       ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
 
-      console.log('dsdsdsdsdsdsd', currentTime);
       props.onActivityPrevious(currentTime, duration);
     }
   };
   onProgress = (data) => {
-    //this.checkForPoints(parseInt(data.currentTime))
     setCurrentTime(parseInt(data.currentTime));
     const elapsed_sec = parseInt(data.currentTime);
     let result = newarr.filter((o1) => parseInt(o1) === parseInt(elapsed_sec));
 
-    //console.log('progress', elapsed_sec, '   ', result[0], newarr, pausedtime);
     if (elapsed_sec === result[0]) {
       if (parseInt(elapsed_sec) === pausedtime) {
       } else {
@@ -190,12 +148,9 @@ const NormalVideoViewComponent = (props) => {
       }
     }
     onRewatch = (data) => {
-      console.log.bind('DAtaaaa', data);
       if (playerRef) {
-        console.log('onerrewarch', pausedtime);
         var value = newarr.indexOf(pausedtime);
         var newwatch = newarr[value - 1];
-        console.log('onqustionnn', newwatch);
         var newvalue = newarr.indexOf(newwatch);
         if (newvalue === -1) {
           playerRef.current.seek(0);
@@ -212,30 +167,11 @@ const NormalVideoViewComponent = (props) => {
     };
   };
 
-  // handleOrientation = (orientation) => {
-  //   console.log('orintatin', orientation);
-  //   // orientation === 'LANDSCAPE-LEFT' || orientation === 'LANDSCAPE-RIGHT'
-  //   //   ? (this.setState({fullscreen: true}), StatusBar.setHidden(true))
-  //   //   : (this.setState({ fullscreen: false}),
-  //   //   StatusBar.setHidden(false);
-  // };
 
   const onfullscreen = () => {
-    // setFullScreen((fullscreen) => {
-    //   // fullscreen
-    //   //   ? ScreenOrientation.lockAsync(
-    //   //       ScreenOrientation.OrientationLock.LANDSCAPE_LEFT
-    //   //     )
-    //   //   : ScreenOrientation.lockAsync(
-    //   //       ScreenOrientation.OrientationLock.PORTRAIT
-    //   //     );
-    //   alert(fullscreen);
-    //   return fullscreen ? false : true;
-    // });
+
 
     props.onfullscreen();
-
-    //   Orientation.lockToLandscapeLeft();
   };
   handlescreenfull = (val) => {
     setFullScreen(val);
@@ -245,11 +181,7 @@ const NormalVideoViewComponent = (props) => {
         )
       : ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
 
-    // val
-    //   ? Orientation.lockToLandscape()
-    //   : DeviceConstants.isTablet
-    //   ? Orientation.lockToLandscape()
-    //   : Orientation.lockToPortrait();
+   
   };
   handleMainButtonTouch = () => {
     setisplaying(!isPlaying);
@@ -391,7 +323,7 @@ const NormalVideoViewComponent = (props) => {
                   }}
                 />
                 <View style={{ flex: 0.65 }}>
-                  <View style={[styles.subright, { marginLeft: 5 }]}>
+                  <View style={[styles.subright, { marginLeft: 22 }]}>
                     {timesarray}
                   </View>
                 </View>
@@ -471,7 +403,6 @@ const NormalVideoViewComponent = (props) => {
                           console.log('slidingstarte', value, currentTime);
                         }}
                         onValueChange={(value) => {
-                          console.log('prsl', value, '', currentTime);
                           playerRef.current.seek(parseInt(currentTime));
 
                           // if (parseInt(value) > parseInt(currentTime)) {

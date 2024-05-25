@@ -18,18 +18,15 @@ const MyTopics = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { chapterItem, subjectItem } = route.params;
   const { user } = useSelector(selectUser);
-  const { topics, PreviousQuestionPaperByCount ,GatePreviousQuestionPaperByCount} = useSelector(selectMyCourses);
+  const { topics, PreviousQuestionPaperByCount, GatePreviousQuestionPaperByCount } = useSelector(selectMyCourses);
 
   useEffect(() => {
     if (user) {
       const payload = {
-        // universityId: user.userOrg.universityId,
-        // branchId: user.userOrg.branchId,
-        // semesterId: user.userOrg.semesterId,
         subjectId: chapterItem?.subjectId,
         chapterId: chapterItem?.chapterId,
         boardId: user.userOrg.boardId,
-        gradeId:  user.userOrg.gradeId,
+        gradeId: user.userOrg.gradeId,
         offset: 0,
         limit: 1000,
       };
@@ -39,25 +36,25 @@ const MyTopics = ({ route, navigation }) => {
         dispatch,
         userId: user?.userInfo?.userId,
       });
-      getPreviousQuestionPaperByCount({
-        dispatch,
-        userId: user?.userInfo?.userId,
+      // getPreviousQuestionPaperByCount({
+      //   dispatch,
+      //   userId: user?.userInfo?.userId,
 
-        subjectId: chapterItem?.subjectId,
-        chapterId: chapterItem?.chapterId,
-        semesterId: user?.userOrg.semesterId,
-      });
-      getGatePreviousQuestionPaperCountByTopic({
-        dispatch,
-        userId: user?.userInfo?.userId,
+      //   subjectId: chapterItem?.subjectId,
+      //   chapterId: chapterItem?.chapterId,
+      //   semesterId: user?.userOrg.semesterId,
+      // });
+      // getGatePreviousQuestionPaperCountByTopic({
+      //   dispatch,
+      //   userId: user?.userInfo?.userId,
 
-        subjectId: chapterItem?.subjectId,
-        chapterId: chapterItem?.chapterId,
-        semesterId: user?.userOrg.semesterId,
-      });
-      
+      //   subjectId: chapterItem?.subjectId,
+      //   chapterId: chapterItem?.chapterId,
+      //   semesterId: user?.userOrg.semesterId,
+      // });
+
     }
-  }, [route]);
+  }, [topics]);
   // async getPreviousQuestionPaperByCount(user, token) {
   //   const { subjectId, chapterId } = this.props.data;
   //   const semesterId = user.userOrg.semesterId;
@@ -85,8 +82,6 @@ const MyTopics = ({ route, navigation }) => {
   //     console.error(error);
   //   }
   // }
-  useEffect(() => {
-  }, [GatePreviousQuestionPaperByCount]);
 
   const gotoActivity = (item) => {
     navigation.navigate('ActivityResources', {
@@ -103,23 +98,28 @@ const MyTopics = ({ route, navigation }) => {
         title={chapterItem?.chapterName}
         backAction={() => {
           // Handle back button press
-          navigation.navigate('MyChapters', { subjectItem: subjectItem });
+          if (route.params.from === 'search') {
+            navigation.navigate('DrawerNavigation', {from:"mychapters",navigation:navigation});
+          } else {
+            navigation.navigate('MyChapters', { subjectItem: subjectItem });
+
+          }
         }}
         imageSource={{ uri: chapterItem?.image }}
         labels={[topics?.items?.length + ' Topics']}
       />
 
       <TopicsList
-      navigation={navigation}
+        navigation={navigation}
         data={topics?.items}
         PreviousQuestionPaperByCount={
           PreviousQuestionPaperByCount.length > 0
             ? PreviousQuestionPaperByCount
             : []}
-            GatePreviousQuestionPaperByCount={
-              GatePreviousQuestionPaperByCount.length > 0
-                ? GatePreviousQuestionPaperByCount
-                : []
+        GatePreviousQuestionPaperByCount={
+          GatePreviousQuestionPaperByCount.length > 0
+            ? GatePreviousQuestionPaperByCount
+            : []
         }
         onChange={(item) => gotoActivity(item)}
       />

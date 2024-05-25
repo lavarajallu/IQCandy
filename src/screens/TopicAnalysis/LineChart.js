@@ -100,7 +100,6 @@ const TimeSpentChart = ({ topicsTimeTakenData = {} }) => {
       setspinner(false);
     }
 
-    console.log('weeklyEngagementAverage');
   }, [topicsTimeTakenData]);
 
   return spinner ? (

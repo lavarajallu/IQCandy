@@ -14,9 +14,12 @@ const mySearchSlice = createSlice({
     },
     setTopicDetails: (state, action) => {
       state.topicDetails = action.payload;
+      state.searchData = {}
     },
     setChapterDetails: (state, action) => {
       state.chapterDetails = action.payload;
+      state.searchData = {}
+
     },
   },
 });

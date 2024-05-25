@@ -94,10 +94,7 @@ const PracticeSolutions = ({ route, navigation }) => {
       setSelectedItem(practiceSolutionsData[0]);
       setquestionno(0);
       setspinnser(false);
-      console.log(
-        'nkDJKjakljakljkljlkj',
-        JSON.stringify(practiceSolutionsData[0])
-      );
+      
     }
   }, [practiceSolutionsData]);
   const backAction = () => {
@@ -160,7 +157,6 @@ const PracticeSolutions = ({ route, navigation }) => {
     //const selectedItem = selectedItem;
   
     const correctAnswer = selectedItem?.solution.split(',')
-    console.log(selectedItem.solution,     option.key )
     if (selectedItem.solution == option.key || correctAnswer.includes(option.key)) {
       return 'green'
     } else if (selectedItem.userAnswer == option.key) {

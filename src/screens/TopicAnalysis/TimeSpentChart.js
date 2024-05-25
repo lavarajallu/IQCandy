@@ -16,7 +16,6 @@ const TimeSpentChart = ({ topicsTimeTakenData = {} }) => {
         let color = question.score === 1 ? '#A3BA6D' : '#F94D48';
         values.push({ y: Math.abs(question.timeTaken), color });
       });
-      console.log('acnadkljckadc', labels, values);
       const conf = {
         chart: {
           type: 'column',
@@ -90,7 +89,6 @@ const TimeSpentChart = ({ topicsTimeTakenData = {} }) => {
       setData(false);
     }
 
-    console.log('weeklyEngagementAverage');
   }, [topicsTimeTakenData]);
   //var isTablet = DeviceConstants.isTablet;
   var circle = 10,

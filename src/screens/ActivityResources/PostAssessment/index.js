@@ -71,7 +71,6 @@ const PostAssessment = ({ route, navigation }) => {
     radius = 20;
   var interval;
   const backAction = () => {
-    //console.log('backAction');
     clearInterval(interval);
     setSelectedItem({});
     setAnswerObj({});
@@ -515,7 +514,6 @@ const PostAssessment = ({ route, navigation }) => {
     if (finalArray.length > 0) {
       finalArray.map((res, i) => {
         if (res.question === selectedItem.questionId) {
-          //   console.log("ffff",res.question ,  "  ", this.state.selectedItem.reference_id)
           setAnswerObj(res);
         } else {
           setAnswerObj({});

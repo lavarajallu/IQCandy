@@ -43,6 +43,7 @@ const getChapterDetails = async (payload) => {
   
   const response = await makeApiCall(endpoint, method, body);
   // Check for success and handle accordingly
+
   if (response) {
     const { data } = response;
     payload.dispatch(setChapterDetails(data));

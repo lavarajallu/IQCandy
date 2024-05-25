@@ -84,7 +84,6 @@ const PrePaperAssessment = ({ route, navigation }) => {
   };
   useEffect(() => {
     var questionPaperId = data.questionPaperId;
-    console.log(data.questionPaperTestType)
     if (data.questionPaperTestType === 'subjective') {
       setSubjectiveview(true);
       setLoading(true);

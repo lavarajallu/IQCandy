@@ -56,7 +56,6 @@ const LearningAnalysis = ({ navigation }) => {
       color: "#6A517",
     }
   ]
-  console.log('chapterAvgData', chapterAvgData);
   useEffect(() => {
     if (user) {
       const payload = {

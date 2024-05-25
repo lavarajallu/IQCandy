@@ -40,10 +40,10 @@ const MyPracticeChapters = ({ route, navigation }) => {
 
   useEffect(() => {
     if (user) {
-      getValidaPackages({
-        dispatch,
-        userId: user?.userInfo?.userId,
-      });
+      // getValidaPackages({
+      //   dispatch,
+      //   userId: user?.userInfo?.userId,
+      // });
       getPracticeChapters({
         dispatch,
         userId: user?.userInfo?.userId,
@@ -117,7 +117,6 @@ const MyPracticeChapters = ({ route, navigation }) => {
     goBack(navigation);
   };
   const onEventPress = (data) => {
-    console.log('ggg');
   };
   const onItem = (item, index, type, newindex) => {
     if (index === 1) {
@@ -226,10 +225,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
           }
         }
       } else {
-        if (
-          validatePackage &&
-          validatePackage?.subscriptionStatus === 'active'
-        ) {
+        
           if (item.testType === 'subject' || item.testType === 'Subject') {
             if (newindex > 0) {
               if (
@@ -280,25 +276,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
               alert('Please complete before chapter first');
             }
           }
-        } else {
-          Alert.alert(
-            'IQ Candy',
-            'You are not subscribed to access this chapter, Do you want to subscribe?',
-            [
-              {
-                text: 'No',
-                onPress: () => console.log('Cancel Pressed'),
-                style: 'cancel',
-              },
-              {
-                text: 'Yes',
-                onPress: () => {
-                  navigation.navigate('BuyPackages');
-                },
-              },
-            ]
-          );
-        }
+       
       }
     }
   };
@@ -416,7 +394,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
                           />
                         )}
                       </View>
-                      {user?.role?.roleName === 'General Student' &&
+                      {/* {user?.role?.roleName === 'General Student' &&
                       validatePackage?.subscriptionStatus !== 'active' ? (
                         <View
                           style={[
@@ -435,7 +413,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
                             source={require('../../../../assets/images/lock.png')}
                           />
                         </View>
-                      ) : null}
+                      ) : null} */}
                     </View>
                     <View style={styles.subjectview}>
                       {chapterItem.testType === 'Subject' ? (
@@ -526,7 +504,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
                           />
                         )}
                       </View>
-                      {user?.role?.roleName === 'General Student' &&
+                      {/* {user?.role?.roleName === 'General Student' &&
                       validatePackage?.subscriptionStatus !== 'active' ? (
                         <View
                           style={[
@@ -545,7 +523,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
                             source={require('../../../../assets/images/lock.png')}
                           />
                         </View>
-                      ) : null}
+                      ) : null} */}
                     </View>
                   </TouchableOpacity>
                 </View>

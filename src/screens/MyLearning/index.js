@@ -38,10 +38,7 @@ const MyLearning = () => {
       /></View>
   );
 
-  const seeAll = () => {
-    console.log('Courses see All method in home screen');
-  };
-
+ 
   return (
     <>
       <CardHeaderLabel

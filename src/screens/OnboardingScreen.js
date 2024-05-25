@@ -4,6 +4,7 @@ import {
   Text,
   Image,
   ImageBackground,
+  Dimensions,
   Platform,
   TouchableOpacity,
 } from 'react-native';
@@ -16,67 +17,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { selectUser } from '../store/authManagement/selector';
+var windowWidth = Dimensions.get('window').width;
+var windowHeight = Dimensions.get('window').height;
 function OnboardingScreen({ navigation }) {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const { user, loginthrought } = useSelector(selectUser);
 
   const [thisscreen, setthisscreen] = useState(false)
-  const renderItem = ({ item, index }) => (
-    <ImageBackground source={require('./../../assets/images/Logo.jpg')} style={styles.image}>
-      {/* <View style={styles.logoContainer}>
-        <Image source={item?.logo} />
-      </View>
-      <View style={styles.container}>
-        <ImageBackground
-          source={require('../../assets/images/Union.png')}
-          style={styles.textContainer}
-        >
-          <Text style={styles.title}>{item?.title}</Text>
-          <Text style={styles.text}>{item?.text}</Text>
-        </ImageBackground>
 
-        <TouchableOpacity
-          style={styles.nextArrowView}
-          onPress={() => {
-            navigation.navigate('Login');
-          }}
-        >
-          <Image source={item?.nextArrow} />
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity
-        style={{
-          marginBottom: Platform.OS === 'ios' ? 20 : 10,
-          alignItems: 'center',
-        }}
-        onPress={() => {
-          // Your onPress logic goes here
-          console.log('Touchable pressed');
-          navigation.navigate('Login');
-        }}
-      >
-        <Text
-          style={{
-            color: COLORS.whiteColor,
-            fontSize: 16,
-            textAlign: 'left',
-            fontFamily: 'mulish-regular',
-          }}
-        >
-          Already have an account?{' '}
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontFamily: 'mulish-bold',
-              textDecorationLine: 'underline',
-            }}
-          >
-            LOGIN
-          </Text>
-        </Text>
-      </TouchableOpacity> */}
-    </ImageBackground>
-  );
 
   const handleDone = () => {
     navigation.navigate('OnboardStarted');
@@ -132,8 +80,8 @@ function OnboardingScreen({ navigation }) {
     }}
   >
     <Image
-      source={require('./../../assets/images/iq.gif')}
-      style={{ width: 300, height: 300, alignSelf: 'center' }}
+      source={require('./../../assets/images/iqcandygif.gif')}
+      style={{ width: windowWidth, height: windowHeight, }}
     />
   </View>
   );

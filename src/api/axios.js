@@ -2,7 +2,8 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
 import { Alert } from 'react-native';
-const apiBaseUrl ='https://api.iqcandy.com/api/iqcandy'// 'https://api.iqcandy.com/api/iqcandy';
+const apiBaseUrl ='https://api.iqcandy.com/api/iqcandy'// 'https://api.iqcandy.com/api/iqcandy';.
+
 // const apiBaseUrl =
 //   'http://myprofessor-lb-1079580533.ap-south-1.elb.amazonaws.com/api/my-professor';
 

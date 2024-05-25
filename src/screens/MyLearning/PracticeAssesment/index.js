@@ -127,10 +127,8 @@ const PracticeAssesment = ({ route, navigation }) => {
 
     if (testQuestionsData?.data?.length > 0) {
       newarray = testQuestionsData?.data;
-      console.log('sdasDASDASDAS', newarray);
     } else {
       newarray = testQuestionsData?.data?.questions;
-      console.log('SDsadsadasdsd', newarray);
     }
 
     if (newarray && newarray?.length > 0) {

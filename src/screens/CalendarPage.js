@@ -67,7 +67,6 @@ const CalendarPage = ({ route, navigation }) => {
         .format('YYYY-MM-DD HH:mm:ss'),
       toDate: moment(enddate).endOf('month').format('YYYY-MM-DD HH:mm:ss'),
     };
-    console.log("dfjdflkjdf", data)
     getschedulefiltered({
       dispatch,
       data: data,
@@ -83,7 +82,6 @@ const CalendarPage = ({ route, navigation }) => {
       scheduledata?.map((res, i) => {
         newarray.push(moment.utc(res.scheduleDate).format('YYYY-MM-DD'));
       });
-      console.log("dkflasdfjlkdsflkdsjfdfd                    ", scheduledata)
       const uniqueAges = newarray?.filter(unique);
 
       var newmarkedarray = [];
@@ -123,9 +121,7 @@ const CalendarPage = ({ route, navigation }) => {
     }
   }, [scheduledata]);
   const onDayPress = (day) => {
-    //data => moment(data.scheduleDate).format('YYYY-MM-DD') === day.dateStringconst result
     var result = [];
-    // console.log('dattaaa', day, this.state.evemnsdata);
     if (Object.keys(evemnsdata).length > 0) {
       const keys = Object.keys(evemnsdata);
       keys.forEach((key, index) => {
@@ -133,14 +129,9 @@ const CalendarPage = ({ route, navigation }) => {
           result = evemnsdata[key];
         }
       });
-      // console.log('result', result);
-      //  if(result.length > 0){
       setneweventsdata(result);
       setnewmodal(true);
-      // this.setState({ neweventsdata: result }, () => {
-      //   this.setState({ newmodal: true });
-      // });
-      // //  }
+     
     } else {
       setneweventsdata([]);
       setnewmodal(true);
@@ -174,7 +165,6 @@ const CalendarPage = ({ route, navigation }) => {
     );
   };
   const renderEmptyDate = () => {
-    // console.log('dknkldnfdf');
     return (
       <View
         style={{ height: 15, flex: 1, alignItems: 'center', marginTop: 30 }}
@@ -291,7 +281,6 @@ const CalendarPage = ({ route, navigation }) => {
       'https://api.iqcandy.com/api/iqcandy' +
 
       `/universities/${user?.userOrg?.universityId}/branches/${user?.userOrg?.branchId}/semesters/${user?.userOrg?.semesterId}/subjects/${subjectId}/chapters/${chapterId}`;
-    console.log('dckkd', url);
     fetch(url, {
       method: 'GET',
       headers: {
@@ -302,7 +291,6 @@ const CalendarPage = ({ route, navigation }) => {
       .then((response) => response.json())
       .then((json) => {
         if (json) {
-          console.log('Dvnkdsvkl;sd', json);
 
           if (json.data) {
             var chapterDetails = json.data
@@ -310,7 +298,6 @@ const CalendarPage = ({ route, navigation }) => {
               'https://api.iqcandy.com/api/iqcandy' +
 
               `/universities/${user?.userOrg?.universityId}/branches/${user?.userOrg?.branchId}/semesters/${user?.userOrg?.semesterId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}`;
-            console.log('dckkd', url);
             fetch(url, {
               method: 'GET',
               headers: {
@@ -321,7 +308,6 @@ const CalendarPage = ({ route, navigation }) => {
               .then((response) => response.json())
               .then((json) => {
                 if (json) {
-                  console.log('Dvnkdsvkl;sd', json);
 
                   if (json.data) {
                     additionalitem['topicId'] = item.scheduleTypeId;

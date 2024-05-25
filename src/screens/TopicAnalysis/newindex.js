@@ -82,7 +82,6 @@ class TopicAnalysis extends Component {
           //this.getassesmentanalysis()
           //this.getquestionstimespent()
         } else {
-          console.log('hihii');
         }
       } else {
         alert('errorrr');
@@ -106,7 +105,6 @@ class TopicAnalysis extends Component {
       .then((response) => response.json())
       .then((json) => {
         //st data = json.data;
-        console.log('newwwwwwwww', json);
         if (json.data) {
           this.setState({
             timespentquestions: json.data,
@@ -122,8 +120,6 @@ class TopicAnalysis extends Component {
       .catch((error) => console.error(error));
   }
   getassesmentanalysis() {
-    console.log('ddddd', this.props.data.reference_id);
-    //  https://api.iconeducate.com/student/assessmentAnalysis/b2ab5c8d-92fc-4597-a7e6-6
     fetch(
      'https://api.iqcandy.com/api/iqcandy/student/assessmentAnalysis/' + this.props.data.reference_id,
       {
@@ -137,7 +133,6 @@ class TopicAnalysis extends Component {
       .then((response) => response.json())
       .then((json) => {
         //st data = json.data;
-        console.log('json.datajson.data', json.data);
         if (json.data) {
           const studentTopicPerformanceAnalysisData = json.data;
           if (studentTopicPerformanceAnalysisData?.qusType) {
@@ -153,7 +148,6 @@ class TopicAnalysis extends Component {
                 });
               }
             );
-            console.log('tabledata', questionAnalysis);
 
             let finalsample = [];
             questionAnalysis.map((res, i) => {
@@ -171,8 +165,6 @@ class TopicAnalysis extends Component {
               'No Of Wrong Questions',
             ];
             var tableData = finalsample;
-            console.log('tableHead', tableHead);
-            console.log('tabledataaaa', tableData);
 
             this.setState({
               tableHead,
@@ -187,7 +179,6 @@ class TopicAnalysis extends Component {
       .catch((error) => console.error(error));
   }
   getTopicAnalysis() {
-    console.log('admnladfjlkdafhl', this.props.data);
     var userId = this.state.userDetails.userInfo.userId;
     var topicId = this.props.data.topicId;
     var universalTopicId = this.props.data.universalTopicId;
@@ -205,17 +196,11 @@ class TopicAnalysis extends Component {
     )
       .then((response) => response.json())
       .then((json) => {
-        //st data = json.data;
-        console.log('topicanalysis data', json.data);
         if (json.code === 201) {
           var topicAnalysisData = json.data;
           if (json.data.topicProgress?.totalProgress) {
             var completion = parseInt(json.data.topicProgress.totalProgress);
-            console.log(
-              '.anvkdjnvkc',
-              completion,
-              Math.round(100 - completion)
-            );
+           
             var completepercent = completion ? Math.round(completion) : 0;
             var incompletepercent = completion
               ? Math.round(100 - completion)
@@ -233,7 +218,6 @@ class TopicAnalysis extends Component {
             var newarr = [];
             newarr.push(obj1);
             newarr.push(obj2);
-            console.log('ffff.....', newarr);
             this.setState({
               topicpercentarray: newarr,
               loading: false,
@@ -252,7 +236,6 @@ class TopicAnalysis extends Component {
             });
           }
           if (topicAnalysisData?.userTestQuestions?.length) {
-            console.log('kcmkjckxjcdfk');
             var timeSpentData = json.data.timeSpent;
             let progressItemList = [];
             if (timeSpentData?.length > 0) {
@@ -288,7 +271,6 @@ class TopicAnalysis extends Component {
             progressItemList.map((res, i) => {
               graphvalue = graphvalue + res.percent;
             });
-            console.log('dafhjdhfkld', graphvalue);
 
             if (topicAnalysisData?.userTestQuestions?.length) {
               var diffLevelTopicAnalysisObj = {};
@@ -333,8 +315,6 @@ class TopicAnalysis extends Component {
                 'No Of Wrong Questions',
               ];
               var tableData = finalsample;
-              console.log('tableHead', tableHead);
-              console.log('tabledataaaa', tableData);
               // { correct: 1, inCorrect: 2, unAnswered: 0 }
 
               const diffLevelObj = {
@@ -356,7 +336,6 @@ class TopicAnalysis extends Component {
                   inCorrect: wrongQuestionsCount,
                 };
               });
-              console.log('dancjladnckldaf', diffLevelTopicAnalysisObj);
             }
 
             this.setState(
@@ -389,7 +368,6 @@ class TopicAnalysis extends Component {
                 }
               }
             );
-            // console.log(".dksnack.acnk",diffLevelTopicAnalysisObj,questionAnalysis)
           } else {
             this.setState({
               quesloading: false,
@@ -404,29 +382,9 @@ class TopicAnalysis extends Component {
       })
       .catch((error) => console.error(error));
   }
-  // logout() {
-  //   var url = baseUrl + `/users/logout`;
-  //   //console.log("value", url)
-  //   fetch(url, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       jwt: this.state.token,
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((json) => {
-  //       console.log(':xjcbjhjckx', json);
-  //       AsyncStorage.removeItem('@user');
-  //       AsyncStorage.removeItem('@access_token');
-  //    //   Actions.login({ type: 'reset' });
-  //     })
-  //     .catch((error) => console.error(error));
-  // }
+  
   onBack() {
-    //alert("hiii")
- //   Actions.pop();
-    // Actions.topics({ type: "reset", data: this.props.topicsdata, subjectData: this.props.subjectData })
+   
   }
 
   render() {

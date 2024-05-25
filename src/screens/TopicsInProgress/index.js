@@ -23,7 +23,7 @@ const TopicsInProgress = (props) => {
   const { lhTitle } = props;
   const navigation = useNavigation();
   const { topicDetails, chapterDetails } = useSelector(selectSearch);
-  const [selectedItem, setSelectedItem] = useState({});
+  const [selectedItem, setSelectedItem] = useState(null);
   useEffect(() => {
     if (user) {
       const reqPayload = {
@@ -41,7 +41,6 @@ const TopicsInProgress = (props) => {
     }
   }, [user]);
   useEffect(()=>{
-    console.log(",djddns,nadksd",progressTopics)
   },[progressTopics])
   const gotoChaptersPage = (item) => {
     setSelectedItem(item);
@@ -62,14 +61,18 @@ const TopicsInProgress = (props) => {
     // });
   };
   useEffect(() => {
-    if (chapterDetails && Object.keys(chapterDetails).length > 0) {
-      navigation.navigate('ActivityResources', {
-        topicItem: { ...selectedItem },
-        chapterItem: chapterDetails,
-
-        from: 'progresstopics',
-      });
+    if(selectedItem){
+      if (chapterDetails && Object.keys(chapterDetails).length > 0) {
+        setSelectedItem(null);
+        navigation.navigate('ActivityResources', {
+          topicItem: { ...selectedItem },
+          chapterItem: chapterDetails,
+  
+          from: 'progresstopics',
+        });
+      }
     }
+    
   }, [chapterDetails]);
 
   const renderItem = ({ item }) => (

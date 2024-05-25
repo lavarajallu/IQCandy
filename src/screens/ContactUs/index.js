@@ -60,17 +60,17 @@ const GenericContactCard = ({ contactInfo, contactType }) => {
 
 const ContactUs = () => (
   <View style={styles.container}>
-    <GenericContactCard contactInfo='+919494843456' contactType='phone' />
+    <GenericContactCard contactInfo='+66-035950595' contactType='phone' />
     <GenericContactCard
       contactInfo="Hello, let's connect!"
       contactType='message'
     />
     <GenericContactCard
-      contactInfo='support@myprofessor.in'
+      contactInfo='admin@iqcandy.com'
       contactType='email'
     />
     <GenericContactCard
-      contactInfo='http://www.myprofessor.in/'
+      contactInfo='https://www.iqcandy.com/'
       contactType='website'
     />
   </View>

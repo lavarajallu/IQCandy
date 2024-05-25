@@ -21,7 +21,7 @@ const loginUser = async (payload) => {
   const method = 'POST';
   const body = payload.data;
   const response = await makeApiCall(endpoint, method, body);
-
+ //alert(JSON.stringify(response))
   // Check for success and handle accordingly
   if (response) {
     const { data } = response;

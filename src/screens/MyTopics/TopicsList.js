@@ -26,7 +26,6 @@ const TopicsList = (props) => {
 
   const renderItem = ({ item ,index}) => {
     var percent = parseInt(item.progress);
-    //  console.log('progressss', item);
     let color;
     if (percent > 80) {
       color = 'green';
@@ -35,7 +34,6 @@ const TopicsList = (props) => {
     } else {
       color = 'orange';
     }
-    //   console.log('ajcnanckdc', item);
     var questionPaperCount = 0;
     if (props.PreviousQuestionPaperByCount) {
 

@@ -47,15 +47,7 @@ const QuizComponent = ({
   };
 
   const handleSubmit = () => {
-    // setTimerRunning(false); // Stop the timer when the exam is submitted
-    // console.log(
-    //   'Submitted answers:',
-    //   questions.map((q, index) => ({
-    //     question: q.question,
-    //     answer: q.options[selectedAnswer],
-    //   }))
-    // );
-    // submitQuestions();
+   
   };
 
   return (

@@ -175,29 +175,7 @@ const ProfPdfViewNew = ({ route, navigation }) => {
       userId: user?.userInfo.userId,
       data: body,
     });
-    // const authToken = await AsyncStorage.getItem('userToken');
-    // var url = `https://api.iqcandy.com/api/iqcandy/users/${user?.userInfo.userId}/analytics/capture-activity`;
-
-    // fetch(url, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     jwt: authToken,
-    //   },
-    //   body: JSON.stringify(body),
-    // })
-    //   .then((response) => response.json())
-    //   .then((json) => {
-    //     console.log('kanckanCKACKD', JSON.stringify(json));
-    //     if (json.data) {
-    //       const data = json.data;
-
-    //       alert('mczc' + JSON.stringify(data));
-    //     } else {
-    //       console.log('ncmxcmnxc', JSON.stringify(json));
-    //     }
-    //   })
-    //   .catch((error) => console.error(error));
+    
   };
   const handleNextActivity = () => {
     var newarray = route.params.smartres;
@@ -342,14 +320,11 @@ const ProfPdfViewNew = ({ route, navigation }) => {
     let scale = scalevalue * 1.2;
     scale = scale > 3 ? 3 : scale;
     setScale(scale);
-    // this.setState({ scale });
-    // console.log(`zoomIn scale: ${scale}`);
   };
   const onzoomout = () => {
     let scale = scalevalue > 1 ? scalevalue / 1.2 : 1;
     setScale(scale);
 
-    // console.log(`zoomOut scale: ${scale}`);
   };
   return (
     <SafeAreaView
@@ -395,11 +370,9 @@ const ProfPdfViewNew = ({ route, navigation }) => {
                   maxScale={3.0}
                   onLoadComplete={(numberOfPages, filePath) => {
                     setloadcomplet(true);
-                    console.log(`number of pages: ${numberOfPages}, {}`);
                   }}
                   // onPageChanged={() => onPageChanged()}
                   onError={(error) => {
-                    console.log('ffffe', error);
                     // this.setState({
                     //   error: true,
                     // });

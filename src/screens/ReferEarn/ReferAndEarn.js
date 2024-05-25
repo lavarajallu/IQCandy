@@ -34,15 +34,13 @@ const ReferAndEarn = (props) => {
       subject: 'Referal Invite',
       message:
         'HI Your Referal code is  ' +
-        referalcode +
-        '  please click on the below link to download the app https://myprofessorapp.page.link/29hQ',
+        referalcode
     };
     try {
       const result = await Share.share({
         message:
           'HI Your Referal code is ' +
-          referalcode +
-          ' please click on the below link to download the app https://myprofessorapp.page.link/29hQ',
+          referalcode
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {

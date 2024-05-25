@@ -106,7 +106,6 @@ const TopicAnalysis = ({ route, navigation }) => {
             var newarr = [];
             newarr.push(obj1);
             newarr.push(obj2);
-            console.log('ffff.....', newarr);
             settopicpercentarray(series)
             setcompleteincomplearray(newarr)
             setloading(false)
@@ -214,8 +213,6 @@ const TopicAnalysis = ({ route, navigation }) => {
                 'No Of Wrong Questions',
               ];
               var tableData = finalsample;
-              console.log('tableHead', tableHead);
-              console.log('tabledataaaa', tableData);
               // { correct: 1, inCorrect: 2, unAnswered: 0 }
 
               const diffLevelObj = {
@@ -237,7 +234,6 @@ const TopicAnalysis = ({ route, navigation }) => {
                   inCorrect: wrongQuestionsCount,
                 };
               });
-              console.log('dancjladnckldaf', diffLevelTopicAnalysisObj);
             }
             setloading((loading) => {
               settopicanalysisdata(json.data)
@@ -254,7 +250,6 @@ const TopicAnalysis = ({ route, navigation }) => {
               return false
             })
 
-            // console.log(".dksnack.acnk",diffLevelTopicAnalysisObj,questionAnalysis)
           } else {
             setquesloading(false)
 

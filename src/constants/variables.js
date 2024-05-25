@@ -50,7 +50,7 @@ const apiEndPoints = {
     updateanalyticsNotes: (payload) =>
       `/users/${payload.userId}/analytics/capture-activity`,
     getprofessorresources: (payload) =>
-      `/topics/${payload.topicId}/activities?resourceType=teacher`,
+      `/topics/${payload.topicId}/activities?resourceType=Teacher`,
     getreviewsolutions: (payload) =>
       `/analytics/users/${payload.userId}/assessments/${payload.userTestId}/review-questions?activityDimId=${payload.activityDimId}`,
     //getrecommendedtopics: (payload = `/recommended-topics/${payload.topicId}`),
@@ -58,6 +58,11 @@ const apiEndPoints = {
     getQuestionPaperByTopicIdRequest:(payload)=>`/question-papers/topics/${payload.topicId}/questions`,
     getGateQuestionPaperByTopicIdRequest:(payload)=>`/gate/question-papers/topics/${payload.topicId}/questions`,
     getrecommendedtopicActivities:(payload)=>`/recommended-topics/${payload.universalTopicId}/activities`,
+    validatevideoquestiona:(payload) => `analytics/users/${payload.userId}/activities/${payload.activityDimId}/videos/test-questions/${payload.questionId}/validate`,
+    getvideoquestions:(payload)=> `/analytics/users/${payload.userId}/activities/${payload.activityDimId}/videos/test-questions?assignedActivityId=${payload.assignedActivityId}`,
+    getAssessmentTestQuestionRequest:(payload)  =>
+      `/analytics/users/${payload.userId}/activities/${payload.activityDimId}/test-questions/${payload.index}?assignedActivityId=${payload.assignedActivityId}&userTestId=${payload.testId}&questionId=${payload.questionId}`,
+    getVideoquestionsvideopro:(payload) =>  `/activities/${payload.activityId}/video-questions`
   },
   topicsinProgress: {
     getTopicsProgress: (userId) =>

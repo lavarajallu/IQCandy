@@ -13,7 +13,7 @@ export const imagePaths = {
     indexOne: require('../../assets/images/OnBoardProfileStarted.png'),
   },
   authentiCation: {
-    loginBanner: require('../../assets/images/auth/loginBanner.png'),
+    loginBanner: require('../../assets/images/auth/loginBanner.jpeg'),
     registerBanner: require('../../assets/images/auth/registerBanner.png'),
     appLogo: require('../../assets/images/Logo.jpg'),
     shapeLogo: require('../../assets/images/auth/Shape.png'),

@@ -5,7 +5,6 @@ import { COLORS } from '../../../constants/colors';
 
 const SubjectsList = (props) => {
   const { subjectsList, onSubjectClick } = props;
-  console.log('subjectsList', subjectsList);
   const [activeIndex, setActiveIndex] = useState(0);
   const gradientColors = [
     ['#86D4F6', '#C4EDFF'],
