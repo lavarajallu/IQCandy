@@ -49,13 +49,7 @@ const MyChapters = ({ route, navigation }) => {
         offset: 0,
         limit: 1000,
       };
-      console.log(
-        "nbcdndcjdckxlc",payload
-      )
-      // getValidaPackages({
-      //   dispatch,
-      //   userId: user?.userInfo?.userId,
-      // });
+      
       getChapters({
         data: payload,
         dispatch,

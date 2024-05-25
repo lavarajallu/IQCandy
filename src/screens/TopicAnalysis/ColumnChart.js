@@ -9,7 +9,6 @@ const ColumnChart = ({ type, question }) => {
   let [data, setData] = useState(true);
   let [spinner, setspinner] = useState(true);
   useEffect(() => {
-    console.log('datattatatatta', question);
     //  if (question && Object.keys(question).length) {
     var correct = question?.correct ? question?.correct : 0;
     var incorrect = question?.inCorrect ? question?.inCorrect : 0;

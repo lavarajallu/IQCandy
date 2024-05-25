@@ -30,8 +30,7 @@ const ChaptersList = (props) => {
   };
   const renderItem = ({ item, index }) => {
     const progresswidth = windowWidth / 2.15
-    console.log("dafjkdaflkdfd", user?.role?.roleName
-      , validatePackage)
+
     var percent = parseInt(item.progress);
     const role = user?.role?.roleName
     let color;

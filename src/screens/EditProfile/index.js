@@ -90,7 +90,6 @@ const EditProfile = ({ navigation }) => {
         quality: 1,
       });
       if (!result.canceled) {
-        console.log('dafkadjfdjf', result);
 
         setProfilepic(result.assets[0].base64);
       }
@@ -123,7 +122,6 @@ const EditProfile = ({ navigation }) => {
       aspect: [4, 3],
       quality: 1,
     });
-    console.log('dkjfbckjdbfjkdbfk', result);
     if (!result.canceled) {
       setProfilepic(result.assets[0].base64);
     }

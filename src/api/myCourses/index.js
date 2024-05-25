@@ -30,7 +30,11 @@ import {
   setQuestionPaperByTopicIdRequest,
   setvideoActivitydataPro,
   setrecommtopicActivities,
-  setytvideoActivitydata
+  setvideoquestionsdata,
+  setytvideoActivitydata,
+  setvalidatevideoquestiona,
+  setvideoquestionassesdata,
+  setVideoquestionsvideopro
 } from '../../store/student/myCourses/slice';
 
 const getSubjects = async (payload) => {
@@ -314,6 +318,56 @@ const getVideoActivityData = async (payload) => {
     payload.dispatch(setvideoActivitydata(data));
   }
 };
+const getVideoquestionsvideopro = async (payload) => {
+  const { myCourses } = apiEndPoints;
+  const endpoint = myCourses.getVideoquestionsvideopro(payload);
+  const method = 'GET';
+  const body = payload.data;
+  const response = await makeApiCall(endpoint, method);
+  // Check for   success and handle accordingly
+  if (response) {
+    const { data } = response;
+    payload.dispatch(setVideoquestionsvideopro(data));
+  }
+};
+const getAssessmentTestQuestionRequest = async (payload) => {
+  const { myCourses } = apiEndPoints;
+  const endpoint = myCourses.getAssessmentTestQuestionRequest(payload);
+  const method = 'GET';
+  const body = payload.data;
+  const response = await makeApiCall(endpoint, method);
+  // Check for   success and handle accordingly
+
+  if (response) {
+    const { data } = response;
+    payload.dispatch(setvideoquestionassesdata(data));
+  }
+};
+const validatevideoquestiona = async (payload) => {
+  const { myCourses } = apiEndPoints;
+  const endpoint = myCourses.validatevideoquestiona(payload);
+  const method = 'POST';
+  const body = payload.data;
+  const response = await makeApiCall(endpoint, method,body);
+  // Check for   success and handle accordingly
+
+  if (response) {
+    const { data } = response;
+    payload.dispatch(setvalidatevideoquestiona(data));
+  }
+};
+const getVideoquestions = async (payload) => {
+  const { myCourses } = apiEndPoints;
+  const endpoint = myCourses.getvideoquestions(payload);
+  const method = 'GET';
+  const body = payload.data;
+  const response = await makeApiCall(endpoint, method);
+  // Check for   success and handle accordingly
+  if (response) {
+    var { data } = response;
+    payload.dispatch(setvideoquestionsdata(data));
+  }
+};
 const getVideoActivityDatayoutube = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getNotesActivityData(payload);
@@ -420,11 +474,16 @@ export {
   addtocalenderPost,
   getCalenderDataapi,
   addtocalenderPut,
+  validatevideoquestiona,
   updateanalyticsNotes,
   getPreviousQuestionPaperByCount,
   getGatePreviousQuestionPaperCountByTopic,
   getrecommendedtopics,
   getNotesActivityDataProfe,
   getVideoActivityDataProf,
-  getrecommendedtopicActivities
+  getrecommendedtopicActivities,
+  getVideoquestions,
+  getAssessmentTestQuestionRequest,
+ getVideoquestionsvideopro 
+
 };

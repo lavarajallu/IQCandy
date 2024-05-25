@@ -117,7 +117,6 @@ const MyPracticeChapters = ({ route, navigation }) => {
     goBack(navigation);
   };
   const onEventPress = (data) => {
-    console.log('ggg');
   };
   const onItem = (item, index, type, newindex) => {
     if (index === 1) {

@@ -82,18 +82,7 @@ const DropDownSearch = (props) => {
         searchPlaceholder='Search...'
         value={value}
         onFocus={() => setIsFocus(true)}
-        // onBlur={() => {
-        //   console.log('isFocus', selectedValue);
-        //   setIsFocus(false);
-
-        //   // Trigger onBlur validation
-        //   if (!selectedValue) {
-        //     setLocalValidation({
-        //       showErrorMessage: true,
-        //       errorMessage: `${label} cannot be empty`,
-        //     });
-        //   }
-        // }}
+      
         onChange={(item) => {
           onSelect(item);
         }}

@@ -5,6 +5,7 @@ import {
   ScrollView,
   Text,
   TouchableHighlight,
+  Platform,
   View,
 } from 'react-native';
 import MathJax from 'react-native-mathjax';
@@ -22,65 +23,62 @@ class VideoQuestionModal extends Component {
       answerobj: {},
       showCorrectView: null,
       attempt: false,
-      mewdata: this.props.data,
+      mewdata: this.props.questionsArray,
       loading: true,
       startdate: moment().format('YYYY-MM-DD HH:mm:ss'),
     };
   }
   componentDidMount() {
-    if (this.props.questiondata) {
-      console.log('didmount', this.props.questiondata);
+    console.log(JSON.stringify(this.props.questionsArray))
+    if (this.props.questionsArray) {
       this.setState(
         {
-          questiondata: this.props.questiondata,
+          questiondata: this.props.questionsArray,
           loading: false,
-        },
-        () => {
-          console.log('didmount222', this.props.activitydata);
-          // this.getquestionbyId()
         }
       );
     }
   }
 
   async onAnswer(data) {
-    console.log('dmcnjadnfjkd', this.props.data);
     var obj = {
       attemptStartedAt: this.state.startdate,
       attemptEndedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
-      userTestId: this.props.data.userTestId,
-      questionId: this.props.data.questionId,
+      userTestId:this.props.data.userTestId,
+      questionId:this.props.questionsArray.questionId,
       userAnswer: data.key,
     };
-    console.log('sknckackl', obj);
+    
 
-    const token = await AsyncStorage.getItem('@access_token');
+    const token = await AsyncStorage.getItem('userToken');
     var userId = this.props.userDetails.userInfo.userId;
     var activityDimId = this.props.activitydata.activityDimId;
-    var questionId = this.props.data.questionId;
+    var questionId = this.props.questionsArray.questionId
+    var assignedActivityId = this.props.activitydata.assignedActivityId;
+    var  index = data.index
+    
     if (token) {
-      const url = `https://api.iqcandy.com/api/iqcandy/analytics/users/${userId}/activities/${activityDimId}/videos/test-questions/${questionId}/validate`;
+     
+      const url = `https://api.iqcandy.com/api/iqcandy/analytics/users/${userId}/activities/${activityDimId}/videos/test-questions/${questionId}/validate`
 
-      console.log('ur,l', url);
       fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          jwt: JSON.parse(token),
+          jwt:token,
         },
         body: JSON.stringify(obj),
       })
         .then((response) => response.json())
         .then((json) => {
-          const response = json;
-          console.log('d.knckad', json);
+          alert(JSON.stringify(json))
 
+          const response = json;
           if (
             response &&
             response?.data &&
             ['Lightning Fast'].includes(response.data.analysis)
           ) {
-            console.log(':kncnkadnkcmndkldmfkd');
             this.setState({
               showCorrectView: true,
               answerobj: obj,
@@ -95,52 +93,10 @@ class VideoQuestionModal extends Component {
         .catch((error) => console.error(error));
     }
 
-    // var question = this.state.questiondata;
-    // var answer = data;
-    // console.log(" question.correctanswe", question.correctanswer)
-    // var answerid = data.answerId
-    // var questionid = question.questionid
-    // var question = question.question
-    // var correct =this.state.questiondata.correctanswer
-    // var result;
-    // console.log("question",answerid,  " ", correct)
-    // if(answerid === correct){
-    //     result = true;
-    // }else{
-    //     result = false
-    // }
-    // var obj = {
-
-    //     questionid,
-    //     question,
-    //     answerid,
-    //     correct,
-    //     result
-    // }
-    // this.setState({
-    //     answerobj : obj
-    // },()=>{
-    //   var interval = setTimeout(()=>{
-    //     if(this.state.answerobj.result){
-    //       this.setState({
-    //         showCorrectView:true
-    //       })
-    //     }else{
-    //       this.setState({
-    //         showCorrectView:false
-    //       })
-    //     }
-    //   },200)
-
-    // }
-
-    // )
-    // //finalarray.push(obj);
   }
 
   onTryfirst() {
-    var newoptions = this.shuffle(this.state.questiondata.options);
-    console.log('cc', newoptions);
+    var newoptions = this.state.questiondata.options
     this.setState({
       attempt: true,
       answerobj: {},
@@ -157,12 +113,10 @@ class VideoQuestionModal extends Component {
   }
 
   onRewatch() {
-    console.log('sdsd', this.state.questiondata);
-    this.props.onRewatch(this.props.data);
+    this.props.onRewatch(this.props.questionsArray);
   }
 
   render() {
-    console.log('skdlksd', this.state.answerobj);
     return !this.state.loading ? (
       this.state.showCorrectView === null ? (
         <View style={styles.mainView}>
@@ -236,7 +190,7 @@ class VideoQuestionModal extends Component {
               </View>
               <View style={styles.answersview}>
                 <View style={styles.answersubview}>
-                  {this.state.questiondata.options.map((res, i) => (
+                  {this.state.questiondata?.options?.map((res, i) => (
                     <TouchableHighlight
                       key={i}
                       onPress={this.onAnswer.bind(this, res)}
@@ -318,7 +272,7 @@ class VideoQuestionModal extends Component {
                             style={{
                               //backgroundColor: this.state.answerobj.user_answer === item.key ? topicindata.color : "transparent",
                               width: '90%',
-                              marginTop: Platform.OS === 'android' ? 5 : 4,
+                              //marginTop: Platform.OS === 'android' ? 5 : 4,
                               // borderWidth: 1,
                               // borderRadius:10,
                               // borderColor: this.state.answerobj.user_answer === item.key ? topicindata.color : "lightgrey",

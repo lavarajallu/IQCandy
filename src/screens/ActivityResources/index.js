@@ -35,6 +35,7 @@ import {
   addtocalenderPut,
   getprofessorresources,
   getrecommendedtopics,
+  getVideoquestions,
   getrecommendedtopicActivities,
 } from '../../api/myCourses';
 import Modal from 'react-native-modal';
@@ -79,7 +80,7 @@ const ActivityResources = ({ route, navigation }) => {
   const [onclick, setonclick] = useState(false);
   const [recommendedarray, setrecommendedarray] = useState([]);
   const tabs = [
-    { id: '1', title: 'Activity Resources' },
+    { id: '1', title: 'Icon Resources' },
     { id: '2', title: 'Professor Resources' },
   ];
   useEffect(() => {
@@ -108,7 +109,7 @@ const ActivityResources = ({ route, navigation }) => {
         dispatch,
         userId: user?.userInfo?.userId,
       });
-
+     
       if (user?.role.roleName === 'Student') {
         getprofessorresources({
           dispatch,
@@ -144,8 +145,8 @@ const ActivityResources = ({ route, navigation }) => {
     }
   }, [recommendedtopics]);
   useEffect(() => {
+    //alert(JSON.stringify(Profactivities))
     if (Profactivities && Profactivities.length > 0) {
-      ///console.log("ProfactivitiesProfactivitiesProfactivities",Profactivities)
       setprores(Profactivities);
     }
   }, [Profactivities]);
@@ -216,8 +217,7 @@ const ActivityResources = ({ route, navigation }) => {
       '#c44921',
     ];
     var newitem = newarray[Math.floor(Math.random() * newarray.length)];
-    // var url = baseUrl + `/user-schedules/${this.state?.scheduledata?.id}`;
-    //console.log("topicItemtopicItemtopicItem",topicItem)
+    
     var chapterId, subjectId;
     if (chapterItem?.chapterId) {
       chapterId = chapterItem?.chapterId;
@@ -724,7 +724,7 @@ const ActivityResources = ({ route, navigation }) => {
             <View style={styles.rowContainer}>
               <Button
                 style={styles.button}
-                title={'Activity Resources'}
+                title={'Icon Resources'}
                 textStyle={styles.buttonText}
                 onPress={() => { }}
               />

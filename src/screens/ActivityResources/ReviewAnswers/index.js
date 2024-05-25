@@ -90,10 +90,7 @@ const ReviewAnswers = ({ route, navigation }) => {
       setSelectedItem(reviewsolquestions[0]);
       setquestionno(0);
       setspinnser(false);
-      console.log(
-        'nkDJKjakljakljkljlkj',
-        JSON.stringify(reviewsolquestions[0])
-      );
+      
     }
   }, [reviewsolquestions]);
   const backAction = () => {
@@ -154,27 +151,9 @@ const ReviewAnswers = ({ route, navigation }) => {
     });
   };
   const returnBoxColor = (option) => {
-    //const selectedItem = selectedItem;
-    // let correct_answer = selectedItem?.solution.split(',');
-    // console.log('correct_answer...', selectedItem?.userAnswer , option.key);
-    // if (
-    //   selectedItem?.userAnswer === option.key ||
-    //   correct_answer?.includes(option.key)
-    // ) {
-    //   return 'green';
-    // } else if (
-    //   selectedItem?.userAnswer &&
-    //   selectedItem?.userAnswer !== option.key
-    // ) {
-    //   return 'lightgrey';
-    // } else if (selectedItem?.userAnswer === option.key) {
-    //   return '#f14d65';
-    // } else {
-    //   return 'lightgrey';
-    // }
+  
 
     const correctAnswer = selectedItem?.solution.split(',')
-    console.log(selectedItem.solution,     option.key )
     if (selectedItem.solution == option.key || correctAnswer.includes(option.key)) {
       return 'green'
     } else if (selectedItem.userAnswer == option.key) {

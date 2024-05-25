@@ -25,6 +25,8 @@ import { selectMyCourses } from '../../../store/student/myCourses/selector';
 import {
   getVideoActivityDatayoutube,
   updateanalyticsNotes,
+  getAssessmentTestQuestionRequest,
+  getVideoquestions
 } from '../../../api/myCourses';
 import moment from 'moment';
 var windowWidth = Dimensions.get('window').width;
@@ -33,7 +35,7 @@ const YtVideoActivity = ({ route, navigation }) => {
   const { questions } = textContent;
   const { topicItem, chapterItem, subjectItem, from, data, data1 } =
     route.params;
-  const { notesActivityData, videoActivityData, ytvideoActivityData } =
+  const { notesActivityData, videoActivityData, ytvideoActivityData ,videoquestionsdata,Videoquestionassesdata} =
     useSelector(selectMyCourses);
   const { user } = useSelector(selectUser);
   const dispatch = useDispatch();
@@ -44,6 +46,7 @@ const YtVideoActivity = ({ route, navigation }) => {
   const [newdata, setdata] = useState({});
   const [activityStartTime, setactivityStartTime] = useState(null);
   const [showfullscreen, setfullscreen] = useState(false);
+  const [videosdata,setvideoquestionsdata] = useState([])
   const backAction = () => {
     updateAnalytics();
     navigation.navigate('ActivityResources', {
@@ -79,35 +82,12 @@ const YtVideoActivity = ({ route, navigation }) => {
         videoWatchedInSec: duration,
         videoPausedAt: newdata,
       };
-    console.log('dcndsncd', newdata);
     updateanalyticsNotes({
       dispatch,
       userId: user?.userInfo.userId,
       data: body,
     });
-    // const authToken = await AsyncStorage.getItem('userToken');
-    // var url = `https://api.iqcandy.com/api/iqcandy/users/${user?.userInfo.userId}/analytics/capture-activity`;
-
-    // fetch(url, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     jwt: authToken,
-    //   },
-    //   body: JSON.stringify(body),
-    // })
-    //   .then((response) => response.json())
-    //   .then((json) => {
-    //     console.log('kanckanCKACKD', JSON.stringify(json));
-    //     if (json.data) {
-    //       const data = json.data;
-
-    //       alert('mczc' + JSON.stringify(data));
-    //     } else {
-    //       console.log('ncmxcmnxc', JSON.stringify(json));
-    //     }
-    //   })
-    //   .catch((error) => console.error(error));
+   
   };
   useEffect(() => {
     var activityDimId = data.activityDimId;
@@ -116,20 +96,38 @@ const YtVideoActivity = ({ route, navigation }) => {
       userId: user?.userInfo?.userId,
       activityDimId: activityDimId,
     });
+    getVideoquestions({
+      dispatch,
+      userId: user?.userInfo?.userId,
+      activityDimId: activityDimId,
+      assignedActivityId:data.assignedActivityId
+    });  
     const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
     setactivityStartTime(activityStartTime);
   }, [user]);
+  useEffect(()=>{
+    if(videoquestionsdata && videoquestionsdata.length > 0){
+     var newdata = [...videoquestionsdata]
+     newdata.sort(function (a, b) {
+       let dateA = parseInt(a.timeInSec);
+       let dateB = parseInt(b.timeInSec);
+       if (dateA < dateB) {
+         return -1;
+       } else if (dateA > dateB) {
+         return 1;
+       }
+       return 0;
+     });
+     setvideoquestionsdata(newdata)
+    }
+   },[videoquestionsdata])
   useEffect(() => {
     if (ytvideoActivityData && Object.keys(ytvideoActivityData).length > 0) {
-      console.log(
-        'mklfdajflkdjfl............................',
-        ytvideoActivityData
-      );
+     
       setnormalvideodata(ytvideoActivityData);
     }
   }, [ytvideoActivityData]);
   const onActivityNext = (currentTime, duration) => {
-    //console.log('11111111', currentTime, 'vvv', duration);
     if (currentTime) {
       updateAnalytics(currentTime, duration);
     } else {
@@ -155,7 +153,6 @@ const YtVideoActivity = ({ route, navigation }) => {
     }, 1000);
   };
   const onActivityPrevious = (data, duration) => {
-    console.log('previoussssssssss', data, 'vvv', duration);
     if (data) {
       updateAnalytics(data, duration);
     } else {
@@ -166,11 +163,26 @@ const YtVideoActivity = ({ route, navigation }) => {
   const onNewBack = () => {
     setnewmodal(false);
   };
-  const onPause = (data) => {
-    setdata(data);
-    setnewmodal(true);
+  const onPause = (questionInfo) => {
+    setdata(questionInfo);
+    getAssessmentTestQuestionRequest({
+      dispatch,
+      questionId: questionInfo.questionId,
+      testId: questionInfo.userTestId,
+      activityDimId: data.activityDimId,
+      userId: user?.userInfo.userId,
+      assignedActivityId:data.assignedActivityId,
+      index: questionInfo.index
+    })
+
     //  this.setState({ newmodal: true })
   };
+  useEffect(()=>{
+   if(Videoquestionassesdata && Object.keys(Videoquestionassesdata).length > 0){
+   
+    setnewmodal(true);
+   }
+  },[Videoquestionassesdata])
   const onfullscreen = (value) => {
     if (this.funcComRef) {
       setfullscreen(!showfullscreen);
@@ -338,7 +350,6 @@ const YtVideoActivity = ({ route, navigation }) => {
   const onRewatch = () => {
     setnewmodal(false);
     this.funcComRef('rewatch', newdata);
-    //  console.log('onreeeee', NormalVideoViewComponent.pausedtime);
   };
   const onback = () => {
     if (this.funcComRef) {
@@ -404,7 +415,7 @@ const YtVideoActivity = ({ route, navigation }) => {
             onBackNew={onBackNew}
             onActivityPrevious={onActivityPrevious}
             onfullscreen={onfullscreen}
-            questionsArray={[]}
+            questionsArray={videosdata}
             onBack={onNewBack}
             onPause={onPause}
             data={normalvideodata}
@@ -500,6 +511,9 @@ const YtVideoActivity = ({ route, navigation }) => {
             data={newdata}
             onquestionSubmit={() => onquestionSubmit(20)}
             onRewatch={onRewatch}
+            userDetails={user}
+            Videoquestionassesdata={Videoquestionassesdata}
+            activitydata={data}
           />
         </View>
       </Modal>

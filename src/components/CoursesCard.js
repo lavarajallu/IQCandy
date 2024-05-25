@@ -18,7 +18,6 @@ const CoursesCard = (props) => {
   const { item, onChange, title, fromscreen } = props;
 
   const chapterLocation = () => {
-    console.log('chapterLocation:', item?.text);
   };
   ``;
   var cardcontainer;
@@ -53,7 +52,6 @@ const CoursesCard = (props) => {
       color = 'orange';
     }
   }
-  console.log("sfljfdk", item?.image)
   return (
     fromscreen === 'Dashboard' || fromscreen === 'progresstopics' ?
 

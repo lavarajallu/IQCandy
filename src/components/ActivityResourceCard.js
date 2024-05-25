@@ -67,7 +67,7 @@ const ActivityResourceCard = (props) => {
     color = 'orange';
   }
   var imageUrl = 'https://stepup-india.s3.ap-south-1.amazonaws.com';
-  console.log('dfklkdsjfkldf', item);
+  
   return (
     <>
       <View style={styles.cardContainer}>

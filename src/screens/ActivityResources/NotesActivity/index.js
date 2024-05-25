@@ -344,14 +344,12 @@ const NotesActivity = ({ route, navigation }) => {
     let scale = scalevalue * 1.2;
     scale = scale > 3 ? 3 : scale;
     setScale(scale);
-    // this.setState({ scale });
-    // console.log(`zoomIn scale: ${scale}`);
+    
   };
   const onzoomout = () => {
     let scale = scalevalue > 1 ? scalevalue / 1.2 : 1;
     setScale(scale);
 
-    // console.log(`zoomOut scale: ${scale}`);
   };
   return (
     <SafeAreaView
@@ -397,14 +395,11 @@ const NotesActivity = ({ route, navigation }) => {
                   maxScale={3.0}
                   onLoadComplete={(numberOfPages, filePath) => {
                     setloadcomplet(true);
-                    console.log(`number of pages: ${numberOfPages}, {}`);
                   }}
                   // onPageChanged={() => onPageChanged()}
                   onError={(error) => {
                     console.log('ffffe', error);
-                    // this.setState({
-                    //   error: true,
-                    // });
+                   
                   }}
                   onPressLink={(uri) => {
                     console.log(`Link presse: ${uri}`);

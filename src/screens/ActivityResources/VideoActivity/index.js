@@ -27,6 +27,8 @@ import getVideoId from 'get-video-id';
 import {
   getVideoActivityData,
   updateanalyticsNotes,
+  getAssessmentTestQuestionRequest,
+  getVideoquestions
 } from '../../../api/myCourses';
 import moment from 'moment';
 var windowWidth = Dimensions.get('window').width;
@@ -35,7 +37,7 @@ const VideoActivity = ({ route, navigation }) => {
   const { questions } = textContent;
   const { topicItem, chapterItem, subjectItem, from, data, data1 } =
     route.params;
-  const { notesActivityData, videoActivityData } = useSelector(selectMyCourses);
+  const { notesActivityData, videoActivityData ,videoquestionsdata,Videoquestionassesdata} = useSelector(selectMyCourses);
   const { user } = useSelector(selectUser);
   const dispatch = useDispatch();
   const video = React.useRef(null);
@@ -49,7 +51,8 @@ const VideoActivity = ({ route, navigation }) => {
   const [vimeourl, setvimeourl] = useState('')
 
   const [vimeovideo, setvimeovideo] = useState('')
-
+  const [videosdata,setvideoquestionsdata] = useState([])
+   const[videodetailsquestion,setvideodetailsquestion] = useState(null)
   const backAction = () => {
     updateAnalytics();
     navigation.navigate('ActivityResources', {
@@ -61,6 +64,7 @@ const VideoActivity = ({ route, navigation }) => {
   };
   const updateAnalytics = async (newdata, duration) => {
     const { data, subjectItem, chapterItem, topicItem } = route.params;
+    setvideoquestionsdata(null)
     if (data.activityType)
       var body = {
         activityDimId: data.activityDimId,
@@ -85,35 +89,11 @@ const VideoActivity = ({ route, navigation }) => {
         videoWatchedInSec: duration,
         videoPausedAt: newdata,
       };
-    console.log('dcndsncd', newdata);
     updateanalyticsNotes({
       dispatch,
       userId: user?.userInfo.userId,
       data: body,
     });
-    // const authToken = await AsyncStorage.getItem('userToken');
-    // var url = `https://api.iqcandy.com/api/iqcandy/users/${user?.userInfo.userId}/analytics/capture-activity`;
-
-    // fetch(url, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     jwt: authToken,
-    //   },
-    //   body: JSON.stringify(body),
-    // })
-    //   .then((response) => response.json())
-    //   .then((json) => {
-    //     console.log('kanckanCKACKD', JSON.stringify(json));
-    //     if (json.data) {
-    //       const data = json.data;
-
-    //       alert('mczc' + JSON.stringify(data));
-    //     } else {
-    //       console.log('ncmxcmnxc', JSON.stringify(json));
-    //     }
-    //   })
-    //   .catch((error) => console.error(error));
   };
   useEffect(() => {
     var activityDimId = data.activityDimId;
@@ -123,9 +103,33 @@ const VideoActivity = ({ route, navigation }) => {
       userId: user?.userInfo?.userId,
       activityDimId: activityDimId,
     });
-    const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
+    getVideoquestions({
+      dispatch,
+      userId: user?.userInfo?.userId,
+      activityDimId: activityDimId,
+      assignedActivityId:data.assignedActivityId
+    });  
+      const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
     setactivityStartTime(activityStartTime);
+    
   }, [user]);
+  useEffect(()=>{
+    
+   if(videoquestionsdata && videoquestionsdata.length > 0){
+    var newdata = [...videoquestionsdata]
+    newdata.sort(function (a, b) {
+      let dateA = parseInt(a.timeInSec);
+      let dateB = parseInt(b.timeInSec);
+      if (dateA < dateB) {
+        return -1;
+      } else if (dateA > dateB) {
+        return 1;
+      }
+      return 0;
+    });
+    setvideoquestionsdata(newdata)
+   }
+  },[videoquestionsdata])
   useEffect(() => {
     if (videoActivityData && Object.keys(videoActivityData).length > 0) {
       if (data.activityType === 'conceptual_video') {
@@ -138,7 +142,6 @@ const VideoActivity = ({ route, navigation }) => {
         })
           .then(res => res.json())
           .then(res => {
-            console.log("ddjf", res);
             if (res.title === 'Sorry') {
               setnormalvideodata(videoActivityData);
             } else {
@@ -153,7 +156,6 @@ const VideoActivity = ({ route, navigation }) => {
           ).catch((err) => {
             setnormalvideodata(videoActivityData);
 
-            console.log("dnflkdf", err)
           })
       } else {
         setnormalvideodata(videoActivityData);
@@ -163,7 +165,6 @@ const VideoActivity = ({ route, navigation }) => {
     }
   }, [videoActivityData]);
   const onActivityNext = (currentTime, duration) => {
-    //console.log('11111111', currentTime, 'vvv', duration);
     if (currentTime) {
       updateAnalytics(currentTime, duration);
     } else {
@@ -174,6 +175,7 @@ const VideoActivity = ({ route, navigation }) => {
 
   const onBackNew = (data, duration) => {
     if (data) {
+      
       updateAnalytics(data, duration);
     } else {
       updateAnalytics(0, 0);
@@ -189,7 +191,6 @@ const VideoActivity = ({ route, navigation }) => {
     }, 1000);
   };
   const onActivityPrevious = (data, duration) => {
-    console.log('previoussssssssss', data, 'vvv', duration);
     if (data) {
       updateAnalytics(data, duration);
     } else {
@@ -200,11 +201,26 @@ const VideoActivity = ({ route, navigation }) => {
   const onNewBack = () => {
     setnewmodal(false);
   };
-  const onPause = (data) => {
-    setdata(data);
-    setnewmodal(true);
+  const onPause = (questionInfo) => {
+    setdata(questionInfo);
+    getAssessmentTestQuestionRequest({
+      dispatch,
+      questionId: questionInfo.questionId,
+      testId: questionInfo.userTestId,
+      activityDimId: data.activityDimId,
+      userId: user?.userInfo.userId,
+      assignedActivityId:data.assignedActivityId,
+      index: questionInfo.index
+    })
+
     //  this.setState({ newmodal: true })
   };
+  useEffect(()=>{
+   if( Videoquestionassesdata && Object.keys(Videoquestionassesdata).length > 0){
+    setvideodetailsquestion(Videoquestionassesdata)
+    setnewmodal(true);
+   }
+  },[Videoquestionassesdata])
   const onfullscreen = (value) => {
     if (this.funcComRef) {
       setfullscreen(!showfullscreen);
@@ -367,12 +383,13 @@ const VideoActivity = ({ route, navigation }) => {
   };
   const onquestionSubmit = (value) => {
     setnewmodal(false);
+   
+    setvideodetailsquestion(null)
     this.funcComRef('questionsubmit', value);
   };
   const onRewatch = () => {
     setnewmodal(false);
     this.funcComRef('rewatch', newdata);
-    //  console.log('onreeeee', NormalVideoViewComponent.pausedtime);
   };
   const onback = () => {
     if (this.funcComRef) {
@@ -391,17 +408,7 @@ const VideoActivity = ({ route, navigation }) => {
       backgroundColor: 'white',
       borderRadius: 20,
       width: '95%',
-      // flex: 0.85,
-      // backgroundColor: COLORS.whiteColor,
-      // marginHorizontal: windowWidth * 0.03,
-      // borderWidth: 1,
-      // borderColor: COLORS.whiteColor,
-      // borderRadius: 4,
-      // marginVertical: 10,
-      // shadowOffset: { width: 2, height: 4 },
-      // shadowColor: COLORS.black,
-      // shadowOpacity: 0.2,
-      // shadowRadius: 3,
+     
     };
   } else {
     stylefull = {
@@ -438,7 +445,7 @@ const VideoActivity = ({ route, navigation }) => {
             onBackNew={onBackNew}
             onActivityPrevious={onActivityPrevious}
             onfullscreen={onfullscreen}
-            questionsArray={[]}
+            questionsArray={videosdata}
             onBack={onNewBack}
             onPause={onPause}
             data={normalvideodata}
@@ -536,6 +543,9 @@ const VideoActivity = ({ route, navigation }) => {
             data={newdata}
             onquestionSubmit={() => onquestionSubmit(20)}
             onRewatch={onRewatch}
+            userDetails={user}
+            Videoquestionassesdata={Videoquestionassesdata}
+            activitydata={data}
           />
         </View>
       </Modal>

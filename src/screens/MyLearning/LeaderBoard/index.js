@@ -61,7 +61,6 @@ const LeaderBoard = ({ navigation }) => {
   const onRuleBook = () => {
     setRuleVisible(true);
   };
-
   return (
     <SafeAreaView style={styles.container}>
       <Header

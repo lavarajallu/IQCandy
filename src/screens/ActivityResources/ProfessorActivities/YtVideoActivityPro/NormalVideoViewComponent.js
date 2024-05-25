@@ -34,7 +34,7 @@ const NormalVideoViewComponent = (props) => {
   let [show, setShow] = useState(null);
   let [questiondisplay, setQuestionDisplay] = useState(null);
   let [fullscreen, setFullScreen] = useState(false);
-  let [isPlaying, setisplaying] = useState(true);
+  let [isPlaying, setisplaying] = useState(false);
   let [index, setIndex] = useState(0);
   let [questionsarray, setquestionsarray] = useState([]);
   let [loading, setLoading] = useState(true);
@@ -42,16 +42,14 @@ const NormalVideoViewComponent = (props) => {
 
   useEffect(() => {
   ///  Orientation.addOrientationListener(handleOrientation);
-    // console.log("PRopssss.......",questionsArray)
     if (props.data) {
       var videoid = getVideoId(props.data.url);
     }
     if (questionsArray.length > 0) {
-      //   console.log("hhhhhhh")
       let orders = questionsArray;
       orders.sort(function (a, b) {
-        let dateA = parseInt(a.timeInSec);
-        let dateB = parseInt(b.timeInSec);
+        let dateA = parseInt(a.timeinsec);
+        let dateB = parseInt(b.timeinsec);
         if (dateA < dateB) {
           return -1;
         } else if (dateA > dateB) {
@@ -59,31 +57,25 @@ const NormalVideoViewComponent = (props) => {
         }
         return 0;
       });
-
-      // console.log("ordersordersorders",orders)
       setquestionsarray(orders);
       setQuestionDisplay(orders[0]);
-      // setPausedTime(parseInt(orders[0].question.timeinsec))
-      // setNormlaData(props.data);
+
 
       var newarr = [];
       orders.map((res, i) => {
-        var time = parseInt(res.timeInSec);
+        var time = parseInt(res.timeinsec);
         newarr.push(time);
-        console.log('timesarrayyyyy', newarr);
         setnewarr(newarr);
       });
     } else {
       setLoading(false);
     }
     if (videoid) {
-      console.log('ssdsd', videoid);
       setvideoid(videoid.id);
       setLoading(false);
     }
   }, [questionsArray]);
   props.forwardRef((name, value) => {
-    console.log('dkfjkldnfkldf', name, value);
     if (name === 'rewatch') {
       onRewatch(value);
     } else if (name === 'questionsubmit') {
@@ -108,18 +100,18 @@ const NormalVideoViewComponent = (props) => {
       if (this._youTubeRef) {
         elapsed_sec = await this._youTubeRef?.getCurrentTime();
       }
-      setCurrentTime(elapsed_sec);
+     // var time = parseFloat(elapsed_sec).toFixed(2)
+      setCurrentTime(parseiInt(elapsed_sec));
 
       let result = newarr.filter(
         (o1) => parseInt(o1) === parseInt(elapsed_sec)
       );
-      console.log('oiffff', Math.floor(elapsed_sec), result, pausedtime);
       if (parseInt(elapsed_sec) === result[0]) {
         if (parseInt(elapsed_sec) === pausedtime) {
         } else {
           //  ismodal = true
           var newdata = questionsArray.filter(
-            (o1) => parseInt(o1.timeInSec) === result[0]
+            (o1) => parseInt(o1.timeinsec) === result[0]
           );
           setisplaying(false);
           setData(newdata[0]);
@@ -136,11 +128,10 @@ const NormalVideoViewComponent = (props) => {
           //   })
         }
       }
-    }, 1000);
+    }, 500);
   };
   handleReady = (data) => {
     this._youTubeRef?.getDuration().then((getDuration) => {
-      console.log('youtubedatayoutubedata', youtubedata);
       setDuration(parseInt(getDuration));
     });
     if (youtubedata.videoPausedAt > 1) {
@@ -154,51 +145,38 @@ const NormalVideoViewComponent = (props) => {
   };
   onStateChange = (e) => {
     if (this._youTubeRef) {
-      //  console.log("eee",e.state,"playing")
 
       if (initial === 0) {
-        console.log('intuallalaaa', e.state, 'playing');
-        if (e.state === 'playing') {
+        if (e === 'playing') {
           this.onReady();
         }
       }
     }
   };
   onReady = () => {
-    console.log('kdnddddk', newarr);
     if (this._youTubeRef) {
       initial = 1;
       interval = setInterval(async () => {
         const elapsed_sec = await this._youTubeRef?.getCurrentTime();
         setCurrentTime(elapsed_sec);
-        //console.log("0show",elapsed_sec)
         let result = newarr.filter(
           (o1) => parseInt(o1) === parseInt(elapsed_sec)
         );
-        console.log('0show', elapsed_sec, result);
-        if (parseInt(elapsed_sec) === result[0]) {
+        if (parseInt(elapsed_sec.toFixed(2)) === result[0]) {
           //this.setState({show: true})
-          //console.log("0show",parseInt(elapsed_sec), this.state.pausedtime)
           if (show === true) {
-            //console.log("ifff")
           } else {
-            // console.log("questionsarray",parseInt(questionsArray[0].timeInSec),result[0])
 
             var newdata = questionsArray.filter(
-              (o1) => parseInt(o1.timeInSec) === result[0]
+              (o1) => parseInt(o1.timeinsec) === result[0]
             );
-            console.log('newtomeee', JSON.stringify(newdata));
             setisplaying(false);
             setData(newdata[0]);
             setPausedTime(result[0]);
             props.onPause(newdata[0]);
             clearInterval(interval);
 
-            //  this.setState({
-            //   time: elapsed_sec,
-            //   elapsed: elapsed_sec,
-
-            // })
+          
           }
         }
       }, 1000);
@@ -217,7 +195,6 @@ const NormalVideoViewComponent = (props) => {
       initial = 0;
       let elapsed_sec = await this._youTubeRef?.getCurrentTime();
       let duration = await this._youTubeRef?.getDuration();
-      console.log('kdnckdnckdc', elapsed_sec, duration);
       clearInterval(interval);
       props.onBackNew(elapsed_sec, duration);
     }
@@ -253,14 +230,10 @@ const NormalVideoViewComponent = (props) => {
     }
   };
   onRewatch = (data) => {
-    console.log('DAtaaaa', newarr);
     if (this._youTubeRef) {
-      console.log('onerrewarch', pausedtime);
       var value = newarr.indexOf(pausedtime);
       var newwatch = newarr[value - 1];
-      console.log('onqustionnnjdndjsdjsndjsnd', newwatch);
       var newvalue = newarr.indexOf(newwatch);
-      console.log('d,cdnd', newvalue);
       if (newvalue === -1) {
         this._youTubeRef?.seekTo(0, true);
         setCurrentTime(0);
@@ -278,7 +251,6 @@ const NormalVideoViewComponent = (props) => {
   };
 
   handleOrientation = (orientation) => {
-    console.log('orintatin', orientation);
     // orientation === 'LANDSCAPE-LEFT' || orientation === 'LANDSCAPE-RIGHT'
     //   ? (this.setState({fullscreen: true}), StatusBar.setHidden(true))
     //   : (this.setState({ fullscreen: false}),
@@ -287,13 +259,11 @@ const NormalVideoViewComponent = (props) => {
 
   onfullscreen = () => {
     setFullScreen(!fullscreen);
-    console.log('FUllll', fullscreen);
     props.onfullscreen();
 
     //   Orientation.lockToLandscapeLeft();
   };
   handlescreenfull = (val) => {
-    console.log('fulll', val);
     setFullScreen(val);
     val
     ? ScreenOrientation.lockAsync(
@@ -393,7 +363,7 @@ const NormalVideoViewComponent = (props) => {
             apiKey={'AIzaSyB1DjYP6DVdeu2l8i33gZ6PdMfA9piDHsY'}
             controls={0}
             videoId={videoid}
-            play={!isPlaying} // control playback of video with true/false
+            play={isPlaying} // control playback of video with true/false
             onReady={handleReady}
             onChangeState={onStateChange}
             height={ fullscreen ? windowWidth /1.5: 250 }
@@ -429,7 +399,7 @@ const NormalVideoViewComponent = (props) => {
                 />
               )}
             </TouchableOpacity>
-            {Platform.OS === 'ios' ? 
+          
             <>
             <View
               style={[
@@ -524,9 +494,7 @@ const NormalVideoViewComponent = (props) => {
                           console.log('slidingstarte', value, currentTime);
                         }}
                         onValueChange={(value) => {
-                          console.log('prsl', value, '', currentTime);
                           if (parseInt(value) > parseInt(currentTime)) {
-                            console.log('prigressvl', value, '', currentTime);
                             if (props.resourcedata.percentage !== 0) {
                               setCurrentTime(parseInt(value));
                               if (pausedtime > parseInt(value)) {
@@ -535,7 +503,6 @@ const NormalVideoViewComponent = (props) => {
 
                               this._youTubeRef?.seekTo(parseInt(value), true);
                             } else {
-                              // console.log("sadfkajshdfkuahfkudhfkad")
                               this._youTubeRef?.seekTo(
                                 parseInt(currentTime),
                                 true
@@ -567,7 +534,7 @@ const NormalVideoViewComponent = (props) => {
                   </Text>
                 </View>
               </View>
-            </View></> : null}
+            </View></> 
           </View>
         </View>
       </View>

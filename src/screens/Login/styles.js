@@ -19,12 +19,12 @@ const styles = StyleSheet.create({
   },
   curvedLine: {
     flex: 1,
-    marginTop: height * 0.16,
+    marginTop: height * 0.2,
   },
   logoContainer: {
     flex: 0.2,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
   },
   inputContainer: {
     flex: 0.35,
