@@ -128,7 +128,6 @@ const Register = ({ navigation }) => {
     });
   };
   useEffect(()=>{
-   // alert("hkjhkjhjk"+JSON.stringify(branches))
   },[branches])
   const onChangeBranch = (branchId) => {
     setSelectedBranch(branchId);

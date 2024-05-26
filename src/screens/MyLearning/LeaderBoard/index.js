@@ -37,7 +37,6 @@ const LeaderBoard = ({ navigation }) => {
 
   useEffect(() => {
     if (user) {
-      //alert(JSON.stringify(user.userOrg.boardId))
       getLeaderBoardData({
         dispatch,
         userId: user.userInfo.userId,

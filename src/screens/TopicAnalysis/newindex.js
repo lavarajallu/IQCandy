@@ -68,7 +68,6 @@ class TopicAnalysis extends Component {
   getData = async () => {
     try {
       const value = await AsyncStorage.getItem('@user');
-      //  alert(JSON.stringify(value))
       if (value !== null) {
         var data = JSON.parse(value);
 
@@ -374,7 +373,6 @@ class TopicAnalysis extends Component {
             });
           }
         } else if (json.error?.code === 400) {
-          //alert("dknkdf")
           Alert.alert('IQ Candy', json.error.message, [
             { text: 'OK', onPress: () => this.logout() },
           ]);

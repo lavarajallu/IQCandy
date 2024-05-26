@@ -68,7 +68,6 @@ const ProfilePage = () => {
         // })
 
         var profileprcent = count / 8;
-       // alert(profileprcent)
         setProfilePercent(profileprcent);
       }
       setFirstName(data.userInfo.firstName);

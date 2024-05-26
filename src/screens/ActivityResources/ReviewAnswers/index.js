@@ -83,7 +83,6 @@ const ReviewAnswers = ({ route, navigation }) => {
     });
   }, [user]);
   useEffect(() => {
-    // alert(JSON.stringify(reviewsolquestions));
     if (reviewsolquestions && reviewsolquestions.length > 0) {
       setloading(false);
       setquestionarray(reviewsolquestions);

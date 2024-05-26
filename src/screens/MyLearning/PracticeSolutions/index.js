@@ -68,7 +68,6 @@ const PracticeSolutions = ({ route, navigation }) => {
     'Z',
   ];
   useEffect(() => {
-    // alert(route.params.testid);
     var userId = user.userInfo.userId;
     // var activityDimId = route.params.activtydata.activityDimId;
     var userTestId = route.params.testid;
@@ -87,7 +86,6 @@ const PracticeSolutions = ({ route, navigation }) => {
     });
   }, [user]);
   useEffect(() => {
-    // alert(JSON.stringify(reviewsolquestions));
     if (practiceSolutionsData && practiceSolutionsData.length > 0) {
       setloading(false);
       setquestionarray(practiceSolutionsData);
@@ -282,7 +280,6 @@ const PracticeSolutions = ({ route, navigation }) => {
   onPrevious = () => {
     //  scrollToIndex(questionno);
     if (questionno - 1 === questionsarray.length) {
-      // alert('dfd');
       // this.setState({
       //     isvisible: true
       // })
