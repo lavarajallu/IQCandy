@@ -32,51 +32,44 @@ const ParcticeCard = (props) => {
   }
   return (
     <TouchableOpacity
-    style={{
-      width: width/2.3,
-      height: height/6,
-      backgroundColor: COLORS.whiteColor,
-      borderRadius: 8,
-      marginLeft: 8,marginTop:10
-    }}
-    onPress={() => {
-      onChange('HIELLO');
-    }}
-  >
-    <View
-      style={{flex:1}}
+      style={{
+        width: width / 2.3,
+        height: height / 6,
+        backgroundColor: COLORS.whiteColor,
+        borderRadius: 8,
+        marginLeft: 8,
+        marginTop: 10,
+      }}
+      onPress={() => {
+        onChange('HIELLO');
+      }}
     >
-      {/* Your Image Component with dimensions */}
-      {/* Replace 'YourImageSource' with the actual source of your image */}
-      <Image
-        source={{ uri: item?.image }}
-        style={styles.image}
-        resizeMode={'cover'}
-      />
-      <View style={styles.absview}>
-        <Text style={styles.textstyle}>
-        {item?.name}
-        </Text>
-      </View>
-     
-     <View>
-     <ProgressBar
-       progress={percent ? percent / 100 : 0}
-       width={
-             width/2.3
-       }
-       height={2}
-       color={color}
-       unfilledColor={'lightgrey'}
-       borderColor={'transparent'}
-     />
-     </View>
+      <View style={{ flex: 1 }}>
+        {/* Your Image Component with dimensions */}
+        {/* Replace 'YourImageSource' with the actual source of your image */}
+        <Image
+          source={{ uri: item?.image }}
+          style={styles.image}
+          resizeMode={'cover'}
+        />
+        <View style={styles.absview}>
+          <Text style={styles.textstyle} numberOfLines={2}>
+            {item?.name}
+          </Text>
+        </View>
 
-    
-   
-    </View>
-  
-  </TouchableOpacity>
+        <View>
+          <ProgressBar
+            progress={percent ? percent / 100 : 0}
+            width={width / 2.3}
+            height={2}
+            color={color}
+            unfilledColor={'lightgrey'}
+            borderColor={'transparent'}
+          />
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 
@@ -96,8 +89,21 @@ const styles = {
     height: 117,
     padding: 5,
   },
-  absview:{width:"100%",height:50,backgroundColor:"rgba(0, 0, 0, 0.6)",position:"absolute",bottom:0},
-  textstyle:{fontSize:14,color:"white",textAlign:"center"},
+  absview: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    position: 'absolute',
+    bottom: 0,
+  },
+  textstyle: {
+    fontSize: 14,
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: 'mulish-bold',
+  },
   image: {
     flex: 1,
     width: null,

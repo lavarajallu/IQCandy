@@ -18,10 +18,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 10,
     marginVertical: 5,
-    width: "90%",
+    width: '90%',
   },
   numberCircle: {
-    backgroundColor: COLORS.coursesColor,
+    backgroundColor: COLORS.appSecondaryColor,
     height: 35,
     width: 35,
     justifyContent: 'center',
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   numberText: {
-    backgroundColor: COLORS.coursesColor,
+    backgroundColor: COLORS.appSecondaryColor,
     padding: 5,
     borderRadius: 5,
     color: 'white',

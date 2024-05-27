@@ -11,7 +11,6 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-//import Pdf from 'react-native-pdf';
 import Pdf from 'react-native-pdf';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
 
@@ -144,7 +143,7 @@ const NotesActivity = ({ route, navigation }) => {
       var body = {
         activityDimId: data.activityDimId,
         boardId: user.userOrg.boardId,
-        gradeId:  user.userOrg.gradeId,
+        gradeId: user.userOrg.gradeId,
 
         subjectId: subjectItem?.subjectId
           ? subjectItem.subjectId
@@ -169,7 +168,6 @@ const NotesActivity = ({ route, navigation }) => {
       userId: user?.userInfo.userId,
       data: body,
     });
-  
   };
   const handleNextActivity = () => {
     var newarray = route.params.smartres;
@@ -344,12 +342,10 @@ const NotesActivity = ({ route, navigation }) => {
     let scale = scalevalue * 1.2;
     scale = scale > 3 ? 3 : scale;
     setScale(scale);
-    
   };
   const onzoomout = () => {
     let scale = scalevalue > 1 ? scalevalue / 1.2 : 1;
     setScale(scale);
-
   };
   return (
     <SafeAreaView
@@ -399,7 +395,6 @@ const NotesActivity = ({ route, navigation }) => {
                   // onPageChanged={() => onPageChanged()}
                   onError={(error) => {
                     console.log('ffffe', error);
-                   
                   }}
                   onPressLink={(uri) => {
                     console.log(`Link presse: ${uri}`);

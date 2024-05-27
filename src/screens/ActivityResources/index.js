@@ -80,8 +80,8 @@ const ActivityResources = ({ route, navigation }) => {
   const [onclick, setonclick] = useState(false);
   const [recommendedarray, setrecommendedarray] = useState([]);
   const tabs = [
-    { id: '1', title: 'Icon Resources' },
-    { id: '2', title: 'Professor Resources' },
+    { id: '1', title: `IQ Candy Activity` },
+    { id: '2', title: `Teacher Activity` },
   ];
   useEffect(() => {
     var chapterId, subjectId;
@@ -109,13 +109,13 @@ const ActivityResources = ({ route, navigation }) => {
         dispatch,
         userId: user?.userInfo?.userId,
       });
-     
+
       if (user?.role.roleName === 'Student') {
         getprofessorresources({
           dispatch,
           userId: user?.userInfo?.userId,
           topicId: topicItem?.topicId,
-          resourceType: 'teacher'
+          resourceType: 'teacher',
         });
       }
       var scheduleTypeId = topicItem?.topicId;
@@ -217,7 +217,7 @@ const ActivityResources = ({ route, navigation }) => {
       '#c44921',
     ];
     var newitem = newarray[Math.floor(Math.random() * newarray.length)];
-    
+
     var chapterId, subjectId;
     if (chapterItem?.chapterId) {
       chapterId = chapterItem?.chapterId;
@@ -573,7 +573,7 @@ const ActivityResources = ({ route, navigation }) => {
       }}
     />
   );
-  const handleSave = () => { };
+  const handleSave = () => {};
   showDatePicker = () => {
     this.setState({ showpicker: true });
   };
@@ -640,7 +640,8 @@ const ActivityResources = ({ route, navigation }) => {
           // Handle back button press
           if (
             route.params.from === 'heatmap' ||
-            route.params.from === 'calender' || route.params.from ==='search'
+            route.params.from === 'calender' ||
+            route.params.from === 'search'
           ) {
             goBack(navigation);
           } else if (route.params.from === 'progresstopics') {
@@ -676,8 +677,8 @@ const ActivityResources = ({ route, navigation }) => {
             <View
               style={{
                 flexDirection: 'row',
-                justifyContent: 'center',
-                paddingVertical: 10,
+                justifyContent: 'space-evenly',
+                paddingVertical: 20,
               }}
             >
               {tabs.map(renderTab)}
@@ -726,7 +727,7 @@ const ActivityResources = ({ route, navigation }) => {
                 style={styles.button}
                 title={'Icon Resources'}
                 textStyle={styles.buttonText}
-                onPress={() => { }}
+                onPress={() => {}}
               />
 
               {/* Icon */}

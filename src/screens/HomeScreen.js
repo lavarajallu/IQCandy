@@ -15,7 +15,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 import MyCourses from './MyCourses';
 import TopicsInProgress from './TopicsInProgress';
 import MyLearning from './MyLearning';
-import MyCoursesCarousal from './MyCoursesCarousal'
 import { selectUser } from '../store/authManagement/selector';
 import { imagePaths } from '../constants/path';
 import * as Device from 'expo-device';
@@ -24,7 +23,6 @@ import Constants from 'expo-constants';
 const { width, height } = Dimensions.get('window');
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CardHeaderLabel from '../components/CardHeaderLabel';
-import { isRejectedWithValue } from '@reduxjs/toolkit';
 import { COLORS } from '../constants/colors';
 
 Notifications.setNotificationHandler({
@@ -106,8 +104,7 @@ const HomeScreen = ({ route, navigation }) => {
       });
 
     responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-      });
+      Notifications.addNotificationResponseReceivedListener((response) => {});
 
     return () => {
       Notifications.removeNotificationSubscription(
@@ -132,42 +129,51 @@ const HomeScreen = ({ route, navigation }) => {
         <View
           style={{
             flex: platformValue,
-          
             justifyContent: 'center',
             alignItems: 'center',
           }}
         >
-          <ImageBackground
+          {/* <ImageBackground
             source={require('../../assets/images/dashboardrect.png')}
             style={styles.imageView}
-          >
-            <View style={{ flex: 1, flexDirection: "row" }}>
-              <View style={{ flex: 0.35, justifyContent: "space-around", }}>
-                <TouchableOpacity onPress={() => navigation.navigate('Subjects')} style={{ alignItems: "flex-end", }}>
+          > */}
+          <View style={styles.imageView}>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <View style={{ flex: 0.35, justifyContent: 'space-around' }}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('Subjects')}
+                  style={{ alignItems: 'flex-end' }}
+                >
                   <Image
                     source={require('../../assets/images/engage.png')}
                     style={{
-                      height: 123/2.5,
-                      width: 236/2.5
+                      height: 123 / 2.5,
+                      width: 236 / 2.5,
                     }}
-                  /></TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('MyPractice')} style={{ alignItems: "flex-end", }}>
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('MyPractice')}
+                  style={{ alignItems: 'flex-end' }}
+                >
                   <Image
                     source={require('../../assets/images/evaluate.png')}
                     style={{
-                      height: 123/2.5,
-                      width: 236/2.5
+                      height: 123 / 2.5,
+                      width: 236 / 2.5,
                     }}
-                  /></TouchableOpacity>
-
+                  />
+                </TouchableOpacity>
               </View>
-              <View style={{ flex: 0.3, justifyContent: "center", }}>
+              <View style={{ flex: 0.3, justifyContent: 'center' }}>
                 <ImageBackground
                   source={require('../../assets/images/dashboardimg.png')}
                   style={{
                     height: 120,
                     width: 120,
-                    borderRadius: 120 / 2, justifyContent: "center", alignItems: "center"
+                    borderRadius: 120 / 2,
+                    justifyContent: 'center',
+                    alignItems: 'center',
                   }}
                 >
                   {user?.userInfo?.profilePic ? (
@@ -194,31 +200,37 @@ const HomeScreen = ({ route, navigation }) => {
                 </ImageBackground>
               </View>
 
-              <View style={{ flex: 0.35, justifyContent: "space-around" }}>
-                <TouchableOpacity onPress={() => navigation.navigate('LearningAnalysis')}>
+              <View style={{ flex: 0.35, justifyContent: 'space-around' }}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('LearningAnalysis')}
+                >
                   <Image
                     source={require('../../assets/images/explore.png')}
                     style={{
-                      height: 123/2.5,
-                      width: 236/2.5
+                      height: 123 / 2.5,
+                      width: 236 / 2.5,
                     }}
-                  /></TouchableOpacity>
-                <TouchableOpacity onPress={() => navigation.navigate('ReferEarn', { from: "dashboard" })}>
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate('ReferEarn', { from: 'dashboard' })
+                  }
+                >
                   <Image
                     source={require('../../assets/images/referearn.png')}
                     style={{
-                      height: 123/2.5,
-                      width: 236/2.5
+                      height: 123 / 2.5,
+                      width: 236 / 2.5,
                     }}
-                  /></TouchableOpacity>
+                  />
+                </TouchableOpacity>
               </View>
-
             </View>
-
-
-          </ImageBackground>
+          </View>
+          {/* </ImageBackground> */}
         </View>
-     
+
         <View style={{ flex: platformValue, marginTop: 10 }}>
           <MyCourses navigation={navigation} />
         </View>
@@ -228,28 +240,43 @@ const HomeScreen = ({ route, navigation }) => {
         </View>
         <View style={{ flex: 0.05 }}></View>
         <View style={{ flex: platformValue, padding: 0, marginTop: 20 }}>
-          <TopicsInProgress lhTitle={'My Topics In Progress'} navigation={navigation} />
+          <TopicsInProgress
+            lhTitle={'My Topics In Progress'}
+            navigation={navigation}
+          />
         </View>
         <View style={{ marginVertical: 30 }}>
           <View stye={{ flex: 1 }}>
-            <CardHeaderLabel
-              lHLabel={'Refer & Earn'}
-
-            />
+            <CardHeaderLabel lHLabel={'Refer & Earn'} />
             <View style={styles.referview}>
               <View style={styles.referleftview}>
-                <Text style={{ fontSize: 15 }}><Text style={{ fontSize: 20 }}>Invite</Text> your Friends</Text>
-                <Text style={{ marginTop: 5, fontSize: 15 }}>Refer your friends to the <Text style={{ fontSize: 15, color: COLORS.appSecondaryColor }}>IQ Candy </Text>App by sharing your unique referral code</Text>
+                <Text style={{ fontSize: 15 }}>
+                  <Text style={{ fontSize: 20 }}>Invite</Text> your Friends
+                </Text>
+                <Text style={{ marginTop: 5, fontSize: 15 }}>
+                  Refer your friends to the{' '}
+                  <Text
+                    style={{ fontSize: 15, color: COLORS.appSecondaryColor }}
+                  >
+                    IQ Candy{' '}
+                  </Text>
+                  App by sharing your unique referral code
+                </Text>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('ReferEarn', { from: "dashboard" })}
-                  style={styles.referbutton}>
-                  <Text style={{ color: "white" }}>Refer Now</Text>
+                  onPress={() =>
+                    navigation.navigate('ReferEarn', { from: 'dashboard' })
+                  }
+                  style={styles.referbutton}
+                >
+                  <Text style={{ color: 'white' }}>Refer Now</Text>
                 </TouchableOpacity>
               </View>
               <View style={styles.referright}>
-                <Image source={require('./../../assets/images/instructions.png')} style={styles.referimg} />
+                <Image
+                  source={require('./../../assets/images/instructions.png')}
+                  style={styles.referimg}
+                />
               </View>
-
             </View>
           </View>
         </View>
@@ -264,21 +291,31 @@ const styles = StyleSheet.create({
     width: width,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: COLORS.dashBoardBackgroundColor,
   },
   referview: {
-    flexDirection: "row", marginVertical: 10
+    flexDirection: 'row',
+    marginVertical: 10,
   },
   referleftview: {
-    flex: 0.7, marginLeft: 10
+    flex: 0.7,
+    marginLeft: 10,
   },
   referbutton: {
-    padding: 10, marginTop: 5, backgroundColor: COLORS.appSecondaryColor, width: 100, alignSelf: "center",
-     borderRadius: 10, justifyContent: "center", alignItems: "center"
+    padding: 10,
+    marginTop: 5,
+    backgroundColor: COLORS.appSecondaryColor,
+    width: 100,
+    alignSelf: 'center',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  referright: { flex: 0.3, },
+  referright: { flex: 0.3 },
   referimg: {
-    width: 227 / 2.5, height: 293 / 2.5
-  }
+    width: 227 / 2.5,
+    height: 293 / 2.5,
+  },
 });
 
 export default HomeScreen;

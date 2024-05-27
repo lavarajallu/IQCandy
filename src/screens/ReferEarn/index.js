@@ -31,7 +31,7 @@ const options = [
   { value: 'bank_account', label: 'Bank Account' },
   { value: 'vpa', label: 'VPA' },
 ];
-const ReferEarn = ({ route, navigation}) => {
+const ReferEarn = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectUser);
   const { referCode, postPayout } = useSelector(selectReferandEarn);
@@ -42,17 +42,17 @@ const ReferEarn = ({ route, navigation}) => {
   const [accountpoints, setaccountpoints] = useState('');
   const [ifsccode, setifsccode] = useState('');
   const [vpaAddress, setvpaAddress] = useState('');
-const[fromscreen,setfromscreen] = useState("load")
+  const [fromscreen, setfromscreen] = useState('load');
   const [accountType, setaccounttype] = useState({
     value: 'bank_account',
     label: 'Bank Account',
   });
 
   useEffect(() => {
-    if(route?.params?.from === 'dashboard'){
-      setfromscreen("dashboard")
-    }else{
-      setfromscreen("sidemenu")
+    if (route?.params?.from === 'dashboard') {
+      setfromscreen('dashboard');
+    } else {
+      setfromscreen('sidemenu');
     }
     getReferalCode({
       dispatch,
@@ -129,13 +129,150 @@ const[fromscreen,setfromscreen] = useState("load")
   const backAction = () => {
     goBack(navigation);
   };
-  return (
-   fromscreen === 'dashboard' ? 
+  return fromscreen === 'dashboard' ? (
     <SafeAreaView
-    style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
-  >
-    <Header backAction={backAction} headerTitle={'Refer & Earn'} />
-    <View style={[styles.container, styles.shadowProp]}>
+      style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
+    >
+      <Header backAction={backAction} headerTitle={'Refer & Earn'} />
+      <View style={[styles.container, styles.shadowProp]}>
+        <View style={styles.tabBarContainer}>
+          <View style={styles.tabsContainer}>
+            {/* Render custom tabs */}
+            {tabs.map(renderTab)}
+          </View>
+
+          {/* Render your content based on the selected tab */}
+          {selectedTab === '1' && <Instructions />}
+          {selectedTab === '2' && <ReferAndEarn referCode={referCode} />}
+          {selectedTab === '3' && (
+            <ReferredUsers
+              referCode={referCode}
+              onredeempoints={onredeempoints}
+            />
+          )}
+          {selectedTab === '4' && <Payouts />}
+
+          <Modal isVisible={newmodal}>
+            <KeyboardAvoidingView
+              style={{ flex: 1, justifyContent: 'center' }}
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            >
+              <View style={styles.modalview}>
+                <>
+                  <Text>Account Type:</Text>
+                  <Dropdown
+                    style={styles.dropdownview}
+                    placeholderStyle={{
+                      fontSize: 16,
+                    }}
+                    selectedTextStyle={{
+                      fontSize: 16,
+                    }}
+                    data={options}
+                    maxHeight={300}
+                    labelField='label'
+                    valueField='value'
+                    placeholder='Select item'
+                    value={accountTypevalue}
+                    onChange={(item) => {
+                      setaccounttypevalue(item.value);
+                      setaccounttype(item);
+                    }}
+                  />
+                </>
+                {accountTypevalue === 'bank_account' ? (
+                  <>
+                    <>
+                      <Text style={styles.modaltext}>Name:</Text>
+                      <TextInput
+                        style={styles.modaltextinput}
+                        onChangeText={(text) => setaccountnmae(text)}
+                        value={accountnmae}
+                      />
+                    </>
+                    <>
+                      <Text style={styles.modaltext}>Account Number:</Text>
+                      <TextInput
+                        style={styles.modaltextinput}
+                        onChangeText={(text) => setaccountnumber(text)}
+                        value={accountnumber}
+                      />
+                    </>
+                    <>
+                      <Text style={styles.modaltext}>IFSC Code:</Text>
+                      <TextInput
+                        style={styles.modaltextinput}
+                        onChangeText={(text) => setifsccode(text)}
+                        value={ifsccode}
+                      />
+                    </>
+                    <>
+                      <Text style={styles.modaltext}>Points:</Text>
+                      <TextInput
+                        style={styles.modaltextinput}
+                        onChangeText={(text) => setaccountpoints(text)}
+                        value={accountpoints}
+                      />
+                    </>
+                  </>
+                ) : (
+                  <>
+                    <>
+                      <Text style={{ marginTop: 10 }}>Name:</Text>
+                      <TextInput
+                        style={{
+                          marginTop: 10,
+                          height: 50,
+                          borderWidth: 1,
+                          borderColor: 'lightgrey',
+                          backgroundColor: 'white',
+                          borderRadius: 12,
+                          padding: 12,
+                        }}
+                        onChangeText={(text) => setaccountnmae(text)}
+                        value={accountnmae}
+                      />
+                    </>
+                    <>
+                      <Text style={styles.modaltext}>VPA Address:</Text>
+                      <TextInput
+                        style={styles.modaltextinput}
+                        onChangeText={(text) => setvpaAddress(text)}
+                        value={vpaAddress}
+                      />
+                    </>
+                    <>
+                      <Text style={styles.modaltext}>Points:</Text>
+                      <TextInput
+                        style={styles.modaltextinput}
+                        onChangeText={(text) => setaccountpoints(text)}
+                        value={accountpoints}
+                      />
+                    </>
+                  </>
+                )}
+
+                <View style={styles.modalbottomView}>
+                  <TouchableOpacity
+                    onPress={() => setnewmodal(false)}
+                    style={styles.modalbutton}
+                  >
+                    <Text style={styles.modalbuttontext}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={onsubmitreddem}
+                    style={styles.modalbutton}
+                  >
+                    <Text style={styles.modalbuttontext}>Submit</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </KeyboardAvoidingView>
+          </Modal>
+        </View>
+      </View>
+    </SafeAreaView>
+  ) : (
     <View style={styles.tabBarContainer}>
       <View style={styles.tabsContainer}>
         {/* Render custom tabs */}
@@ -267,145 +404,7 @@ const[fromscreen,setfromscreen] = useState("load")
           </View>
         </KeyboardAvoidingView>
       </Modal>
-    
-    </View></View>
-    </SafeAreaView> : 
-    <View style={styles.tabBarContainer}>
-    <View style={styles.tabsContainer}>
-      {/* Render custom tabs */}
-      {tabs.map(renderTab)}
     </View>
-
-    {/* Render your content based on the selected tab */}
-    {selectedTab === '1' && <Instructions />}
-    {selectedTab === '2' && <ReferAndEarn referCode={referCode} />}
-    {selectedTab === '3' && (
-      <ReferredUsers referCode={referCode} onredeempoints={onredeempoints} />
-    )}
-    {selectedTab === '4' && <Payouts />}
-
-    <Modal isVisible={newmodal}>
-      <KeyboardAvoidingView
-        style={{ flex: 1, justifyContent: 'center' }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
-        <View style={styles.modalview}>
-          <>
-            <Text>Account Type:</Text>
-            <Dropdown
-              style={styles.dropdownview}
-              placeholderStyle={{
-                fontSize: 16,
-              }}
-              selectedTextStyle={{
-                fontSize: 16,
-              }}
-              data={options}
-              maxHeight={300}
-              labelField='label'
-              valueField='value'
-              placeholder='Select item'
-              value={accountTypevalue}
-              onChange={(item) => {
-                setaccounttypevalue(item.value);
-                setaccounttype(item);
-              }}
-            />
-          </>
-          {accountTypevalue === 'bank_account' ? (
-            <>
-              <>
-                <Text style={styles.modaltext}>Name:</Text>
-                <TextInput
-                  style={styles.modaltextinput}
-                  onChangeText={(text) => setaccountnmae(text)}
-                  value={accountnmae}
-                />
-              </>
-              <>
-                <Text style={styles.modaltext}>Account Number:</Text>
-                <TextInput
-                  style={styles.modaltextinput}
-                  onChangeText={(text) => setaccountnumber(text)}
-                  value={accountnumber}
-                />
-              </>
-              <>
-                <Text style={styles.modaltext}>IFSC Code:</Text>
-                <TextInput
-                  style={styles.modaltextinput}
-                  onChangeText={(text) => setifsccode(text)}
-                  value={ifsccode}
-                />
-              </>
-              <>
-                <Text style={styles.modaltext}>Points:</Text>
-                <TextInput
-                  style={styles.modaltextinput}
-                  onChangeText={(text) => setaccountpoints(text)}
-                  value={accountpoints}
-                />
-              </>
-            </>
-          ) : (
-            <>
-              <>
-                <Text style={{ marginTop: 10 }}>Name:</Text>
-                <TextInput
-                  style={{
-                    marginTop: 10,
-                    height: 50,
-                    borderWidth: 1,
-                    borderColor: 'lightgrey',
-                    backgroundColor: 'white',
-                    borderRadius: 12,
-                    padding: 12,
-                  }}
-                  onChangeText={(text) => setaccountnmae(text)}
-                  value={accountnmae}
-                />
-              </>
-              <>
-                <Text style={styles.modaltext}>VPA Address:</Text>
-                <TextInput
-                  style={styles.modaltextinput}
-                  onChangeText={(text) => setvpaAddress(text)}
-                  value={vpaAddress}
-                />
-              </>
-              <>
-                <Text style={styles.modaltext}>Points:</Text>
-                <TextInput
-                  style={styles.modaltextinput}
-                  onChangeText={(text) => setaccountpoints(text)}
-                  value={accountpoints}
-                />
-              </>
-            </>
-          )}
-
-          <View style={styles.modalbottomView}>
-            <TouchableOpacity
-              onPress={() => setnewmodal(false)}
-              style={styles.modalbutton}
-            >
-              <Text style={styles.modalbuttontext}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={onsubmitreddem}
-              style={styles.modalbutton}
-            >
-              <Text style={styles.modalbuttontext}>Submit</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </KeyboardAvoidingView>
-    </Modal>
-  
-  </View>
-          
-
-    
   );
 };
 
@@ -459,23 +458,23 @@ const styles = StyleSheet.create({
   },
   tabBarContainer: {
     flex: 1,
+    justifyContent: 'space-around',
     padding: 10,
-    marginLeft: 5,
   },
   tabsContainer: {
     flexDirection: 'row',
-
-    justifyContent: 'space-evenly', // Add space between buttons
+    alignItems: 'center',
+    justifyContent: 'space-between', // Add space between buttons
   },
   tabItem: {
     height: 35,
-    width: width / 4.5,
-    borderRadius: 6,
+    padding: 10,
+    borderRadius: 4,
     borderWidth: 1,
-    borderColor: '#F8F8F8',
+    borderColor: COLORS.appSecondaryColor,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 10,
+    marginRight: 0,
     ...SHADOW_STYLES,
   },
   tabText: {

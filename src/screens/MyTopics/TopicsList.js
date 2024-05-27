@@ -18,13 +18,18 @@ import { COLORS } from '../../constants/colors';
 import ProgressLine from '../../components/ProgressLine';
 
 const TopicsList = (props) => {
-  const { data, onChange, PreviousQuestionPaperByCount, GatePreviousQuestionPaperByCount } = props;
+  const {
+    data,
+    onChange,
+    PreviousQuestionPaperByCount,
+    GatePreviousQuestionPaperByCount,
+  } = props;
 
   const onSelectItem = (item) => {
     onChange(item);
   };
 
-  const renderItem = ({ item ,index}) => {
+  const renderItem = ({ item, index }) => {
     var percent = parseInt(item.progress);
     let color;
     if (percent > 80) {
@@ -36,52 +41,52 @@ const TopicsList = (props) => {
     }
     var questionPaperCount = 0;
     if (props.PreviousQuestionPaperByCount) {
-
       let obj = props.PreviousQuestionPaperByCount?.find(
-        (o) => o.uniTopicId == item.universalTopicId
+        (o) => o?.uniTopicId == item?.universalTopicId
       );
       if (obj) {
-        questionPaperCount = obj.prevRepeatedCount;
+        questionPaperCount = obj?.prevRepeatedCount;
       }
-
     }
 
     var gatequestionPaperCount = 0;
     if (props.GatePreviousQuestionPaperByCount) {
-
       let obj = props.GatePreviousQuestionPaperByCount?.find(
-        (o) => o.uniTopicId == item.universalTopicId
+        (o) => o?.uniTopicId == item.universalTopicId
       );
       if (obj) {
         gatequestionPaperCount = obj.prevRepeatedCount;
       }
-
     }
     return (
-      <View style={{
-       borderWidth: 1, width: windowWidth / 2.15,
-        backgroundColor: COLORS.whiteColor, justifyContent: "center",
-        borderRadius: 8,borderColor:"transparent",
-        marginLeft: 8, marginTop: 10,
-      }}>
+      <View
+        style={{
+          borderWidth: 1,
+          width: windowWidth / 2.15,
+          backgroundColor: COLORS.whiteColor,
+          justifyContent: 'center',
+          borderRadius: 8,
+          borderColor: 'transparent',
+          marginLeft: 8,
+          marginTop: 10,
+        }}
+      >
         <View style={{ flex: 0.9 }}>
           <TouchableOpacity
             style={styles.card}
             onPress={() => onSelectItem(item)}
-
           >
-            <View
-              style={{ flex: 1 }}
-            >
+            <View style={{ flex: 1 }}>
               <Image
                 source={{ uri: item?.image }}
                 style={styles.image}
                 resizeMode={'cover'}
               />
               <View style={styles.absview}>
-                <Text style={styles.textstyle}>
-                  {` ${item?.topicName}`}
-                </Text>
+                <Text
+                  style={styles.textstyle}
+                  numberOfLines={2}
+                >{` ${item?.topicName}`}</Text>
               </View>
 
               <View>
@@ -105,39 +110,35 @@ const TopicsList = (props) => {
                   />
                 )}
               </View>
-
-
-
             </View>
-
           </TouchableOpacity>
         </View>
-       
-
-
       </View>
     );
   };
   const getQuestionPapers = (topicitem, questionpapers, type) => {
-    props.navigation.navigate('TopicQuestionpapertype', { topicitem: topicitem, questionpapertype: type, questionpaper: questionpapers })
-  }
+    props.navigation.navigate('TopicQuestionpapertype', {
+      topicitem: topicitem,
+      questionpapertype: type,
+      questionpaper: questionpapers,
+    });
+  };
   useEffect(() => {
     // f(JSON.stringify(props.PreviousQuestionPaperByCount));
     // topicId: '06e15f20-f577-11ed-a7e5-19018bf1e7d4',
   });
   return (
     <>
-     
-        <FlatList
-          data={data}
-          keyExtractor={(item) => item.idx}
-          horizontal={false}
-          showsHorizontalScrollIndicator={false}
-          renderItem={renderItem}
-          numColumns={2} // Set the number of columns to 2
+      <FlatList
+        data={data}
+        keyExtractor={(item) => item.idx}
+        horizontal={false}
+        showsHorizontalScrollIndicator={false}
+        renderItem={renderItem}
+        numColumns={2} // Set the number of columns to 2
         //   ItemSeparatorComponent={ItemSeparator}
-        />
-        {/* <FlatList
+      />
+      {/* <FlatList
         data={data}
         keyExtractor={(item) => item?.idx}
         numColumns={2}
@@ -145,7 +146,7 @@ const TopicsList = (props) => {
         showsHorizontalScrollIndicator={false}
         renderItem={renderItem}
       /> */}
-      
+
       {/* <FlatList
         data={data}
         keyExtractor={(item) => item.id}
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
     height: height / 6,
     backgroundColor: COLORS.whiteColor,
     borderRadius: 8,
-  //  marginLeft: 8, marginTop: 10
+    //  marginLeft: 8, marginTop: 10
   },
   shadowProp: {
     shadowOffset: { width: -2, height: 4 },
@@ -175,7 +176,6 @@ const styles = StyleSheet.create({
   },
   cardContent: {
     flexDirection: 'row',
-
   },
   image: {
     flex: 1,
@@ -225,10 +225,23 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     color: COLORS.lightGray,
   },
-  absview: { width: "100%", height: 55, backgroundColor: "rgba(0, 0, 0, 0.6)", position: "absolute", bottom: 0 },
-  textstyle: { fontSize: 13, color: "white", textAlign: "center" },
+  absview: {
+    width: '100%',
+    height: 55,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 0,
+  },
+  textstyle: {
+    fontSize: 13,
+    color: 'white',
+    textAlign: 'left',
+    fontFamily: 'mulish-bold',
+    paddingLeft: 5,
+  },
   container: {
-
     marginVertical: 10,
   },
   shadowProp: {

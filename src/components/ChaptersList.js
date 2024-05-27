@@ -8,31 +8,29 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../constants/colors';
-import ProgressLine from './ProgressLine';
-import { imagePaths } from '../constants/path';
 const windowWidth = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 import * as Progress from 'react-native-progress';
+import ItemSeparator from './ItemSeparator';
 const ChaptersList = (props) => {
   const { data, onChange, validatePackage, onlockmodal, user } = props;
 
   const onSelectItem = (item) => {
-    onChange(item,);
+    onChange(item);
   };
-  const onSelectItemlock = (item) =>{
+  const onSelectItemlock = (item) => {
     onlock(true);
-  }
+  };
   const onlock = () => {
     onlockmodal(true);
   };
   const renderItem = ({ item, index }) => {
-    const progresswidth = windowWidth / 2.15
+    const progresswidth = windowWidth / 2.15;
 
     var percent = parseInt(item.progress);
-    const role = user?.role?.roleName
+    const role = user?.role?.roleName;
     let color;
     if (percent > 80) {
       color = 'green';
@@ -42,66 +40,47 @@ const ChaptersList = (props) => {
       color = 'orange';
     }
     return (
-      <TouchableOpacity
-      style={styles.card}
-      onPress={() => onSelectItem(item)}
+      <TouchableOpacity style={styles.card} onPress={() => onSelectItem(item)}>
+        <View style={{ flex: 1 }}>
+          <Image
+            source={{ uri: item?.image }}
+            style={styles.image}
+            resizeMode={'cover'}
+          />
+          <View style={styles.absview}>
+            <Text
+              style={styles.textstyle}
+              numberOfLines={2}
+            >{` ${item?.chapterName}`}</Text>
+          </View>
 
-    >
-      <View
-        style={{ flex: 1 }}
-      >
-        <Image
-          source={{ uri: item?.image }}
-          style={styles.image}
-          resizeMode={'cover'}
-        />
-        <View style={styles.absview}>
-          <Text style={styles.textstyle}>
-            {` ${item?.chapterName}`}
-          </Text>
+          <View>
+            {item.progress ? (
+              <Progress.Bar
+                progress={parseInt(item.progress) / 100}
+                width={progresswidth}
+                color={color}
+                height={2}
+                unfilledColor={'lightgrey'}
+                borderColor={'transparent'}
+              />
+            ) : (
+              <Progress.Bar
+                progress={0}
+                width={progresswidth}
+                color={color}
+                height={2}
+                unfilledColor={'lightgrey'}
+                borderColor={'transparent'}
+              />
+            )}
+          </View>
         </View>
-
-        <View>
-          {item.progress ? (
-            <Progress.Bar
-              progress={parseInt(item.progress) / 100}
-              width={progresswidth}
-              color={color}
-              height={2}
-              unfilledColor={'lightgrey'}
-              borderColor={'transparent'}
-            />
-          ) : (
-            <Progress.Bar
-              progress={0}
-              width={progresswidth}
-              color={color}
-              height={2}
-              unfilledColor={'lightgrey'}
-              borderColor={'transparent'}
-            />
-          )}
-        </View>
-
-
-
-      </View>
-
-    </TouchableOpacity>
-    )
+      </TouchableOpacity>
+    );
   };
   return (
     <>
-
-
-
-      {/* <FlatList
-          data={data}
-          key={'_'}
-          // keyExtractor={item => "_" + item.chapterId}
-          showsHorizontalScrollIndicator={false}
-          renderItem={renderItem}
-        /> */}
       <FlatList
         data={data}
         keyExtractor={(item) => item.idx}
@@ -109,7 +88,7 @@ const ChaptersList = (props) => {
         showsHorizontalScrollIndicator={false}
         renderItem={renderItem}
         numColumns={2} // Set the number of columns to 2
-      //   ItemSeparatorComponent={ItemSeparator}
+        ItemSeparatorComponent={ItemSeparator}
       />
     </>
   );
@@ -124,7 +103,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.whiteColor,
     borderRadius: 8,
     marginVertical: 10,
-    marginLeft: 10
+    marginLeft: 10,
     // /padding: 4,
   },
   shadowProp: {
@@ -185,10 +164,22 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     color: COLORS.lightGray,
   },
-  absview: { width: "100%", height: 50, backgroundColor: "rgba(0, 0, 0, 0.6)", position: "absolute", bottom: 0 },
-  textstyle: { fontSize: 14, color: "white", textAlign: "center" },
+  absview: {
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    width: '100%',
+    height: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    position: 'absolute',
+    bottom: 0,
+  },
+  textstyle: {
+    fontSize: 14,
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: 'mulish-bold',
+  },
   container: {
-
     marginVertical: 10,
   },
   shadowProp: {
