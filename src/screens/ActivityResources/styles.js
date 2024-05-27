@@ -23,22 +23,21 @@ const styles = StyleSheet.create({
     color: COLORS.whiteColor,
     fontSize: 16,
     fontFamily: 'mulish-bold',
-    fontWeight: '700',
   },
   iconContainer: {
-    width: 35,
-    height: 35,
+    width: 42,
+    height: 42,
     borderRadius: 7,
     borderWidth: 1,
-    marginLeft: 5,
+    marginLeft: 0,
     borderColor: COLORS.appSecondaryColor, // Set your desired border color
     justifyContent: 'center',
     alignItems: 'center',
     // transform: [{ rotate: '180deg' }], // Rotate the icon
   },
   tabItem: {
-    height: 40,
-    width: width / 2.4,
+    height: 42,
+    width: width / 2.6,
     borderRadius: 6,
     borderWidth: 1,
     borderColor: '#F8F8F8',
@@ -48,10 +47,9 @@ const styles = StyleSheet.create({
     ...SHADOW_STYLES,
   },
   tabText: {
-    fontSize: 15,
+    fontSize: 14,
     fontFamily: 'mulish-bold',
     textAlign: 'left',
-    fontWeight: 'bold',
   },
 });
 

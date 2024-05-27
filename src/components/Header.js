@@ -20,7 +20,13 @@ export default function Header(props) {
         flex: 0.08,
       }}
     >
-      <View style={{ flex: 0.2, justifyContent: 'center' }}>
+      <View
+        style={{
+          flex: 0.2,
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start',
+        }}
+      >
         <BackButton backAction={backAction} />
       </View>
       <View

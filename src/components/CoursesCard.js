@@ -17,8 +17,7 @@ const windowWidth = Dimensions.get('window').width;
 const CoursesCard = (props) => {
   const { item, onChange, title, fromscreen } = props;
 
-  const chapterLocation = () => {
-  };
+  const chapterLocation = () => {};
   ``;
   var cardcontainer;
   if (fromscreen === 'Fullsubjects') {
@@ -52,108 +51,88 @@ const CoursesCard = (props) => {
       color = 'orange';
     }
   }
-  return (
-    fromscreen === 'Dashboard' || fromscreen === 'progresstopics' ?
-
-
-      <TouchableOpacity
-        style={{
-          width: width / 1.8,
-          height: height / 6,
-          backgroundColor: COLORS.whiteColor,
-          borderRadius: 8,
-          marginLeft: 8,
-          marginHorizontal:10
-        }}
-        onPress={() => {
-          onChange(item);
-        }}
-      >
-        <View
-          style={{ flex: 1 }}
-        >
-          {/* Your Image Component with dimensions */}
-          {/* Replace 'YourImageSource' with the actual source of your image */}
-          <Image
-            source={{ uri: item?.image }}
-            style={styles.image}
-            resizeMode={fromscreen === 'Fullsubjects' ? 'stretch' : 'cover'}
-          />
-          <View style={styles.absview}>
-            <Text style={styles.textstyle}>
-              {title === 'topics' ? item?.topicName : item?.name}
-            </Text>
-          </View>
-
-          <View>
-            <ProgressBar
-              progress={percent ? percent / 100 : 0}
-              width={
-                fromscreen === 'Fullsubjects'
-                  ? progreswwidth / 1.05
-                  : width / 1.8
-              }
-              height={2}
-              color={color}
-              unfilledColor={'lightgrey'}
-              borderColor={'transparent'}
-            />
-          </View>
-
-
-
+  return fromscreen === 'Dashboard' || fromscreen === 'progresstopics' ? (
+    <TouchableOpacity
+      style={{
+        width: width / 1.8,
+        height: height / 6,
+        backgroundColor: COLORS.whiteColor,
+        borderRadius: 8,
+        marginLeft: 8,
+        marginHorizontal: 10,
+      }}
+      onPress={() => {
+        onChange(item);
+      }}
+    >
+      <View style={{ flex: 1 }}>
+        {/* Your Image Component with dimensions */}
+        {/* Replace 'YourImageSource' with the actual source of your image */}
+        <Image
+          source={{ uri: item?.image }}
+          style={styles.image}
+          resizeMode={fromscreen === 'Fullsubjects' ? 'stretch' : 'cover'}
+        />
+        <View style={styles.absview}>
+          <Text style={styles.textstyle} numberOfLines={2}>
+            {title === 'topics' ? item?.topicName : item?.name}
+          </Text>
         </View>
 
-      </TouchableOpacity>
-      :
-      <TouchableOpacity
-        style={{
-          width: width / 2.3,
-          height: height / 6,
-          backgroundColor: COLORS.whiteColor,
-          borderRadius: 8,
-          marginLeft: 8,
-          marginTop: 10
-        }}
-        onPress={() => {
-          onChange(item);
-        }}
-      >
-        <View
-          style={{ flex: 1 }}
-        >
-          {/* Your Image Component with dimensions */}
-          {/* Replace 'YourImageSource' with the actual source of your image */}
-          <Image
-            source={{ uri: item?.image }}
-            style={styles.image}
-            resizeMode={fromscreen === 'Fullsubjects' ? 'stretch' : 'cover'}
+        <View>
+          <ProgressBar
+            progress={percent ? percent / 100 : 0}
+            width={
+              fromscreen === 'Fullsubjects' ? progreswwidth / 1.05 : width / 1.8
+            }
+            height={2}
+            color={color}
+            unfilledColor={'lightgrey'}
+            borderColor={'transparent'}
           />
-          <View style={styles.absview}>
-            <Text style={styles.textstyle}>
-              {title === 'topics' ? item?.topicName : item?.name}
-            </Text>
-          </View>
-
-          <View>
-            <ProgressBar
-              progress={percent ? percent / 100 : 0}
-              width={
-                width / 2.3
-              }
-              height={2}
-              color={color}
-              unfilledColor={'lightgrey'}
-              borderColor={'transparent'}
-            />
-          </View>
-
-
-
+        </View>
+      </View>
+    </TouchableOpacity>
+  ) : (
+    <TouchableOpacity
+      style={{
+        width: width / 2.3,
+        height: height / 6,
+        backgroundColor: COLORS.whiteColor,
+        borderRadius: 8,
+        marginLeft: 8,
+        marginTop: 10,
+      }}
+      onPress={() => {
+        onChange(item);
+      }}
+    >
+      <View style={{ flex: 1 }}>
+        {/* Your Image Component with dimensions */}
+        {/* Replace 'YourImageSource' with the actual source of your image */}
+        <Image
+          source={{ uri: item?.image }}
+          style={styles.image}
+          resizeMode={fromscreen === 'Fullsubjects' ? 'stretch' : 'cover'}
+        />
+        <View style={styles.absview}>
+          <Text style={styles.textstyle}>
+            {title === 'topics' ? item?.topicName : item?.name}
+          </Text>
         </View>
 
-      </TouchableOpacity>
-
+        <View>
+          <ProgressBar
+            progress={percent ? percent / 100 : 0}
+            width={width / 2.3}
+            height={2}
+            color={color}
+            unfilledColor={'lightgrey'}
+            borderColor={'transparent'}
+          />
+        </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 
@@ -170,8 +149,21 @@ const styles = {
     padding: 5,
     // Add other styles as needed
   },
-  absview: { width: "100%", height: 50, backgroundColor: "rgba(0, 0, 0, 0.6)", position: "absolute", bottom: 0 },
-  textstyle: { fontSize: 14, color: "white", textAlign: "center" },
+  absview: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    height: 50,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    position: 'absolute',
+    bottom: 0,
+  },
+  textstyle: {
+    fontSize: 14,
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: 'mulish-bold',
+  },
   image: {
     flex: 1,
     width: null,

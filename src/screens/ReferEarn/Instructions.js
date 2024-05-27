@@ -32,7 +32,7 @@ const Instructions = () => {
       </View>
 
       <View style={styles.instructionsImage}>
-        <Image source={require('../../../assets/images/Refer/tab1.png')}/>
+        <Image source={require('../../../assets/images/Refer/tab1.png')} />
       </View>
     </View>
   );
@@ -43,26 +43,25 @@ export default Instructions;
 const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: '#DEFCFF',
-    width: "100%",
+    width: '100%',
     borderRadius: 8,
     opacity: 0.9,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 12,
-    marginTop: 20,
+    marginTop: 10,
     ...SHADOW_STYLES,
   },
   cardText: {
     fontFamily: 'mulish-bold',
-    fontWeight: '800',
     textAlign: 'justify',
     fontSize: 13,
     color: COLORS.coursesColor,
   },
   buttonContainer: {
-    width:"100%",
+    width: '100%',
     height: 38,
-    backgroundColor: COLORS.coursesColor,
+    backgroundColor: COLORS.appSecondaryColor,
     borderRadius: 2,
     justifyContent: 'center',
     alignItems: 'center',
@@ -78,6 +77,6 @@ const styles = StyleSheet.create({
   instructionsImage: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 15,
+    marginVertical: 5,
   },
 });
