@@ -134,18 +134,19 @@ const HomeScreen = ({ route, navigation }) => {
             var appversion = json.data.version;
             //var data = appversion.split('v');
             ///alert(data[1])
-            if (8.0 < appversion) {
-              alert(appversion)
-          //    alert("appveriosn"+appversion)
-             // navigation.navigate('VersionUpdate')
-             // Actions.versionupdate();
+            if (9.0 < appversion) {
+              // alert(appversion)
+              //    alert("appveriosn"+appversion)
+              navigation.navigate('VersionUpdate');
+              // Actions.versionupdate();
             }
           }
         } else {
         }
       })
       .catch((error) => console.error(error));
-  }
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={{ flex: 1 }}>

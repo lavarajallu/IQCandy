@@ -166,7 +166,7 @@ const NormalVideoViewComponent = (props) => {
         let result = newarr.filter(
           (o1) => parseInt(o1) === parseInt(elapsed_sec)
         );
-        console.log(newarr)
+        console.log(newarr);
         if (parseInt(elapsed_sec) === result[0]) {
           if (show === true) {
           } else {
@@ -197,7 +197,9 @@ const NormalVideoViewComponent = (props) => {
       // } else {
       //   Orientation.lockToPortrait();
       // }
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+      ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT_UP
+      );
 
       initial = 0;
       let elapsed_sec = await this._youTubeRef?.getCurrentTime();
@@ -216,7 +218,9 @@ const NormalVideoViewComponent = (props) => {
       // } else {
       //   Orientation.lockToPortrait();
       // }
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+      ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT_UP
+      );
 
       let elapsed_sec = await this._youTubeRef?.getCurrentTime();
       let duration = await this._youTubeRef?.getDuration();
@@ -228,7 +232,9 @@ const NormalVideoViewComponent = (props) => {
     initial = 0;
     setisplaying(false);
     if (this._youTubeRef) {
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+      ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT_UP
+      );
 
       let elapsed_sec = await this._youTubeRef?.getCurrentTime();
       let duration = await this._youTubeRef?.getDuration();
@@ -276,7 +282,9 @@ const NormalVideoViewComponent = (props) => {
       ? ScreenOrientation.lockAsync(
           ScreenOrientation.OrientationLock.LANDSCAPE_LEFT
         )
-      : ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+      : ScreenOrientation.lockAsync(
+          ScreenOrientation.OrientationLock.PORTRAIT_UP
+        );
   };
   handleMainButtonTouch = () => {
     setisplaying(!isPlaying);
@@ -429,9 +437,9 @@ const NormalVideoViewComponent = (props) => {
                   }}
                 />
                 <View style={{ flex: 0.65 }}>
-                  <View style={[styles.subright, { marginLeft: 22 }]}>
+                  {/* <View style={[styles.subright, { marginLeft: 22 }]}>
                     {timesarray}
-                  </View>
+                  </View> */}
                 </View>
                 <View
                   style={{
@@ -517,7 +525,6 @@ const NormalVideoViewComponent = (props) => {
                           //     if (pausedtime > parseInt(value)) {
                           //       setPausedTime(null);
                           //     }
-
                           //     this._youTubeRef?.seekTo(parseInt(value), true);
                           //   } else {
                           //     this._youTubeRef?.seekTo(
@@ -530,7 +537,6 @@ const NormalVideoViewComponent = (props) => {
                           //   if (pausedtime > parseInt(value)) {
                           //     setPausedTime(null);
                           //   }
-
                           //   this._youTubeRef?.seekTo(parseInt(value), true);
                           // }
                         }}

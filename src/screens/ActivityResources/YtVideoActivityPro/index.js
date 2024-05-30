@@ -101,12 +101,12 @@ const YtVideoActivity = ({ route, navigation }) => {
       userId: user?.userInfo?.userId,
       activityDimId: activityDimId,
     });
-    getVideoquestions({
-      dispatch,
-      userId: user?.userInfo?.userId,
-      activityDimId: activityDimId,
-      assignedActivityId: data.assignedActivityId,
-    });
+    // getVideoquestions({
+    //   dispatch,
+    //   userId: user?.userInfo?.userId,
+    //   activityDimId: activityDimId,
+    //   assignedActivityId: data.assignedActivityId,
+    // });
     const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
     setactivityStartTime(activityStartTime);
   }, [user]);
@@ -165,7 +165,6 @@ const YtVideoActivity = ({ route, navigation }) => {
     handlePreviousActivity();
   };
   const onNewBack = () => {
-    alert('hi');
     setnewmodal(false);
   };
   const onPause = (questionInfo) => {
@@ -508,7 +507,7 @@ const YtVideoActivity = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
       )}
-      <Modal isVisible={newmodal}>
+      {/* <Modal isVisible={newmodal}>
         <View
           style={{
             flex: 1,
@@ -525,7 +524,7 @@ const YtVideoActivity = ({ route, navigation }) => {
             activitydata={data}
           />
         </View>
-      </Modal>
+      </Modal> */}
     </SafeAreaView>
   );
 };
