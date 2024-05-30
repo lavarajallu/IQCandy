@@ -93,27 +93,23 @@ const NormalVideoViewComponent = (props) => {
   });
   onquestionSubmit = (time) => {
     setisplaying(false);
-   
   };
   onLoad = (data) => {
     //this.setInteractiveAxis(data);
     setDuration(parseInt(data.duration));
     if (normaldata.videoPausedAt) {
-   
     } else {
       setCurrentTime(0);
     }
   };
   const getcurrentTime = async () => {
     if (playerRef) {
-      
       ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
       props.onBackNew(currentTime, duration);
     }
   };
   onNext = async () => {
     if (playerRef) {
-    
       ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
 
       props.onActivityNext(currentTime, duration);
@@ -121,7 +117,6 @@ const NormalVideoViewComponent = (props) => {
   };
   onPrevious = async () => {
     if (playerRef) {
-      
       ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
 
       props.onActivityPrevious(currentTime, duration);
@@ -147,6 +142,7 @@ const NormalVideoViewComponent = (props) => {
         //this.setState({ isPlaying: true,data:this.state.questiondisplay,show: true},()=>this.props.onPause(this.state.data));
       }
     }
+  }
     onRewatch = (data) => {
       if (playerRef) {
         var value = newarr.indexOf(pausedtime);
@@ -164,13 +160,9 @@ const NormalVideoViewComponent = (props) => {
           setisplaying(false);
         }
       }
-    };
   };
 
-
   const onfullscreen = () => {
-
-
     props.onfullscreen();
   };
   handlescreenfull = (val) => {
@@ -180,8 +172,6 @@ const NormalVideoViewComponent = (props) => {
           ScreenOrientation.OrientationLock.LANDSCAPE_LEFT
         )
       : ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-
-   
   };
   handleMainButtonTouch = () => {
     setisplaying(!isPlaying);
@@ -254,10 +244,12 @@ const NormalVideoViewComponent = (props) => {
           <View style={{ flex: 1 }}>
             <Video
               source={{
-                uri: props.activityType === 'conceptual_video' ? props.vimeourl  :  normaldata.url,
-                 headers: {
-                  Referer:
-                  'https://login.iqcandy.com/',
+                uri:
+                  props.activityType === 'conceptual_video'
+                    ? props.vimeourl
+                    : normaldata.url,
+                headers: {
+                  Referer: 'https://login.iqcandy.com/',
                 },
               }} // Can be a URL or a local file.
               ref={playerRef}
@@ -277,7 +269,8 @@ const NormalVideoViewComponent = (props) => {
               resizeMode={fullscreen ? 'cover' : 'contain'}
               onProgress={onProgress}
             />
-            <TouchableOpacity
+            {/* This is video fullscreen or halfscreen icons */}
+            {/* <TouchableOpacity
               onPress={onfullscreen}
               style={{
                 top: fullscreen ? 50 : 50,
@@ -307,7 +300,7 @@ const NormalVideoViewComponent = (props) => {
                   }}
                 />
               )}
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <View
               style={[
                 styles.absview,

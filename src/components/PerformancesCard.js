@@ -27,21 +27,50 @@ const PerformancesCard = ({
     <View style={styles.cardContainer}>
       <Text style={styles.cardTitle}>{cardTitle}</Text>
 
+     
+
       <RNSpeedometer
         size={size}
-        minValue={minValue}
-        maxValue={maxValue}
-        easeDuration={easeDuration}
+        minValue={0}
+        maxValue={90}
         value={value ? value : 0}
-        currentValueText={currentValueText}
-        needleHeightRatio={needleHeightRatio}
-        ringWidth={ringWidth}
-        needleTransitionDuration={needleTransitionDuration}
-        needleTransition={needleTransition}
-        needleColor={needleColor}
-        segmentColors={segmentColors}
-        labelNoteStyle={labelNoteStyle}
-        labels={labelsList}
+        currentValueText="Score-o-meter"
+        needleHeightRatio={0.7}
+        ringWidth={80}
+        needleTransitionDuration={3000}
+        needleTransition="easeElastic"
+        needleColor={COLORS.appSecondaryColor}
+        segmentColors={[
+          '#c44921',
+          '#d88414',
+          '#a3ba6d',
+          '#016313',
+        ]}
+        labelNoteStyle={{ fontSize: 15 }}
+        labels={[
+          {
+            name: 'Poor',
+            labelColor: '#c44921',
+
+            activeBarColor: '#c44921',
+          },
+
+          {
+            name: 'Average',
+            labelColor: '#d88414',
+            activeBarColor: '#d88414',
+          },
+          {
+            name: 'Good',
+            labelColor: '#a3ba6d',
+            activeBarColor: '#a3ba6d',
+          },
+          {
+            name: 'Excellent',
+            labelColor: '#016313',
+            activeBarColor: '#016313',
+          },
+        ]}
       />
     </View>
   );

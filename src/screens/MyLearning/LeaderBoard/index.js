@@ -34,7 +34,6 @@ const LeaderBoard = ({ navigation }) => {
   const [ruleVisible, setRuleVisible] = useState(false);
   const { leaderBoardData, rulBookCriteria } = useSelector(selectMyLearning);
 
-
   useEffect(() => {
     if (user) {
       getLeaderBoardData({
@@ -179,7 +178,7 @@ const LeaderBoard = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
               <View style={{ backgroundColor: 'white' }}>
-                {rulBookCriteria && rulBookCriteria.length > 0 ? (
+                {rulBookCriteria && rulBookCriteria?.length > 0 ? (
                   <ScrollView>
                     {rulBookCriteria?.map((res, i) => (
                       <View key={i} style={styles.modallistview}>

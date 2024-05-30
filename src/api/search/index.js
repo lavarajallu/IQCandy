@@ -39,8 +39,7 @@ const getChapterDetails = async (payload) => {
   const endpoint = searchPage.getChapterDetails(payload);
   const method = 'GET';
   const body = payload.data;
- 
-  
+
   const response = await makeApiCall(endpoint, method, body);
   // Check for success and handle accordingly
 

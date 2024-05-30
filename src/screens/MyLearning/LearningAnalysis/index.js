@@ -49,13 +49,12 @@ const LearningAnalysis = ({ navigation }) => {
   };
   const bllomsdatastatic = [
     {
-      label: "HTML",
-      value:
-        0,
+      label: 'HTML',
+      value: 0,
       totalQuestions: 0,
-      color: "#6A517",
-    }
-  ]
+      color: '#6A517',
+    },
+  ];
   useEffect(() => {
     if (user) {
       const payload = {
@@ -307,29 +306,28 @@ const LearningAnalysis = ({ navigation }) => {
               }}
               labelsList={textContent.labelsList}
             />
-          ) : 
-          <PerformancesCard
-          cardTitle='Couse Progress Average'
-          size={width / 1.8}
-          minValue={0}
-          maxValue={100}
-          easeDuration={500}
-          value={0
-          }
-          currentValueText='Score-o-meter'
-          needleHeightRatio={0.9}
-          ringWidth={100}
-          needleTransitionDuration={3000}
-          needleTransition='easeElastic'
-          segmentColors={COLORS.segmentColors}
-          labelNoteStyle={{
-            fontSize: 16,
-            fontWeight: '700',
-            fontFamily: 'mulish-bold',
-          }}
-          labelsList={textContent.labelsList}
-        />
-          }
+          ) : (
+            <PerformancesCard
+              cardTitle='Couse Progress Average'
+              size={width / 1.8}
+              minValue={0}
+              maxValue={100}
+              easeDuration={500}
+              value={0}
+              currentValueText='Score-o-meter'
+              needleHeightRatio={0.9}
+              ringWidth={100}
+              needleTransitionDuration={3000}
+              needleTransition='easeElastic'
+              segmentColors={COLORS.segmentColors}
+              labelNoteStyle={{
+                fontSize: 16,
+                fontWeight: '700',
+                fontFamily: 'mulish-bold',
+              }}
+              labelsList={textContent.labelsList}
+            />
+          )}
 
           {bloomsData.length > 0 && (
             <View style={styles.activityView}>
@@ -369,7 +367,7 @@ const LearningAnalysis = ({ navigation }) => {
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginTop:20
+                marginTop: 20,
               }}
             >
               <Text>No Data...</Text>

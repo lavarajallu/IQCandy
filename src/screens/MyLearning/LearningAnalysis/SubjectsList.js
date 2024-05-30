@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+  ImageBackground,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS } from '../../../constants/colors';
 
@@ -49,10 +57,8 @@ const SubjectsList = (props) => {
       horizontal
       renderItem={({ item, index }) => {
         const isActive = index === activeIndex;
-        const cardStyles = calculateCardStyles(index);
         const currentGradientColors =
           gradientColors[index % gradientColors.length] || []; // Provide a default empty array
-        const currentBackgroundColor = repeatedBackgroundColors[index];
 
         const borderColor = isActive
           ? COLORS.appSecondaryColor
@@ -68,59 +74,32 @@ const SubjectsList = (props) => {
                 height: 120,
                 marginLeft: index === 0 ? 8 : 0,
                 marginRight: 8,
-                borderRadius: 10,
-                borderWidth: 2,
-                padding: 2,
+                borderRadius: 4,
+                borderWidth: isActive ? 4 : 1,
+                padding: 0,
                 borderColor: borderColor,
               }}
             >
-              <LinearGradient
-                colors={currentGradientColors}
-                style={{ flex: 1, borderRadius: 10 }}
+              <ImageBackground
+                style={{ flex: 1 }}
+                source={{ uri: item.image ? item.image : null }}
               >
-                {/* Icon */}
-                <View
-                  style={{
-                    width: 52,
-                    height: 52,
-                    backgroundColor: currentBackgroundColor,
-                    borderRadius: 26,
-                    alignSelf: 'center',
-                    marginTop: 10,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Image
-                    source={{ uri: item.image ? item.image : null }}
-                    style={{ width: 52, height: 52, borderRadius: 26 }}
-                  />
-                </View>
-
                 {/* Subject Title Text */}
-                <Text
-                  style={{
-                    color: COLORS?.black,
-                    fontSize: 12,
-                    textAlign: 'center',
-                    fontWeight: '500',
-                    fontFamily: 'mulish-regular',
-                    marginTop: 20,
-                  }}
-                  numberOfLines={1}
-                >
-                  {item.name}
-                </Text>
-              </LinearGradient>
-              {isActive && (
-                <View
-                  style={{
-                    borderBottomWidth: 2,
-                    borderBottomColor: COLORS.primary,
-                    alignSelf: 'center',
-                  }}
-                />
-              )}
+                <View style={styles.absview}>
+                  <Text
+                    style={{
+                      color: COLORS?.whiteColor,
+                      fontSize: 12,
+                      textAlign: 'center',
+                      fontFamily: 'mulish-bold',
+                      padding: 4,
+                    }}
+                    numberOfLines={2}
+                  >
+                    {item.name}
+                  </Text>
+                </View>
+              </ImageBackground>
             </View>
           </TouchableOpacity>
         );
@@ -129,5 +108,17 @@ const SubjectsList = (props) => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  absview: {
+    width: '100%',
+    height: 40,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 0,
+  },
+});
 
 export default SubjectsList;

@@ -12,10 +12,8 @@ import { capitalizeFirstLetter } from '../../constants/helpers';
 
 const getIconByType = (type) => {
   switch (type) {
-    case 'phone':
-      return <Icon name='phone' size={24} color={COLORS.whiteColor} />;
-    case 'message':
-      return <Icon name='comment' size={24} color={COLORS.whiteColor} />;
+    // case 'phone':
+    //   return <Icon name='phone' size={24} color={COLORS.whiteColor} />;
     case 'email':
       return <Icon name='envelope' size={24} color={COLORS.whiteColor} />;
     case 'website':
@@ -28,12 +26,9 @@ const getIconByType = (type) => {
 const GenericContactCard = ({ contactInfo, contactType }) => {
   const handlePress = () => {
     switch (contactType) {
-      case 'phone':
-        Linking.openURL(`tel:${contactInfo}`);
-        break;
-      case 'message':
-        Linking.openURL(`sms:${contactInfo}`);
-        break;
+      // case 'phone':
+      //   Linking.openURL(`tel:${contactInfo}`);
+      //   break;
       case 'email':
         Linking.openURL(`mailto:${contactInfo}`);
         break;
@@ -60,15 +55,8 @@ const GenericContactCard = ({ contactInfo, contactType }) => {
 
 const ContactUs = () => (
   <View style={styles.container}>
-    <GenericContactCard contactInfo='+66-035950595' contactType='phone' />
-    <GenericContactCard
-      contactInfo="Hello, let's connect!"
-      contactType='message'
-    />
-    <GenericContactCard
-      contactInfo='admin@iqcandy.com'
-      contactType='email'
-    />
+    {/* <GenericContactCard contactInfo='+66-035950595' contactType='phone' /> */}
+    <GenericContactCard contactInfo='admin@iqcandy.com' contactType='email' />
     <GenericContactCard
       contactInfo='https://www.iqcandy.com/'
       contactType='website'
@@ -83,7 +71,7 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: COLORS.coursesColor,
+    backgroundColor: COLORS.appSecondaryColor,
     padding: 16,
     marginBottom: 16,
     borderRadius: 8,

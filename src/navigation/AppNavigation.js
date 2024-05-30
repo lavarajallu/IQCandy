@@ -45,7 +45,7 @@ import {
   YtVideoActivityPro,
   YtVideoActivity,
   TopicAnalysis,
-  RecommendedActivityResources
+  RecommendedActivityResources,
 } from '../screens';
 import ReferEarn from '../screens/ReferEarn';
 
@@ -104,7 +104,7 @@ function AppNavigation() {
   return (
     <Stack.Navigator initialRouteName={getInitialRoute()}>
       {/* {isFirstLaunch && user ? ( */}
-        {/* <>
+      {/* <>
           <Stack.Screen
             name={'DrawerNavigation'}
             component={DrawerNavigation}
@@ -296,235 +296,234 @@ function AppNavigation() {
           />
         </>
       ) : ( */}
-        <>
-          <Stack.Screen
-            name='Login'
-            component={Login}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='ForgotPassword'
-            component={ForgotPassword}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='ResetPassword'
-            component={ResetPassword}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='OTPVerification'
-            component={OTPVerification}
-            options={{ headerShown: false }}
-          />
+      <>
+        <Stack.Screen
+          name='Login'
+          component={Login}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='ForgotPassword'
+          component={ForgotPassword}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='ResetPassword'
+          component={ResetPassword}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='OTPVerification'
+          component={OTPVerification}
+          options={{ headerShown: false }}
+        />
 
-          <Stack.Screen
-            name='Register'
-            component={Register}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='Onboarding'
-            component={OnboardingScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='OnboardStarted'
-            component={OnBoardStartedScreen}
-            options={{ headerShown: false }}
-          />
+        <Stack.Screen
+          name='Register'
+          component={Register}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='Onboarding'
+          component={OnboardingScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='OnboardStarted'
+          component={OnBoardStartedScreen}
+          options={{ headerShown: false }}
+        />
 
-          <Stack.Screen
-            name={'DrawerNavigation'}
-            component={DrawerNavigation}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='MyChapters'
-            component={MyChapters}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='MyTopics'
-            component={MyTopics}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='MyLearning'
-            component={MyLearning}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='ActivityResources'
-            component={ActivityResources}
-            options={{ headerShown: false }}
-          />
+        <Stack.Screen
+          name={'DrawerNavigation'}
+          component={DrawerNavigation}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='MyChapters'
+          component={MyChapters}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='MyTopics'
+          component={MyTopics}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='MyLearning'
+          component={MyLearning}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='ActivityResources'
+          component={ActivityResources}
+          options={{ headerShown: false }}
+        />
 
-          <Stack.Screen
-            name='PreAssessment'
-            component={PreAssessment}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='PostAssessment'
-            component={PostAssessment}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='VideoActivity'
-            component={VideoActivity}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='NotesActivity'
-            component={NotesActivity}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='Summary'
-            component={Summary}
-            options={{ headerShown: false }}
-          />
-            <Stack.Screen
-            name='ReferEarn'
-            component={ReferEarn}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='MyPractice'
-            component={MyPractice}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='LearningAnalysis'
-            component={LearningAnalysis}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='LeaderBoard'
-            component={LeaderBoard}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='KnowledgeMap'
-            component={KnowledgeMap}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='PreviousQuestionPapers'
-            component={PreviousQuestionPapers}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='PrePaperAssessment'
-            component={PrePaperAssessment}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='EditProfile'
-            component={EditProfile}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='MyPracticeChapters'
-            component={MyPracticeChapters}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='SearchPage'
-            component={SearchPage}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='ReviewTests'
-            component={ReviewTests}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='BuyPackages'
-            component={BuyPackages}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='Subjects'
-            component={Subjects}
-            options={{ headerShown: false }}
-          />
+        <Stack.Screen
+          name='PreAssessment'
+          component={PreAssessment}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='PostAssessment'
+          component={PostAssessment}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='VideoActivity'
+          component={VideoActivity}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='NotesActivity'
+          component={NotesActivity}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='Summary'
+          component={Summary}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='ReferEarn'
+          component={ReferEarn}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='MyPractice'
+          component={MyPractice}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='LearningAnalysis'
+          component={LearningAnalysis}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='LeaderBoard'
+          component={LeaderBoard}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='KnowledgeMap'
+          component={KnowledgeMap}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='PreviousQuestionPapers'
+          component={PreviousQuestionPapers}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='PrePaperAssessment'
+          component={PrePaperAssessment}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='EditProfile'
+          component={EditProfile}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='MyPracticeChapters'
+          component={MyPracticeChapters}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='SearchPage'
+          component={SearchPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='ReviewTests'
+          component={ReviewTests}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='BuyPackages'
+          component={BuyPackages}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='Subjects'
+          component={Subjects}
+          options={{ headerShown: false }}
+        />
 
-          <Stack.Screen
-            name='TopicsProgressAll'
-            component={TopicsProgressAll}
-            options={{ headerShown: false }}
-          />
+        <Stack.Screen
+          name='TopicsProgressAll'
+          component={TopicsProgressAll}
+          options={{ headerShown: false }}
+        />
 
-          <Stack.Screen
-            name='PracticeAssesment'
-            component={PracticeAssesment}
-            options={{ headerShown: false }}
-          />
+        <Stack.Screen
+          name='PracticeAssesment'
+          component={PracticeAssesment}
+          options={{ headerShown: false }}
+        />
 
-          <Stack.Screen
-            name='PracticeSummary'
-            component={PracticeSummary}
-            options={{ headerShown: false }}
-          />
+        <Stack.Screen
+          name='PracticeSummary'
+          component={PracticeSummary}
+          options={{ headerShown: false }}
+        />
 
-          <Stack.Screen
-            name='ReviewPractice'
-            component={ReviewPractice}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='ReviewAnswers'
-            component={ReviewAnswers}
-            options={{ headerShown: false }}
-          />
+        <Stack.Screen
+          name='ReviewPractice'
+          component={ReviewPractice}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='ReviewAnswers'
+          component={ReviewAnswers}
+          options={{ headerShown: false }}
+        />
 
-          <Stack.Screen
-            name='PracticeSolutions'
-            component={PracticeSolutions}
-            options={{ headerShown: false }}
-          />
-            <Stack.Screen
-            name='TopicQuestionpapertype'
-            component={TopicQuestionpapertype}
-            options={{ headerShown: false }}
-          />
-            <Stack.Screen
-            name='ProfPdfViewNew'
-            component={ProfPdfViewNew}
-            options={{ headerShown: false }}
-          />
-            <Stack.Screen
-            name='VideoActivityPro'
-            component={VideoActivityPro}
-            options={{ headerShown: false }}
-          />
-          
-          <Stack.Screen
-            name='YtVideoActivityPro'
-            component={YtVideoActivityPro}
-            options={{ headerShown: false }}
-          />
-            <Stack.Screen
-            name='YtVideoActivity'
-            component={YtVideoActivity}
-            options={{ headerShown: false }}
-          />
-          
-          <Stack.Screen
-            name='RecommendedActivityResources'
-            component={RecommendedActivityResources}
-            options={{ headerShown: false }}
-          />
-          
-          <Stack.Screen
-            name='TopicAnalysis'
-            component={TopicAnalysis}
-            options={{ headerShown: false }}
-          />
-        </>
-      
+        <Stack.Screen
+          name='PracticeSolutions'
+          component={PracticeSolutions}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='TopicQuestionpapertype'
+          component={TopicQuestionpapertype}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='ProfPdfViewNew'
+          component={ProfPdfViewNew}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='VideoActivityPro'
+          component={VideoActivityPro}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name='YtVideoActivityPro'
+          component={YtVideoActivityPro}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name='YtVideoActivity'
+          component={YtVideoActivity}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name='RecommendedActivityResources'
+          component={RecommendedActivityResources}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name='TopicAnalysis'
+          component={TopicAnalysis}
+          options={{ headerShown: false }}
+        />
+      </>
     </Stack.Navigator>
   );
 

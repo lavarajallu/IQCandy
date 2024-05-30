@@ -1,13 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  Alert,
-  Dimensions,
-} from 'react-native';
+import { View, StyleSheet, Image, Dimensions } from 'react-native';
 import ValidatedTextInput from '../../components/ValidatedTextInput';
 import Button from '../../components/Button';
 import { COLORS } from '../../constants/colors';
@@ -16,7 +8,7 @@ import { changePassword } from '../../api/auth';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../../store/authManagement/selector';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const ChangePassword = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -125,7 +117,10 @@ const ChangePassword = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.logoContainer}>
-        <Image source={require('../../../assets/images/changepwd.jpeg')} />
+        <Image
+          source={require('../../../assets/images/changepwd.jpeg')}
+          style={styles.logo}
+        />
       </View>
       <View style={styles.inputContainer}>
         <ValidatedTextInput
@@ -181,13 +176,16 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.whiteColor,
   },
   logoContainer: {
-    flex: 0.35,
+    flex: 0.36,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  inputContainer: { flex: 0.35, justifyContent: 'center' },
+  inputContainer: {
+    flex: 0.35,
+    justifyContent: 'center',
+  },
   buttonContainer: {
-    flex: 0.3,
+    flex: 0.25,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -201,8 +199,8 @@ const styles = StyleSheet.create({
     color: COLORS.whiteColor,
     fontSize: 20,
     fontFamily: 'mulish-bold',
-    fontWeight: '700',
   },
+  logo: { height: height * 0.3, width: width * 0.9, marginTop: 10 },
 });
 
 export default ChangePassword;

@@ -164,11 +164,7 @@ export const textContent = {
       labelColor: '#c44921',
       activeBarColor: '#c44921',
     },
-    {
-      name: 'Below Average',
-      labelColor: '#c44921',
-      activeBarColor: '#c44921',
-    },
+    
     {
       name: 'Average',
       labelColor: '#d88414',
@@ -198,21 +194,21 @@ export const textContent = {
     {
       id: 2,
       progress: '30',
-      title: 'Learning Analysis',
+      title: 'Learning Overview',
       description: 'Role Readiness Score',
       type: 'learning_analysis',
       image_uri: require('../../assets/images/my_learning/learning_analysis.png'),
       color: '#f94d48',
     },
-    // {
-    //   id: 3,
-    //   progress: '20',
-    //   title: 'Prev Question Papers',
-    //   description: 'Role Readiness Score',
-    //   type: 'prev_question_papers',
-    //   image_uri: require('../../assets/images/my_learning/previoustest.png'),
-    //   color: '#277292',
-    // },
+    {
+      id: 3,
+      progress: '50',
+      title: 'Knowledge Map',
+      description: 'Role Readiness Score',
+      type: 'knowledge_map',
+      image_uri: require('../../assets/images/my_learning/heatmap.png'),
+      color: '#277292',
+    },
     {
       id: 4,
       progress: '40',
@@ -221,15 +217,6 @@ export const textContent = {
       type: 'leader_board',
       image_uri: require('../../assets/images/my_learning/leader_board.png'),
       color: '#924ad4',
-    },
-    {
-      id: 5,
-      progress: '50',
-      title: 'Knowledge Map',
-      description: 'Role Readiness Score',
-      type: 'knowledge_map',
-      image_uri: require('../../assets/images/my_learning/heatmap.png'),
-      color: '#734f96',
     },
   ],
 

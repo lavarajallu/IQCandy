@@ -1,4 +1,3 @@
-// Create a Drawer Navigator
 import React from 'react';
 import {
   SafeAreaView,
@@ -12,9 +11,8 @@ import {
   createDrawerNavigator,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../store/authManagement/selector';
-
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -27,16 +25,15 @@ import ContactUs from '../screens/ContactUs';
 import ProfilePage from '../screens/ProfilePage';
 import ChangePassword from '../screens/ChangePassword';
 import { clearUser } from '../store/authManagement/slice';
-import { useDispatch } from 'react-redux';
 
 // Create a Drawer Navigator
 const Drawer = createDrawerNavigator();
 
-const DrawerNavigation = ({ route,navigation }) => {
+const CustomDrawerContent = (props) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectUser);
 
-  const handleLogout = (navigation) => {
+  const handleLogout = () => {
     Alert.alert(
       'Logout',
       'Are you sure you want to logout?',
@@ -51,73 +48,98 @@ const DrawerNavigation = ({ route,navigation }) => {
             await AsyncStorage.removeItem('userToken');
             await AsyncStorage.removeItem('userInfo');
             dispatch(clearUser());
-            navigation.replace('Login');
+            props.navigation.replace('Login');
           },
         },
       ],
       { cancelable: false }
     );
   };
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <View
+        style={{
+          height: 200,
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: COLORS.whiteColor,
+        }}
+      >
+        {user?.userInfo?.profilePic ? (
+          <Image
+            source={{
+              uri: user.userInfo.profilePic,
+            }}
+            style={{
+              height: 100,
+              width: 100,
+              borderRadius: 50,
+              marginBottom: 12,
+            }}
+          />
+        ) : (
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate('EditProfile')}
+          >
+            <Image
+              style={{
+                height: 100,
+                width: 100,
+                borderRadius: 50,
+                marginBottom: 12,
+                resizeMode: 'contain',
+              }}
+              source={imagePaths.logos.profileAvatarImage}
+            />
+          </TouchableOpacity>
+        )}
+
+        <Text
+          style={{
+            fontSize: 16,
+            fontWeight: 'bold',
+            fontFamily: 'mulish-bold',
+            color: COLORS.black,
+          }}
+        >
+          {user?.userInfo?.firstName} {user?.userInfo?.lastName}
+        </Text>
+      </View>
+
+      <DrawerItemList {...props} />
+
+      <TouchableOpacity
+        onPress={handleLogout}
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          padding: 20,
+          borderTopWidth: 1,
+          borderTopColor: COLORS.appSecondaryColor,
+        }}
+      >
+        <AntDesign name='logout' size={24} color={COLORS.black} />
+        <Text
+          style={{
+            fontFamily: 'mulish-medium',
+            fontSize: 14,
+            marginLeft: 25,
+            color: COLORS.black,
+          }}
+        >
+          Log out
+        </Text>
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
+};
+
+const DrawerNavigation = () => {
   return (
     <Drawer.Navigator
-      drawerContent={(props) => {
-        return (
-          <SafeAreaView>
-            <View
-              style={{
-                height: 200,
-                width: '100%',
-                justifyContent: 'center',
-                alignItems: 'center',
-                backgroundColor: COLORS.whiteColor,
-              }}
-            >
-              {user?.userInfo?.profilePic ? (
-                <Image
-                  source={{
-                    uri: user.userInfo.profilePic,
-                  }}
-                  style={{
-                    height: 100,
-                    width: 100,
-                    borderRadius: 50,
-                    marginBottom: 12,
-                  }}
-                />
-              ) : (
-                <TouchableOpacity
-                  onPress={() => navigation.navigate('EditProfile')}
-                >
-                  <Image
-                    style={{
-                      height: 100,
-                      width: 100,
-                      borderRadius: 50,
-                      marginBottom: 12,
-                      resizeMode: 'contain',
-                    }}
-                    source={imagePaths.logos.profileAvatarImage}
-                  />
-                </TouchableOpacity>
-              )}
-
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                  fontFamily: 'mulish-bold',
-                  color: COLORS.black,
-                }}
-              >
-                {user?.userInfo?.firstName} {user?.userInfo?.lastName}
-              </Text>
-            </View>
-
-            <DrawerItemList {...props}
-          />
-          </SafeAreaView>
-        );
-      }}
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
       screenOptions={{
         activeTintColor: COLORS.appSecondaryColor,
         inactiveTintColor: COLORS.black,
@@ -129,7 +151,7 @@ const DrawerNavigation = ({ route,navigation }) => {
     >
       <Drawer.Screen
         name='BottomTabNavigation'
-        options={{
+        options={({ navigation }) => ({
           drawerLabelStyle: {
             fontFamily: 'mulish-medium',
             textAlign: 'left',
@@ -137,7 +159,7 @@ const DrawerNavigation = ({ route,navigation }) => {
           },
           drawerLabel: 'Home',
           title: 'IQ Candy',
-          headerTitleAlign: 'center', // Align title in the center
+          headerTitleAlign: 'center',
           headerTintColor: COLORS.whiteColor,
           headerStyle: {
             backgroundColor: COLORS.appSecondaryColor,
@@ -148,25 +170,16 @@ const DrawerNavigation = ({ route,navigation }) => {
             textAlign: 'justify',
             fontSize: 16,
           },
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => handleLogout(navigation)}
-              style={{ marginRight: 10 }}
-            >
-              <AntDesign name='logout' size={24} color='white' />
-            </TouchableOpacity>
-          ),
-
           headerShadowVisible: false,
           drawerIcon: () => (
             <IonIcon name='home-outline' size={24} color={COLORS.black} />
           ),
-        }}
+        })}
         component={BottomTabNavigation}
       />
       <Drawer.Screen
         name='Profile'
-        options={{
+        options={({ navigation }) => ({
           drawerLabelStyle: {
             fontFamily: 'mulish-medium',
             textAlign: 'left',
@@ -201,7 +214,11 @@ const DrawerNavigation = ({ route,navigation }) => {
             >
               <Image
                 source={require('../../assets/images/editicon.png')}
-                style={{ width: 10, height: 10 , tintColor:COLORS.appSecondaryColor}}
+                style={{
+                  width: 10,
+                  height: 10,
+                  tintColor: COLORS.appSecondaryColor,
+                }}
               />
             </TouchableOpacity>
           ),
@@ -213,10 +230,11 @@ const DrawerNavigation = ({ route,navigation }) => {
               color={COLORS.black}
             />
           ),
-        }}
+        })}
         component={ProfilePage}
       />
-      <Drawer.Screen
+      {/* Refer & Earn Disabled at a moment */}
+      {/* <Drawer.Screen
         name='Refer & Earn'
         options={{
           drawerLabelStyle: {
@@ -242,7 +260,7 @@ const DrawerNavigation = ({ route,navigation }) => {
           ),
         }}
         component={ReferEarn}
-      />
+      /> */}
       <Drawer.Screen
         name='Change Password'
         options={{
@@ -300,9 +318,7 @@ const DrawerNavigation = ({ route,navigation }) => {
           ),
         }}
         component={ContactUs}
-       // onPress={()=>alert('hiii')}
       />
-     
     </Drawer.Navigator>
   );
 };

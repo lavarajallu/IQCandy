@@ -50,7 +50,7 @@ const ProfPdfViewNew = ({ route, navigation }) => {
   const backAction = () => {
     //  updateAnalytics();
     if (route.params.type === 'recommtopicActivities') {
-      goBack(navigation)
+      goBack(navigation);
     } else {
       navigation.navigate('ActivityResources', {
         topicItem: route.params.topicItem,
@@ -73,8 +73,10 @@ const ProfPdfViewNew = ({ route, navigation }) => {
     setactivityStartTime(activityStartTime);
   }, [route]);
   useEffect(() => {
-
-    if (notesActivityDataProf && Object.keys(notesActivityDataProf).length > 0) {
+    if (
+      notesActivityDataProf &&
+      Object.keys(notesActivityDataProf).length > 0
+    ) {
       const data = notesActivityDataProf;
       if (route.params.data.activityType === 'pdf') {
         if (notesActivityDataProf.url) {
@@ -106,11 +108,9 @@ const ProfPdfViewNew = ({ route, navigation }) => {
                 : notesActivityDataProf.pdfPagePausedAt
             );
           } else {
-            setPage(1)
-            setIndex(1)
+            setPage(1);
+            setIndex(1);
           }
-
-
         } else {
           setNodataUrl(true);
           setLoading(false);
@@ -118,7 +118,8 @@ const ProfPdfViewNew = ({ route, navigation }) => {
         }
       } else if (
         route.params.data.activityType === 'html5' ||
-        route.params.data.activityType === 'web'
+        route.params.data.activityType === 'web' ||
+        route.params.data.activityType === 'games'
       ) {
         setNotestActivitydata(notesActivityDataProf.url);
         setIshtml(true);
@@ -148,20 +149,20 @@ const ProfPdfViewNew = ({ route, navigation }) => {
 
     if (data.activityType)
       var body = {
-        activityDimId: data?.activityDimId ? data?.activityDimId : "",
+        activityDimId: data?.activityDimId ? data?.activityDimId : '',
         boardId: user.userOrg.boardId,
-        gradeId:  user.userOrg.gradeId,
+        gradeId: user.userOrg.gradeId,
 
         subjectId: subjectItem?.subjectId
           ? subjectItem.subjectId
           : chapterItem?.subjectId
-            ? chapterItem.subjectId
-            : null,
+          ? chapterItem.subjectId
+          : null,
         chapterId: chapterItem?.chapterId
           ? chapterItem.chapterId
           : topicItem?.chapterId
-            ? topicItem.chapterId
-            : null,
+          ? topicItem.chapterId
+          : null,
         topicId: route.params.topicItem?.topicId
           ? route.params.topicItem.topicId
           : null,
@@ -175,7 +176,6 @@ const ProfPdfViewNew = ({ route, navigation }) => {
       userId: user?.userInfo.userId,
       data: body,
     });
-    
   };
   const handleNextActivity = () => {
     var newarray = route.params.smartres;
@@ -185,7 +185,9 @@ const ProfPdfViewNew = ({ route, navigation }) => {
       if (
         newobj.activityType === 'pdf' ||
         newobj.activityType === 'HTML5' ||
-        newobj.activityType === 'html5' || newobj.activityType === 'web'
+        newobj.activityType === 'html5' ||
+        newobj.activityType === 'web' ||
+        newobj.activityType === 'games'
       ) {
         navigation.navigate('ProfPdfViewNew', {
           index: index + 1,
@@ -211,9 +213,7 @@ const ProfPdfViewNew = ({ route, navigation }) => {
           topicItem: route.params.topicItem,
           from: route.params.from,
         });
-      } else if (
-        newobj.activityType === 'youtube'
-      ) {
+      } else if (newobj.activityType === 'youtube') {
         navigation.navigate('YtVideoActivityPro', {
           index: index + 1,
           smartres: route.params.smartres,
@@ -225,16 +225,14 @@ const ProfPdfViewNew = ({ route, navigation }) => {
           from: route.params.from,
         });
       }
-     
+    } else {
+      navigation.navigate('ActivityResources', {
+        topicItem: route.params.topicItem,
+        chapterItem: route.params.chapterItem,
+        subjectItem: route.params.subjectItem,
+        from: route.params.from,
+      });
     }
-    else {
-        navigation.navigate('ActivityResources', {
-          topicItem: route.params.topicItem,
-          chapterItem: route.params.chapterItem,
-          subjectItem: route.params.subjectItem,
-          from: route.params.from,
-        });
-      }
   };
   const handlePreviousActivity = () => {
     var newarray = route.params.smartres;
@@ -245,7 +243,8 @@ const ProfPdfViewNew = ({ route, navigation }) => {
         newobj.activityType === 'pdf' ||
         newobj.activityType === 'HTML5' ||
         newobj.activityType === 'html5' ||
-        newobj.activityType === 'web'
+        newobj.activityType === 'web' ||
+        newobj.activityType === 'games'
       ) {
         navigation.navigate('ProfPdfViewNew', {
           index: index - 1,
@@ -271,9 +270,7 @@ const ProfPdfViewNew = ({ route, navigation }) => {
           topicItem: route.params.topicItem,
           from: route.params.from,
         });
-      } else if (
-        newobj.activityType === 'youtube'
-      ) {
+      } else if (newobj.activityType === 'youtube') {
         navigation.navigate('YtVideoActivityPro', {
           index: index - 1,
           smartres: route.params.smartres,
@@ -286,16 +283,12 @@ const ProfPdfViewNew = ({ route, navigation }) => {
         });
       }
     } else {
-     
-    
-        navigation.navigate('ActivityResources', {
-          topicItem: route.params.topicItem,
-          chapterItem: route.params.chapterItem,
-          subjectItem: route.params.subjectItem,
-          from: route.params.from,
-        });
-
-      
+      navigation.navigate('ActivityResources', {
+        topicItem: route.params.topicItem,
+        chapterItem: route.params.chapterItem,
+        subjectItem: route.params.subjectItem,
+        from: route.params.from,
+      });
     }
   };
   const onPrevIndex = () => {
@@ -324,7 +317,6 @@ const ProfPdfViewNew = ({ route, navigation }) => {
   const onzoomout = () => {
     let scale = scalevalue > 1 ? scalevalue / 1.2 : 1;
     setScale(scale);
-
   };
   return (
     <SafeAreaView

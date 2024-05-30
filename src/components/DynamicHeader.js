@@ -19,7 +19,8 @@ const DynamicHeader = ({
   labels,
   labelsStyle,
   righticon,
-  onanalysis
+  onanalysis,
+  isOpacityView = true,
 }) => {
   return (
     <View style={[styles.container, { height: 240 }]}>
@@ -32,36 +33,61 @@ const DynamicHeader = ({
         </TouchableOpacity>
 
         <View style={styles.contentContainer}>
-          <View style={{flexDirection:"row"}}>
-            <View style={{flex:0.8,}}>
-            <Text style={styles.title}>{title}</Text>
-
+          <View style={{ flexDirection: 'row' }}>
+            <View
+              style={{
+                flex: 0.8,
+                width: '100%',
+                height: 50,
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                position: 'absolute',
+              }}
+            >
+              <Text style={styles.title} numberOfLines={2}>
+                {title}
+              </Text>
             </View>
-            <View style={{flex:0.1}}>
-            {righticon ? 
-        <TouchableOpacity onPress={onanalysis} style={{marginLeft:10}}>
-          <Image source={righticon} style={{width:30,height:30,justifyContent:"center",alignItems:"center",tintColor:"white"}}/>
-          </TouchableOpacity>
-         : null }
+            <View style={{ flex: 0.1 }}>
+              {righticon ? (
+                <TouchableOpacity
+                  onPress={onanalysis}
+                  style={{ marginLeft: 10 }}
+                >
+                  <Image
+                    source={righticon}
+                    style={{
+                      width: 30,
+                      height: 30,
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      tintColor: 'white',
+                    }}
+                  />
+                </TouchableOpacity>
+              ) : null}
             </View>
-          
           </View>
-        
+
           {labels && (
             <View style={[styles.labelsContainer, labelsStyle]}>
-              {labels.map((label, index) => (
-                <React.Fragment key={index}>
+              {labels?.map((label, index) => (
+                <>
                   {index > 0 && <Text style={styles.separator}>-</Text>}
-                  <Text style={styles.label}>{label}</Text>
-                </React.Fragment>
+                  <Text style={styles.label} numberOfLines={2}>
+                    {label}
+                  </Text>
+                </>
               ))}
             </View>
           )}
-         
         </View>
-        <View style={{justifyContent:"center",alignItems:"center",paddingVertical:5,}}>
-        
-         </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingVertical: 5,
+          }}
+        ></View>
       </ImageBackground>
     </View>
   );
@@ -91,8 +117,8 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     justifyContent: 'flex-end',
-    marginBottom: 5,
-    padding: 10,
+    alignItems: 'flex-start',
+    marginHorizontal: 4,
   },
   title: {
     color: COLORS.whiteColor,
@@ -104,9 +130,8 @@ const styles = StyleSheet.create({
   },
   labelsContainer: {
     flexDirection: 'row',
-    marginTop: 10,
-    marginLeft: 5,
-    justifyContent: 'flex-start',
+    marginLeft: 8,
+    justifyContent: 'flex-end',
   },
   separator: {
     color: COLORS.whiteColor,
@@ -117,10 +142,10 @@ const styles = StyleSheet.create({
   },
   label: {
     color: COLORS.whiteColor,
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 12,
     marginHorizontal: 3,
-    fontFamily: 'mulish-regular',
+    marginTop: 25,
+    fontFamily: 'mulish-bold',
   },
 });
 
