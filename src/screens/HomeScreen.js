@@ -9,6 +9,7 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -213,8 +214,11 @@ const HomeScreen = ({ route, navigation }) => {
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('ReferEarn', { from: 'dashboard' })
+                  onPress={
+                    () => {
+                      Alert.alert('IQ Candy', 'Coming Soon');
+                    }
+                    // navigation.navigate('ReferEarn', { from: 'dashboard' })
                   }
                 >
                   <Image
@@ -246,7 +250,8 @@ const HomeScreen = ({ route, navigation }) => {
           />
         </View>
         <View style={{ marginVertical: 30 }}>
-          <View stye={{ flex: 1 }}>
+          {/* Refer & Earn Card disabled */}
+          {/* <View stye={{ flex: 1 }}>
             <CardHeaderLabel lHLabel={'Refer & Earn'} />
             <View style={styles.referview}>
               <View style={styles.referleftview}>
@@ -278,7 +283,7 @@ const HomeScreen = ({ route, navigation }) => {
                 />
               </View>
             </View>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>

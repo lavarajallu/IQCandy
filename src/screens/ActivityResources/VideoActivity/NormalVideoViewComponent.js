@@ -28,7 +28,7 @@ const NormalVideoViewComponent = (props) => {
   const { questionsArray } = props;
   // let [spinner, setSpinner] = useState(true);
   const [normaldata, setNormlaData] = useState(props.data);
-  const [vimeourl,setvimeourl] = useState(props.vimeourl)
+  const [vimeourl, setvimeourl] = useState(props.vimeourl);
   // let [visisted, setVisited] = useState(false);
   const [pausedtime, setPausedTime] = useState(null);
 
@@ -49,10 +49,10 @@ const NormalVideoViewComponent = (props) => {
   useEffect(() => {
     //  Orientation.addOrientationListener(handleOrientation);
     if (questionsArray?.length > 0) {
-     var orders = questionsArray
-   setquestionsarray(orders);
+      var orders = questionsArray;
+      setquestionsarray(orders);
       setQuestionDisplay(orders[0]);
-       setPausedTime(parseInt(orders[0].timeInSec))
+      setPausedTime(parseInt(orders[0].timeInSec));
       setNormlaData(props.data);
       setLoading(false);
       var newarr = [];
@@ -65,6 +65,7 @@ const NormalVideoViewComponent = (props) => {
       setLoading(false);
     }
   }, [questionsArray]);
+
   props.forwardRef((name, value) => {
     if (name === 'rewatch') {
       onRewatch(value);
@@ -80,27 +81,28 @@ const NormalVideoViewComponent = (props) => {
       onNext();
     }
   });
+
   onquestionSubmit = (time) => {
     setisplaying(false);
     setShow(false);
-    if(questionsarray[index+1]){
-        setPausedTime(parseInt(questionsarray[index+1]?.timeInSec));
-        setQuestionDisplay(questionsarray[index+1]);
-        setShow(false);
-        setIndex(index+1)
-        setTimeout(()=>{
-            setisplaying(false)
-          },500)
-
-    }else{
-        setPausedTime(null);
-        setQuestionDisplay(null);
-        setShow(false);
-        setTimeout(()=>{
-            setisplaying(false)
-          },500)
+    if (questionsarray[index + 1]) {
+      setPausedTime(parseInt(questionsarray[index + 1]?.timeInSec));
+      setQuestionDisplay(questionsarray[index + 1]);
+      setShow(false);
+      setIndex(index + 1);
+      setTimeout(() => {
+        setisplaying(false);
+      }, 500);
+    } else {
+      setPausedTime(null);
+      setQuestionDisplay(null);
+      setShow(false);
+      setTimeout(() => {
+        setisplaying(false);
+      }, 500);
     }
   };
+
   onLoad = (data) => {
     //this.setInteractiveAxis(data);
     setDuration(parseInt(data.duration));
@@ -150,45 +152,45 @@ const NormalVideoViewComponent = (props) => {
     //this.checkForPoints(parseInt(data.currentTime))
     setCurrentTime(parseInt(data.currentTime));
     const elapsed_sec = parseInt(data.currentTime);
-    let result = newarr.filter((o1) => parseInt(o1) === parseInt(elapsed_sec));
+    let result = newarr?.filter((o1) => parseInt(o1) === parseInt(elapsed_sec));
 
     if (elapsed_sec === result[0]) {
+      console.log('elapsed_sec:', elapsed_sec, pausedtime);
       // if (parseInt(elapsed_sec) === pausedtime) {
       // } else {
-        var newdata = questionsarray.filter(
-          (o1) => parseInt(o1.timeInSec) === result[0]
-        );
-        setisplaying(true);
-        setData(newdata[0]);
-        setShow(true);
-        setPausedTime(result[0]);
-        props.onPause(newdata[0]);
+      var newdata = questionsarray.filter(
+        (o1) => parseInt(o1.timeInSec) === result[0]
+      );
+      setisplaying(true);
+      setData(newdata[0]);
+      setShow(true);
+      setPausedTime(result[0]);
+      props.onPause(newdata[0]);
 
-        //this.setState({ isPlaying: true,data:this.state.questiondisplay,show: true},()=>this.props.onPause(this.state.data));
-      
-    }}
-    onRewatch = (data) => {
-      if (playerRef) {
-        var value = newarr.indexOf(pausedtime);
-        var newwatch = newarr[value - 1];
-        var newvalue = newarr.indexOf(newwatch);
-        if (newvalue === -1) {
-          playerRef.current.seek(0);
-          setCurrentTime(0);
-          setShow(false);
-          setisplaying(false);
-        } else {
-          playerRef.current.seek(newarr[newvalue] + 1);
-          setCurrentTime(newarr[newvalue] + 1);
-          setShow(false);
-          setisplaying(false);
-        }
+      //this.setState({ isPlaying: true,data:this.state.questiondisplay,show: true},()=>this.props.onPause(this.state.data));
+      //}
+    }
+  };
+  onRewatch = (data) => {
+    if (playerRef) {
+      var value = newarr.indexOf(pausedtime);
+      var newwatch = newarr[value - 1];
+      var newvalue = newarr.indexOf(newwatch);
+      if (newvalue === -1) {
+        playerRef.current.seek(0);
+        setCurrentTime(0);
+        setShow(false);
+        setisplaying(false);
+      } else {
+        playerRef.current.seek(newarr[newvalue] + 1);
+        setCurrentTime(newarr[newvalue] + 1);
+        setShow(false);
+        setisplaying(false);
       }
-    };
-
+    }
+  };
 
   const onfullscreen = () => {
-   
     props.onfullscreen();
 
     //   Orientation.lockToLandscapeLeft();
@@ -278,10 +280,12 @@ const NormalVideoViewComponent = (props) => {
           <View style={{ flex: 1 }}>
             <Video
               source={{
-                uri: props.activityType === 'conceptual_video' ? props.vimeourl  :  normaldata.url,
+                uri:
+                  props.activityType === 'conceptual_video'
+                    ? props.vimeourl
+                    : normaldata.url,
                 headers: {
-                  Referer:
-                    'https://login.iqcandy.com/',
+                  Referer: 'https://login.iqcandy.com/',
                 },
               }} // Can be a URL or a local file.
               ref={playerRef}
@@ -301,7 +305,7 @@ const NormalVideoViewComponent = (props) => {
               resizeMode={fullscreen ? 'cover' : 'contain'}
               onProgress={onProgress}
             />
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={onfullscreen}
               style={{
                 top: fullscreen ? 50 : 50,
@@ -331,7 +335,7 @@ const NormalVideoViewComponent = (props) => {
                   }}
                 />
               )}
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <View
               style={[
                 styles.absview,
@@ -346,8 +350,8 @@ const NormalVideoViewComponent = (props) => {
                     alignItems: 'center',
                   }}
                 />
-                <View style={{ flex: 0.65,}}>
-                  <View style={[styles.subright, {marginLeft: 22 }]}>
+                <View style={{ flex: 0.65 }}>
+                  <View style={[styles.subright, { marginLeft: 22 }]}>
                     {timesarray}
                   </View>
                 </View>
@@ -410,7 +414,7 @@ const NormalVideoViewComponent = (props) => {
                 </View>
                 <View style={{ flex: 0.65 }}>
                   <View style={styles.subright}>
-                  {duration > 0 ? (
+                    {duration > 0 ? (
                       <Slider
                         style={{ width: '100%', height: fullimg }}
                         minimumValue={0}

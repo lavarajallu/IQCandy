@@ -12,6 +12,7 @@ import {
   Platform,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 import VideoQuestionModal from './VideoQuestionModal';
 import Modal from 'react-native-modal';
@@ -28,7 +29,7 @@ import {
   getVideoActivityData,
   updateanalyticsNotes,
   getAssessmentTestQuestionRequest,
-  getVideoquestions
+  getVideoquestions,
 } from '../../../api/myCourses';
 import moment from 'moment';
 var windowWidth = Dimensions.get('window').width;
@@ -37,7 +38,12 @@ const VideoActivity = ({ route, navigation }) => {
   const { questions } = textContent;
   const { topicItem, chapterItem, subjectItem, from, data, data1 } =
     route.params;
-  const { notesActivityData, videoActivityData ,videoquestionsdata,Videoquestionassesdata} = useSelector(selectMyCourses);
+  const {
+    notesActivityData,
+    videoActivityData,
+    videoquestionsdata,
+    Videoquestionassesdata,
+  } = useSelector(selectMyCourses);
   const { user } = useSelector(selectUser);
   const dispatch = useDispatch();
   const video = React.useRef(null);
@@ -47,12 +53,12 @@ const VideoActivity = ({ route, navigation }) => {
   const [newdata, setdata] = useState({});
   const [activityStartTime, setactivityStartTime] = useState(null);
   const [showfullscreen, setfullscreen] = useState(false);
-  const [vimeothumbnailurl, setvimeothumbnailurl] = useState('')
-  const [vimeourl, setvimeourl] = useState('')
+  const [vimeothumbnailurl, setvimeothumbnailurl] = useState('');
+  const [vimeourl, setvimeourl] = useState('');
 
-  const [vimeovideo, setvimeovideo] = useState('')
-  const [videosdata,setvideoquestionsdata] = useState([])
-   const[videodetailsquestion,setvideodetailsquestion] = useState(null)
+  const [vimeovideo, setvimeovideo] = useState('');
+  const [videosdata, setvideoquestionsdata] = useState([]);
+  const [videodetailsquestion, setvideodetailsquestion] = useState(null);
   const backAction = () => {
     updateAnalytics();
     navigation.navigate('ActivityResources', {
@@ -64,7 +70,7 @@ const VideoActivity = ({ route, navigation }) => {
   };
   const updateAnalytics = async (newdata, duration) => {
     const { data, subjectItem, chapterItem, topicItem } = route.params;
-    setvideoquestionsdata(null)
+    setvideoquestionsdata(null);
     if (data.activityType)
       var body = {
         activityDimId: data.activityDimId,
@@ -74,13 +80,13 @@ const VideoActivity = ({ route, navigation }) => {
         subjectId: subjectItem?.subjectId
           ? subjectItem.subjectId
           : chapterItem?.subjectId
-            ? chapterItem.subjectId
-            : null,
+          ? chapterItem.subjectId
+          : null,
         chapterId: chapterItem?.chapterId
           ? chapterItem.chapterId
           : topicItem?.chapterId
-            ? topicItem.chapterId
-            : null,
+          ? topicItem.chapterId
+          : null,
         topicId: route.params.topicItem?.topicId
           ? route.params.topicItem.topicId
           : null,
@@ -107,29 +113,27 @@ const VideoActivity = ({ route, navigation }) => {
       dispatch,
       userId: user?.userInfo?.userId,
       activityDimId: activityDimId,
-      assignedActivityId:data.assignedActivityId
-    });  
-      const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
-    setactivityStartTime(activityStartTime);
-    
-  }, [user]);
-  useEffect(()=>{
-    
-   if(videoquestionsdata && videoquestionsdata.length > 0){
-    var newdata = [...videoquestionsdata]
-    newdata.sort(function (a, b) {
-      let dateA = parseInt(a.timeInSec);
-      let dateB = parseInt(b.timeInSec);
-      if (dateA < dateB) {
-        return -1;
-      } else if (dateA > dateB) {
-        return 1;
-      }
-      return 0;
+      assignedActivityId: data.assignedActivityId,
     });
-    setvideoquestionsdata(newdata)
-   }
-  },[videoquestionsdata])
+    const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
+    setactivityStartTime(activityStartTime);
+  }, [user]);
+  useEffect(() => {
+    if (videoquestionsdata && videoquestionsdata.length > 0) {
+      var newdata = [...videoquestionsdata];
+      newdata.sort(function (a, b) {
+        let dateA = parseInt(a.timeInSec);
+        let dateB = parseInt(b.timeInSec);
+        if (dateA < dateB) {
+          return -1;
+        } else if (dateA > dateB) {
+          return 1;
+        }
+        return 0;
+      });
+      setvideoquestionsdata(newdata);
+    }
+  }, [videoquestionsdata]);
   useEffect(() => {
     if (videoActivityData && Object.keys(videoActivityData).length > 0) {
       if (data.activityType === 'conceptual_video') {
@@ -137,26 +141,26 @@ const VideoActivity = ({ route, navigation }) => {
         fetch(`https://player.vimeo.com/video/${VIMEO_ID.id}/config`, {
           method: 'GET',
           headers: {
-            'Referer': 'https://login.iqcandy.com/'
-          }
+            Referer: 'https://login.iqcandy.com/',
+          },
         })
-          .then(res => res.json())
-          .then(res => {
+          .then((res) => res.json())
+          .then((res) => {
             if (res.title === 'Sorry') {
               setnormalvideodata(videoActivityData);
             } else {
               setnormalvideodata(videoActivityData);
-              setvimeothumbnailurl(res.video.thumbs['640'])
-              setvimeourl(res.request.files.hls.cdns[res.request.files.hls.default_cdn].url)
-              setvimeovideo(res.video)
-            
+              setvimeothumbnailurl(res.video.thumbs['640']);
+              setvimeourl(
+                res.request.files.hls.cdns[res.request.files.hls.default_cdn]
+                  .url
+              );
+              setvimeovideo(res.video);
             }
-          }
-
-          ).catch((err) => {
-            setnormalvideodata(videoActivityData);
-
           })
+          .catch((err) => {
+            setnormalvideodata(videoActivityData);
+          });
       } else {
         setnormalvideodata(videoActivityData);
       }
@@ -175,7 +179,6 @@ const VideoActivity = ({ route, navigation }) => {
 
   const onBackNew = (data, duration) => {
     if (data) {
-      
       updateAnalytics(data, duration);
     } else {
       updateAnalytics(0, 0);
@@ -206,21 +209,24 @@ const VideoActivity = ({ route, navigation }) => {
     getAssessmentTestQuestionRequest({
       dispatch,
       questionId: questionInfo.questionId,
-      testId: questionInfo.userTestId,
+      testId: questionInfo?.userTestId,
       activityDimId: data.activityDimId,
       userId: user?.userInfo.userId,
-      assignedActivityId:data.assignedActivityId,
-      index: questionInfo.index
-    })
+      assignedActivityId: data.assignedActivityId,
+      index: questionInfo.index,
+    });
 
     //  this.setState({ newmodal: true })
   };
-  useEffect(()=>{
-   if( Videoquestionassesdata && Object.keys(Videoquestionassesdata).length > 0){
-    setvideodetailsquestion(Videoquestionassesdata)
-    setnewmodal(true);
-   }
-  },[Videoquestionassesdata])
+  useEffect(() => {
+    if (
+      Videoquestionassesdata &&
+      Object.keys(Videoquestionassesdata).length > 0
+    ) {
+      setvideodetailsquestion(Videoquestionassesdata);
+      setnewmodal(true);
+    }
+  }, [Videoquestionassesdata]);
   const onfullscreen = (value) => {
     if (this.funcComRef) {
       setfullscreen(!showfullscreen);
@@ -253,7 +259,8 @@ const VideoActivity = ({ route, navigation }) => {
         newobj.activityType === 'pdf' ||
         newobj.activityType === 'HTML5' ||
         newobj.activityType === 'html5' ||
-        newobj.activityType === 'web'
+        newobj.activityType === 'web' ||
+        newobj.activityType === 'games'
       ) {
         navigation.navigate('NotesActivity', {
           index: index + 1,
@@ -330,7 +337,8 @@ const VideoActivity = ({ route, navigation }) => {
         newobj.activityType === 'pdf' ||
         newobj.activityType === 'HTML5' ||
         newobj.activityType === 'html5' ||
-        newobj.activityType === 'web'
+        newobj.activityType === 'web' ||
+        newobj.activityType === 'games'
       ) {
         navigation.navigate('NotesActivity', {
           index: index - 1,
@@ -383,8 +391,8 @@ const VideoActivity = ({ route, navigation }) => {
   };
   const onquestionSubmit = (value) => {
     setnewmodal(false);
-   
-    setvideodetailsquestion(null)
+
+    setvideodetailsquestion(null);
     this.funcComRef('questionsubmit', value);
   };
   const onRewatch = () => {
@@ -392,6 +400,7 @@ const VideoActivity = ({ route, navigation }) => {
     this.funcComRef('rewatch', newdata);
   };
   const onback = () => {
+    ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
     if (this.funcComRef) {
       this.funcComRef('gettime', 'Val');
     } else {
@@ -408,7 +417,6 @@ const VideoActivity = ({ route, navigation }) => {
       backgroundColor: 'white',
       borderRadius: 20,
       width: '95%',
-     
     };
   } else {
     stylefull = {

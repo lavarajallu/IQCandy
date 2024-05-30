@@ -219,7 +219,8 @@ const Login = ({ navigation }) => {
               onPress={handleLogin} // Call the function to handle login
             />
 
-            <TouchableOpacity
+            {/* Register Page Navigation */}
+            {/* <TouchableOpacity
               onPress={() => {
                 navigation.navigate('Register');
               }}
@@ -228,7 +229,7 @@ const Login = ({ navigation }) => {
                 Don’t have an account?{' '}
                 <Text style={styles.createAccountLink}>Create Account</Text>
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </ImageBackground>
         {/* Use the Loader component */}

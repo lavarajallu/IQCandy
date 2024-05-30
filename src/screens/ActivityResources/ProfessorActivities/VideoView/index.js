@@ -23,9 +23,9 @@ import { textContent } from '../../../../constants/content';
 import { selectUser } from '../../../../store/authManagement/selector';
 import { selectMyCourses } from '../../../../store/student/myCourses/selector';
 import {
-    getVideoActivityDataProf,
+  getVideoActivityDataProf,
   updateanalyticsNotes,
-  getVideoquestionsvideopro
+  getVideoquestionsvideopro,
 } from '../../../../api/myCourses';
 import moment from 'moment';
 import getVideoId from 'get-video-id';
@@ -36,7 +36,12 @@ const VideoActivityPro = ({ route, navigation }) => {
   const { questions } = textContent;
   const { topicItem, chapterItem, subjectItem, from, data, data1 } =
     route.params;
-  const { notesActivityData, videoActivityData,videoActivityDataPro,Videoquestionsvideopro } = useSelector(selectMyCourses);
+  const {
+    notesActivityData,
+    videoActivityData,
+    videoActivityDataPro,
+    Videoquestionsvideopro,
+  } = useSelector(selectMyCourses);
   const { user } = useSelector(selectUser);
   const dispatch = useDispatch();
   const video = React.useRef(null);
@@ -46,12 +51,12 @@ const VideoActivityPro = ({ route, navigation }) => {
   const [newdata, setdata] = useState({});
   const [activityStartTime, setactivityStartTime] = useState(null);
   const [showfullscreen, setfullscreen] = useState(false);
-  const [vimeothumbnailurl, setvimeothumbnailurl] = useState('')
-  const [vimeourl, setvimeourl] = useState('')
-const [videosdata,setvideoquestionsdata] = useState({})
-  const [vimeovideo, setvimeovideo] = useState('')
+  const [vimeothumbnailurl, setvimeothumbnailurl] = useState('');
+  const [vimeourl, setvimeourl] = useState('');
+  const [videosdata, setvideoquestionsdata] = useState({});
+  const [vimeovideo, setvimeovideo] = useState('');
   const backAction = () => {
-     //updateAnalytics();
+    //updateAnalytics();
     navigation.navigate('ActivityResources', {
       topicItem: route.params.topicItem,
       chapterItem: route.params.chapterItem,
@@ -91,7 +96,6 @@ const [videosdata,setvideoquestionsdata] = useState({})
       userId: user?.userInfo.userId,
       data: body,
     });
-   
   };
   useEffect(() => {
     getVideoActivityDataProf({
@@ -104,64 +108,61 @@ const [videosdata,setvideoquestionsdata] = useState({})
       dispatch,
       userId: user?.userInfo?.userId,
       activityId: route.params.data.id,
-    }); 
+    });
     const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
     setactivityStartTime(activityStartTime);
   }, [user]);
-  useEffect(()=>{
-    if(Videoquestionsvideopro && Videoquestionsvideopro.length > 0){
-     var newdata = [...Videoquestionsvideopro]
-     newdata.sort(function (a, b) {
-       let dateA = parseInt(a.timeInSec);
-       let dateB = parseInt(b.timeInSec);
-       if (dateA < dateB) {
-         return -1;
-       } else if (dateA > dateB) {
-         return 1;
-       }
-       return 0;
-     });
-     setvideoquestionsdata(newdata)
+  useEffect(() => {
+    if (Videoquestionsvideopro && Videoquestionsvideopro.length > 0) {
+      var newdata = [...Videoquestionsvideopro];
+      newdata.sort(function (a, b) {
+        let dateA = parseInt(a.timeInSec);
+        let dateB = parseInt(b.timeInSec);
+        if (dateA < dateB) {
+          return -1;
+        } else if (dateA > dateB) {
+          return 1;
+        }
+        return 0;
+      });
+      setvideoquestionsdata(newdata);
     }
-   },[Videoquestionsvideopro])
+  }, [Videoquestionsvideopro]);
   useEffect(() => {
     if (videoActivityDataPro && Object.keys(videoActivityDataPro).length > 0) {
-     
-      
-        if (data.activityType === 'conceptual_video') {
-          var VIMEO_ID = getVideoId(videoActivityData.url);
-          fetch(`https://player.vimeo.com/video/${VIMEO_ID.id}/config`, {
-            method: 'GET',
-            headers: {
-              'Referer': 'https://login.iqcandy.com/'
+      if (data.activityType === 'conceptual_video') {
+        var VIMEO_ID = getVideoId(videoActivityData.url);
+        fetch(`https://player.vimeo.com/video/${VIMEO_ID.id}/config`, {
+          method: 'GET',
+          headers: {
+            Referer: 'https://login.iqcandy.com/',
+          },
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            if (res.title === 'Sorry') {
+              setnormalvideodata(videoActivityDataPro);
+            } else {
+              setnormalvideodata(videoActivityDataPro);
+              setvimeothumbnailurl(res.video.thumbs['640']);
+              setvimeourl(
+                res.request.files.hls.cdns[res.request.files.hls.default_cdn]
+                  .url
+              );
+              setvimeovideo(res.video);
             }
           })
-            .then(res => res.json())
-            .then(res => {
-              if (res.title === 'Sorry') {
-                setnormalvideodata(videoActivityDataPro);
-              } else {
-                setnormalvideodata(videoActivityDataPro);
-                setvimeothumbnailurl(res.video.thumbs['640'])
-                setvimeourl(res.request.files.hls.cdns[res.request.files.hls.default_cdn].url)
-                setvimeovideo(res.video)
-              
-              }
-            }
-  
-            ).catch((err) => {
-              setnormalvideodata(videoActivityDataPro);
-              })
-        } else {
-          setnormalvideodata(videoActivityDataPro);
-        }
-  
-        // setnormalvideodata(videoActivityData);
-      
+          .catch((err) => {
+            setnormalvideodata(videoActivityDataPro);
+          });
+      } else {
+        setnormalvideodata(videoActivityDataPro);
+      }
+
+      // setnormalvideodata(videoActivityData);
     }
   }, [videoActivityDataPro]);
   const onActivityNext = (currentTime, duration) => {
-   
     handleNextActivity();
   };
 
@@ -171,9 +172,9 @@ const [videosdata,setvideoquestionsdata] = useState({})
     // } else {
     //   updateAnalytics(0, 0);
     // }
-    if(route.params.type === 'recommtopicActivities'){
-      goBack(navigation)
-    }else{
+    if (route.params.type === 'recommtopicActivities') {
+      goBack(navigation);
+    } else {
       setTimeout(() => {
         navigation.navigate('ActivityResources', {
           topicItem: route.params.topicItem,
@@ -183,10 +184,8 @@ const [videosdata,setvideoquestionsdata] = useState({})
         });
       }, 1000);
     }
-  
   };
   const onActivityPrevious = (data, duration) => {
-  
     handlePreviousActivity();
   };
   const onNewBack = () => {
@@ -194,12 +193,11 @@ const [videosdata,setvideoquestionsdata] = useState({})
   };
   const onPause = (data) => {
     setdata(data);
-    setdata((data)=>{
+    setdata((data) => {
       setnewmodal(true);
 
       return data;
-    })
-  
+    });
   };
   const onfullscreen = (value) => {
     if (this.funcComRef) {
@@ -216,56 +214,56 @@ const [videosdata,setvideoquestionsdata] = useState({})
     var index = route.params.index;
     if (newobj) {
       if (
-           newobj.activityType === 'pdf' ||
-           newobj.activityType === 'HTML5' ||
-           newobj.activityType === 'html5' || newobj.activityType === 'web'
-         ) {
-           navigation.navigate('ProfPdfViewNew', {
-             index: index + 1,
-             smartres: route.params.smartres,
-             data: newobj,
-             type: route.params.type,
-             chapterItem: route.params.chapterItem,
-             subjectItem: route.params.subjectItem,
-             topicItem: route.params.topicItem,
-             from: route.params.from,
-           });
-         } else if (
-           newobj.activityType === 'conceptual_video' ||
-           newobj.activityType === 'video'
-         ) {
-           navigation.navigate('VideoActivityPro', {
-             index: index + 1,
-             smartres: route.params.smartres,
-             data: newobj,
-             type: route.params.type,
-             chapterItem: route.params.chapterItem,
-             subjectItem: route.params.subjectItem,
-             topicItem: route.params.topicItem,
-             from: route.params.from,
-           });
-         }else if (
-           newobj.activityType === 'youtube'
-         ) {
-           navigation.navigate('YtVideoActivityPro', {
-             index: index + 1,
-             smartres: route.params.smartres,
-             data: newobj,
-             type: route.params.type,
-             chapterItem: route.params.chapterItem,
-             subjectItem: route.params.subjectItem,
-             topicItem: route.params.topicItem,
-             from: route.params.from,
-           });
-         }
-       } else {
-         navigation.navigate('ActivityResources', {
-           topicItem: route.params.topicItem,
-           chapterItem: route.params.chapterItem,
-           subjectItem: route.params.subjectItem,
-           from: route.params.from,
-         });
-       }
+        newobj.activityType === 'pdf' ||
+        newobj.activityType === 'HTML5' ||
+        newobj.activityType === 'html5' ||
+        newobj.activityType === 'web' ||
+        newobj.activityType === 'games'
+      ) {
+        navigation.navigate('ProfPdfViewNew', {
+          index: index + 1,
+          smartres: route.params.smartres,
+          data: newobj,
+          type: route.params.type,
+          chapterItem: route.params.chapterItem,
+          subjectItem: route.params.subjectItem,
+          topicItem: route.params.topicItem,
+          from: route.params.from,
+        });
+      } else if (
+        newobj.activityType === 'conceptual_video' ||
+        newobj.activityType === 'video'
+      ) {
+        navigation.navigate('VideoActivityPro', {
+          index: index + 1,
+          smartres: route.params.smartres,
+          data: newobj,
+          type: route.params.type,
+          chapterItem: route.params.chapterItem,
+          subjectItem: route.params.subjectItem,
+          topicItem: route.params.topicItem,
+          from: route.params.from,
+        });
+      } else if (newobj.activityType === 'youtube') {
+        navigation.navigate('YtVideoActivityPro', {
+          index: index + 1,
+          smartres: route.params.smartres,
+          data: newobj,
+          type: route.params.type,
+          chapterItem: route.params.chapterItem,
+          subjectItem: route.params.subjectItem,
+          topicItem: route.params.topicItem,
+          from: route.params.from,
+        });
+      }
+    } else {
+      navigation.navigate('ActivityResources', {
+        topicItem: route.params.topicItem,
+        chapterItem: route.params.chapterItem,
+        subjectItem: route.params.subjectItem,
+        from: route.params.from,
+      });
+    }
   };
   const handlePreviousActivity = () => {
     var newarray = route.params.smartres;
@@ -273,56 +271,56 @@ const [videosdata,setvideoquestionsdata] = useState({})
     var index = route.params.index;
     if (newobj) {
       if (
-           newobj.activityType === 'pdf' ||
-           newobj.activityType === 'HTML5' ||
-           newobj.activityType === 'html5' || newobj.activityType === 'web'
-         ) {
-           navigation.navigate('ProfPdfViewNew', {
-             index: index  - 1,
-             smartres: route.params.smartres,
-             data: newobj,
-             type: route.params.type,
-             chapterItem: route.params.chapterItem,
-             subjectItem: route.params.subjectItem,
-             topicItem: route.params.topicItem,
-             from: route.params.from,
-           });
-         } else if (
-           newobj.activityType === 'conceptual_video' ||
-           newobj.activityType === 'video'
-         ) {
-           navigation.navigate('VideoActivityPro', {
-             index: index -  1,
-             smartres: route.params.smartres,
-             data: newobj,
-             type: route.params.type,
-             chapterItem: route.params.chapterItem,
-             subjectItem: route.params.subjectItem,
-             topicItem: route.params.topicItem,
-             from: route.params.from,
-           });
-         }else if (
-           newobj.activityType === 'youtube'
-         ) {
-           navigation.navigate('YtVideoActivityPro', {
-             index: index - 1,
-             smartres: route.params.smartres,
-             data: newobj,
-             type: route.params.type,
-             chapterItem: route.params.chapterItem,
-             subjectItem: route.params.subjectItem,
-             topicItem: route.params.topicItem,
-             from: route.params.from,
-           });
-         }
-       } else {
-         navigation.navigate('ActivityResources', {
-           topicItem: route.params.topicItem,
-           chapterItem: route.params.chapterItem,
-           subjectItem: route.params.subjectItem,
-           from: route.params.from,
-         });
-       }
+        newobj.activityType === 'pdf' ||
+        newobj.activityType === 'HTML5' ||
+        newobj.activityType === 'html5' ||
+        newobj.activityType === 'web' ||
+        newobj.activityType === 'games'
+      ) {
+        navigation.navigate('ProfPdfViewNew', {
+          index: index - 1,
+          smartres: route.params.smartres,
+          data: newobj,
+          type: route.params.type,
+          chapterItem: route.params.chapterItem,
+          subjectItem: route.params.subjectItem,
+          topicItem: route.params.topicItem,
+          from: route.params.from,
+        });
+      } else if (
+        newobj.activityType === 'conceptual_video' ||
+        newobj.activityType === 'video'
+      ) {
+        navigation.navigate('VideoActivityPro', {
+          index: index - 1,
+          smartres: route.params.smartres,
+          data: newobj,
+          type: route.params.type,
+          chapterItem: route.params.chapterItem,
+          subjectItem: route.params.subjectItem,
+          topicItem: route.params.topicItem,
+          from: route.params.from,
+        });
+      } else if (newobj.activityType === 'youtube') {
+        navigation.navigate('YtVideoActivityPro', {
+          index: index - 1,
+          smartres: route.params.smartres,
+          data: newobj,
+          type: route.params.type,
+          chapterItem: route.params.chapterItem,
+          subjectItem: route.params.subjectItem,
+          topicItem: route.params.topicItem,
+          from: route.params.from,
+        });
+      }
+    } else {
+      navigation.navigate('ActivityResources', {
+        topicItem: route.params.topicItem,
+        chapterItem: route.params.chapterItem,
+        subjectItem: route.params.subjectItem,
+        from: route.params.from,
+      });
+    }
   };
   const onquestionSubmit = (value) => {
     setnewmodal(false);
@@ -486,7 +484,7 @@ const [videosdata,setvideoquestionsdata] = useState({})
             alignItems: 'center',
           }}
         >
-           <VideoQuestionModal
+          <VideoQuestionModal
             data={newdata}
             questionsArray={newdata}
             onquestionSubmit={() => onquestionSubmit(20)}

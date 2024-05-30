@@ -131,7 +131,6 @@ const CalendarPage = ({ route, navigation }) => {
       });
       setneweventsdata(result);
       setnewmodal(true);
-     
     } else {
       setneweventsdata([]);
       setnewmodal(true);
@@ -279,7 +278,6 @@ const CalendarPage = ({ route, navigation }) => {
     var topicId = item.scheduleTypeId;
     var url =
       'https://api.iqcandy.com/api/iqcandy' +
-
       `/universities/${user?.userOrg?.universityId}/branches/${user?.userOrg?.branchId}/semesters/${user?.userOrg?.semesterId}/subjects/${subjectId}/chapters/${chapterId}`;
     fetch(url, {
       method: 'GET',
@@ -291,12 +289,10 @@ const CalendarPage = ({ route, navigation }) => {
       .then((response) => response.json())
       .then((json) => {
         if (json) {
-
           if (json.data) {
-            var chapterDetails = json.data
+            var chapterDetails = json.data;
             var url =
               'https://api.iqcandy.com/api/iqcandy' +
-
               `/universities/${user?.userOrg?.universityId}/branches/${user?.userOrg?.branchId}/semesters/${user?.userOrg?.semesterId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}`;
             fetch(url, {
               method: 'GET',
@@ -308,10 +304,9 @@ const CalendarPage = ({ route, navigation }) => {
               .then((response) => response.json())
               .then((json) => {
                 if (json) {
-
                   if (json.data) {
                     additionalitem['topicId'] = item.scheduleTypeId;
-                    additionalitem['image'] = json.data.image;   
+                    additionalitem['image'] = json.data.image;
                     navigation.navigate('ActivityResources', {
                       topicItem: { ...additionalitem },
                       chapterItem: chapterDetails,
@@ -322,34 +317,26 @@ const CalendarPage = ({ route, navigation }) => {
                 }
               })
               .catch((error) => console.error(error));
-          
           }
         }
       })
       .catch((error) => console.error(error));
-
-   
   };
-  
-  const ongo = (item) => {
 
+  const ongo = (item) => {
     seteventtapped((eventtapped) => {
       setnewmodal((newmodal) => {
-        gotoChaptersPage(item)
+        gotoChaptersPage(item);
 
+        return false;
+      });
 
-
-        return false
-      })
-
-      return item
-    })
- 
+      return item;
+    });
   };
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-     
         {isspinner ? (
           <Text>Loading</Text>
         ) : (
@@ -463,7 +450,7 @@ const CalendarPage = ({ route, navigation }) => {
       <Modal
         testID={'modal'}
         isVisible={newmodal}
-      // onSwipeComplete={this.closenewmodal.bind(this)}
+        // onSwipeComplete={this.closenewmodal.bind(this)}
       >
         <View style={{ flex: 1, justifyContent: 'center' }}>
           <View

@@ -113,7 +113,8 @@ const NotesActivity = ({ route, navigation }) => {
         }
       } else if (
         notesActivityData.activityType === 'html5' ||
-        notesActivityData.activityType === 'web'
+        notesActivityData.activityType === 'web' ||
+        notesActivityData.activityType === 'games'
       ) {
         setNotestActivitydata(notesActivityData.url);
         setIshtml(true);
@@ -192,7 +193,8 @@ const NotesActivity = ({ route, navigation }) => {
         newobj.activityType === 'pdf' ||
         newobj.activityType === 'HTML5' ||
         newobj.activityType === 'html5' ||
-        newobj.activityType === 'web'
+        newobj.activityType === 'web' ||
+        newobj.activityType === 'games'
       ) {
         navigation.navigate('NotesActivity', {
           index: index + 1,
@@ -269,7 +271,8 @@ const NotesActivity = ({ route, navigation }) => {
         newobj.activityType === 'pdf' ||
         newobj.activityType === 'HTML5' ||
         newobj.activityType === 'html5' ||
-        newobj.activityType === 'web'
+        newobj.activityType === 'web' ||
+        newobj.activityType === 'games'
       ) {
         navigation.navigate('NotesActivity', {
           index: index - 1,

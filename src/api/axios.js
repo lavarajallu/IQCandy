@@ -2,10 +2,8 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
 import { Alert } from 'react-native';
-const apiBaseUrl ='https://api.iqcandy.com/api/iqcandy'// 'https://api.iqcandy.com/api/iqcandy';.
-
-// const apiBaseUrl =
-//   'http://myprofessor-lb-1079580533.ap-south-1.elb.amazonaws.com/api/my-professor';
+// import { useAppContext } from '../hooks/AppContext';
+const apiBaseUrl = `https://api.iqcandy.com/api/iqcandy`;
 
 // Create an instance of Axios with the desired configuration
 const axiosInstance = axios.create({
@@ -21,6 +19,7 @@ axiosInstance.interceptors.request.use(
     if (authToken) {
       config.headers.jwt = authToken;
     }
+    console.log('Request Config:', config);
     return config;
   },
   (error) => {
@@ -40,23 +39,25 @@ axiosInstance.interceptors.response.use(
     }
   },
   async (error) => {
+    // const { dispatch, navigation } = useAppContext(); // Use context to get dispatch and navigation
+
     const errorInfo = error?.response?.data?.error;
     const errorMessage = errorInfo?.message || '';
-    console.error('Error during API: ',  error?.response);
+    console.error('Error during API: ', error?.response);
     // Session cleared whenever user session is expired
     if (errorMessage === 'Session Expired, please login.') {
-      Alert.alert(
-        'IQ Candy',
-        'Session Expired, please logout and login again'
-      );
+      Alert.alert('IQ Candy', 'Session Expired, please logout and login again');
+
+      // if (dispatch && navigation) {
       await AsyncStorage.removeItem('userToken');
       await AsyncStorage.removeItem('userInfo');
       dispatch(clearUser());
       navigation.replace('Login');
+      // }
     } else {
-     Alert.alert('IQ Candy', errorMessage);
+      Alert.alert('IQ Candy', errorMessage);
     }
-    // throw error;
+    throw error;
   }
 );
 

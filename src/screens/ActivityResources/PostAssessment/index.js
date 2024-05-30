@@ -377,7 +377,8 @@ const PostAssessment = ({ route, navigation }) => {
         newobj.activityType === 'pdf' ||
         newobj.activityType === 'HTML5' ||
         newobj.activityType === 'html5' ||
-        newobj.activityType === 'web'
+        newobj.activityType === 'web' ||
+        newobj.activityType === 'games'
       ) {
         navigation.navigate('NotesActivity', {
           index: index + 1,
@@ -455,7 +456,8 @@ const PostAssessment = ({ route, navigation }) => {
         newobj.activityType === 'pdf' ||
         newobj.activityType === 'HTML5' ||
         newobj.activityType === 'html5' ||
-        newobj.activityType === 'web'
+        newobj.activityType === 'web' ||
+        newobj.activityType === 'games'
       ) {
         navigation.navigate('NotesActivity', {
           index: index - 1,

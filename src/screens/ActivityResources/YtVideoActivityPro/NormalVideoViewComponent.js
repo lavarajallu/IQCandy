@@ -1,13 +1,20 @@
 /* eslint-disable react/no-this-in-sfc */
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Image, Platform, Text, TouchableOpacity, View,Dimensions } from 'react-native';
+import {
+  Image,
+  Platform,
+  Text,
+  TouchableOpacity,
+  View,
+  Dimensions,
+} from 'react-native';
 //import DeviceConstants from 'react-native-device-constants';
 import Slider from '@react-native-community/slider';
 import getVideoId from 'get-video-id';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import YouTube from 'react-native-youtube';
-import YoutubePlayer from "react-native-youtube-iframe";
+import YoutubePlayer from 'react-native-youtube-iframe';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
 import styles from './styles';
@@ -38,7 +45,7 @@ const NormalVideoViewComponent = (props) => {
   let [newarr, setnewarr] = useState([]);
 
   useEffect(() => {
-  ///  Orientation.addOrientationListener(handleOrientation);
+    ///  Orientation.addOrientationListener(handleOrientation);
     if (props.data) {
       var videoid = getVideoId(props.data.url);
     }
@@ -141,10 +148,10 @@ const NormalVideoViewComponent = (props) => {
   };
   onStateChange = (e) => {
     if (this._youTubeRef) {
-
       if (initial === 0) {
-
-        if (e === 'playing') {
+        if (Platform.OS === 'android' && e === 'playing') {
+          this.onReady();
+        } else if (Platform.OS === 'ios' && e?.state === 'playing') {
           this.onReady();
         }
       }
@@ -162,7 +169,6 @@ const NormalVideoViewComponent = (props) => {
         if (parseInt(elapsed_sec) === result[0]) {
           if (show === true) {
           } else {
-
             var newdata = questionsArray.filter(
               (o1) => parseInt(o1.timeInSec) === result[0]
             );
@@ -266,15 +272,16 @@ const NormalVideoViewComponent = (props) => {
   handlescreenfull = (val) => {
     setFullScreen(val);
     val
-    ? ScreenOrientation.lockAsync(
-        ScreenOrientation.OrientationLock.LANDSCAPE_LEFT
-      )
-    : ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+      ? ScreenOrientation.lockAsync(
+          ScreenOrientation.OrientationLock.LANDSCAPE_LEFT
+        )
+      : ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
   };
   handleMainButtonTouch = () => {
     setisplaying(!isPlaying);
   };
-  toHHMMSS = (secs) => {
+  const toHHMMSS = (secs) => {
+    //alert(secs);
     var sec_num = parseInt(secs, 10);
     var hours = Math.floor(sec_num / 3600);
     var minutes = Math.floor(sec_num / 60) % 60;
@@ -285,15 +292,14 @@ const NormalVideoViewComponent = (props) => {
       .filter((v, i) => v !== '00' || i > 0)
       .join(':');
   };
-  // useEffect(()=>{
 
-  // },[timesarray])
+  useEffect(() => {}, [timesarray]);
+
   const timesarray = [];
   const arraydata = [];
   for (var i = 0; i < duration; i++) {
     arraydata.push({ value: i });
   }
-  const YOUR_API_KEY = 'paste yout api key here';
 
   var count = 0;
   {
@@ -341,34 +347,41 @@ const NormalVideoViewComponent = (props) => {
         }}
       >
         <View style={{ flex: 1 }}>
-          <View style={{ flex: 1, justifyContent: 'center', }}>
-            {Platform.OS === 'ios' ? 
-            <YouTube
-              ref={(component) => {
-                this._youTubeRef = component;
-              }}
-              apiKey={'AIzaSyB1DjYP6DVdeu2l8i33gZ6PdMfA9piDHsY'}
-              controls={0}
-              videoId={videoid}
-              play={isPlaying} // control playback of video with true/false
-              onReady={handleReady}
-              onChangeState={onStateChange}
-              style={{ height: fullscreen ? '100%' : '50%' }}
-              onError={(error)=>{console.log("Errororororrrrrr",error)}}
-            /> : 
-            
-            <YoutubePlayer  ref={(component) => {
-              this._youTubeRef = component;
-            }}
-            apiKey={'AIzaSyB1DjYP6DVdeu2l8i33gZ6PdMfA9piDHsY'}
-            controls={0}
-            videoId={videoid}
-            play={isPlaying}// control playback of video with true/false
-            onReady={handleReady}
-            onChangeState={onStateChange}
-            height={ fullscreen ? windowWidth /1.5: 250 }
-            onError={(error)=>{console.log("Errororororrrrrr",error)}} />}
-            <TouchableOpacity
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            {Platform.OS === 'ios' ? (
+              <YouTube
+                ref={(component) => {
+                  this._youTubeRef = component;
+                }}
+                apiKey={'AIzaSyB1DjYP6DVdeu2l8i33gZ6PdMfA9piDHsY'}
+                controls={0}
+                videoId={videoid}
+                play={isPlaying} // control playback of video with true/false
+                onReady={handleReady}
+                onChangeState={onStateChange}
+                style={{ height: fullscreen ? '100%' : '50%' }}
+                onError={(error) => {
+                  console.log('Errororororrrrrr', error);
+                }}
+              />
+            ) : (
+              <YoutubePlayer
+                ref={(component) => {
+                  this._youTubeRef = component;
+                }}
+                apiKey={'AIzaSyB1DjYP6DVdeu2l8i33gZ6PdMfA9piDHsY'}
+                controls={0}
+                videoId={videoid}
+                play={isPlaying} // control playback of video with true/false
+                onReady={handleReady}
+                onChangeState={onStateChange}
+                height={fullscreen ? windowWidth / 1.5 : 250}
+                onError={(error) => {
+                  console.log('Errororororrrrrr', error);
+                }}
+              />
+            )}
+            {/* <TouchableOpacity
               onPress={onfullscreen}
               style={{
                 top: fullscreen ? 50 : 50,
@@ -398,8 +411,8 @@ const NormalVideoViewComponent = (props) => {
                   }}
                 />
               )}
-            </TouchableOpacity>
-          
+            </TouchableOpacity> */}
+
             <View
               style={[
                 styles.absview,
@@ -470,7 +483,13 @@ const NormalVideoViewComponent = (props) => {
                       />
                     )}
                   </TouchableOpacity>
-                  <Text style={{ color: 'white', fontSize: subfont }}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: subfont,
+                      fontFamily: 'mulish-regular',
+                    }}
+                  >
                     {toHHMMSS(currentTime)}
                   </Text>
                 </View>
@@ -481,16 +500,15 @@ const NormalVideoViewComponent = (props) => {
                         style={{ width: '100%', height: fullimg }}
                         minimumValue={0}
                         maximumValue={duration}
-                        minimumTrackTintColor="#FFFFFF"
-                        maximumTrackTintColor="#000000"
+                        minimumTrackTintColor='#FFFFFF'
+                        maximumTrackTintColor='#000000'
                         thumbImage={
                           Platform.OS === 'ios'
                             ? require('../../../../assets/images/thumb1.png')
                             : require('../../../../assets/images/thumb.png')
                         }
                         value={currentTime} // Which is updated by videoRef.onProgress listener
-                        onSlidingStart={(value) => {
-                        }}
+                        onSlidingStart={(value) => {}}
                         onValueChange={(value) => {
                           if (parseInt(value) > parseInt(currentTime)) {
                             if (props.resourcedata.percentage !== 0) {
@@ -527,7 +545,13 @@ const NormalVideoViewComponent = (props) => {
                     alignItems: 'center',
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: subfont }}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: subfont,
+                      fontFamily: 'mulish-regular',
+                    }}
+                  >
                     {toHHMMSS(duration)}
                   </Text>
                 </View>
