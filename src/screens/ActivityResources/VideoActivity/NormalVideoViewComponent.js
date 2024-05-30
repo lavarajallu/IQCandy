@@ -121,7 +121,7 @@ const NormalVideoViewComponent = (props) => {
       //   Orientation.lockToPortrait();
       // }
       ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-    //  props.onBackNew(currentTime, duration);
+       props.onBackNew(currentTime, duration);
     }
   };
   onNext = async () => {
@@ -431,7 +431,7 @@ const NormalVideoViewComponent = (props) => {
                           console.log('slidingstarte', value, currentTime);
                         }}
                         onValueChange={(value) => {
-                          playerRef.current.seek(parseInt(currentTime));
+                         // playerRef.current.seek(parseInt(currentTime));
 
                           // if (parseInt(value) > parseInt(currentTime)) {
                           //   if (props.resourcedata.percentage !== 0) {

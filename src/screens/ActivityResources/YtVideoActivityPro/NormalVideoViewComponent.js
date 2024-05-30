@@ -511,28 +511,28 @@ const NormalVideoViewComponent = (props) => {
                         value={currentTime} // Which is updated by videoRef.onProgress listener
                         onSlidingStart={(value) => {}}
                         onValueChange={(value) => {
-                          if (parseInt(value) > parseInt(currentTime)) {
-                            if (props.resourcedata.percentage !== 0) {
-                              setCurrentTime(parseInt(value));
-                              if (pausedtime > parseInt(value)) {
-                                setPausedTime(null);
-                              }
+                          // if (parseInt(value) > parseInt(currentTime)) {
+                          //   if (props.resourcedata.percentage !== 0) {
+                          //     setCurrentTime(parseInt(value));
+                          //     if (pausedtime > parseInt(value)) {
+                          //       setPausedTime(null);
+                          //     }
 
-                              this._youTubeRef?.seekTo(parseInt(value), true);
-                            } else {
-                              this._youTubeRef?.seekTo(
-                                parseInt(currentTime),
-                                true
-                              );
-                            }
-                          } else {
-                            setCurrentTime(parseInt(value));
-                            if (pausedtime > parseInt(value)) {
-                              setPausedTime(null);
-                            }
+                          //     this._youTubeRef?.seekTo(parseInt(value), true);
+                          //   } else {
+                          //     this._youTubeRef?.seekTo(
+                          //       parseInt(currentTime),
+                          //       true
+                          //     );
+                          //   }
+                          // } else {
+                          //   setCurrentTime(parseInt(value));
+                          //   if (pausedtime > parseInt(value)) {
+                          //     setPausedTime(null);
+                          //   }
 
-                            this._youTubeRef?.seekTo(parseInt(value), true);
-                          }
+                          //   this._youTubeRef?.seekTo(parseInt(value), true);
+                          // }
                         }}
                       />
                     ) : null}

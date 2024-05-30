@@ -98,7 +98,7 @@ const HomeScreen = ({ route, navigation }) => {
     // registerForPushNotificationsAsync().then((token) =>
     //   setExpoPushToken(token)
     // );
-
+    getversion();
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
         setNotification(notification);
@@ -123,7 +123,29 @@ const HomeScreen = ({ route, navigation }) => {
       }
     });
   }, []);
-
+  const getversion = () => {
+    fetch(`https://api.iqcandy.com/api/iqcandy/app-version/latest`, {
+      method: 'GET',
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.code === 201) {
+          if (json.data) {
+            var appversion = json.data.version;
+            //var data = appversion.split('v');
+            ///alert(data[1])
+            if (8.0 < appversion) {
+              alert(appversion)
+          //    alert("appveriosn"+appversion)
+             // navigation.navigate('VersionUpdate')
+             // Actions.versionupdate();
+            }
+          }
+        } else {
+        }
+      })
+      .catch((error) => console.error(error));
+  }
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={{ flex: 1 }}>

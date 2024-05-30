@@ -44,6 +44,7 @@ import YtVideoActivityPro from './ActivityResources/ProfessorActivities/YtVideoA
 import YtVideoActivity from './ActivityResources/YtVideoActivityPro'
 import RecommendedActivityResources from './ActivityResources/RecommendedActivities'
 import TopicAnalysis from './TopicAnalysis'
+import VersionUpdate from './VersionUpdate'
 export {
   Login,
   Register,
@@ -90,5 +91,6 @@ export {
   YtVideoActivityPro,
   YtVideoActivity,
   RecommendedActivityResources,
+  VersionUpdate,
   TopicAnalysis
 };
