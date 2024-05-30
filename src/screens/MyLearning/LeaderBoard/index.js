@@ -27,6 +27,7 @@ import {
 } from '../../../api/myLearning';
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
 import { selectUser } from '../../../store/authManagement/selector';
+import RuleBookModal from '../../../components/RuleBookModal';
 
 const LeaderBoard = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -165,49 +166,11 @@ const LeaderBoard = ({ navigation }) => {
         </View>
       )}
       {rulBookCriteria ? (
-        <Modal isVisible={ruleVisible}>
-          <View style={styles.modalMainView}>
-            <View style={styles.modalsubview}>
-              <View style={styles.modaltopview}>
-                <Text style={styles.modalheadtext}>Rule Book</Text>
-                <TouchableOpacity onPress={() => setRuleVisible(false)}>
-                  <Image
-                    source={require('../../../../assets/images/cancel.png')}
-                    style={styles.modalcancelimage}
-                  />
-                </TouchableOpacity>
-              </View>
-              <View style={{ backgroundColor: 'white' }}>
-                {rulBookCriteria && rulBookCriteria?.length > 0 ? (
-                  <ScrollView>
-                    {rulBookCriteria?.map((res, i) => (
-                      <View key={i} style={styles.modallistview}>
-                        <View style={styles.modalsublistview}>
-                          <View style={styles.modallistleftview}>
-                            <Text style={styles.modallistlefttext}>
-                              {res?.description}
-                            </Text>
-                          </View>
-                          <View style={styles.modallistrightview}>
-                            <View style={styles.modallistbutton}>
-                              <Text
-                                style={styles.modalpointstext}
-                              >{`${res?.points} pts`}</Text>
-                            </View>
-                          </View>
-                        </View>
-                      </View>
-                    ))}
-                  </ScrollView>
-                ) : (
-                  <View style={styles.loadingView}>
-                    <Text>No data</Text>
-                  </View>
-                )}
-              </View>
-            </View>
-          </View>
-        </Modal>
+        <RuleBookModal
+          rulBookCriteria={rulBookCriteria}
+          ruleVisible={ruleVisible}
+          setRuleVisible={setRuleVisible}
+        />
       ) : null}
     </SafeAreaView>
   );
