@@ -75,7 +75,6 @@ const TopicAnalysis = ({ route, navigation }) => {
           var topicAnalysisData = json.data;
           if (json.data.topicProgress?.totalProgress) {
             var completion = parseInt(json.data.topicProgress.totalProgress);
-         //   alert(JSON.stringify(json.data.topicProgress))
             var completepercent = completion ? Math.round(completion) : 0;
             var incompletepercent = completion
               ? Math.round(100 - completion)
@@ -101,7 +100,6 @@ const TopicAnalysis = ({ route, navigation }) => {
             // };
             const widthAndHeight = 250
             const series = [completepercent, incompletepercent]
-           // alert(JSON.stringify(series))
             const sliceColor = ['#A3BA6D', '#F94D48']
             var newarr = [];
             newarr.push(obj1);
@@ -161,7 +159,6 @@ const TopicAnalysis = ({ route, navigation }) => {
                   newprogressitemlist.push(newitem)
                 }
               });
-             // alert(JSON.stringify(newprogressitemlist))
             }
             var graphvalue = 0;
             progressItemList =

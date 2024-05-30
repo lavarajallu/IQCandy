@@ -28,7 +28,7 @@ const screenOptions = {
   tabBarActiveTintColor: COLORS.tabBarLabelActiveColor,
 };
 
-const BottomTabNavigation = ({route}) => {
+const BottomTabNavigation = ({ route }) => {
   return (
     <Tab.Navigator
       initialRouteName='Home'
@@ -95,7 +95,6 @@ const BottomTabNavigation = ({route}) => {
           headerTitleAlign: 'center', // Align title in the center
           headerTintColor: COLORS.whiteColor,
           headerStyle: {
-            
             backgroundColor: COLORS.appSecondaryColor,
           },
           headerTitleStyle: {
@@ -106,7 +105,8 @@ const BottomTabNavigation = ({route}) => {
           },
         }}
       />
-      <Tab.Screen
+      {/* Notifications commented at present */}
+      {/* <Tab.Screen
         name='Notifications'
         component={Notifications}
         options={{
@@ -128,7 +128,7 @@ const BottomTabNavigation = ({route}) => {
             fontSize: 16,
           },
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };

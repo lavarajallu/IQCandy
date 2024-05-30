@@ -64,7 +64,9 @@ const Summary = ({ route, navigation }) => {
       } else if (
         newobj.activityType === 'pdf' ||
         newobj.activityType === 'HTML5' ||
-        newobj.activityType === 'html5' || newobj.activityType === 'web'
+        newobj.activityType === 'html5' ||
+        newobj.activityType === 'web' ||
+        newobj.activityType === 'games'
       ) {
         navigation.navigate('NotesActivity', {
           index: index + 1,
@@ -98,9 +100,7 @@ const Summary = ({ route, navigation }) => {
           topicItem: route.params.topicItem,
           from: route.params.from,
         });
-      }else if (
-        newobj.activityType === 'youtube'
-      ) {
+      } else if (newobj.activityType === 'youtube') {
         navigation.navigate('YtVideoActivity', {
           index: index + 1,
           smartres: route.params.smartres,

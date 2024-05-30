@@ -23,9 +23,9 @@ import { textContent } from '../../../../constants/content';
 import { selectUser } from '../../../../store/authManagement/selector';
 import { selectMyCourses } from '../../../../store/student/myCourses/selector';
 import {
-    getVideoActivityDataProf,
+  getVideoActivityDataProf,
   updateanalyticsNotes,
-  getVideoquestionsvideopro
+  getVideoquestionsvideopro,
 } from '../../../../api/myCourses';
 import moment from 'moment';
 var windowWidth = Dimensions.get('window').width;
@@ -34,7 +34,12 @@ const YtVideoActivityPro = ({ route, navigation }) => {
   const { questions } = textContent;
   const { topicItem, chapterItem, subjectItem, from, data, data1 } =
     route.params;
-  const { notesActivityData, videoActivityData,videoActivityDataPro ,Videoquestionsvideopro} = useSelector(selectMyCourses);
+  const {
+    notesActivityData,
+    videoActivityData,
+    videoActivityDataPro,
+    Videoquestionsvideopro,
+  } = useSelector(selectMyCourses);
   const { user } = useSelector(selectUser);
   const dispatch = useDispatch();
   const video = React.useRef(null);
@@ -44,19 +49,20 @@ const YtVideoActivityPro = ({ route, navigation }) => {
   const [newdata, setdata] = useState({});
   const [activityStartTime, setactivityStartTime] = useState(null);
   const [showfullscreen, setfullscreen] = useState(false);
-  const [videosdata,setvideoquestionsdata] = useState({})
+  const [videosdata, setvideoquestionsdata] = useState({});
 
   const backAction = () => {
     //updateAnalytics();
-    if(route.params.type === 'recommtopicActivities'){
-      goBack(navigation)    }else{
-    navigation.navigate('ActivityResources', {
-      topicItem: route.params.topicItem,
-      chapterItem: route.params.chapterItem,
-      subjectItem: route.params.subjectItem,
-      from: 'topics',
-    });
-  }
+    if (route.params.type === 'recommtopicActivities') {
+      goBack(navigation);
+    } else {
+      navigation.navigate('ActivityResources', {
+        topicItem: route.params.topicItem,
+        chapterItem: route.params.chapterItem,
+        subjectItem: route.params.subjectItem,
+        from: 'topics',
+      });
+    }
   };
   const updateAnalytics = async (newdata, duration) => {
     const { data, subjectItem, chapterItem, topicItem } = route.params;
@@ -64,7 +70,7 @@ const YtVideoActivityPro = ({ route, navigation }) => {
       var body = {
         activityDimId: data.activityDimId,
         boardId: user.userOrg.boardId,
-        gradeId:  user.userOrg.gradeId,
+        gradeId: user.userOrg.gradeId,
 
         subjectId: subjectItem?.subjectId
           ? subjectItem.subjectId
@@ -89,7 +95,6 @@ const YtVideoActivityPro = ({ route, navigation }) => {
       userId: user?.userInfo.userId,
       data: body,
     });
-   
   };
   useEffect(() => {
     getVideoActivityDataProf({
@@ -98,48 +103,45 @@ const YtVideoActivityPro = ({ route, navigation }) => {
       id: route.params.data.id,
       activityInfoId: route.params.data.activityInfoId,
     });
-    getVideoquestionsvideopro({
-      dispatch,
-      userId: user?.userInfo?.userId,
-      activityId: route.params.data.id,
-    }); 
+    // getVideoquestionsvideopro({
+    //   dispatch,
+    //   userId: user?.userInfo?.userId,
+    //   activityId: route.params.data.id,
+    // });
     const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
     setactivityStartTime(activityStartTime);
   }, [user]);
-  useEffect(()=>{
-    if(Videoquestionsvideopro && Videoquestionsvideopro.length > 0){
-      console.log("klsadjklsjkljsd",Videoquestionsvideopro)
-     var newdata = [...Videoquestionsvideopro]
-     newdata.sort(function (a, b) {
-       let dateA = parseInt(a.timeInSec);
-       let dateB = parseInt(b.timeInSec);
-       if (dateA < dateB) {
-         return -1;
-       } else if (dateA > dateB) {
-         return 1;
-       }
-       return 0;
-     });
-     setvideoquestionsdata(newdata)
+  useEffect(() => {
+    if (Videoquestionsvideopro && Videoquestionsvideopro.length > 0) {
+      console.log('klsadjklsjkljsd', Videoquestionsvideopro);
+      var newdata = [...Videoquestionsvideopro];
+      newdata.sort(function (a, b) {
+        let dateA = parseInt(a.timeInSec);
+        let dateB = parseInt(b.timeInSec);
+        if (dateA < dateB) {
+          return -1;
+        } else if (dateA > dateB) {
+          return 1;
+        }
+        return 0;
+      });
+      setvideoquestionsdata(newdata);
     }
-   },[Videoquestionsvideopro])
+  }, [Videoquestionsvideopro]);
   useEffect(() => {
     if (videoActivityDataPro && Object.keys(videoActivityDataPro).length > 0) {
-     setnormalvideodata(videoActivityDataPro);
+      setnormalvideodata(videoActivityDataPro);
     }
   }, [videoActivityDataPro]);
   const onActivityNext = (currentTime, duration) => {
-  
     handleNextActivity();
   };
 
   const onBackNew = (data, duration) => {
-  
-
-   // setTimeout(() => {
-    if(route.params.type === 'recommtopicActivities'){
-      goBack(navigation)
-    }else{
+    // setTimeout(() => {
+    if (route.params.type === 'recommtopicActivities') {
+      goBack(navigation);
+    } else {
       navigation.navigate('ActivityResources', {
         topicItem: route.params.topicItem,
         chapterItem: route.params.chapterItem,
@@ -147,10 +149,9 @@ const YtVideoActivityPro = ({ route, navigation }) => {
         from: 'topics',
       });
     }
-  //  }, 1000);
+    //  }, 1000);
   };
   const onActivityPrevious = (data, duration) => {
-   
     handlePreviousActivity();
   };
   const onNewBack = () => {
@@ -158,12 +159,11 @@ const YtVideoActivityPro = ({ route, navigation }) => {
   };
   const onPause = (data) => {
     setdata(data);
-    setdata((data)=>{
-     setnewmodal(true);
+    setdata((data) => {
+      setnewmodal(true);
 
       return data;
-    })
-  
+    });
   };
   const onfullscreen = (value) => {
     if (this.funcComRef) {
@@ -177,56 +177,56 @@ const YtVideoActivityPro = ({ route, navigation }) => {
     var index = route.params.index;
     if (newobj) {
       if (
-           newobj.activityType === 'pdf' ||
-           newobj.activityType === 'HTML5' ||
-           newobj.activityType === 'html5' ||newobj.activityType === 'web'
-         ) {
-           navigation.navigate('ProfPdfViewNew', {
-             index: index + 1,
-             smartres: route.params.smartres,
-             data: newobj,
-             type: route.params.type,
-             chapterItem: route.params.chapterItem,
-             subjectItem: route.params.subjectItem,
-             topicItem: route.params.topicItem,
-             from: route.params.from,
-           });
-         } else if (
-           newobj.activityType === 'conceptual_video' ||
-           newobj.activityType === 'video'
-         ) {
-           navigation.navigate('VideoActivityPro', {
-             index: index + 1,
-             smartres: route.params.smartres,
-             data: newobj,
-             type: route.params.type,
-             chapterItem: route.params.chapterItem,
-             subjectItem: route.params.subjectItem,
-             topicItem: route.params.topicItem,
-             from: route.params.from,
-           });
-         }else if (
-           newobj.activityType === 'youtube'
-         ) {
-           navigation.navigate('YtVideoActivityPro', {
-             index: index + 1,
-             smartres: route.params.smartres,
-             data: newobj,
-             type: route.params.type,
-             chapterItem: route.params.chapterItem,
-             subjectItem: route.params.subjectItem,
-             topicItem: route.params.topicItem,
-             from: route.params.from,
-           });
-         }
-       } else {
-         navigation.navigate('ActivityResources', {
-           topicItem: route.params.topicItem,
-           chapterItem: route.params.chapterItem,
-           subjectItem: route.params.subjectItem,
-           from: route.params.from,
-         });
-       }
+        newobj.activityType === 'pdf' ||
+        newobj.activityType === 'HTML5' ||
+        newobj.activityType === 'html5' ||
+        newobj.activityType === 'web' ||
+        newobj.activityType === 'games'
+      ) {
+        navigation.navigate('ProfPdfViewNew', {
+          index: index + 1,
+          smartres: route.params.smartres,
+          data: newobj,
+          type: route.params.type,
+          chapterItem: route.params.chapterItem,
+          subjectItem: route.params.subjectItem,
+          topicItem: route.params.topicItem,
+          from: route.params.from,
+        });
+      } else if (
+        newobj.activityType === 'conceptual_video' ||
+        newobj.activityType === 'video'
+      ) {
+        navigation.navigate('VideoActivityPro', {
+          index: index + 1,
+          smartres: route.params.smartres,
+          data: newobj,
+          type: route.params.type,
+          chapterItem: route.params.chapterItem,
+          subjectItem: route.params.subjectItem,
+          topicItem: route.params.topicItem,
+          from: route.params.from,
+        });
+      } else if (newobj.activityType === 'youtube') {
+        navigation.navigate('YtVideoActivityPro', {
+          index: index + 1,
+          smartres: route.params.smartres,
+          data: newobj,
+          type: route.params.type,
+          chapterItem: route.params.chapterItem,
+          subjectItem: route.params.subjectItem,
+          topicItem: route.params.topicItem,
+          from: route.params.from,
+        });
+      }
+    } else {
+      navigation.navigate('ActivityResources', {
+        topicItem: route.params.topicItem,
+        chapterItem: route.params.chapterItem,
+        subjectItem: route.params.subjectItem,
+        from: route.params.from,
+      });
+    }
   };
   const handlePreviousActivity = () => {
     var newarray = route.params.smartres;
@@ -234,56 +234,56 @@ const YtVideoActivityPro = ({ route, navigation }) => {
     var index = route.params.index;
     if (newobj) {
       if (
-           newobj.activityType === 'pdf' ||
-           newobj.activityType === 'HTML5' ||
-           newobj.activityType === 'html5' || newobj.activityType === 'web'
-         ) {
-           navigation.navigate('ProfPdfViewNew', {
-             index: index  - 1,
-             smartres: route.params.smartres,
-             data: newobj,
-             type: route.params.type,
-             chapterItem: route.params.chapterItem,
-             subjectItem: route.params.subjectItem,
-             topicItem: route.params.topicItem,
-             from: route.params.from,
-           });
-         } else if (
-           newobj.activityType === 'conceptual_video' ||
-           newobj.activityType === 'video'
-         ) {
-           navigation.navigate('VideoActivityPro', {
-             index: index -  1,
-             smartres: route.params.smartres,
-             data: newobj,
-             type: route.params.type,
-             chapterItem: route.params.chapterItem,
-             subjectItem: route.params.subjectItem,
-             topicItem: route.params.topicItem,
-             from: route.params.from,
-           });
-         }else if (
-           newobj.activityType === 'youtube'
-         ) {
-           navigation.navigate('YtVideoActivityPro', {
-             index: index - 1,
-             smartres: route.params.smartres,
-             data: newobj,
-             type: route.params.type,
-             chapterItem: route.params.chapterItem,
-             subjectItem: route.params.subjectItem,
-             topicItem: route.params.topicItem,
-             from: route.params.from,
-           });
-         }
-       } else {
-         navigation.navigate('ActivityResources', {
-           topicItem: route.params.topicItem,
-           chapterItem: route.params.chapterItem,
-           subjectItem: route.params.subjectItem,
-           from: route.params.from,
-         });
-       }
+        newobj.activityType === 'pdf' ||
+        newobj.activityType === 'HTML5' ||
+        newobj.activityType === 'html5' ||
+        newobj.activityType === 'web' ||
+        newobj.activityType === 'games'
+      ) {
+        navigation.navigate('ProfPdfViewNew', {
+          index: index - 1,
+          smartres: route.params.smartres,
+          data: newobj,
+          type: route.params.type,
+          chapterItem: route.params.chapterItem,
+          subjectItem: route.params.subjectItem,
+          topicItem: route.params.topicItem,
+          from: route.params.from,
+        });
+      } else if (
+        newobj.activityType === 'conceptual_video' ||
+        newobj.activityType === 'video'
+      ) {
+        navigation.navigate('VideoActivityPro', {
+          index: index - 1,
+          smartres: route.params.smartres,
+          data: newobj,
+          type: route.params.type,
+          chapterItem: route.params.chapterItem,
+          subjectItem: route.params.subjectItem,
+          topicItem: route.params.topicItem,
+          from: route.params.from,
+        });
+      } else if (newobj.activityType === 'youtube') {
+        navigation.navigate('YtVideoActivityPro', {
+          index: index - 1,
+          smartres: route.params.smartres,
+          data: newobj,
+          type: route.params.type,
+          chapterItem: route.params.chapterItem,
+          subjectItem: route.params.subjectItem,
+          topicItem: route.params.topicItem,
+          from: route.params.from,
+        });
+      }
+    } else {
+      navigation.navigate('ActivityResources', {
+        topicItem: route.params.topicItem,
+        chapterItem: route.params.chapterItem,
+        subjectItem: route.params.subjectItem,
+        from: route.params.from,
+      });
+    }
   };
   const onquestionSubmit = (value) => {
     setnewmodal(false);
@@ -294,9 +294,10 @@ const YtVideoActivityPro = ({ route, navigation }) => {
     this.funcComRef('rewatch', newdata);
   };
   const onback = () => {
-    if(this.funcComRef){
-    this.funcComRef('gettime', 'Val')}else{
-      goBack(navigation)
+    if (this.funcComRef) {
+      this.funcComRef('gettime', 'Val');
+    } else {
+      goBack(navigation);
     }
   };
   var stylefull;
@@ -440,7 +441,7 @@ const YtVideoActivityPro = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
       )}
-      <Modal isVisible={newmodal}>
+      {/* <Modal isVisible={newmodal}>
         <View
           style={{
             flex: 1,
@@ -457,7 +458,7 @@ const YtVideoActivityPro = ({ route, navigation }) => {
             userDetails={user}
           />
         </View>
-      </Modal>
+      </Modal> */}
     </SafeAreaView>
   );
 };

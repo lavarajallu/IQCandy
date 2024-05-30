@@ -67,7 +67,7 @@ const ActivityResources = ({ route, navigation }) => {
   const { topicDetails, chapterDetails } = useSelector(selectSearch);
 
   const [progresscount, setProgressCount] = useState(0);
-  const [dateformar, setdateformar] = useState(null);
+  const [dataFormat, setdataFormat] = useState(null);
   const [date, setDate] = useState(null);
   const [showerrormodel, setshowerrormodel] = useState(false);
   const [showpicker, setShowPicker] = useState(false);
@@ -152,7 +152,7 @@ const ActivityResources = ({ route, navigation }) => {
   }, [Profactivities]);
   useEffect(() => {
     if (getcalenderdata && Object.keys(getcalenderdata).length > 0) {
-      setdateformar(moment.utc(getcalenderdata.scheduleDate).format('lll'));
+      setdataFormat(moment.utc(getcalenderdata.scheduleDate).format('lll'));
       setscheduledata(getcalenderdata);
       setalreadyschedule(true);
     }
@@ -167,7 +167,7 @@ const ActivityResources = ({ route, navigation }) => {
     }
   }, [activities]);
   const addtocalender = () => {
-    if (dateformar) {
+    if (dataFormat) {
       var newarray = [
         '#6a5177',
         '#d88212',
@@ -193,7 +193,7 @@ const ActivityResources = ({ route, navigation }) => {
         userId: user?.userInfo.userId,
         scheduleType: 'topic',
         scheduleTypeId: topicItem.topicId,
-        scheduleDate: dateformar,
+        scheduleDate: dataFormat,
         additionalInfo: JSON.stringify({
           subjectId: subjectId,
           chapterId: chapterId,
@@ -233,7 +233,7 @@ const ActivityResources = ({ route, navigation }) => {
       userId: user?.userInfo.userId,
       scheduleType: 'topic',
       scheduleTypeId: topicItem.topicId,
-      scheduleDate: dateformar,
+      scheduleDate: dataFormat,
       additionalInfo: JSON.stringify({
         subjectId: subjectId,
         chapterId: chapterId,
@@ -342,7 +342,7 @@ const ActivityResources = ({ route, navigation }) => {
           userId: user?.userInfo.userId,
           scheduleType: 'topic',
           scheduleTypeId: topicItem.topicId,
-          scheduleDate: dateformar,
+          scheduleDate: dataFormat,
           additionalInfo: JSON.stringify({
             semesterId: user?.userOrg.semesterId,
             subjectId: subjectId,
@@ -407,10 +407,12 @@ const ActivityResources = ({ route, navigation }) => {
             from: from,
           });
         } else if (
-          item.activityType === 'pdf' ||
-          item.activityType === 'HTML5' ||
-          item.activityType === 'html5' ||
-          item.activityType === 'web'
+          (item.activityType =
+            'games' ||
+            item.activityType === 'pdf' ||
+            item.activityType === 'HTML5' ||
+            item.activityType === 'html5' ||
+            item.activityType === 'web')
         ) {
           navigation.navigate('NotesActivity', {
             index,
@@ -475,7 +477,8 @@ const ActivityResources = ({ route, navigation }) => {
         item.activityType === 'pdf' ||
         item.activityType === 'HTML5' ||
         item.activityType === 'html5' ||
-        item.activityType === 'web'
+        item.activityType === 'web' ||
+        item.activityType === 'games'
       ) {
         navigation.navigate('NotesActivity', {
           type,
@@ -523,7 +526,8 @@ const ActivityResources = ({ route, navigation }) => {
       item.activityType === 'pdf' ||
       item.activityType === 'HTML5' ||
       item.activityType === 'html5' ||
-      item.activityType === 'web'
+      item.activityType === 'web' ||
+      item.activityType === 'games'
     ) {
       navigation.navigate('ProfPdfViewNew', {
         index,
@@ -586,11 +590,11 @@ const ActivityResources = ({ route, navigation }) => {
   handleConfirm = (date) => {
     if (date > new Date()) {
       setShowPicker(false);
-      setdateformar(moment(new Date(date)).format('YYYY-MM-DD hh:mm:ss'));
+      setdataFormat(moment(new Date(date)).format('YYYY-MM-DD hh:mm:ss'));
       setshowerrormodel(false);
     } else {
       setShowPicker(false);
-      setdateformar(moment(new Date()).format('YYYY-MM-DD hh:mm:ss'));
+      setdataFormat(moment(new Date()).format('YYYY-MM-DD hh:mm:ss'));
       setshowerrormodel(true);
     }
   };
@@ -752,28 +756,6 @@ const ActivityResources = ({ route, navigation }) => {
             />
           </>
         )}
-        {/* {recommendedarray && recommendedarray?.length > 0 ? (
-          <>
-            <Text
-              style={{
-                fontSize: 18,
-                color: COLORS.appSecondaryColor,
-                marginLeft: 15,
-                marginVertical: 10,
-              }}
-            >
-              Recommended Topics
-            </Text>
-            <FlatList
-              data={recommendedarray}
-              keyExtractor={(item) => item.topicId}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              renderItem={renderItemTopics}
-              ItemSeparatorComponent={ItemSeparator}
-            />
-          </>
-        ) : null} */}
 
         <Modal isVisible={showmodal}>
           <View
@@ -834,7 +816,7 @@ const ActivityResources = ({ route, navigation }) => {
                       }}
                     >
                       <Text style={{ fontSize: 18 }}>
-                        {dateformar || date || 'Select Date and Time'}
+                        {dataFormat || date || 'Select Date and Time'}
                       </Text>
                     </TouchableOpacity>
 
@@ -842,7 +824,7 @@ const ActivityResources = ({ route, navigation }) => {
                       isVisible={showpicker}
                       mode='datetime'
                       date={
-                        new Date(date) || new Date(dateformar) || new Date()
+                        new Date(date) || new Date(dataFormat) || new Date()
                       }
                       minimumDate={new Date()}
                       // minimumDate={new Date(Date.now())}

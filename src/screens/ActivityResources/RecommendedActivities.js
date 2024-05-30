@@ -27,17 +27,14 @@ import styles from './styles';
 import { selectUser } from '../../store/authManagement/selector';
 import { selectMyCourses } from '../../store/student/myCourses/selector';
 import CoursesCard from '../../components/CoursesCard';
-import {
-    getrecommendedtopicActivities
-  } from '../../api/myCourses';
+import { getrecommendedtopicActivities } from '../../api/myCourses';
 
 const { width, height } = Dimensions.get('window');
 
 const RecommendedActivityResources = ({ route, navigation }) => {
   const dispatch = useDispatch();
- 
+
   const [showmodal, setshowmodal] = useState(false);
- 
 
   const [progresscount, setProgressCount] = useState(0);
   const [dateformar, setdateformar] = useState(null);
@@ -54,151 +51,140 @@ const RecommendedActivityResources = ({ route, navigation }) => {
   const [recommendedarray, setrecommendedarray] = useState([]);
 
   const { user } = useSelector(selectUser);
-  const {
-    
-    recommtopicActivities
-  } = useSelector(selectMyCourses);
-  const topicitem = route.params.topicitem
-  const { chapterItem, subjectItem,from} =  route.params
-useEffect(()=>{
-   
+  const { recommtopicActivities } = useSelector(selectMyCourses);
+  const topicitem = route.params.topicitem;
+  const { chapterItem, subjectItem, from } = route.params;
+  useEffect(() => {
     getrecommendedtopicActivities({
-        userId: user?.userInfo?.userId,
-  
-        dispatch,
-        universalTopicId: topicitem?.universalTopicId,
-      });
-},[user])
+      userId: user?.userInfo?.userId,
 
-useEffect(()=>{
-  },[recommtopicActivities])
+      dispatch,
+      universalTopicId: topicitem?.universalTopicId,
+    });
+  }, [user]);
 
+  useEffect(() => {}, [recommtopicActivities]);
 
-const renderItem = ({ item, index }) => (
-  <ActivityResourceCard
-    type={'recommtopicActivities'}
-    item={item}
-    index={index}
-    activities={recommtopicActivities}
-    progresscount={progresscount}
-    onPress={() => {
-      gotoActivityResouce(item, index, 'recommtopicActivities');
-    }}
-  />
-);
-const gotoActivityResouce = (item, index, type) =>{
-       const topicItem = topicitem
-       const newarray = recommtopicActivities
-        // if (item.activityType === 'pre') {
-        //   navigation.navigate('PreAssessment', {
-        //     type,
-        //     index,
-        //     smartres: newarray,
-        //     data: item,
-        //     chapterItem: chapterItem,
-        //     subjectItem: subjectItem,
-        //     topicItem: topicItem,
-        //     from: from,
-        //   });
-        // } else if (item.activityType === 'post') {
-        //   navigation.navigate('PostAssessment', {
-        //     type,
-        //     index,
-        //     smartres: newarray,
-        //     data: item,
-        //     chapterItem: chapterItem,
-        //     subjectItem: subjectItem,
-        //     topicItem: topicItem,
-        //     from: from,
-        //   });
-      //  } else
-         if (
-          item.activityType === 'video' ||
-          item.activityType === 'conceptual_video'
-        ) {
-          navigation.navigate('VideoActivityPro', {
-            type,
-            index,
-            smartres: newarray,
-            data: item,
-            chapterItem: chapterItem,
-            subjectItem: subjectItem,
-            topicItem: topicItem,
-            from: from,
-          });
-        } else if (
-          item.activityType === 'pdf' ||
-          item.activityType === 'HTML5' ||
-          item.activityType === 'html5' ||
-          item.activityType === 'web'
-        ) {
-          navigation.navigate('ProfPdfViewNew', {
-            type,
-            index,
-            smartres: newarray,
-            data: item,
-            chapterItem: chapterItem,
-            subjectItem: subjectItem,
-            topicItem: topicItem,
-            from: from,
-          });
-        } else if (
-          item.activityType === 'youtube'
-        ) {
-          navigation.navigate('YtVideoActivityPro', {
-            type,
-            index,
-            smartres: newarray,
-            data: item,
-            chapterItem: chapterItem,
-            subjectItem: subjectItem,
-            topicItem: topicItem,
-            from: from,
-          });
-        }
-      
-}
-
-return (
-  <>
-    <DynamicHeader
-      backAction={() => {
-        // Handle back button press
-        goBack(navigation)
+  const renderItem = ({ item, index }) => (
+    <ActivityResourceCard
+      type={'recommtopicActivities'}
+      item={item}
+      index={index}
+      activities={recommtopicActivities}
+      progresscount={progresscount}
+      onPress={() => {
+        gotoActivityResouce(item, index, 'recommtopicActivities');
       }}
-      imageSource={
-        topicitem?.image
-          ? { uri: topicitem?.image }
-          : imagePaths.myChapters.headerImage
-      }
-      labelsRow={true}
-      title={topicitem?.topicName ? topicitem?.topicName : topicitem.name}
     />
+  );
+  const gotoActivityResouce = (item, index, type) => {
+    const topicItem = topicitem;
+    const newarray = recommtopicActivities;
+    // if (item.activityType === 'pre') {
+    //   navigation.navigate('PreAssessment', {
+    //     type,
+    //     index,
+    //     smartres: newarray,
+    //     data: item,
+    //     chapterItem: chapterItem,
+    //     subjectItem: subjectItem,
+    //     topicItem: topicItem,
+    //     from: from,
+    //   });
+    // } else if (item.activityType === 'post') {
+    //   navigation.navigate('PostAssessment', {
+    //     type,
+    //     index,
+    //     smartres: newarray,
+    //     data: item,
+    //     chapterItem: chapterItem,
+    //     subjectItem: subjectItem,
+    //     topicItem: topicItem,
+    //     from: from,
+    //   });
+    //  } else
+    if (
+      item.activityType === 'video' ||
+      item.activityType === 'conceptual_video'
+    ) {
+      navigation.navigate('VideoActivityPro', {
+        type,
+        index,
+        smartres: newarray,
+        data: item,
+        chapterItem: chapterItem,
+        subjectItem: subjectItem,
+        topicItem: topicItem,
+        from: from,
+      });
+    } else if (
+      item.activityType === 'pdf' ||
+      item.activityType === 'HTML5' ||
+      item.activityType === 'html5' ||
+      item.activityType === 'web' ||
+      item.activityType === 'games'
+    ) {
+      navigation.navigate('ProfPdfViewNew', {
+        type,
+        index,
+        smartres: newarray,
+        data: item,
+        chapterItem: chapterItem,
+        subjectItem: subjectItem,
+        topicItem: topicItem,
+        from: from,
+      });
+    } else if (item.activityType === 'youtube') {
+      navigation.navigate('YtVideoActivityPro', {
+        type,
+        index,
+        smartres: newarray,
+        data: item,
+        chapterItem: chapterItem,
+        subjectItem: subjectItem,
+        topicItem: topicItem,
+        from: from,
+      });
+    }
+  };
+
+  return (
+    <>
+      <DynamicHeader
+        backAction={() => {
+          // Handle back button press
+          goBack(navigation);
+        }}
+        imageSource={
+          topicitem?.image
+            ? { uri: topicitem?.image }
+            : imagePaths.myChapters.headerImage
+        }
+        labelsRow={true}
+        title={topicitem?.topicName ? topicitem?.topicName : topicitem.name}
+      />
       <>
-      <View style={styles.rowContainer}>
-            <Button
-              style={styles.button}
-              title={'Activity Resources'}
-              textStyle={styles.buttonText}
-              onPress={() => { }}
-            />
-
-            {/* Icon */}
-           
-          </View>
-
-          <FlatList
-            data={recommtopicActivities}
-            keyExtractor={(item) => item.id}
-            horizontal={false}
-            showsHorizontalScrollIndicator={false}
-            renderItem={renderItem}
+        <View style={styles.rowContainer}>
+          <Button
+            style={styles.button}
+            title={'Activity Resources'}
+            textStyle={styles.buttonText}
+            onPress={() => {}}
           />
-      </>
-         
-        </>
 
-    )
+          {/* Icon */}
+        </View>
+
+        <FlatList
+          data={recommtopicActivities}
+          keyExtractor={(item) => item.id}
+          horizontal={false}
+          showsHorizontalScrollIndicator={false}
+          renderItem={renderItem}
+        />
+      </>
+    </>
+  );
 };
 
 export default RecommendedActivityResources;

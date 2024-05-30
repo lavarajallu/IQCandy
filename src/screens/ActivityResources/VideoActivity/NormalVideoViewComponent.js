@@ -28,7 +28,7 @@ const NormalVideoViewComponent = (props) => {
   const { questionsArray } = props;
   // let [spinner, setSpinner] = useState(true);
   const [normaldata, setNormlaData] = useState(props.data);
-  const [vimeourl,setvimeourl] = useState(props.vimeourl)
+  const [vimeourl, setvimeourl] = useState(props.vimeourl);
   // let [visisted, setVisited] = useState(false);
   const [pausedtime, setPausedTime] = useState(null);
 
@@ -49,10 +49,10 @@ const NormalVideoViewComponent = (props) => {
   useEffect(() => {
     //  Orientation.addOrientationListener(handleOrientation);
     if (questionsArray?.length > 0) {
-     var orders = questionsArray
-   setquestionsarray(orders);
+      var orders = questionsArray;
+      setquestionsarray(orders);
       setQuestionDisplay(orders[0]);
-       setPausedTime(parseInt(orders[0].timeInSec))
+      //   setPausedTime(parseInt(orders[0].timeInSec));
       setNormlaData(props.data);
       setLoading(false);
       var newarr = [];
@@ -65,6 +65,7 @@ const NormalVideoViewComponent = (props) => {
       setLoading(false);
     }
   }, [questionsArray]);
+
   props.forwardRef((name, value) => {
     if (name === 'rewatch') {
       onRewatch(value);
@@ -80,27 +81,28 @@ const NormalVideoViewComponent = (props) => {
       onNext();
     }
   });
+
   onquestionSubmit = (time) => {
     setisplaying(false);
     setShow(false);
-    if(questionsarray[index+1]){
-        setPausedTime(parseInt(questionsarray[index+1]?.timeInSec));
-        setQuestionDisplay(questionsarray[index+1]);
-        setShow(false);
-        setIndex(index+1)
-        setTimeout(()=>{
-            setisplaying(false)
-          },500)
-
-    }else{
-        setPausedTime(null);
-        setQuestionDisplay(null);
-        setShow(false);
-        setTimeout(()=>{
-            setisplaying(false)
-          },500)
+    if (questionsarray[index + 1]) {
+      setPausedTime(parseInt(questionsarray[index + 1]?.timeInSec));
+      setQuestionDisplay(questionsarray[index + 1]);
+      setShow(false);
+      setIndex(index + 1);
+      setTimeout(() => {
+        setisplaying(false);
+      }, 500);
+    } else {
+      setPausedTime(null);
+      setQuestionDisplay(null);
+      setShow(false);
+      setTimeout(() => {
+        setisplaying(false);
+      }, 500);
     }
   };
+
   onLoad = (data) => {
     //this.setInteractiveAxis(data);
     setDuration(parseInt(data.duration));
@@ -116,9 +118,11 @@ const NormalVideoViewComponent = (props) => {
       // if (DeviceConstants.isTablet) {
       //   Orientation.lockToLandscape();
       // } else {
-      //   Orientation.lockToPortrait();
+      //   Orientation.lockToPORTRAIT_UP();
       // }
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+      ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT_UP
+      );
       props.onBackNew(currentTime, duration);
     }
   };
@@ -127,9 +131,11 @@ const NormalVideoViewComponent = (props) => {
       // if (DeviceConstants.isTablet) {
       //   Orientation.lockToLandscape();
       // } else {
-      //   Orientation.lockToPortrait();
+      //   Orientation.lockToPORTRAIT_UP();
       // }
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+      ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT_UP
+      );
 
       props.onActivityNext(currentTime, duration);
     }
@@ -139,56 +145,53 @@ const NormalVideoViewComponent = (props) => {
       // if (DeviceConstants.isTablet) {
       //   Orientation.lockToLandscape();
       // } else {
-      //   Orientation.lockToPortrait();
+      //   Orientation.lockToPORTRAIT_UP();
       // }
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+      ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT_UP
+      );
 
       props.onActivityPrevious(currentTime, duration);
     }
   };
   onProgress = (data) => {
     //this.checkForPoints(parseInt(data.currentTime))
-    setCurrentTime(parseInt(data.currentTime));
-    const elapsed_sec = parseInt(data.currentTime);
-    let result = newarr.filter((o1) => parseInt(o1) === parseInt(elapsed_sec));
-
+    setCurrentTime(parseInt(data?.currentTime));
+    const elapsed_sec = parseInt(data?.currentTime);
+    let result = newarr?.filter((o1) => parseInt(o1) === elapsed_sec);
     if (elapsed_sec === result[0]) {
-      // if (parseInt(elapsed_sec) === pausedtime) {
-      // } else {
-        var newdata = questionsarray.filter(
-          (o1) => parseInt(o1.timeInSec) === result[0]
-        );
-        setisplaying(true);
-        setData(newdata[0]);
-        setShow(true);
-        setPausedTime(result[0]);
-        props.onPause(newdata[0]);
-
-        //this.setState({ isPlaying: true,data:this.state.questiondisplay,show: true},()=>this.props.onPause(this.state.data));
-      
-    }}
-    onRewatch = (data) => {
-      if (playerRef) {
-        var value = newarr.indexOf(pausedtime);
-        var newwatch = newarr[value - 1];
-        var newvalue = newarr.indexOf(newwatch);
-        if (newvalue === -1) {
-          playerRef.current.seek(0);
-          setCurrentTime(0);
-          setShow(false);
-          setisplaying(false);
-        } else {
-          playerRef.current.seek(newarr[newvalue] + 1);
-          setCurrentTime(newarr[newvalue] + 1);
-          setShow(false);
-          setisplaying(false);
-        }
+      var newdata = questionsarray.filter(
+        (o1) => parseInt(o1.timeInSec) === result[0]
+      );
+      //parseInt(this.state.questionsarray[0].question.timeinsec) ===
+      setisplaying(true);
+      setData(newdata[0]);
+      setShow(true);
+      setPausedTime(result[0]);
+      props.onPause(newdata[0]);
+      //this.setState({ isPlaying: true,data:this.state.questiondisplay,show: true},()=>this.props.onPause(this.state.data));
+    }
+  };
+  onRewatch = (data) => {
+    if (playerRef) {
+      var value = newarr.indexOf(pausedtime);
+      var newwatch = newarr[value - 1];
+      var newvalue = newarr.indexOf(newwatch);
+      if (newvalue === -1) {
+        playerRef.current.seek(0);
+        setCurrentTime(0);
+        setShow(false);
+        setisplaying(false);
+      } else {
+        playerRef.current.seek(newarr[newvalue] + 1);
+        setCurrentTime(newarr[newvalue] + 1);
+        setShow(false);
+        setisplaying(false);
       }
-    };
-
+    }
+  };
 
   const onfullscreen = () => {
-   
     props.onfullscreen();
 
     //   Orientation.lockToLandscapeLeft();
@@ -199,13 +202,15 @@ const NormalVideoViewComponent = (props) => {
       ? ScreenOrientation.lockAsync(
           ScreenOrientation.OrientationLock.LANDSCAPE_LEFT
         )
-      : ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+      : ScreenOrientation.lockAsync(
+          ScreenOrientation.OrientationLock.PORTRAIT_UP
+        );
 
     // val
     //   ? Orientation.lockToLandscape()
     //   : DeviceConstants.isTablet
     //   ? Orientation.lockToLandscape()
-    //   : Orientation.lockToPortrait();
+    //   : Orientation.lockToPORTRAIT_UP();
   };
   handleMainButtonTouch = () => {
     setisplaying(!isPlaying);
@@ -278,10 +283,12 @@ const NormalVideoViewComponent = (props) => {
           <View style={{ flex: 1 }}>
             <Video
               source={{
-                uri: props.activityType === 'conceptual_video' ? props.vimeourl  :  normaldata.url,
+                uri:
+                  props.activityType === 'conceptual_video'
+                    ? props.vimeourl
+                    : normaldata.url,
                 headers: {
-                  Referer:
-                    'https://login.iqcandy.com/',
+                  Referer: 'https://login.iqcandy.com/',
                 },
               }} // Can be a URL or a local file.
               ref={playerRef}
@@ -346,10 +353,10 @@ const NormalVideoViewComponent = (props) => {
                     alignItems: 'center',
                   }}
                 />
-                <View style={{ flex: 0.65,}}>
-                  <View style={[styles.subright, {marginLeft: 22 }]}>
+                <View style={{ flex: 0.65 }}>
+                  {/* <View style={[styles.subright, { marginLeft: 22 }]}>
                     {timesarray}
-                  </View>
+                  </View> */}
                 </View>
                 <View
                   style={{
@@ -410,7 +417,7 @@ const NormalVideoViewComponent = (props) => {
                 </View>
                 <View style={{ flex: 0.65 }}>
                   <View style={styles.subright}>
-                  {duration > 0 ? (
+                    {duration > 0 ? (
                       <Slider
                         style={{ width: '100%', height: fullimg }}
                         minimumValue={0}
@@ -427,8 +434,7 @@ const NormalVideoViewComponent = (props) => {
                           console.log('slidingstarte', value, currentTime);
                         }}
                         onValueChange={(value) => {
-                          playerRef.current.seek(parseInt(currentTime));
-
+                          // playerRef.current.seek(parseInt(currentTime));
                           // if (parseInt(value) > parseInt(currentTime)) {
                           //   if (props.resourcedata.percentage !== 0) {
                           //     console.log('playerRef', playerRef);
@@ -436,7 +442,6 @@ const NormalVideoViewComponent = (props) => {
                           //     if (pausedtime > parseInt(value)) {
                           //       setPausedTime(null);
                           //     }
-
                           //     playerRef.current.seek(parseInt(value));
                           //   } else {
                           //     // console.log("sadfkajshdfkuahfkudhfkad")
@@ -449,7 +454,6 @@ const NormalVideoViewComponent = (props) => {
                           //   if (pausedtime > parseInt(value)) {
                           //     setPausedTime(null);
                           //   }
-
                           //   playerRef.current.seek(parseInt(value));
                           // }
                         }}

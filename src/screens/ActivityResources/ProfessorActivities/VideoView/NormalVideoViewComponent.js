@@ -93,36 +93,37 @@ const NormalVideoViewComponent = (props) => {
   });
   onquestionSubmit = (time) => {
     setisplaying(false);
-   
   };
   onLoad = (data) => {
     //this.setInteractiveAxis(data);
     setDuration(parseInt(data.duration));
     if (normaldata.videoPausedAt) {
-   
     } else {
       setCurrentTime(0);
     }
   };
   const getcurrentTime = async () => {
     if (playerRef) {
-      
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+      ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT_UP
+      );
       props.onBackNew(currentTime, duration);
     }
   };
   onNext = async () => {
     if (playerRef) {
-    
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+      ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT_UP
+      );
 
       props.onActivityNext(currentTime, duration);
     }
   };
   onPrevious = async () => {
     if (playerRef) {
-      
-      ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+      ScreenOrientation.lockAsync(
+        ScreenOrientation.OrientationLock.PORTRAIT_UP
+      );
 
       props.onActivityPrevious(currentTime, duration);
     }
@@ -147,30 +148,27 @@ const NormalVideoViewComponent = (props) => {
         //this.setState({ isPlaying: true,data:this.state.questiondisplay,show: true},()=>this.props.onPause(this.state.data));
       }
     }
-    onRewatch = (data) => {
-      if (playerRef) {
-        var value = newarr.indexOf(pausedtime);
-        var newwatch = newarr[value - 1];
-        var newvalue = newarr.indexOf(newwatch);
-        if (newvalue === -1) {
-          playerRef.current.seek(0);
-          setCurrentTime(0);
-          setShow(false);
-          setisplaying(false);
-        } else {
-          playerRef.current.seek(newarr[newvalue] + 1);
-          setCurrentTime(newarr[newvalue] + 1);
-          setShow(false);
-          setisplaying(false);
-        }
+  };
+  onRewatch = (data) => {
+    if (playerRef) {
+      var value = newarr.indexOf(pausedtime);
+      var newwatch = newarr[value - 1];
+      var newvalue = newarr.indexOf(newwatch);
+      if (newvalue === -1) {
+        playerRef.current.seek(0);
+        setCurrentTime(0);
+        setShow(false);
+        setisplaying(false);
+      } else {
+        playerRef.current.seek(newarr[newvalue] + 1);
+        setCurrentTime(newarr[newvalue] + 1);
+        setShow(false);
+        setisplaying(false);
       }
-    };
+    }
   };
 
-
   const onfullscreen = () => {
-
-
     props.onfullscreen();
   };
   handlescreenfull = (val) => {
@@ -179,9 +177,9 @@ const NormalVideoViewComponent = (props) => {
       ? ScreenOrientation.lockAsync(
           ScreenOrientation.OrientationLock.LANDSCAPE_LEFT
         )
-      : ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
-
-   
+      : ScreenOrientation.lockAsync(
+          ScreenOrientation.OrientationLock.PORTRAIT_UP
+        );
   };
   handleMainButtonTouch = () => {
     setisplaying(!isPlaying);
@@ -254,10 +252,12 @@ const NormalVideoViewComponent = (props) => {
           <View style={{ flex: 1 }}>
             <Video
               source={{
-                uri: props.activityType === 'conceptual_video' ? props.vimeourl  :  normaldata.url,
-                 headers: {
-                  Referer:
-                  'https://login.iqcandy.com/',
+                uri:
+                  props.activityType === 'conceptual_video'
+                    ? props.vimeourl
+                    : normaldata.url,
+                headers: {
+                  Referer: 'https://login.iqcandy.com/',
                 },
               }} // Can be a URL or a local file.
               ref={playerRef}
@@ -277,7 +277,8 @@ const NormalVideoViewComponent = (props) => {
               resizeMode={fullscreen ? 'cover' : 'contain'}
               onProgress={onProgress}
             />
-            <TouchableOpacity
+            {/* This is video fullscreen or halfscreen icons */}
+            {/* <TouchableOpacity
               onPress={onfullscreen}
               style={{
                 top: fullscreen ? 50 : 50,
@@ -307,7 +308,7 @@ const NormalVideoViewComponent = (props) => {
                   }}
                 />
               )}
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <View
               style={[
                 styles.absview,
@@ -323,9 +324,9 @@ const NormalVideoViewComponent = (props) => {
                   }}
                 />
                 <View style={{ flex: 0.65 }}>
-                  <View style={[styles.subright, { marginLeft: 22 }]}>
+                  {/* <View style={[styles.subright, { marginLeft: 22 }]}>
                     {timesarray}
-                  </View>
+                  </View> */}
                 </View>
                 <View
                   style={{
@@ -403,8 +404,7 @@ const NormalVideoViewComponent = (props) => {
                           console.log('slidingstarte', value, currentTime);
                         }}
                         onValueChange={(value) => {
-                          playerRef.current.seek(parseInt(currentTime));
-
+                          //  playerRef.current.seek(parseInt(currentTime));
                           // if (parseInt(value) > parseInt(currentTime)) {
                           //   if (props.resourcedata.percentage !== 0) {
                           //     console.log('playerRef', playerRef);
@@ -412,7 +412,6 @@ const NormalVideoViewComponent = (props) => {
                           //     if (pausedtime > parseInt(value)) {
                           //       setPausedTime(null);
                           //     }
-
                           //     playerRef.current.seek(parseInt(value));
                           //   } else {
                           //     // console.log("sadfkajshdfkuahfkudhfkad")
@@ -425,7 +424,6 @@ const NormalVideoViewComponent = (props) => {
                           //   if (pausedtime > parseInt(value)) {
                           //     setPausedTime(null);
                           //   }
-
                           //   playerRef.current.seek(parseInt(value));
                           // }
                         }}

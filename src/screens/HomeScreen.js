@@ -9,6 +9,7 @@ import {
   Text,
   Dimensions,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -97,7 +98,7 @@ const HomeScreen = ({ route, navigation }) => {
     // registerForPushNotificationsAsync().then((token) =>
     //   setExpoPushToken(token)
     // );
-
+    getversion();
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
         setNotification(notification);
@@ -122,6 +123,29 @@ const HomeScreen = ({ route, navigation }) => {
       }
     });
   }, []);
+  const getversion = () => {
+    fetch(`https://api.iqcandy.com/api/iqcandy/app-version/latest`, {
+      method: 'GET',
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.code === 201) {
+          if (json.data) {
+            var appversion = json.data.version;
+            //var data = appversion.split('v');
+            ///alert(data[1])
+            if (9.0 < appversion) {
+              // alert(appversion)
+              //    alert("appveriosn"+appversion)
+              navigation.navigate('VersionUpdate');
+              // Actions.versionupdate();
+            }
+          }
+        } else {
+        }
+      })
+      .catch((error) => console.error(error));
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -213,8 +237,11 @@ const HomeScreen = ({ route, navigation }) => {
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('ReferEarn', { from: 'dashboard' })
+                  onPress={
+                    () => {
+                      Alert.alert('IQ Candy', 'Coming Soon');
+                    }
+                    // navigation.navigate('ReferEarn', { from: 'dashboard' })
                   }
                 >
                   <Image
@@ -246,7 +273,8 @@ const HomeScreen = ({ route, navigation }) => {
           />
         </View>
         <View style={{ marginVertical: 30 }}>
-          <View stye={{ flex: 1 }}>
+          {/* Refer & Earn Card disabled */}
+          {/* <View stye={{ flex: 1 }}>
             <CardHeaderLabel lHLabel={'Refer & Earn'} />
             <View style={styles.referview}>
               <View style={styles.referleftview}>
@@ -278,7 +306,7 @@ const HomeScreen = ({ route, navigation }) => {
                 />
               </View>
             </View>
-          </View>
+          </View> */}
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -71,7 +71,6 @@ class VideoQuestionModal extends Component {
       })
         .then((response) => response.json())
         .then((json) => {
-          alert(JSON.stringify(json))
 
           const response = json;
           if (

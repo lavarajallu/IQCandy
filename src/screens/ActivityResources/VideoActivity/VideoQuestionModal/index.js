@@ -36,6 +36,13 @@ class VideoQuestionModal extends Component {
           loading: false,
         }
       );
+    }else{
+      this.setState(
+        {
+          questiondata: this.props.data,
+          loading: false,
+        }
+      );
     }
   }
 
@@ -63,7 +70,6 @@ class VideoQuestionModal extends Component {
     //   assignedActivityId
     // })
     if (token) {
-     
       const url = `https://api.iqcandy.com/api/iqcandy/analytics/users/${userId}/activities/${activityDimId}/videos/test-questions/${questionId}/validate`
 
       fetch(url, {

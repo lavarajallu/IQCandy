@@ -8,6 +8,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import AppNavigation from './src/navigation/AppNavigation';
 import StatusBarComponent from './src/components/StatusBarComponent';
 import store from './src/store';
+// import { AppProvider } from './src/hooks/AppContext';
 
 const App = () => {
   let [fontsLoaded] = Font.useFonts({
@@ -42,7 +43,9 @@ const App = () => {
       <Provider store={store}>
         <StatusBarComponent />
         <NavigationContainer>
+          {/* <AppProvider> */}
           <AppNavigation />
+          {/* </AppProvider> */}
         </NavigationContainer>
       </Provider>
     </>

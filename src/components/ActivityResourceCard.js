@@ -13,7 +13,7 @@ const { width, height } = Dimensions.get('window');
 import ProgressLine from './ProgressLine';
 
 const ActivityResourceCard = (props) => {
-  const { item, onPress, progresscount, index, type ,activities} = props;
+  const { item, onPress, progresscount, index, type, activities } = props;
 
   const getLabelText = (item) => {
     const minutes = Math.floor(item?.duration / 60);
@@ -24,11 +24,11 @@ const ActivityResourceCard = (props) => {
         return `${item?.totalQuestions} Questions`;
       case 'html5':
         return '1 Referral Link';
-        case 'web':
-          return '1 Referral Link';
+      case 'web':
+        return '1 Referral Link';
       case 'pdf':
         return `${item.pdfPages} Pages`;
-      case 'video' :
+      case 'video':
         return ` ${
           item?.duration
             ? `1 Video | Duration : ${minutes}:${
@@ -36,15 +36,15 @@ const ActivityResourceCard = (props) => {
               }`
             : '1 video | Duration : 0'
         }`;
-        case 'conceptual_video':
-          return ` ${
-            item?.duration
-              ? `1 Video | Duration : ${minutes}:${
-                  seconds > 9 ? seconds : '0' + seconds
-                }`
-              : '1 video | Duration : 0'
-          }`;
-      
+      case 'conceptual_video':
+        return ` ${
+          item?.duration
+            ? `1 Video | Duration : ${minutes}:${
+                seconds > 9 ? seconds : '0' + seconds
+              }`
+            : '1 video | Duration : 0'
+        }`;
+
       case 'youtube':
         return ` ${
           item?.duration
@@ -67,7 +67,7 @@ const ActivityResourceCard = (props) => {
     color = 'orange';
   }
   var imageUrl = 'https://stepup-india.s3.ap-south-1.amazonaws.com';
-  
+
   return (
     <>
       <View style={styles.cardContainer}>
@@ -109,13 +109,14 @@ const ActivityResourceCard = (props) => {
           {type === 'icon' ? (
             <View style={[styles.imageContainer, { backgroundColor: 'white' }]}>
               {progresscount === 0 ? (
-                index === 0 ? null : (
-                  activities?.find((activity) => activity.activityType === 'pre') ?
+                index === 0 ? null : activities?.find(
+                    (activity) => activity.activityType === 'pre'
+                  ) ? (
                   <Image
                     source={require('../../assets/images/icons/lock.jpg')}
                     //style={{ width: 10, height: 10 }}
-                  /> : null
-                )
+                  />
+                ) : null
               ) : item.status === 'completed' ? (
                 <Image
                   source={require('../../assets/images/icons/greentick.png')}
@@ -139,12 +140,13 @@ const ActivityResourceCard = (props) => {
             />
           )}
         </TouchableOpacity>
-        {type === 'icon' ? 
-        <ProgressLine
-          progressPercentage={item?.progress}
-          color={color}
-          unfilledColor={'lightgrey'}
-        /> : null}
+        {type === 'icon' ? (
+          <ProgressLine
+            progressPercentage={item?.progress}
+            color={color}
+            unfilledColor={'lightgrey'}
+          />
+        ) : null}
       </View>
     </>
   );

@@ -52,9 +52,7 @@ function OnboardingScreen({ navigation }) {
 
   useEffect(() => {
     if(loginthrought){
-    // alert("ifffff"+loginthrought)
     }else{
-     // alert("elseeeeeee"+loginthrought)
       setTimeout(() => {
         getData();
       }, 7000);

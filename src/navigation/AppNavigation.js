@@ -46,6 +46,7 @@ import {
   YtVideoActivity,
   TopicAnalysis,
   RecommendedActivityResources,
+  VersionUpdate
 } from '../screens';
 import ReferEarn from '../screens/ReferEarn';
 
@@ -521,6 +522,11 @@ function AppNavigation() {
         <Stack.Screen
           name='TopicAnalysis'
           component={TopicAnalysis}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen
+          name='VersionUpdate'
+          component={VersionUpdate}
           options={{ headerShown: false }}
         />
       </>

@@ -164,11 +164,7 @@ export const textContent = {
       labelColor: '#c44921',
       activeBarColor: '#c44921',
     },
-    {
-      name: 'Below Average',
-      labelColor: '#c44921',
-      activeBarColor: '#c44921',
-    },
+    
     {
       name: 'Average',
       labelColor: '#d88414',

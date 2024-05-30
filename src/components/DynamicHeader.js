@@ -33,21 +33,22 @@ const DynamicHeader = ({
         </TouchableOpacity>
 
         <View style={styles.contentContainer}>
-          <View style={{ flexDirection: 'row' }}>
+          <View style={{
+            width: '100%',
+            height: 50, flexDirection: 'row', backgroundColor: "green",
+            position: 'absolute', backgroundColor: 'rgba(0, 0, 0, 0.5)',top:190,
+          }}>
             <View
               style={{
                 flex: 0.8,
-                width: '100%',
-                height: 50,
-                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                position: 'absolute',
+
               }}
             >
               <Text style={styles.title} numberOfLines={2}>
                 {title}
               </Text>
             </View>
-            <View style={{ flex: 0.1 }}>
+            <View style={{ flex: 0.1,  }}>
               {righticon ? (
                 <TouchableOpacity
                   onPress={onanalysis}
@@ -118,12 +119,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'flex-start',
-    marginHorizontal: 4,
+   // marginHorizontal: 4,
   },
   title: {
     color: COLORS.whiteColor,
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 15,
     textAlign: 'left',
     fontFamily: 'mulish-bold',
     marginLeft: 10,

@@ -337,7 +337,6 @@ const getAssessmentTestQuestionRequest = async (payload) => {
   const body = payload.data;
   const response = await makeApiCall(endpoint, method);
   // Check for   success and handle accordingly
-
   if (response) {
     const { data } = response;
     payload.dispatch(setvideoquestionassesdata(data));

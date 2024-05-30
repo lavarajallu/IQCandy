@@ -26,17 +26,23 @@ import {
   getVideoActivityDatayoutube,
   updateanalyticsNotes,
   getAssessmentTestQuestionRequest,
-  getVideoquestions
+  getVideoquestions,
 } from '../../../api/myCourses';
 import moment from 'moment';
+import * as ScreenOrientation from 'expo-screen-orientation';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
 const YtVideoActivity = ({ route, navigation }) => {
   const { questions } = textContent;
   const { topicItem, chapterItem, subjectItem, from, data, data1 } =
     route.params;
-  const { notesActivityData, videoActivityData, ytvideoActivityData ,videoquestionsdata,Videoquestionassesdata} =
-    useSelector(selectMyCourses);
+  const {
+    notesActivityData,
+    videoActivityData,
+    ytvideoActivityData,
+    videoquestionsdata,
+    Videoquestionassesdata,
+  } = useSelector(selectMyCourses);
   const { user } = useSelector(selectUser);
   const dispatch = useDispatch();
   const video = React.useRef(null);
@@ -46,7 +52,7 @@ const YtVideoActivity = ({ route, navigation }) => {
   const [newdata, setdata] = useState({});
   const [activityStartTime, setactivityStartTime] = useState(null);
   const [showfullscreen, setfullscreen] = useState(false);
-  const [videosdata,setvideoquestionsdata] = useState([])
+  const [videosdata, setvideoquestionsdata] = useState([]);
   const backAction = () => {
     updateAnalytics();
     navigation.navigate('ActivityResources', {
@@ -62,7 +68,7 @@ const YtVideoActivity = ({ route, navigation }) => {
       var body = {
         activityDimId: data.activityDimId,
         boardId: user.userOrg.boardId,
-        gradeId:  user.userOrg.gradeId,
+        gradeId: user.userOrg.gradeId,
 
         subjectId: subjectItem?.subjectId
           ? subjectItem.subjectId
@@ -87,7 +93,6 @@ const YtVideoActivity = ({ route, navigation }) => {
       userId: user?.userInfo.userId,
       data: body,
     });
-   
   };
   useEffect(() => {
     var activityDimId = data.activityDimId;
@@ -96,34 +101,33 @@ const YtVideoActivity = ({ route, navigation }) => {
       userId: user?.userInfo?.userId,
       activityDimId: activityDimId,
     });
-    getVideoquestions({
-      dispatch,
-      userId: user?.userInfo?.userId,
-      activityDimId: activityDimId,
-      assignedActivityId:data.assignedActivityId
-    });  
+    // getVideoquestions({
+    //   dispatch,
+    //   userId: user?.userInfo?.userId,
+    //   activityDimId: activityDimId,
+    //   assignedActivityId: data.assignedActivityId,
+    // });
     const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
     setactivityStartTime(activityStartTime);
   }, [user]);
-  useEffect(()=>{
-    if(videoquestionsdata && videoquestionsdata.length > 0){
-     var newdata = [...videoquestionsdata]
-     newdata.sort(function (a, b) {
-       let dateA = parseInt(a.timeInSec);
-       let dateB = parseInt(b.timeInSec);
-       if (dateA < dateB) {
-         return -1;
-       } else if (dateA > dateB) {
-         return 1;
-       }
-       return 0;
-     });
-     setvideoquestionsdata(newdata)
+  useEffect(() => {
+    if (videoquestionsdata && videoquestionsdata.length > 0) {
+      var newdata = [...videoquestionsdata];
+      newdata.sort(function (a, b) {
+        let dateA = parseInt(a.timeInSec);
+        let dateB = parseInt(b.timeInSec);
+        if (dateA < dateB) {
+          return -1;
+        } else if (dateA > dateB) {
+          return 1;
+        }
+        return 0;
+      });
+      setvideoquestionsdata(newdata);
     }
-   },[videoquestionsdata])
+  }, [videoquestionsdata]);
   useEffect(() => {
     if (ytvideoActivityData && Object.keys(ytvideoActivityData).length > 0) {
-     
       setnormalvideodata(ytvideoActivityData);
     }
   }, [ytvideoActivityData]);
@@ -171,18 +175,20 @@ const YtVideoActivity = ({ route, navigation }) => {
       testId: questionInfo.userTestId,
       activityDimId: data.activityDimId,
       userId: user?.userInfo.userId,
-      assignedActivityId:data.assignedActivityId,
-      index: questionInfo.index
-    })
+      assignedActivityId: data.assignedActivityId,
+      index: questionInfo.index,
+    });
 
     //  this.setState({ newmodal: true })
   };
-  useEffect(()=>{
-   if(Videoquestionassesdata && Object.keys(Videoquestionassesdata).length > 0){
-   
-    setnewmodal(true);
-   }
-  },[Videoquestionassesdata])
+  useEffect(() => {
+    if (
+      Videoquestionassesdata &&
+      Object.keys(Videoquestionassesdata).length > 0
+    ) {
+      setnewmodal(true);
+    }
+  }, [Videoquestionassesdata]);
   const onfullscreen = (value) => {
     if (this.funcComRef) {
       setfullscreen(!showfullscreen);
@@ -215,7 +221,8 @@ const YtVideoActivity = ({ route, navigation }) => {
         newobj.activityType === 'pdf' ||
         newobj.activityType === 'HTML5' ||
         newobj.activityType === 'html5' ||
-        newobj.activityType === 'web'
+        newobj.activityType === 'web' ||
+        newobj.activityType === 'games'
       ) {
         navigation.navigate('NotesActivity', {
           index: index + 1,
@@ -292,7 +299,8 @@ const YtVideoActivity = ({ route, navigation }) => {
         newobj.activityType === 'pdf' ||
         newobj.activityType === 'HTML5' ||
         newobj.activityType === 'html5' ||
-        newobj.activityType === 'web'
+        newobj.activityType === 'web' ||
+        newobj.activityType === 'games'
       ) {
         navigation.navigate('NotesActivity', {
           index: index - 1,
@@ -499,7 +507,7 @@ const YtVideoActivity = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
       )}
-      <Modal isVisible={newmodal}>
+      {/* <Modal isVisible={newmodal}>
         <View
           style={{
             flex: 1,
@@ -516,7 +524,7 @@ const YtVideoActivity = ({ route, navigation }) => {
             activitydata={data}
           />
         </View>
-      </Modal>
+      </Modal> */}
     </SafeAreaView>
   );
 };

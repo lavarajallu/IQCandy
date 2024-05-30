@@ -233,7 +233,8 @@ const DrawerNavigation = () => {
         })}
         component={ProfilePage}
       />
-      <Drawer.Screen
+      {/* Refer & Earn Disabled at a moment */}
+      {/* <Drawer.Screen
         name='Refer & Earn'
         options={{
           drawerLabelStyle: {
@@ -259,7 +260,7 @@ const DrawerNavigation = () => {
           ),
         }}
         component={ReferEarn}
-      />
+      /> */}
       <Drawer.Screen
         name='Change Password'
         options={{
