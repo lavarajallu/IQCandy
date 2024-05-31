@@ -17,7 +17,7 @@ class VersionUpdate extends Component {
   }
   onupdate() {
     if (Platform.OS === 'android') {
-      const GOOGLE_PACKAGE_NAME = 'iqcandy.learn.com';
+      const GOOGLE_PACKAGE_NAME = 'com.iqcandy';
       const link = `market://details?id=${GOOGLE_PACKAGE_NAME}`;
       Linking.canOpenURL(link).then(
         (supported) => {

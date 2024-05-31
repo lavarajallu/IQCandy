@@ -16,7 +16,7 @@
     "android": {
       "softwareKeyboardLayoutMode": "pan",
       "googleServicesFile": "./google-services.json",
-      "package": "iqcandy.learn.com",
+      "package": "com.iqcandy",
       "config": {
         "usesCleartextTraffic": true
       },
