@@ -134,7 +134,7 @@ const HomeScreen = ({ route, navigation }) => {
             var appversion = json.data.version;
             //var data = appversion.split('v');
             ///alert(data[1])
-            if (10.0 < appversion) {
+            if (10.7 < appversion) {
               // alert(appversion)
               //    alert("appveriosn"+appversion)
               navigation.navigate('VersionUpdate');
