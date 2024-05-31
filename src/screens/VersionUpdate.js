@@ -19,10 +19,10 @@ class VersionUpdate extends Component {
   }
   onupdate() {
     if (Platform.OS === 'android') {
-      const GOOGLE_PACKAGE_NAME = 'iqcandy.learn.com';
+      const GOOGLE_PACKAGE_NAME = 'com.iqcandy';
    
       const link = `market://details?id=${GOOGLE_PACKAGE_NAME}`;
-      alert(link)
+     
       Linking.canOpenURL(link).then(
         (supported) => {
           supported &&
@@ -31,7 +31,7 @@ class VersionUpdate extends Component {
         (err) =>console.log(JSON.stringify(err))
       );
     } else {
-      const developerid = '1532003727';
+      const developerid = '1572587606';
       const link = `itms-apps://itunes.apple.com/app/` + developerid;
       console.log('Dncljkdahfcklda', link);
       Linking.canOpenURL(link).then(
