@@ -38,22 +38,38 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>10.6</string>
+	<string>10.7</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
-		<key>NSAllowsLocalNetworking</key>
-		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>Allow $(PRODUCT_NAME) to access your camera</string>
+	<string>IQCandy uses camera to record video and capture photos of the current user.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>IQCandy uses location services for capturing the location of the current user.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>IQCandy uses location services for capturing the location of the current user.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>IQCandy uses location services for capturing the location of the current user.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>IQCandy uses location services for capturing the location of the current user.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Allow $(PRODUCT_NAME) to access your microphone</string>
+	<string>IQCandy requires access to your microphone.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>IQCandy uses camera to record video and capture photos of the current user.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Allow $(PRODUCT_NAME) to access your photo</string>
+	<string>IQCandy uses camera to record video and capture photos of the current user.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>SplashScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
