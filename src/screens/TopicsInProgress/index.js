@@ -53,12 +53,7 @@ const TopicsInProgress = (props) => {
       branchId: user?.userOrg?.branchId,
       semesterId: user?.userOrg?.semesterId,
     });
-    // navigation.navigate('ActivityResources', {
-    //   topicItem: item,
-    //   chapterItem: chapterItem,
-    //   subjectItem: subjectItem,
-    //   from: 'topics',
-    // });
+ 
   };
   useEffect(() => {
     if(selectedItem){

@@ -48,43 +48,56 @@ const CalendarPage = ({ route, navigation }) => {
   const [newmodal, setnewmodal] = useState(false);
   const [eventtapped, seteventtapped] = useState(null);
   const [selectedItem, setSelectedItem] = useState({});
-  const startingmonths = [{"dateString": "2024-06-03", "day": 3, "month": 6, "timestamp": 1717372800000, "year": 2024},
-  {"dateString": "2024-07-03", "day": 3, "month": 7, "timestamp": 1717372800000, "year": 2024}
-  ]
-  useEffect(()=>{
+  const startingmonths = [
+    {
+      dateString: "2024-06-03",
+      day: 3,
+      month: 6,
+      timestamp: 1717372800000,
+      year: 2024,
+    },
+    {
+      dateString: "2024-07-03",
+      day: 3,
+      month: 7,
+      timestamp: 1717372800000,
+      year: 2024,
+    },
+  ];
+  useEffect(() => {
     const date = new Date();
 
     let day = date.getDate();
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
-    
+
     // This arrangement can be altered based on how we want the date's format to appear.
     let currentDate = `${year}-${month}-${day}`;
     // 3-6-2024
-    var monthsarraya = []
+    var monthsarraya = [];
     var obj1 = {
-      "dateString":currentDate, 
-      "day": day, 
-      "month": month, 
-      "timestamp": 1717372800000, 
-      "year": year
-    }
+      dateString: currentDate,
+      day: day,
+      month: month,
+      timestamp: 1717372800000,
+      year: year,
+    };
     var obj2 = {
-      "dateString":currentDate, 
-      "day": day, 
-      "month": month+1, 
-      "timestamp": 1717372800000, 
-      "year": year
-    }
-    monthsarraya.push(obj1)
-    monthsarraya.push(obj2)
+      dateString: currentDate,
+      day: day,
+      month: month + 1,
+      timestamp: 1717372800000,
+      year: year,
+    };
+    monthsarraya.push(obj1);
+    monthsarraya.push(obj2);
 
     getevents(monthsarraya);
-  },[])
+  }, []);
   const getmonts = (months) => {
     setvisiblemonths(months);
     setisspinner(false);
-      getevents(months);
+    getevents(months);
   };
 
   const getevents = (visiblemonths) => {
@@ -306,11 +319,13 @@ const CalendarPage = ({ route, navigation }) => {
     setSelectedItem(item);
     var subjectId = additionalitem?.subjectId;
     var chapterId = additionalitem?.chapterId;
+    var boardId = user?.userOrg?.boardId;
+    var gradeId = user?.userOrg?.gradeId;
 
     var topicId = item.scheduleTypeId;
     var url =
       "https://api.iqcandy.com/api/iqcandy" +
-      `/universities/${user?.userOrg?.universityId}/branches/${user?.userOrg?.branchId}/semesters/${user?.userOrg?.semesterId}/subjects/${subjectId}/chapters/${chapterId}`;
+      `/boards/${boardId}/grades/${gradeId}/subjects/${subjectId}/chapters/${chapterId}`;
     fetch(url, {
       method: "GET",
       headers: {
@@ -325,7 +340,7 @@ const CalendarPage = ({ route, navigation }) => {
             var chapterDetails = json.data;
             var url =
               "https://api.iqcandy.com/api/iqcandy" +
-              `/universities/${user?.userOrg?.universityId}/branches/${user?.userOrg?.branchId}/semesters/${user?.userOrg?.semesterId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}`;
+              `/boards/${boardId}/grades/${gradeId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}`;
             fetch(url, {
               method: "GET",
               headers: {
@@ -362,6 +377,7 @@ const CalendarPage = ({ route, navigation }) => {
 
         return false;
       });
+      gotoChaptersPage(item);
 
       return item;
     });
@@ -389,8 +405,6 @@ const CalendarPage = ({ route, navigation }) => {
             markingType={"custom"}
             markedDates={markeddata}
           />
-        
-          
         )}
       </View>
       <TouchableWithoutFeedback onPress={() => setshowmodal(false)}>
