@@ -134,7 +134,7 @@ const NormalVideoViewComponent = (props) => {
           //   })
         }
       }
-    }, 500);
+    }, 1000);
   };
   handleReady = (data) => {
     this._youTubeRef?.getDuration().then((getDuration) => {
@@ -387,7 +387,7 @@ const NormalVideoViewComponent = (props) => {
                 }}
               />
             )}
-            {/* <TouchableOpacity
+           <TouchableOpacity
               onPress={onfullscreen}
               style={{
                 top: fullscreen ? 50 : 50,
@@ -417,7 +417,7 @@ const NormalVideoViewComponent = (props) => {
                   }}
                 />
               )}
-            </TouchableOpacity> */}
+            </TouchableOpacity>
 
             <>
               <View

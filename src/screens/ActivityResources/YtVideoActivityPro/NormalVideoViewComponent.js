@@ -122,16 +122,11 @@ const NormalVideoViewComponent = (props) => {
           setPausedTime(result[0]);
           props.onPause(newdata[0]);
 
-          //    this.setState({ isPlaying: false,data:newdata[0],show: true,pausedtime: result[0]},()=>this.props.onPause(this.state.data));
           clearInterval(interval);
-          //    this.setState({
-          //     time: elapsed_sec,
-          //     elapsed: elapsed_sec,
-
-          //   })
+          
         }
       }
-    }, 500);
+    }, 1000);
   };
   handleReady = (data) => {
     this._youTubeRef?.getDuration().then((getDuration) => {
@@ -162,14 +157,14 @@ const NormalVideoViewComponent = (props) => {
       initial = 1;
       interval = setInterval(async () => {
         const elapsed_sec = await this._youTubeRef?.getCurrentTime();
-        setCurrentTime(elapsed_sec);
+      
+        setCurrentTime(parseInt(elapsed_sec));
         let result = newarr.filter(
           (o1) => parseInt(o1) === parseInt(elapsed_sec)
         );
-        console.log(newarr);
+
         if (parseInt(elapsed_sec) === result[0]) {
-          if (show === true) {
-          } else {
+        
             var newdata = questionsArray.filter(
               (o1) => parseInt(o1.timeInSec) === result[0]
             );
@@ -184,9 +179,9 @@ const NormalVideoViewComponent = (props) => {
             //   elapsed: elapsed_sec,
 
             // })
-          }
+          
         }
-      }, 500);
+      }, 1000);
     }
   };
   getcurrentTime = async () => {
@@ -390,7 +385,7 @@ const NormalVideoViewComponent = (props) => {
                 }}
               />
             )}
-            {/* <TouchableOpacity
+             <TouchableOpacity
               onPress={onfullscreen}
               style={{
                 top: fullscreen ? 50 : 50,
@@ -420,7 +415,7 @@ const NormalVideoViewComponent = (props) => {
                   }}
                 />
               )}
-            </TouchableOpacity> */}
+            </TouchableOpacity>
 
             <View
               style={[
@@ -437,9 +432,9 @@ const NormalVideoViewComponent = (props) => {
                   }}
                 />
                 <View style={{ flex: 0.65 }}>
-                  {/* <View style={[styles.subright, { marginLeft: 22 }]}>
+                  <View style={[styles.subright, { marginLeft: 22 }]}>
                     {timesarray}
-                  </View> */}
+                  </View>
                 </View>
                 <View
                   style={{

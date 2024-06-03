@@ -109,12 +109,12 @@ const VideoActivity = ({ route, navigation }) => {
       userId: user?.userInfo?.userId,
       activityDimId: activityDimId,
     });
-    // getVideoquestions({
-    //   dispatch,
-    //   userId: user?.userInfo?.userId,
-    //   activityDimId: activityDimId,
-    //   assignedActivityId: data.assignedActivityId,
-    // });
+    getVideoquestions({
+      dispatch,
+      userId: user?.userInfo?.userId,
+      activityDimId: activityDimId,
+      assignedActivityId: data.assignedActivityId,
+    });
     const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
     setactivityStartTime(activityStartTime);
   }, [user]);
@@ -224,6 +224,7 @@ const VideoActivity = ({ route, navigation }) => {
       Object.keys(Videoquestionassesdata).length > 0
     ) {
       setvideodetailsquestion(Videoquestionassesdata);
+      //alert(true)
       setnewmodal(true);
     }
   }, [Videoquestionassesdata]);
@@ -538,7 +539,7 @@ const VideoActivity = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
       )}
-      {/* <Modal isVisible={newmodal}>
+       <Modal isVisible={newmodal}>
         <View
           style={{
             flex: 1,
@@ -555,7 +556,7 @@ const VideoActivity = ({ route, navigation }) => {
             activitydata={data}
           />
         </View>
-      </Modal> */}
+      </Modal> 
     </SafeAreaView>
   );
 };

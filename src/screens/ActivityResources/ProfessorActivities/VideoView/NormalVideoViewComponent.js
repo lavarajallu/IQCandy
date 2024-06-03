@@ -128,16 +128,16 @@ const NormalVideoViewComponent = (props) => {
       props.onActivityPrevious(currentTime, duration);
     }
   };
-  onProgress = (data) => {
-    setCurrentTime(parseInt(data.currentTime));
-    const elapsed_sec = parseInt(data.currentTime);
-    let result = newarr.filter((o1) => parseInt(o1) === parseInt(elapsed_sec));
-
-    if (elapsed_sec === result[0]) {
-      if (parseInt(elapsed_sec) === pausedtime) {
-      } else {
+    onProgress = (data) => {
+      //this.checkForPoints(parseInt(data.currentTime))
+      setCurrentTime(parseInt(data?.currentTime));
+      const elapsed_sec = parseInt(data?.currentTime);
+      let result = newarr?.filter((o1) => parseInt(o1) === elapsed_sec);
+  
+      if (elapsed_sec === result[0]) {
+  
         var newdata = questionsarray.filter(
-          (o1) => parseInt(o1.question.timeinsec) === result[0]
+          (o1) => parseInt(o1.timeInSec) === result[0]
         );
         //parseInt(this.state.questionsarray[0].question.timeinsec) ===
         setisplaying(true);
@@ -147,7 +147,6 @@ const NormalVideoViewComponent = (props) => {
         props.onPause(newdata[0]);
         //this.setState({ isPlaying: true,data:this.state.questiondisplay,show: true},()=>this.props.onPause(this.state.data));
       }
-    }
   };
   onRewatch = (data) => {
     if (playerRef) {
@@ -272,13 +271,15 @@ const NormalVideoViewComponent = (props) => {
                 right: 0,
                 elevation: 20,
               }}
+              progressUpdateInterval={900}
               onLoad={onLoad}
               onError={(err) => console.log('errorrr', err)}
               resizeMode={fullscreen ? 'cover' : 'contain'}
               onProgress={onProgress}
+              
             />
             {/* This is video fullscreen or halfscreen icons */}
-            {/* <TouchableOpacity
+             <TouchableOpacity
               onPress={onfullscreen}
               style={{
                 top: fullscreen ? 50 : 50,
@@ -308,7 +309,7 @@ const NormalVideoViewComponent = (props) => {
                   }}
                 />
               )}
-            </TouchableOpacity> */}
+            </TouchableOpacity>
             <View
               style={[
                 styles.absview,

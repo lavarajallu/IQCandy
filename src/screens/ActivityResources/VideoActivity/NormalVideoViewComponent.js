@@ -159,7 +159,9 @@ const NormalVideoViewComponent = (props) => {
     setCurrentTime(parseInt(data?.currentTime));
     const elapsed_sec = parseInt(data?.currentTime);
     let result = newarr?.filter((o1) => parseInt(o1) === elapsed_sec);
+
     if (elapsed_sec === result[0]) {
+
       var newdata = questionsarray.filter(
         (o1) => parseInt(o1.timeInSec) === result[0]
       );
@@ -170,7 +172,7 @@ const NormalVideoViewComponent = (props) => {
       setPausedTime(result[0]);
       props.onPause(newdata[0]);
       //this.setState({ isPlaying: true,data:this.state.questiondisplay,show: true},()=>this.props.onPause(this.state.data));
-    }
+   }
   };
   onRewatch = (data) => {
     if (playerRef) {
@@ -293,6 +295,7 @@ const NormalVideoViewComponent = (props) => {
               }} // Can be a URL or a local file.
               ref={playerRef}
               paused={isPlaying}
+              progressUpdateInterval={900}
               //controls={true}
               // fullscreen={true}                          // Store referenc              // Callback when video cannot be loaded
               style={{
@@ -354,9 +357,9 @@ const NormalVideoViewComponent = (props) => {
                   }}
                 />
                 <View style={{ flex: 0.65 }}>
-                  {/* <View style={[styles.subright, { marginLeft: 22 }]}>
+                   <View style={[styles.subright, { marginLeft: 22 }]}>
                     {timesarray}
-                  </View> */}
+                  </View> 
                 </View>
                 <View
                   style={{
