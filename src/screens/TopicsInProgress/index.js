@@ -1,14 +1,13 @@
 //My Courses.js
 
 import React, { useEffect, useState } from 'react';
-import { FlatList ,Text,View} from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import CardHeaderLabel from '../../components/CardHeaderLabel';
 import CoursesCard from '../../components/CoursesCard';
 
-import { textContent } from '../../constants/content';
 import ItemSeparator from '../../components/ItemSeparator';
 import { selectMyTopicsProgress } from '../../store/student/myTopicProgress/selector';
 import { selectSearch } from '../../store/student/search/selector';
@@ -40,8 +39,7 @@ const TopicsInProgress = (props) => {
       });
     }
   }, [user]);
-  useEffect(()=>{
-  },[progressTopics])
+  useEffect(() => {}, [progressTopics]);
   const gotoChaptersPage = (item) => {
     setSelectedItem(item);
     getChapterDetails({
@@ -53,21 +51,19 @@ const TopicsInProgress = (props) => {
       branchId: user?.userOrg?.branchId,
       semesterId: user?.userOrg?.semesterId,
     });
- 
   };
   useEffect(() => {
-    if(selectedItem){
+    if (selectedItem) {
       if (chapterDetails && Object.keys(chapterDetails).length > 0) {
         setSelectedItem(null);
         navigation.navigate('ActivityResources', {
           topicItem: { ...selectedItem },
           chapterItem: chapterDetails,
-  
+
           from: 'progresstopics',
         });
       }
     }
-    
   }, [chapterDetails]);
 
   const renderItem = ({ item }) => (
@@ -75,7 +71,7 @@ const TopicsInProgress = (props) => {
       item={item}
       onChange={() => gotoChaptersPage(item)}
       title={'topics'}
-      fromscreen={"progresstopics"}
+      fromscreen={'progresstopics'}
     />
   );
 
@@ -90,21 +86,22 @@ const TopicsInProgress = (props) => {
         rHLabel={'View All'}
         onPress={seeAll}
       />
-      {progressTopics?.length > 0 ?
-       
-      <FlatList
-        data={progressTopics}
-        keyExtractor={(item) => item.topicId}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        renderItem={renderItem}
-        ItemSeparatorComponent={ItemSeparator}
-      /> :
-      <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-      <Text>No Data</Text>
-              </View>
-             
-    }
+      {progressTopics?.length > 0 ? (
+        <FlatList
+          data={progressTopics}
+          keyExtractor={(item) => item.topicId}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          renderItem={renderItem}
+          ItemSeparatorComponent={ItemSeparator}
+        />
+      ) : (
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+          <Text>No Data</Text>
+        </View>
+      )}
     </>
   );
 };

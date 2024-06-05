@@ -29,7 +29,6 @@ import {
   getVideoquestions,
 } from '../../../api/myCourses';
 import moment from 'moment';
-import * as ScreenOrientation from 'expo-screen-orientation';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
 const YtVideoActivity = ({ route, navigation }) => {

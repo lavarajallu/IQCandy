@@ -123,7 +123,6 @@ const NormalVideoViewComponent = (props) => {
           props.onPause(newdata[0]);
 
           clearInterval(interval);
-          
         }
       }
     }, 1000);
@@ -157,29 +156,27 @@ const NormalVideoViewComponent = (props) => {
       initial = 1;
       interval = setInterval(async () => {
         const elapsed_sec = await this._youTubeRef?.getCurrentTime();
-      
+
         setCurrentTime(parseInt(elapsed_sec));
         let result = newarr.filter(
           (o1) => parseInt(o1) === parseInt(elapsed_sec)
         );
 
         if (parseInt(elapsed_sec) === result[0]) {
-        
-            var newdata = questionsArray.filter(
-              (o1) => parseInt(o1.timeInSec) === result[0]
-            );
-            setisplaying(false);
-            setData(newdata[0]);
-            setPausedTime(result[0]);
-            props.onPause(newdata[0]);
-            clearInterval(interval);
+          var newdata = questionsArray.filter(
+            (o1) => parseInt(o1.timeInSec) === result[0]
+          );
+          setisplaying(false);
+          setData(newdata[0]);
+          setPausedTime(result[0]);
+          props.onPause(newdata[0]);
+          clearInterval(interval);
 
-            //  this.setState({
-            //   time: elapsed_sec,
-            //   elapsed: elapsed_sec,
+          //  this.setState({
+          //   time: elapsed_sec,
+          //   elapsed: elapsed_sec,
 
-            // })
-          
+          // })
         }
       }, 1000);
     }
@@ -385,7 +382,7 @@ const NormalVideoViewComponent = (props) => {
                 }}
               />
             )}
-             <TouchableOpacity
+            <TouchableOpacity
               onPress={onfullscreen}
               style={{
                 top: fullscreen ? 50 : 50,

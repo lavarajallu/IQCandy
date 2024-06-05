@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import AsyncStorage from "@react-native-async-storage/async-storage"; // Make sure to import AsyncStorage or the storage library you're using
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
 
 import {
-  Alert,
-  BackHandler,
   StyleSheet,
   Dimensions,
   FlatList,
@@ -14,19 +12,19 @@ import {
   Text,
   TouchableWithoutFeedback,
   View,
-} from "react-native";
-import { Agenda } from "react-native-calendars";
-import moment from "moment";
-import { CalendarList } from "react-native-calendars";
-import Modal from "react-native-modal";
-import { selectUser } from "../store/authManagement/selector";
-import { selectmyCalender } from "../store/student/myCalender/selector";
-const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
-import { getschedulefiltered } from "../api/myCalender";
-import { COLORS } from "../constants/colors";
-import { getTopicDetails, getChapterDetails } from "../api/search";
-import { selectSearch } from "../store/student/search/selector";
+} from 'react-native';
+import { Agenda } from 'react-native-calendars';
+import moment from 'moment';
+import { CalendarList } from 'react-native-calendars';
+import Modal from 'react-native-modal';
+import { selectUser } from '../store/authManagement/selector';
+import { selectmyCalender } from '../store/student/myCalender/selector';
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+import { getschedulefiltered } from '../api/myCalender';
+import { COLORS } from '../constants/colors';
+import { getTopicDetails, getChapterDetails } from '../api/search';
+import { selectSearch } from '../store/student/search/selector';
 
 const CalendarPage = ({ route, navigation }) => {
   const { user } = useSelector(selectUser);
@@ -34,39 +32,18 @@ const CalendarPage = ({ route, navigation }) => {
   const { scheduledata } = useSelector(selectmyCalender);
   const { topicDetails, chapterDetails } = useSelector(selectSearch);
 
-  const [items, setItems] = useState({
-    "2023-12-01": [{ name: "Event 1" }],
-    "2023-12-02": [{ name: "Event 2A" }, { name: "Event 2B" }],
-    // Add more data as needed
-  });
   const [visiblemonths, setvisiblemonths] = useState([]);
   const [isspinner, setisspinner] = useState(false);
   const [showmodal, setshowmodal] = useState(false);
   const [evemnsdata, setevemnsdata] = useState([]);
   const [markeddata, setmarkeddata] = useState([]);
-  const [neweventsdata, setneweventsdata] = useState([]);
+  const [newEventsData, setNewEventsData] = useState([]);
   const [newmodal, setnewmodal] = useState(false);
   const [eventtapped, seteventtapped] = useState(null);
   const [selectedItem, setSelectedItem] = useState({});
-  const startingmonths = [
-    {
-      dateString: "2024-06-03",
-      day: 3,
-      month: 6,
-      timestamp: 1717372800000,
-      year: 2024,
-    },
-    {
-      dateString: "2024-07-03",
-      day: 3,
-      month: 7,
-      timestamp: 1717372800000,
-      year: 2024,
-    },
-  ];
+
   useEffect(() => {
     const date = new Date();
-
     let day = date.getDate();
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
@@ -94,6 +71,7 @@ const CalendarPage = ({ route, navigation }) => {
 
     getevents(monthsarraya);
   }, []);
+
   const getmonts = (months) => {
     setvisiblemonths(months);
     setisspinner(false);
@@ -108,9 +86,9 @@ const CalendarPage = ({ route, navigation }) => {
     var data = {
       userId: user?.userInfo?.userId,
       fromDate: moment(startdate)
-        .startOf("month")
-        .format("YYYY-MM-DD HH:mm:ss"),
-      toDate: moment(enddate).endOf("month").format("YYYY-MM-DD HH:mm:ss"),
+        .startOf('month')
+        .format('YYYY-MM-DD HH:mm:ss'),
+      toDate: moment(enddate).endOf('month').format('YYYY-MM-DD HH:mm:ss'),
     };
     getschedulefiltered({
       dispatch,
@@ -125,18 +103,15 @@ const CalendarPage = ({ route, navigation }) => {
     if (scheduledata && scheduledata?.length > 0) {
       var newarray = [];
       scheduledata?.map((res, i) => {
-        newarray.push(moment.utc(res.scheduleDate).format("YYYY-MM-DD"));
+        newarray.push(moment.utc(res.scheduleDate).format('YYYY-MM-DD'));
       });
       const uniqueAges = newarray?.filter(unique);
-
-      var newmarkedarray = [];
-      var newitemsarray = [];
       var newobj = {};
       var newmarkedobjarr = {};
       uniqueAges.map((res, i) => {
         var subobjarr = [];
         scheduledata.map((newres, i) => {
-          if (res === moment.utc(newres.scheduleDate).format("YYYY-MM-DD")) {
+          if (res === moment.utc(newres.scheduleDate).format('YYYY-MM-DD')) {
             subobjarr.push(newres);
           }
         });
@@ -145,15 +120,15 @@ const CalendarPage = ({ route, navigation }) => {
       uniqueAges.map((res, i) => {
         var newmarkedobj = {};
         scheduledata.map((newres, i) => {
-          if (res === moment.utc(newres.scheduleDate).format("YYYY-MM-DD")) {
+          if (res === moment.utc(newres.scheduleDate).format('YYYY-MM-DD')) {
             newmarkedobj = {
               customStyles: {
                 container: {
                   backgroundColor: COLORS.appSecondaryColor,
                 },
                 text: {
-                  color: "white",
-                  fontWeight: "bold",
+                  color: 'white',
+                  fontWeight: 'bold',
                 },
               },
             };
@@ -167,17 +142,17 @@ const CalendarPage = ({ route, navigation }) => {
   }, [scheduledata]);
   const onDayPress = (day) => {
     var result = [];
-    if (Object.keys(evemnsdata).length > 0) {
-      const keys = Object.keys(evemnsdata);
+    if (Object?.keys(evemnsdata).length > 0) {
+      const keys = Object?.keys(evemnsdata);
       keys.forEach((key, index) => {
-        if (key === day.dateString) {
+        if (key === day?.dateString) {
           result = evemnsdata[key];
         }
       });
-      setneweventsdata(result);
+      setNewEventsData(result);
       setnewmodal(true);
     } else {
-      setneweventsdata([]);
+      setNewEventsData([]);
       setnewmodal(true);
     }
   };
@@ -188,22 +163,22 @@ const CalendarPage = ({ route, navigation }) => {
   const renderdataItem = ({ item }) => {
     return (
       <TouchableOpacity
-        testID={"item"}
+        testID={'item'}
         style={{
-          backgroundColor: "white",
+          backgroundColor: 'white',
           flex: 1,
           borderRadius: 5,
           padding: 10,
           marginRight: 10,
-          justifyContent: "space-around",
+          justifyContent: 'space-around',
           marginTop: 17,
         }}
         onPress={() => neweventTapped(item)}
       >
         <Text style={{ color: COLORS.appSecondaryColor }}>{item.title}</Text>
         <Text style={{ color: COLORS.appSecondaryColor }}>
-          {moment.utc(item.start).format("LT")} -{" "}
-          {moment.utc(item.end).format("LT")}
+          {moment.utc(item.start).format('LT')} -{' '}
+          {moment.utc(item.end).format('LT')}
         </Text>
       </TouchableOpacity>
     );
@@ -211,7 +186,7 @@ const CalendarPage = ({ route, navigation }) => {
   const renderEmptyDate = () => {
     return (
       <View
-        style={{ height: 15, flex: 1, alignItems: "center", marginTop: 30 }}
+        style={{ height: 15, flex: 1, alignItems: 'center', marginTop: 30 }}
       >
         <Text>No events in this date</Text>
       </View>
@@ -230,16 +205,16 @@ const CalendarPage = ({ route, navigation }) => {
         style={{
           backgroundColor: COLORS.appSecondaryColor,
           padding: 10,
-          justifyContent: "center",
+          justifyContent: 'center',
           width: 200,
-          alignSelf: "center",
+          alignSelf: 'center',
         }}
       >
         <Text
           style={{
-            fontWeight: "bold",
-            color: "white",
-            textAlign: "center",
+            fontWeight: 'bold',
+            color: 'white',
+            textAlign: 'center',
             fontSize: 20,
           }}
         >
@@ -253,60 +228,60 @@ const CalendarPage = ({ route, navigation }) => {
     var newdate = new Date(item.scheduleDate).setTime(
       new Date(item.scheduleDate).getTime() + 1 * 60 * 60 * 1000
     );
-    var enddate = moment.utc(newdate).format("LT");
+    var enddate = moment.utc(newdate).format('LT');
 
     var additionalinfo = JSON.parse(item.additionalInfo);
     return (
       <View style={{ height: 90, marginBottom: 20 }}>
         <View
-          style={{ flex: 1, flexDirection: "row", backgroundColor: "white" }}
+          style={{ flex: 1, flexDirection: 'row', backgroundColor: 'white' }}
         >
           <View
             style={{
               flex: 0.25,
-              justifyContent: "center",
-              alignItems: "center",
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
             <Text style={{ color: COLORS.appSecondaryColor, fontSize: 12 }}>
-              {moment.utc(new Date(item.scheduleDate)).format("MM/DD")}
+              {moment.utc(new Date(item.scheduleDate)).format('MM/DD')}
             </Text>
             <Text style={{ color: COLORS.appSecondaryColor, fontSize: 12 }}>
-              {moment.utc(new Date(item.scheduleDate)).format("ddd")}
+              {moment.utc(new Date(item.scheduleDate)).format('ddd')}
             </Text>
           </View>
           <View
             style={{
               flex: 0.55,
-              justifyContent: "space-evenly",
-              alignItems: "flex-start",
+              justifyContent: 'space-evenly',
+              alignItems: 'flex-start',
             }}
           >
             <Text
               style={{
                 fontSize: 15,
-                fontWeight: "bold",
+                fontWeight: 'bold',
                 color: COLORS.appSecondaryColor,
               }}
             >
               {additionalinfo.title}
             </Text>
             <Text style={{ fontSize: 13, color: COLORS.appSecondaryColor }}>
-              {moment.utc(item.scheduleDate).format("LT")}-{enddate}
+              {moment.utc(item.scheduleDate).format('LT')}-{enddate}
             </Text>
           </View>
           <View
             style={{
               flex: 0.2,
-              justifyContent: "center",
-              alignItems: "center",
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
             <TouchableOpacity
               onPress={() => ongo(item)}
               style={{ backgroundColor: COLORS.appSecondaryColor, padding: 20 }}
             >
-              <Text style={{ fontWeight: "bold", color: "white" }}>GO</Text>
+              <Text style={{ fontWeight: 'bold', color: 'white' }}>GO</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -315,7 +290,7 @@ const CalendarPage = ({ route, navigation }) => {
   };
   const gotoChaptersPage = async (item) => {
     var additionalitem = JSON.parse(item?.additionalInfo);
-    const authToken = await AsyncStorage.getItem("userToken");
+    const authToken = await AsyncStorage.getItem('userToken');
     setSelectedItem(item);
     var subjectId = additionalitem?.subjectId;
     var chapterId = additionalitem?.chapterId;
@@ -324,12 +299,12 @@ const CalendarPage = ({ route, navigation }) => {
 
     var topicId = item.scheduleTypeId;
     var url =
-      "https://api.iqcandy.com/api/iqcandy" +
+      'https://api.iqcandy.com/api/iqcandy' +
       `/boards/${boardId}/grades/${gradeId}/subjects/${subjectId}/chapters/${chapterId}`;
     fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         jwt: authToken,
       },
     })
@@ -339,12 +314,12 @@ const CalendarPage = ({ route, navigation }) => {
           if (json.data) {
             var chapterDetails = json.data;
             var url =
-              "https://api.iqcandy.com/api/iqcandy" +
+              'https://api.iqcandy.com/api/iqcandy' +
               `/boards/${boardId}/grades/${gradeId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}`;
             fetch(url, {
-              method: "GET",
+              method: 'GET',
               headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
                 jwt: authToken,
               },
             })
@@ -352,13 +327,13 @@ const CalendarPage = ({ route, navigation }) => {
               .then((json) => {
                 if (json) {
                   if (json.data) {
-                    additionalitem["topicId"] = item.scheduleTypeId;
-                    additionalitem["image"] = json.data.image;
-                    navigation.navigate("ActivityResources", {
+                    additionalitem['topicId'] = item.scheduleTypeId;
+                    additionalitem['image'] = json.data.image;
+                    navigation.navigate('ActivityResources', {
                       topicItem: { ...additionalitem },
                       chapterItem: chapterDetails,
 
-                      from: "calender",
+                      from: 'calender',
                     });
                   }
                 }
@@ -402,7 +377,7 @@ const CalendarPage = ({ route, navigation }) => {
             renderEmptyData={renderEmptyDate}
             rowHasChanged={rowHasChanged}
             showClosingKnob
-            markingType={"custom"}
+            markingType={'custom'}
             markedDates={markeddata}
           />
         )}
@@ -412,27 +387,26 @@ const CalendarPage = ({ route, navigation }) => {
           <View
             style={{
               flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "red",
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
             <View
               style={{
                 width: windowWidth / 1.2,
-                backgroundColor: "white",
+                backgroundColor: 'white',
                 marginVertical: 15,
               }}
             >
-              <View style={{ backgroundColor: "white" }}>
+              <View style={{ backgroundColor: 'white' }}>
                 <TouchableOpacity onPress={() => setshowmodal(false)}>
                   <Image
-                    source={require("../../assets/images/cancel.png")}
+                    source={require('../../assets/images/cancel.png')}
                     style={{
                       width: 30,
                       height: 30,
                       tintColor: COLORS.appSecondaryColor,
-                      alignSelf: "flex-end",
+                      alignSelf: 'flex-end',
                       marginVertical: 10,
                       marginRight: 10,
                     }}
@@ -442,27 +416,27 @@ const CalendarPage = ({ route, navigation }) => {
                   <View style={{ padding: 20 }}>
                     <View
                       style={{
-                        justifyContent: "center",
-                        alignItems: "center",
+                        justifyContent: 'center',
+                        alignItems: 'center',
                       }}
                     >
-                      <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+                      <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
                         {eventtapped.title}
                       </Text>
                     </View>
                     <View
                       style={{
                         paddingVertical: 20,
-                        justifyContent: "center",
-                        alignItems: "center",
+                        justifyContent: 'center',
+                        alignItems: 'center',
                       }}
                     >
                       <Text style={{ fontSize: 15 }}>
-                        Event Start:{" "}
-                        {moment.utc(eventtapped.start).format("llll")}{" "}
+                        Event Start:{' '}
+                        {moment.utc(eventtapped.start).format('llll')}{' '}
                       </Text>
                       <Text style={{ fontSize: 15, marginTop: 10 }}>
-                        Event End: {moment.utc(eventtapped.end).format("llll")}
+                        Event End: {moment.utc(eventtapped.end).format('llll')}
                       </Text>
                     </View>
                     <TouchableOpacity
@@ -470,17 +444,17 @@ const CalendarPage = ({ route, navigation }) => {
                       style={{
                         height: 50,
                         width: 100,
-                        justifyContent: "center",
-                        alignItems: "center",
+                        justifyContent: 'center',
+                        alignItems: 'center',
                         backgroundColor: COLORS.appSecondaryColor,
-                        alignSelf: "center",
+                        alignSelf: 'center',
                       }}
                     >
                       <Text
                         style={{
                           fontSize: 18,
-                          color: "white",
-                          fontWeight: "bold",
+                          color: 'white',
+                          fontWeight: 'bold',
                         }}
                       >
                         sdsad
@@ -496,45 +470,45 @@ const CalendarPage = ({ route, navigation }) => {
         </Modal>
       </TouchableWithoutFeedback>
       <Modal
-        testID={"modal"}
+        testID={'modal'}
         isVisible={newmodal}
         // onSwipeComplete={this.closenewmodal.bind(this)}
       >
-        <View style={{ flex: 1, justifyContent: "center" }}>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
           <View
             style={{
               height: windowHeight / 1.4,
-              backgroundColor: "lightgrey",
+              backgroundColor: 'lightgrey',
             }}
           >
             <Text
               style={{
                 fontSize: 16,
                 marginVertical: 20,
-                fontWeight: "bold",
+                fontWeight: 'bold',
                 color: COLORS.appSecondaryColor,
-                textAlign: "center",
+                textAlign: 'center',
               }}
             >
               Scheduled Topics
             </Text>
 
-            {neweventsdata.length > 0 ? (
+            {newEventsData?.length > 0 ? (
               <>
                 <FlatList
                   style={{ marginBottom: 30 }}
                   keyExtractor={(item) => item.additionalInfo.scheduleId}
                   ListFooterComponent={renderfootor}
-                  data={neweventsdata}
+                  data={newEventsData}
                   renderItem={newrenderitem}
                 />
               </>
             ) : (
               <>
-                <View style={{ alignItems: "center" }}>
+                <View style={{ alignItems: 'center' }}>
                   <Text
                     style={{
-                      fontWeight: "bold",
+                      fontWeight: 'bold',
                       color: COLORS.appSecondaryColor,
                       fontSize: 18,
                     }}
@@ -547,17 +521,17 @@ const CalendarPage = ({ route, navigation }) => {
                   style={{
                     backgroundColor: COLORS.appSecondaryColor,
                     padding: 10,
-                    justifyContent: "center",
+                    justifyContent: 'center',
                     width: 200,
-                    alignSelf: "center",
+                    alignSelf: 'center',
                     marginTop: 30,
                   }}
                 >
                   <Text
                     style={{
-                      fontWeight: "bold",
-                      color: "white",
-                      textAlign: "center",
+                      fontWeight: 'bold',
+                      color: 'white',
+                      textAlign: 'center',
                       fontSize: 20,
                     }}
                   >
