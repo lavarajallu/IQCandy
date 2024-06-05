@@ -17,6 +17,7 @@ import { getPayoutData } from '../../api/referAndEarn';
 import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import { Colors } from 'react-native-activity-rings/dist/src/Themes';
+import i18n from '../../i18n';
 const { width } = Dimensions.get('window');
 
 const commonStyles = {
@@ -277,7 +278,7 @@ const Payouts = (props) => {
         </View>
         {paymemntload ? (
           <View style={commonStyles.mainView}>
-            <Text style={{ fontSize: 15 }}>Loading..</Text>
+            <Text style={{ fontSize: 15 }}>{i18n.t('loading')}</Text>
           </View>
         ) : payoutData?.items?.length > 0 ? (
           <ScrollView horizontal>
@@ -296,7 +297,7 @@ const Payouts = (props) => {
             </View>
             <View style={commonStyles.buttonContainer}>
               <View style={commonStyles.button}>
-                <Text style={commonStyles.buttonText}>NO DATA</Text>
+                <Text style={commonStyles.buttonText}>{i18n.t('nodata')}</Text>
               </View>
             </View>
           </View>

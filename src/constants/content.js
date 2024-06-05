@@ -1,5 +1,5 @@
 // content.js
-
+import i18n from '../i18n';
 export const textContent = {
   buttonLabels: {
     getStarted: 'GET STARTED',
@@ -164,7 +164,7 @@ export const textContent = {
       labelColor: '#c44921',
       activeBarColor: '#c44921',
     },
-    
+
     {
       name: 'Average',
       labelColor: '#d88414',
@@ -185,7 +185,7 @@ export const textContent = {
     {
       id: 1,
       progress: '80',
-      title: 'My Practice',
+      title: i18n.t('mypractice'),
       description: 'Role Readiness Score',
       type: 'my_practice',
       image_uri: require('../../assets/images/my_learning/practice.png'),
@@ -194,7 +194,7 @@ export const textContent = {
     {
       id: 2,
       progress: '30',
-      title: 'Learning Overview',
+      title: i18n.t('learninganalysis'),
       description: 'Role Readiness Score',
       type: 'learning_analysis',
       image_uri: require('../../assets/images/my_learning/learning_analysis.png'),
@@ -203,7 +203,7 @@ export const textContent = {
     {
       id: 3,
       progress: '50',
-      title: 'Knowledge Map',
+      title: i18n.t('knowledgemap'),
       description: 'Role Readiness Score',
       type: 'knowledge_map',
       image_uri: require('../../assets/images/my_learning/heatmap.png'),
@@ -212,7 +212,7 @@ export const textContent = {
     {
       id: 4,
       progress: '40',
-      title: 'Leader Board',
+      title: i18n.t('leaderboard'),
       description: 'Role Readiness Score',
       type: 'leader_board',
       image_uri: require('../../assets/images/my_learning/leader_board.png'),

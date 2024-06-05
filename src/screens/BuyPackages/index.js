@@ -37,6 +37,7 @@ import {
 import { selectValidatePackage } from '../../store/student/validatePackages/selector';
 import styles from './styles';
 import { setgetassesmentsdata } from '../../store/student/myCourses/slice';
+import i18n from '../../i18n';
 const BuyPackages = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectUser);
@@ -460,7 +461,7 @@ const BuyPackages = ({ route, navigation }) => {
                   alignItems: 'center',
                 }}
               >
-                <Text style={{ fontSize: 12 }}>No Data</Text>
+                <Text style={{ fontSize: 12 }}>{i18n.t('nodata')}</Text>
               </View>
             )}
 

@@ -10,6 +10,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../constants/colors';
 import { getAlphabetLetter, formatTime } from '../utils/questionUtils';
 import CustomButton from './CustomButton';
+import i18n from '../i18n';
 
 const QuizComponent = ({
   questions,
@@ -46,9 +47,7 @@ const QuizComponent = ({
     // }
   };
 
-  const handleSubmit = () => {
-   
-  };
+  const handleSubmit = () => {};
 
   return (
     <View style={styles.container}>
@@ -99,14 +98,14 @@ const QuizComponent = ({
         <View style={styles.buttonContainer}>
           {newquestionid > 0 && (
             <CustomButton
-              title='Previous'
+              title={i18n.t('previous')}
               onPress={handlePrevQuestion}
               color={COLORS.previousButtonColor}
             />
           )}
           {newquestionid < questions.length - 1 && (
             <CustomButton
-              title='Next'
+              title={i18n.t('next')}
               onPress={handleNextQuestion}
               disabled={selectedAnswer === null}
               color={COLORS.nextButtonColor}
@@ -114,7 +113,7 @@ const QuizComponent = ({
           )}
           {newquestionid === questions.length - 1 && (
             <CustomButton
-              title='Submit'
+              title={i18n.t('submit')}
               onPress={handleSubmit}
               color={COLORS.submitButtonColor}
             />

@@ -37,6 +37,7 @@ import {
 } from '../../../api/myLearning';
 import Modal from 'react-native-modal';
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
+import i18n from '../../../i18n';
 
 const PrePaperAssessment = ({ route, navigation }) => {
   //const { questions } = textContent;
@@ -63,7 +64,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
   const [timeUp, setTimeUp] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
   const [spinner, setSpinner] = useState(true);
-  const [subspinner,setsubSpinner] = useState(false)
+  const [subspinner, setsubSpinner] = useState(false);
   const [visiblemodal, setVisiblemodal] = useState(false);
   const [finaload, setfinalload] = useState(false);
   const [reattempt, setReattempt] = useState(false);
@@ -376,7 +377,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
       testId: testId,
     });
   };
-  useState(() => { }, [endtestdata]);
+  useState(() => {}, [endtestdata]);
 
   const onNextsub = () => {
     setsubSpinner(true);
@@ -394,7 +395,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
 
     setTimeout(() => {
       setSeconds(false);
-      setsubSpinner(false)
+      setsubSpinner(false);
       setSelectedItem(subjectiveData[newquestionid - 1]);
     }, 1500);
   };
@@ -431,72 +432,24 @@ const PrePaperAssessment = ({ route, navigation }) => {
 
             <>
               <View style={{ flex: 0.84 }}>
-                {subspinner ? <View style={{flex:1,justifyContent:"center",alignSelf:"center"}}><Text>Loading..</Text></View>:
+                {subspinner ? (
+                  <View
+                    style={{
+                      flex: 1,
+                      justifyContent: 'center',
+                      alignSelf: 'center',
+                    }}
+                  >
+                    <Text>{i18n.t('loading')}</Text>
+                  </View>
+                ) : (
+                  <ScrollView>
+                    <View style={styles.mainScrollview}>
+                      <View style={styles.scrollinside}>
+                        <Text style={styles.questionidtext}>
+                          {newquestionid}.
+                        </Text>
 
-
-                <ScrollView >
-                  <View style={styles.mainScrollview}>
-                    <View style={styles.scrollinside}>
-                      <Text style={styles.questionidtext}>
-                        {newquestionid}.
-                      </Text>
-
-                      <MathJax
-                        mathJaxOptions={{
-                          messageStyle: 'none',
-                          extensions: [
-                            'mml2jax.js',
-                            'MathMenu.js',
-                            'MathZoom.js',
-                            'AssistiveMML.js',
-                            'a11y/accessibility- menu.js',
-                            'tex2jax.js',
-                          ],
-                          jax: ['input/MathML', 'input/TeX', 'output/HTML-CSS'],
-                          tex2jax: {
-                            inlineMath: [
-                              ['$', '$'],
-                              ['\\(', '\\)'],
-                            ],
-                            displayMath: [
-                              ['$$', '$$'],
-                              ['\\[', '\\]'],
-                            ],
-                            processEscapes: true,
-                          },
-                          TeX: {
-                            extensions: [
-                              'AMSmath.js',
-                              'AMSsymbols.js',
-                              'noErrors.js',
-                              'noUndefined.js',
-                            ],
-                          },
-                        }}
-                        style={styles.mathjaxtext}
-                        html={subjectiveData[newquestionid - 1]?.question}
-                      />
-                    </View>
-                    <View style={{ marginTop: 20 }}>
-                      <Text
-                        style={{
-                          fontSize: 12,
-                          marginBottom: 10,
-                          marginLeft: 10,
-                          fontWeight: 'bold',
-                        }}
-                      >
-                        Explanation :
-                      </Text>
-                      <View
-                        style={{
-                          paddingVertical: 10,
-                          marginHorizontal: 10,
-                          borderWidth: 1,
-                          borderColor: 'lightgrey',
-                          marginTop: 10, //borderColor: this.state.answerobj.user_answer === item.key ? topicindata.color : "lightgrey",
-                        }}
-                      >
                         <MathJax
                           mathJaxOptions={{
                             messageStyle: 'none',
@@ -533,25 +486,87 @@ const PrePaperAssessment = ({ route, navigation }) => {
                               ],
                             },
                           }}
-                          style={{
-                            //backgroundColor: this.state.answerobj.user_answer === item.key ? topicindata.color : "transparent",
-                            width: '95%',
-                            // backgroundColor: "red",
-                            //  height: 150,
-                            // borderWidth: 1,
-                            // borderRadius:10,
-
-                            marginLeft: 10,
-                            // justifyContent: "center",
-                            // alignSelf: 'flex-start',
-                          }}
-                          html={subjectiveData[newquestionid - 1]?.explanation}
+                          style={styles.mathjaxtext}
+                          html={subjectiveData[newquestionid - 1]?.question}
                         />
                       </View>
+                      <View style={{ marginTop: 20 }}>
+                        <Text
+                          style={{
+                            fontSize: 12,
+                            marginBottom: 10,
+                            marginLeft: 10,
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          Explanation :
+                        </Text>
+                        <View
+                          style={{
+                            paddingVertical: 10,
+                            marginHorizontal: 10,
+                            borderWidth: 1,
+                            borderColor: 'lightgrey',
+                            marginTop: 10, //borderColor: this.state.answerobj.user_answer === item.key ? topicindata.color : "lightgrey",
+                          }}
+                        >
+                          <MathJax
+                            mathJaxOptions={{
+                              messageStyle: 'none',
+                              extensions: [
+                                'mml2jax.js',
+                                'MathMenu.js',
+                                'MathZoom.js',
+                                'AssistiveMML.js',
+                                'a11y/accessibility- menu.js',
+                                'tex2jax.js',
+                              ],
+                              jax: [
+                                'input/MathML',
+                                'input/TeX',
+                                'output/HTML-CSS',
+                              ],
+                              tex2jax: {
+                                inlineMath: [
+                                  ['$', '$'],
+                                  ['\\(', '\\)'],
+                                ],
+                                displayMath: [
+                                  ['$$', '$$'],
+                                  ['\\[', '\\]'],
+                                ],
+                                processEscapes: true,
+                              },
+                              TeX: {
+                                extensions: [
+                                  'AMSmath.js',
+                                  'AMSsymbols.js',
+                                  'noErrors.js',
+                                  'noUndefined.js',
+                                ],
+                              },
+                            }}
+                            style={{
+                              //backgroundColor: this.state.answerobj.user_answer === item.key ? topicindata.color : "transparent",
+                              width: '95%',
+                              // backgroundColor: "red",
+                              //  height: 150,
+                              // borderWidth: 1,
+                              // borderRadius:10,
+
+                              marginLeft: 10,
+                              // justifyContent: "center",
+                              // alignSelf: 'flex-start',
+                            }}
+                            html={
+                              subjectiveData[newquestionid - 1]?.explanation
+                            }
+                          />
+                        </View>
+                      </View>
                     </View>
-                  </View>
-                </ScrollView>
-}
+                  </ScrollView>
+                )}
               </View>
               {subjectiveData.length > 0 ? (
                 <View style={styles.bottomView}>
@@ -571,7 +586,9 @@ const PrePaperAssessment = ({ route, navigation }) => {
                           ]}
                           onPress={onPrevioussub}
                         >
-                          <Text style={styles.buttontext}>Previous</Text>
+                          <Text style={styles.buttontext}>
+                            {i18n.t('previous')}
+                          </Text>
                         </TouchableOpacity>
                       </View>
                     )}
@@ -588,7 +605,9 @@ const PrePaperAssessment = ({ route, navigation }) => {
                           ]}
                           onPress={onSubmitTestsub}
                         >
-                          <Text style={styles.buttontext}>Done</Text>
+                          <Text style={styles.buttontext}>
+                            {i18n.t('done')}
+                          </Text>
                         </TouchableOpacity>
                       ) : (
                         <TouchableOpacity
@@ -602,7 +621,9 @@ const PrePaperAssessment = ({ route, navigation }) => {
                           ]}
                           onPress={onNextsub}
                         >
-                          <Text style={styles.buttontext}>Next</Text>
+                          <Text style={styles.buttontext}>
+                            {i18n.t('next')}
+                          </Text>
                         </TouchableOpacity>
                       )}
                     </View>
@@ -624,7 +645,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                   style={styles.innerbuttonview}
                 >
                   <Text style={{ color: COLORS.appSecondaryColor }}>
-                    GO BACK
+                    {i18n.t('goback')}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -632,7 +653,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                   style={styles.innerbuttonview}
                 >
                   <Text style={{ color: COLORS.appSecondaryColor }}>
-                    Review Previous Tests
+                    {i18n.t('reviewprevioustest')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -640,9 +661,9 @@ const PrePaperAssessment = ({ route, navigation }) => {
           </View>
         ) : (
           <View style={styles.mainVew}>
-            <Text>No data</Text>
+            <Text>{i18n.t('nodata')}</Text>
             <TouchableOpacity onPress={() => backAction()}>
-              <Text>GO BACK</Text>
+              <Text>{i18n.t('nodata')}</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -701,7 +722,9 @@ const PrePaperAssessment = ({ route, navigation }) => {
                     backgroundColor: 'red',
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 15 }}>CANCEL</Text>
+                  <Text style={{ color: 'white', fontSize: 15 }}>
+                    {i18n.t('cancel')}
+                  </Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => onStartTest()}>
@@ -751,9 +774,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                 marginTop: 10,
               }}
             >
-              {timeUp
-                ? 'Time up! Please submit your assessment'
-                : 'Are you sure you want to submit assessment?'}
+              {timeUp ? i18n.t('timeupsubmit') : i18n.t('areyousuresubmit')}
             </Text>
             <View
               style={{
@@ -771,7 +792,9 @@ const PrePaperAssessment = ({ route, navigation }) => {
                     borderRadius: 20,
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 14 }}>CANCEL</Text>
+                  <Text style={{ color: 'white', fontSize: 14 }}>
+                    {i18n.t('cancel')}
+                  </Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={onSubmit}>
@@ -783,7 +806,9 @@ const PrePaperAssessment = ({ route, navigation }) => {
                     borderRadius: 20,
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 14 }}>SUBMIT</Text>
+                  <Text style={{ color: 'white', fontSize: 14 }}>
+                    {i18n.t('submit')}
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -800,7 +825,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
       <View style={[styles.container, styles.shadowProp]}>
         {loading ? (
           <View style={styles.mainVew}>
-            <Text>Loading...</Text>
+            <Text>{i18n.t('loading')}</Text>
           </View>
         ) : testQuestionsDataa.length > 0 &&
           Object.keys(selectedItem).length > 0 ? (
@@ -830,7 +855,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
             </View>
             {spinner ? (
               <View style={styles.mainVew}>
-                <Text style={{ fontSize: 13 }}>Loading....</Text>
+                <Text style={{ fontSize: 13 }}>{i18n.t('loading')}</Text>
               </View>
             ) : (
               <>
@@ -914,7 +939,9 @@ const PrePaperAssessment = ({ route, navigation }) => {
                             ]}
                             onPress={onPrevious}
                           >
-                            <Text style={styles.buttontext}>Previous</Text>
+                            <Text style={styles.buttontext}>
+                              {i18n.t('previous')}
+                            </Text>
                           </TouchableOpacity>
                         </View>
                       )}
@@ -931,7 +958,9 @@ const PrePaperAssessment = ({ route, navigation }) => {
                             ]}
                             onPress={onSubmitTest}
                           >
-                            <Text style={styles.buttontext}>Submit</Text>
+                            <Text style={styles.buttontext}>
+                              {i18n.t('submit')}
+                            </Text>
                           </TouchableOpacity>
                         ) : (
                           <TouchableOpacity
@@ -945,7 +974,9 @@ const PrePaperAssessment = ({ route, navigation }) => {
                             ]}
                             onPress={onNext}
                           >
-                            <Text style={styles.buttontext}>Next</Text>
+                            <Text style={styles.buttontext}>
+                              {i18n.t('next')}
+                            </Text>
                           </TouchableOpacity>
                         )}
                       </View>
@@ -968,7 +999,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                   style={styles.innerbuttonview}
                 >
                   <Text style={{ color: COLORS.appSecondaryColor }}>
-                    GO BACK
+                    {i18n.t('goback')}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -976,7 +1007,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                   style={styles.innerbuttonview}
                 >
                   <Text style={{ color: COLORS.appSecondaryColor }}>
-                    Review Previous Tests
+                    {i18n.t('reviewprevioustest')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -984,9 +1015,9 @@ const PrePaperAssessment = ({ route, navigation }) => {
           </View>
         ) : (
           <View style={styles.mainVew}>
-            <Text>No data</Text>
+            <Text>{i18n.t('nodata')}</Text>
             <TouchableOpacity onPress={() => backAction()}>
-              <Text>GO BACK</Text>
+              <Text>{i18n.t('goback')}</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -1045,7 +1076,9 @@ const PrePaperAssessment = ({ route, navigation }) => {
                     backgroundColor: 'red',
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 15 }}>CANCEL</Text>
+                  <Text style={{ color: 'white', fontSize: 15 }}>
+                    {i18n.t('cancel')}
+                  </Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => onStartTest()}>
@@ -1095,9 +1128,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                 marginTop: 10,
               }}
             >
-              {timeUp
-                ? 'Time up! Please submit your assessment'
-                : 'Are you sure you want to submit assessment?'}
+              {timeUp ? i18n.t('timeupsubmit') : i18n.t('areyousuresubmit')}
             </Text>
             <View
               style={{
@@ -1115,7 +1146,9 @@ const PrePaperAssessment = ({ route, navigation }) => {
                     borderRadius: 20,
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 14 }}>CANCEL</Text>
+                  <Text style={{ color: 'white', fontSize: 14 }}>
+                    {i18n.t('cancel')}
+                  </Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={onSubmit}>
@@ -1127,7 +1160,9 @@ const PrePaperAssessment = ({ route, navigation }) => {
                     borderRadius: 20,
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 14 }}>SUBMIT</Text>
+                  <Text style={{ color: 'white', fontSize: 14 }}>
+                    {i18n.t('submit')}
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>

@@ -18,6 +18,7 @@ import YoutubePlayer from 'react-native-youtube-iframe';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
 import styles from './styles';
+import i18n from '../../../i18n';
 var initial = 0;
 let interval;
 
@@ -336,7 +337,7 @@ const NormalVideoViewComponent = (props) => {
   // }
   return loading ? (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Loading...</Text>
+      <Text>{i18n.t('loading')}</Text>
     </View>
   ) : (
     <View style={styles.mainView}>

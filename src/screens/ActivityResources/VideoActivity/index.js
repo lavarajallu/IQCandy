@@ -32,6 +32,7 @@ import {
   getVideoquestions,
 } from '../../../api/myCourses';
 import moment from 'moment';
+import i18n from '../../../i18n';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
 const VideoActivity = ({ route, navigation }) => {
@@ -468,7 +469,7 @@ const VideoActivity = ({ route, navigation }) => {
               alignItems: 'center',
             }}
           >
-            <Text style={{ fontSize: 15 }}>Loading...</Text>
+            <Text style={{ fontSize: 15 }}>{i18n.t('loading')}</Text>
           </View>
         )}
       </View>
@@ -500,7 +501,7 @@ const VideoActivity = ({ route, navigation }) => {
                 color: COLORS.appSecondaryColor,
               }}
             >
-              Previous Activity
+              {i18n.t('previousactivity')}
             </Text>
           </TouchableOpacity>
 
@@ -523,7 +524,7 @@ const VideoActivity = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                Next Activity
+                {i18n.t('nextactivity')}
               </Text>
             ) : (
               <Text
@@ -533,13 +534,13 @@ const VideoActivity = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                Done
+                {i18n.t('done')}
               </Text>
             )}
           </TouchableOpacity>
         </View>
       )}
-       <Modal isVisible={newmodal}>
+      <Modal isVisible={newmodal}>
         <View
           style={{
             flex: 1,
@@ -556,7 +557,7 @@ const VideoActivity = ({ route, navigation }) => {
             activitydata={data}
           />
         </View>
-      </Modal> 
+      </Modal>
     </SafeAreaView>
   );
 };

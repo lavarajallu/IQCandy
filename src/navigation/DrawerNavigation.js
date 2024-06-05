@@ -16,6 +16,7 @@ import { selectUser } from '../store/authManagement/selector';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import i18n from '../i18n';
 
 import { COLORS } from '../constants/colors';
 import BottomTabNavigation from './BottomTabNavigation';
@@ -24,6 +25,7 @@ import ReferEarn from '../screens/ReferEarn';
 import ContactUs from '../screens/ContactUs';
 import ProfilePage from '../screens/ProfilePage';
 import ChangePassword from '../screens/ChangePassword';
+import Settings from '../screens/Settings';
 import { clearUser } from '../store/authManagement/slice';
 
 // Create a Drawer Navigator
@@ -35,15 +37,15 @@ const CustomDrawerContent = (props) => {
 
   const handleLogout = () => {
     Alert.alert(
-      'Logout',
-      'Are you sure you want to logout?',
+      i18n.t('logout'),
+      i18n.t('logoutmessage'),
       [
         {
-          text: 'Cancel',
+          text: i18n.t('cancel'),
           style: 'cancel',
         },
         {
-          text: 'OK',
+          text: i18n.t('ok'),
           onPress: async () => {
             await AsyncStorage.removeItem('userToken');
             await AsyncStorage.removeItem('userInfo');
@@ -129,7 +131,7 @@ const CustomDrawerContent = (props) => {
             color: COLORS.black,
           }}
         >
-          Log out
+          {i18n.t('logout')}
         </Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -157,7 +159,7 @@ const DrawerNavigation = () => {
             textAlign: 'left',
             fontSize: 14,
           },
-          drawerLabel: 'Home',
+          drawerLabel: i18n.t('home'),
           title: 'IQ Candy',
           headerTitleAlign: 'center',
           headerTintColor: COLORS.whiteColor,
@@ -171,6 +173,31 @@ const DrawerNavigation = () => {
             fontSize: 16,
           },
           headerShadowVisible: false,
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Settings')}
+              style={{
+                marginRight: 10,
+                backgroundColor: 'white',
+                width: 20,
+                height: 20,
+                borderWidth: 1,
+                borderColor: 'white',
+                borderRadius: 20 / 2,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Image
+                source={require('../../assets/images/editicon.png')}
+                style={{
+                  width: 10,
+                  height: 10,
+                  tintColor: COLORS.appSecondaryColor,
+                }}
+              />
+            </TouchableOpacity>
+          ),
           drawerIcon: () => (
             <IonIcon name='home-outline' size={24} color={COLORS.black} />
           ),
@@ -185,8 +212,8 @@ const DrawerNavigation = () => {
             textAlign: 'left',
             fontSize: 14,
           },
-          drawerLabel: 'My Profile',
-          title: 'My Profile',
+          drawerLabel: i18n.t('profile'),
+          title: i18n.t('profile'),
           headerTintColor: COLORS.whiteColor,
           headerStyle: {
             backgroundColor: COLORS.appSecondaryColor,
@@ -269,8 +296,8 @@ const DrawerNavigation = () => {
             textAlign: 'left',
             fontSize: 14,
           },
-          drawerLabel: 'Change Password',
-          title: 'Change Password',
+          drawerLabel: i18n.t('changepassword'),
+          title: i18n.t('changepassword'),
           headerTintColor: COLORS.whiteColor,
           headerStyle: {
             backgroundColor: COLORS.appSecondaryColor,
@@ -300,8 +327,8 @@ const DrawerNavigation = () => {
             textAlign: 'left',
             fontSize: 14,
           },
-          drawerLabel: 'Contact Us',
-          title: 'Contact Us',
+          drawerLabel: i18n.t('contactus'),
+          title: i18n.t('contactus'),
           headerTintColor: COLORS.whiteColor,
           headerStyle: {
             backgroundColor: COLORS.appSecondaryColor,

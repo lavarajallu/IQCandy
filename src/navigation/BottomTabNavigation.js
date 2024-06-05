@@ -4,8 +4,7 @@ import React from 'react';
 import { Platform, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import IonIcon from 'react-native-vector-icons/Ionicons';
-
+import i18n from '../i18n';
 import { CalendarPage, HomeScreen, SearchPage, ProfilePage } from '../screens';
 
 import { COLORS } from '../constants/colors';
@@ -38,7 +37,7 @@ const BottomTabNavigation = ({ route }) => {
         name='Home'
         component={HomeScreen}
         options={({ navigation }) => ({
-          tabBarLabel: 'Home',
+          tabBarLabel: i18n.t('home'),
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Icon name='home' size={size} color={color} />
@@ -63,7 +62,7 @@ const BottomTabNavigation = ({ route }) => {
         component={SearchPage}
         options={{
           headerShown: false,
-          tabBarLabel: 'Search',
+          tabBarLabel: i18n.t('search'),
           tabBarIcon: ({ color, size }) => (
             <Icon name='search' size={size} color={color} />
           ),
@@ -87,7 +86,7 @@ const BottomTabNavigation = ({ route }) => {
         component={CalendarPage}
         options={{
           headerShown: false,
-          tabBarLabel: 'Calendar',
+          tabBarLabel: i18n.t('calendar'),
           tabBarIcon: ({ color, size }) => (
             <Icon name='calendar' size={size} color={color} />
           ),

@@ -15,6 +15,7 @@ import ValidatedTextInput from '../../components/ValidatedTextInput';
 import Button from '../../components/Button';
 import { forgotPassword } from '../../api/auth';
 import styles from './styles';
+import i18n from '../../i18n';
 
 const ForgotPassword = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -75,7 +76,7 @@ const ForgotPassword = ({ navigation }) => {
 
           <View style={styles.buttonContainer}>
             <Button
-              title={'SUBMIT'}
+              title={i18n.t('submit')}
               style={styles.button}
               textStyle={styles.buttonText}
               onPress={handleForgotPassword} // Call the function to handle login

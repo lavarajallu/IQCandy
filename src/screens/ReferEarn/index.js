@@ -26,6 +26,7 @@ import { getReferalCode, postPayouts } from '../../api/referAndEarn';
 import { selectUser } from '../../store/authManagement/selector';
 import { selectReferandEarn } from '../../store/student/referAndEarn/selector';
 import { validateAccountPoint } from '../../constants/helpers';
+import i18n from '../../i18n';
 const { width } = Dimensions.get('window');
 const options = [
   { value: 'bank_account', label: 'Bank Account' },
@@ -133,7 +134,7 @@ const ReferEarn = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={'Refer & Earn'} />
+      <Header backAction={backAction} headerTitle={i18n.t('referearn')} />
       <View style={[styles.container, styles.shadowProp]}>
         <View style={styles.tabBarContainer}>
           <View style={styles.tabsContainer}>
@@ -257,13 +258,17 @@ const ReferEarn = ({ route, navigation }) => {
                     onPress={() => setnewmodal(false)}
                     style={styles.modalbutton}
                   >
-                    <Text style={styles.modalbuttontext}>Cancel</Text>
+                    <Text style={styles.modalbuttontext}>
+                      {i18n.t('cancel')}
+                    </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={onsubmitreddem}
                     style={styles.modalbutton}
                   >
-                    <Text style={styles.modalbuttontext}>Submit</Text>
+                    <Text style={styles.modalbuttontext}>
+                      {i18n.t('submit')}
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -392,13 +397,13 @@ const ReferEarn = ({ route, navigation }) => {
                 onPress={() => setnewmodal(false)}
                 style={styles.modalbutton}
               >
-                <Text style={styles.modalbuttontext}>Cancel</Text>
+                <Text style={styles.modalbuttontext}>{i18n.t('cancel')}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={onsubmitreddem}
                 style={styles.modalbutton}
               >
-                <Text style={styles.modalbuttontext}>Submit</Text>
+                <Text style={styles.modalbuttontext}>{i18n.t('submit')}</Text>
               </TouchableOpacity>
             </View>
           </View>

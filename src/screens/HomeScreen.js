@@ -14,6 +14,8 @@ import {
 import { useSelector } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
 import MyCourses from './MyCourses';
+import i18n from './../i18n';
+
 import TopicsInProgress from './TopicsInProgress';
 import MyLearning from './MyLearning';
 import { selectUser } from '../store/authManagement/selector';
@@ -95,9 +97,6 @@ const HomeScreen = ({ route, navigation }) => {
   const responseListener = useRef();
 
   useEffect(() => {
-    // registerForPushNotificationsAsync().then((token) =>
-    //   setExpoPushToken(token)
-    // );
     getversion();
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
@@ -116,13 +115,13 @@ const HomeScreen = ({ route, navigation }) => {
   }, []);
   const platformValue = Platform.OS === 'ios' ? 0.32 : 0.36;
   useEffect(() => {
-    AsyncStorage.getItem('pushtoken').then(async (pushtoken) => {
-      if (pushtoken) {
-        // Dispatch an action to update the Redux state with the token
-        await sendPushNotification(pushtoken);
-      }
-    });
-  }, []);
+    // AsyncStorage.getItem('pushtoken').then(async (pushtoken) => {
+    //   if (pushtoken) {
+    //     // Dispatch an action to update the Redux state with the token
+    //     await sendPushNotification(pushtoken);
+    //   }
+    // });
+  });
   const getversion = () => {
     fetch(`https://api.iqcandy.com/api/iqcandy/app-version/latest`, {
       method: 'GET',
@@ -259,16 +258,16 @@ const HomeScreen = ({ route, navigation }) => {
         </View>
 
         <View style={{ flex: platformValue, marginTop: 10 }}>
-          <MyCourses navigation={navigation} />
+          <MyCourses lhTitle={i18n.t('mylibrary')} navigation={navigation} />
         </View>
 
         <View style={{ flex: platformValue, marginTop: 10 }}>
-          <MyLearning navigation={navigation} />
+          <MyLearning lhTitle={i18n.t('mylearning')} navigation={navigation} />
         </View>
         <View style={{ flex: 0.05 }}></View>
         <View style={{ flex: platformValue, padding: 0, marginTop: 20 }}>
           <TopicsInProgress
-            lhTitle={'My Topics In Progress'}
+            lhTitle={i18n.t('mytopicsinprogress')}
             navigation={navigation}
           />
         </View>

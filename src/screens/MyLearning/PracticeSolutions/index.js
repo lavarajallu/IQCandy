@@ -25,6 +25,7 @@ import { selectUser } from '../../../store/authManagement/selector';
 import { selectMyCourses } from '../../../store/student/myCourses/selector';
 import { getreviewsolutionsPractice } from '../../../api/myLearning';
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
+import i18n from '../../../i18n';
 
 const PracticeSolutions = ({ route, navigation }) => {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -92,7 +93,6 @@ const PracticeSolutions = ({ route, navigation }) => {
       setSelectedItem(practiceSolutionsData[0]);
       setquestionno(0);
       setspinnser(false);
-      
     }
   }, [practiceSolutionsData]);
   const backAction = () => {
@@ -153,13 +153,16 @@ const PracticeSolutions = ({ route, navigation }) => {
   };
   const returnBoxColor = (option) => {
     //const selectedItem = selectedItem;
-  
-    const correctAnswer = selectedItem?.solution.split(',')
-    if (selectedItem.solution == option.key || correctAnswer.includes(option.key)) {
-      return 'green'
+
+    const correctAnswer = selectedItem?.solution.split(',');
+    if (
+      selectedItem.solution == option.key ||
+      correctAnswer.includes(option.key)
+    ) {
+      return 'green';
     } else if (selectedItem.userAnswer == option.key) {
-      return 'red'
-      return ''
+      return 'red';
+      return '';
     }
   };
   const rednerAnswerItem = ({ item, index }) => {
@@ -268,7 +271,7 @@ const PracticeSolutions = ({ route, navigation }) => {
       setloading(true);
       setquestionno((questionno) => {
         setTimeout(() => {
-          var nextItem = questionsarray[questionno+1];
+          var nextItem = questionsarray[questionno + 1];
           setloading(false);
           setSelectedItem(nextItem);
         }, 1500);
@@ -288,7 +291,7 @@ const PracticeSolutions = ({ route, navigation }) => {
       setloading(true);
       setquestionno((questionno) => {
         setTimeout(() => {
-          var nextItem = questionsarray[questionno-1];
+          var nextItem = questionsarray[questionno - 1];
           setloading(false);
           setSelectedItem(nextItem);
         }, 1500);
@@ -305,7 +308,7 @@ const PracticeSolutions = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={'Review Answers'} />
+      <Header backAction={backAction} headerTitle={i18n.t('reviewanswers')} />
       <View style={{ flex: 1 }}>
         <View
           style={{
@@ -341,7 +344,7 @@ const PracticeSolutions = ({ route, navigation }) => {
                     alignItems: 'center',
                   }}
                 >
-                  <Text style={{ fontSize: heafont }}>Loading....</Text>
+                  <Text style={{ fontSize: heafont }}>{i18n.t('loading')}</Text>
                 </View>
               ) : (
                 <View style={styles.questionsview}>
@@ -505,7 +508,7 @@ const PracticeSolutions = ({ route, navigation }) => {
                 alignItems: 'center',
               }}
             >
-              <Text style={{ fontSize: 13 }}>Loading......</Text>
+              <Text style={{ fontSize: 13 }}>{i18n.t('loading')}</Text>
             </View>
           )}
         </View>
@@ -550,7 +553,7 @@ const PracticeSolutions = ({ route, navigation }) => {
                       color: COLORS.appSecondaryColor,
                     }}
                   >
-                    Previous
+                    {i18n.t('previous')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -582,7 +585,7 @@ const PracticeSolutions = ({ route, navigation }) => {
                       color: COLORS.appSecondaryColor,
                     }}
                   >
-                    Done
+                    {i18n.t('done')}
                   </Text>
                 </TouchableOpacity>
               ) : (
@@ -605,7 +608,7 @@ const PracticeSolutions = ({ route, navigation }) => {
                       color: COLORS.appSecondaryColor,
                     }}
                   >
-                    Next
+                    {i18n.t('next')}
                   </Text>
                 </TouchableOpacity>
               )}

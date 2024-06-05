@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import styles from './styles';
+import i18n from '../../i18n';
 
 const RuleBookModal = ({ ruleVisible, setRuleVisible, rulBookCriteria }) => {
   return (
@@ -15,7 +16,7 @@ const RuleBookModal = ({ ruleVisible, setRuleVisible, rulBookCriteria }) => {
       <View style={styles.modalMainView}>
         <View style={styles.modalsubview}>
           <View style={styles.modaltopview}>
-            <Text style={styles.modalheadtext}>Rule Book</Text>
+            <Text style={styles.modalheadtext}>{i18n.t('rulebook')}</Text>
             <TouchableOpacity onPress={() => setRuleVisible(false)}>
               <Image
                 source={require('../../../assets/images/cancel.png')}
@@ -50,7 +51,7 @@ const RuleBookModal = ({ ruleVisible, setRuleVisible, rulBookCriteria }) => {
               </ScrollView>
             ) : (
               <View style={styles.loadingView}>
-                <Text>No data</Text>
+                <Text>{i18n.t('nodata')}</Text>
               </View>
             )}
           </View>

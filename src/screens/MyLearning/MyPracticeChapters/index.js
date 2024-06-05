@@ -24,6 +24,7 @@ import { selectValidatePackage } from '../../../store/student/validatePackages/s
 import { getPracticeChapters } from '../../../api/myLearning';
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
 import { selectUser } from '../../../store/authManagement/selector';
+import i18n from '../../../i18n';
 
 const MyPracticeChapters = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -116,8 +117,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
   const backAction = () => {
     goBack(navigation);
   };
-  const onEventPress = (data) => {
-  };
+  const onEventPress = (data) => {};
   const onItem = (item, index, type, newindex) => {
     if (index === 1) {
       if (item.testType === 'subject' || item.testType === 'Subject') {
@@ -225,9 +225,29 @@ const MyPracticeChapters = ({ route, navigation }) => {
           }
         }
       } else {
-        
-          if (item.testType === 'subject' || item.testType === 'Subject') {
-            if (newindex > 0) {
+        if (item.testType === 'subject' || item.testType === 'Subject') {
+          if (newindex > 0) {
+            if (
+              newchapters?.attempts
+                ?.map((pta) => pta.chapterId)
+                .includes(item.chapterId)
+            ) {
+              setSelectedItem(item);
+              setNewModal(true);
+            } else {
+              navigation.navigate('PracticeAssesment', {
+                data: item,
+                subjectData: subjectItem,
+                type: 'Subject',
+                attempttime: 1,
+              });
+            }
+          } else {
+            alert('Please complete before chapter first');
+          }
+        } else {
+          if (newindex > 0) {
+            if (item.testType === 'chapter' || item.testType === 'Chapter') {
               if (
                 newchapters?.attempts
                   ?.map((pta) => pta.chapterId)
@@ -239,44 +259,22 @@ const MyPracticeChapters = ({ route, navigation }) => {
                 navigation.navigate('PracticeAssesment', {
                   data: item,
                   subjectData: subjectItem,
-                  type: 'Subject',
-                  attempttime: 1,
-                });
-              }
-            } else {
-              alert('Please complete before chapter first');
-            }
-          } else {
-            if (newindex > 0) {
-              if (item.testType === 'chapter' || item.testType === 'Chapter') {
-                if (
-                  newchapters?.attempts
-                    ?.map((pta) => pta.chapterId)
-                    .includes(item.chapterId)
-                ) {
-                  setSelectedItem(item);
-                  setNewModal(true);
-                } else {
-                  navigation.navigate('PracticeAssesment', {
-                    data: item,
-                    subjectData: subjectItem,
-                    type: 'Chapter',
-                    attempttime: 1,
-                  });
-                }
-              } else {
-                navigation.navigate('PracticeAssesment', {
-                  data: item,
-                  subjectData: subjectItem,
                   type: 'Chapter',
                   attempttime: 1,
                 });
               }
             } else {
-              alert('Please complete before chapter first');
+              navigation.navigate('PracticeAssesment', {
+                data: item,
+                subjectData: subjectItem,
+                type: 'Chapter',
+                attempttime: 1,
+              });
             }
+          } else {
+            alert('Please complete before chapter first');
           }
-       
+        }
       }
     }
   };
@@ -553,7 +551,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
         <View style={styles.mainview}>
           {loadingData ? (
             <View>
-              <Text style={{ textAlign: 'center' }}>Loading...</Text>
+              <Text style={{ textAlign: 'center' }}>{i18n.t('loading')}</Text>
             </View>
           ) : (
             <View style={styles.mainView}>
@@ -580,7 +578,9 @@ const MyPracticeChapters = ({ route, navigation }) => {
                   borderTopRightRadius: 15,
                 }}
               >
-                <Text style={{ marginLeft: 10, fontSize: 20 }}>Go With..</Text>
+                <Text style={{ marginLeft: 10, fontSize: 20 }}>
+                  {i18n.t('gowith')}
+                </Text>
                 <TouchableOpacity
                   onPress={onReview}
                   style={{
@@ -594,7 +594,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
                     style={{ width: 20, height: 20 }}
                   />
                   <Text style={{ marginLeft: 15, fontSize: 13 }}>
-                    Review Previous Test
+                    {i18n.t('reviewprevioustest')}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -610,7 +610,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
                     style={{ width: 20, height: 20 }}
                   />
                   <Text style={{ marginLeft: 15, fontSize: 13 }}>
-                    Start New Test
+                    {i18n.t('startnewtest')}
                   </Text>
                 </TouchableOpacity>
               </View>

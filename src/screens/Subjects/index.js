@@ -19,6 +19,7 @@ import { selectUser } from '../../store/authManagement/selector';
 import { selectMyCourses } from '../../store/student/myCourses/selector';
 import ItemSeparator from '../../components/ItemSeparator';
 import CoursesCard from '../../components/CoursesCard';
+import i18n from '../../i18n';
 
 const Subjects = ({ route, navigation }) => {
   const { notesActivityData } = useSelector(selectMyCourses);
@@ -44,19 +45,17 @@ const Subjects = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={'Subjects'} />
+      <Header backAction={backAction} headerTitle={i18n.t('subjects')} />
       <View style={[styles.container, styles.shadowProp]}>
-        
-      <FlatList
+        <FlatList
           data={subjects?.items}
           keyExtractor={(item) => item.idx}
           horizontal={false}
           showsHorizontalScrollIndicator={false}
           renderItem={renderItem}
           numColumns={2} // Set the number of columns to 2
-        //   ItemSeparatorComponent={ItemSeparator}
+          //   ItemSeparatorComponent={ItemSeparator}
         />
-       
       </View>
     </SafeAreaView>
   );

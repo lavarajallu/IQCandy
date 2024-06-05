@@ -25,6 +25,7 @@ import {
   getChapterData,
 } from '../../../api/myLearning';
 import { selectUser } from '../../../store/authManagement/selector';
+import i18n from '../../../i18n';
 
 const { width } = Dimensions.get('window');
 
@@ -271,7 +272,10 @@ const LearningAnalysis = ({ navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={'Learning Analysis'} />
+      <Header
+        backAction={backAction}
+        headerTitle={i18n.t('learninganalysis')}
+      />
       <View style={[styles.container, styles.shadowProp]}>
         <ScrollView>
           {subjectsInfo?.items?.length > 0 && (
@@ -283,7 +287,7 @@ const LearningAnalysis = ({ navigation }) => {
 
           {chapterAvgData?.length > 0 ? (
             <PerformancesCard
-              cardTitle='Couse Progress Average'
+              cardTitle={i18n.t('courseprogressavg')}
               size={width / 1.8}
               minValue={0}
               maxValue={100}
@@ -308,7 +312,7 @@ const LearningAnalysis = ({ navigation }) => {
             />
           ) : (
             <PerformancesCard
-              cardTitle='Couse Progress Average'
+              cardTitle={i18n.t('courseprogressavg')}
               size={width / 1.8}
               minValue={0}
               maxValue={100}
@@ -332,7 +336,7 @@ const LearningAnalysis = ({ navigation }) => {
           {bloomsData.length > 0 && (
             <View style={styles.activityView}>
               <Text style={styles.activityheadtext}>
-                {`Bloom's Taxonomy Average`}
+                {i18n.t('bloomtaxonomy')}
               </Text>
 
               <ActivityRings data={bloomsData} config={activityConfig} />
@@ -359,7 +363,11 @@ const LearningAnalysis = ({ navigation }) => {
 
           {chapterAvgData?.length > 0 ? (
             chapterAvgData.map((res, i) => (
-              <LearningAnalysisCard key={i} cardTitle={'Friction'} data={res} />
+              <LearningAnalysisCard
+                key={i}
+                cardTitle={i18n.t('friction')}
+                data={res}
+              />
             ))
           ) : (
             <View
@@ -370,7 +378,7 @@ const LearningAnalysis = ({ navigation }) => {
                 marginTop: 20,
               }}
             >
-              <Text>No Data...</Text>
+              <Text>{i18n.t('nodata')}</Text>
             </View>
           )}
         </ScrollView>

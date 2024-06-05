@@ -28,6 +28,7 @@ import {
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
 import { selectUser } from '../../../store/authManagement/selector';
 import RuleBookModal from '../../../components/RuleBookModal';
+import i18n from '../../../i18n';
 
 const LeaderBoard = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -65,7 +66,7 @@ const LeaderBoard = ({ navigation }) => {
       <Header
         backAction={backAction}
         onRuleBook={() => onRuleBook()}
-        headerTitle={'Leader Board'}
+        headerTitle={i18n.t('leaderboard')}
         rightIcon={true}
       />
       {leaderBoardData?.leaderBoard?.length > 0 ? (
@@ -162,7 +163,7 @@ const LeaderBoard = ({ navigation }) => {
         </>
       ) : (
         <View style={[styles.loadingView, { backgroundColor: 'white' }]}>
-          <Text>No Data</Text>
+          <Text>{i18n.t('nodata')}</Text>
         </View>
       )}
       {rulBookCriteria ? (

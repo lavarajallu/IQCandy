@@ -26,6 +26,7 @@ import {
 } from '../../../api/myCourses';
 import { WebView } from 'react-native-webview';
 import moment from 'moment';
+import i18n from '../../../i18n';
 const NotesActivity = ({ route, navigation }) => {
   const { questions } = textContent;
   const [page, setPage] = useState(null);
@@ -364,7 +365,7 @@ const NotesActivity = ({ route, navigation }) => {
               alignItems: 'center',
             }}
           >
-            <Text style={{ fontSize: 14 }}>Loading.....</Text>
+            <Text style={{ fontSize: 14 }}>{i18n.t('loading')}</Text>
           </View>
         ) : isPdf ? (
           nodataurl ? (
@@ -375,7 +376,7 @@ const NotesActivity = ({ route, navigation }) => {
                 alignItems: 'center',
               }}
             >
-              <Text style={{ fontSize: 14 }}>No Data.....</Text>
+              <Text style={{ fontSize: 14 }}>{i18n.t('nodata')}</Text>
             </View>
           ) : (
             <View style={{ flex: 1 }}>
@@ -481,7 +482,8 @@ const NotesActivity = ({ route, navigation }) => {
                             color: COLORS.appSecondaryColor,
                           }}
                         >
-                          {'< Previous'}
+                          {'<'}
+                          {i18n.t('previous')}
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -523,7 +525,8 @@ const NotesActivity = ({ route, navigation }) => {
                             color: COLORS.appSecondaryColor,
                           }}
                         >
-                          {'Next >'}
+                          {i18n.t('next')}
+                          {'>'}
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -570,7 +573,7 @@ const NotesActivity = ({ route, navigation }) => {
               color: COLORS.appSecondaryColor,
             }}
           >
-            Previous Activity
+            {i18n.t('previousactivity')}
           </Text>
         </TouchableOpacity>
 
@@ -593,7 +596,7 @@ const NotesActivity = ({ route, navigation }) => {
                 color: COLORS.appSecondaryColor,
               }}
             >
-              Next Activity
+              {i18n.t('nextactivity')}
             </Text>
           ) : (
             <Text
@@ -603,7 +606,7 @@ const NotesActivity = ({ route, navigation }) => {
                 color: COLORS.appSecondaryColor,
               }}
             >
-              Done
+              {i18n.t('done')}
             </Text>
           )}
         </TouchableOpacity>

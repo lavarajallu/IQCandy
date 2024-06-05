@@ -36,6 +36,7 @@ import {
   getQuestionByIdReattemptapi,
 } from '../../../api/myCourses';
 import Modal from 'react-native-modal';
+import i18n from '../../../i18n';
 const PreAssessment = ({ route, navigation }) => {
   const { questions } = textContent;
   const { topicItem, chapterItem, subjectItem, from, data } = route.params;
@@ -403,7 +404,7 @@ const PreAssessment = ({ route, navigation }) => {
       <View style={[styles.container, styles.shadowProp]}>
         {loading ? (
           <View style={styles.mainVew}>
-            <Text>Loading...</Text>
+            <Text>{i18n.t('loading')}</Text>
           </View>
         ) : testQuestionsDataa.length > 0 &&
           Object.keys(selectedItem).length > 0 ? (
@@ -433,7 +434,7 @@ const PreAssessment = ({ route, navigation }) => {
             </View>
             {spinner ? (
               <View style={styles.mainVew}>
-                <Text style={{ fontSize: 13 }}>Loading....</Text>
+                <Text style={{ fontSize: 13 }}>{i18n.t('loading')}</Text>
               </View>
             ) : (
               <>
@@ -517,7 +518,9 @@ const PreAssessment = ({ route, navigation }) => {
                             ]}
                             onPress={onPrevious}
                           >
-                            <Text style={styles.buttontext}>Previous</Text>
+                            <Text style={styles.buttontext}>
+                              {i18n.t('previous')}
+                            </Text>
                           </TouchableOpacity>
                         </View>
                       )}
@@ -534,7 +537,9 @@ const PreAssessment = ({ route, navigation }) => {
                             ]}
                             onPress={onSubmitTest}
                           >
-                            <Text style={styles.buttontext}>Submit</Text>
+                            <Text style={styles.buttontext}>
+                              {i18n.t('submit')}
+                            </Text>
                           </TouchableOpacity>
                         ) : (
                           <TouchableOpacity
@@ -548,7 +553,9 @@ const PreAssessment = ({ route, navigation }) => {
                             ]}
                             onPress={onNext}
                           >
-                            <Text style={styles.buttontext}>Next</Text>
+                            <Text style={styles.buttontext}>
+                              {i18n.t('next')}
+                            </Text>
                           </TouchableOpacity>
                         )}
                       </View>
@@ -571,23 +578,15 @@ const PreAssessment = ({ route, navigation }) => {
                   style={styles.innerbuttonview}
                 >
                   <Text style={{ color: COLORS.appSecondaryColor }}>
-                    GO BACK
+                    {i18n.t('goback')}
                   </Text>
                 </TouchableOpacity>
-                {/* <TouchableOpacity
-                  onPress={() => backAction()}
-                  style={styles.innerbuttonview}
-                >
-                  <Text style={{ color: COLORS.appSecondaryColor }}>
-                    Review Previous Tests
-                  </Text>
-                </TouchableOpacity> */}
               </View>
             </View>
           </View>
         ) : (
           <View style={styles.mainVew}>
-            <Text style={{ fontSize: 13 }}>Loading....</Text>
+            <Text style={{ fontSize: 13 }}>{i18n.t('loading')}</Text>
           </View>
         )}
       </View>
@@ -645,7 +644,9 @@ const PreAssessment = ({ route, navigation }) => {
                     backgroundColor: 'red',
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 15 }}>CANCEL</Text>
+                  <Text style={{ color: 'white', fontSize: 15 }}>
+                    {i18n.t('cancel')}
+                  </Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => onStartTest()}>
@@ -657,7 +658,9 @@ const PreAssessment = ({ route, navigation }) => {
                     backgroundColor: 'green',
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 15 }}>OK</Text>
+                  <Text style={{ color: 'white', fontSize: 15 }}>
+                    {i18n.t('ok')}
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -680,14 +683,6 @@ const PreAssessment = ({ route, navigation }) => {
               marginVertical: 15,
             }}
           >
-            {/* <Image
-                  source={require('../../assets/images/finger.png')}
-                  style={{
-                    width: 96 / 1.5,
-                    height: 96 / 1.5,
-                    alignSelf: 'center',
-                  }}
-                /> */}
             <Text
               style={{
                 fontSize: 20,
@@ -695,9 +690,7 @@ const PreAssessment = ({ route, navigation }) => {
                 marginTop: 10,
               }}
             >
-              {timeUp
-                ? 'Time up! Test will be submitte automatcally'
-                : 'Are you sure you want to submit assessment?'}
+              {timeUp ? i18n.t('timeauto') : i18n.t('areyousuresubmit')}
             </Text>
             <View
               style={{
@@ -715,7 +708,9 @@ const PreAssessment = ({ route, navigation }) => {
                     borderRadius: 20,
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 14 }}>Cancel</Text>
+                  <Text style={{ color: 'white', fontSize: 14 }}>
+                    {i18n.t('cancel')}
+                  </Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={onSubmit}>
@@ -727,7 +722,9 @@ const PreAssessment = ({ route, navigation }) => {
                     borderRadius: 20,
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 14 }}>Submit</Text>
+                  <Text style={{ color: 'white', fontSize: 14 }}>
+                    {i18n.t('submit')}
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>

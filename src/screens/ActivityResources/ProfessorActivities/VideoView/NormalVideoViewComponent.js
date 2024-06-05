@@ -15,6 +15,7 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 //import Orientation from 'react-native-orientation-locker';
 //import { imageUrl } from '../../constants';
 import styles from './styles';
+import i18n from '../../../../i18n';
 // import AWS from 'aws-sdk/dist/aws-sdk-react-native';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
@@ -128,25 +129,24 @@ const NormalVideoViewComponent = (props) => {
       props.onActivityPrevious(currentTime, duration);
     }
   };
-    onProgress = (data) => {
-      //this.checkForPoints(parseInt(data.currentTime))
-      setCurrentTime(parseInt(data?.currentTime));
-      const elapsed_sec = parseInt(data?.currentTime);
-      let result = newarr?.filter((o1) => parseInt(o1) === elapsed_sec);
-  
-      if (elapsed_sec === result[0]) {
-  
-        var newdata = questionsarray.filter(
-          (o1) => parseInt(o1.timeInSec) === result[0]
-        );
-        //parseInt(this.state.questionsarray[0].question.timeinsec) ===
-        setisplaying(true);
-        setData(newdata[0]);
-        setShow(true);
-        setPausedTime(result[0]);
-        props.onPause(newdata[0]);
-        //this.setState({ isPlaying: true,data:this.state.questiondisplay,show: true},()=>this.props.onPause(this.state.data));
-      }
+  onProgress = (data) => {
+    //this.checkForPoints(parseInt(data.currentTime))
+    setCurrentTime(parseInt(data?.currentTime));
+    const elapsed_sec = parseInt(data?.currentTime);
+    let result = newarr?.filter((o1) => parseInt(o1) === elapsed_sec);
+
+    if (elapsed_sec === result[0]) {
+      var newdata = questionsarray.filter(
+        (o1) => parseInt(o1.timeInSec) === result[0]
+      );
+      //parseInt(this.state.questionsarray[0].question.timeinsec) ===
+      setisplaying(true);
+      setData(newdata[0]);
+      setShow(true);
+      setPausedTime(result[0]);
+      props.onPause(newdata[0]);
+      //this.setState({ isPlaying: true,data:this.state.questiondisplay,show: true},()=>this.props.onPause(this.state.data));
+    }
   };
   onRewatch = (data) => {
     if (playerRef) {
@@ -237,7 +237,7 @@ const NormalVideoViewComponent = (props) => {
   //   (fullimg = 30), (playicon = 25), (subfont = 18), (progrsheight = 40);
   // }
   return loading ? (
-    <Text>Loading...</Text>
+    <Text>{i18n.t('loading')}</Text>
   ) : (
     <View style={styles.mainView}>
       <View
@@ -276,10 +276,9 @@ const NormalVideoViewComponent = (props) => {
               onError={(err) => console.log('errorrr', err)}
               resizeMode={fullscreen ? 'cover' : 'contain'}
               onProgress={onProgress}
-              
             />
             {/* This is video fullscreen or halfscreen icons */}
-             <TouchableOpacity
+            <TouchableOpacity
               onPress={onfullscreen}
               style={{
                 top: fullscreen ? 50 : 50,

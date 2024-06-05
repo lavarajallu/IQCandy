@@ -35,6 +35,7 @@ import {
 } from '../../../api/myLearning';
 import Modal from 'react-native-modal';
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
+import i18n from '../../../i18n';
 
 const PracticeAssesment = ({ route, navigation }) => {
   const { questions } = textContent;
@@ -444,12 +445,12 @@ const PracticeAssesment = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={'Practice Test'} />
+      <Header backAction={backAction} headerTitle={i18n.t('practicetest')} />
 
       <View style={[styles.container, styles.shadowProp]}>
         {loading ? (
           <View style={styles.mainVew}>
-            <Text>Loading...</Text>
+            <Text>{i18n.t('loading')}</Text>
           </View>
         ) : testQuestionsDataa.length > 0 &&
           Object.keys(selectedItem).length > 0 ? (
@@ -473,7 +474,7 @@ const PracticeAssesment = ({ route, navigation }) => {
             </View>
             {spinner ? (
               <View style={styles.mainVew}>
-                <Text style={{ fontSize: 13 }}>Loading....</Text>
+                <Text style={{ fontSize: 13 }}>{i18n.t('loading')}</Text>
               </View>
             ) : (
               <>
@@ -557,7 +558,9 @@ const PracticeAssesment = ({ route, navigation }) => {
                             ]}
                             onPress={onPrevious}
                           >
-                            <Text style={styles.buttontext}>Previous</Text>
+                            <Text style={styles.buttontext}>
+                              {i18n.t('previous')}
+                            </Text>
                           </TouchableOpacity>
                         </View>
                       )}
@@ -588,7 +591,9 @@ const PracticeAssesment = ({ route, navigation }) => {
                             ]}
                             onPress={onNext}
                           >
-                            <Text style={styles.buttontext}>Next</Text>
+                            <Text style={styles.buttontext}>
+                              {i18n.t('next')}
+                            </Text>
                           </TouchableOpacity>
                         )}
                       </View>
@@ -611,25 +616,17 @@ const PracticeAssesment = ({ route, navigation }) => {
                   style={styles.innerbuttonview}
                 >
                   <Text style={{ color: COLORS.appSecondaryColor }}>
-                    GO BACK
+                    {i18n.t('goback')}
                   </Text>
                 </TouchableOpacity>
-                {/* <TouchableOpacity
-                  onPress={() => backAction()}
-                  style={styles.innerbuttonview}
-                >
-                  <Text style={{ color: COLORS.appSecondaryColor }}>
-                    Review Previous Tests
-                  </Text>
-                </TouchableOpacity> */}
               </View>
             </View>
           </View>
         ) : (
           <View style={styles.mainVew}>
-            <Text>No data</Text>
+            <Text>{i18n.t('nodata')}</Text>
             <TouchableOpacity onPress={() => backAction()}>
-              <Text>GO BACK</Text>
+              <Text>{i18n.t('goback')}</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -688,7 +685,9 @@ const PracticeAssesment = ({ route, navigation }) => {
                     backgroundColor: 'red',
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 15 }}>CANCEL</Text>
+                  <Text style={{ color: 'white', fontSize: 15 }}>
+                    {i18n.t('cancel')}
+                  </Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => onStartTest()}>
@@ -738,9 +737,7 @@ const PracticeAssesment = ({ route, navigation }) => {
                 marginTop: 10,
               }}
             >
-              {timeUp
-                ? 'Time up! Please submit your assessment'
-                : 'Are you sure you want to submit assessment?'}
+              {timeUp ? i18n.t('timeupsubmit') : i18n.t('areyousuresubmit')}
             </Text>
             <View
               style={{
@@ -758,7 +755,9 @@ const PracticeAssesment = ({ route, navigation }) => {
                     borderRadius: 20,
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 14 }}>CANCEL</Text>
+                  <Text style={{ color: 'white', fontSize: 14 }}>
+                    {i18n.t('cancel')}
+                  </Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={onSubmit}>

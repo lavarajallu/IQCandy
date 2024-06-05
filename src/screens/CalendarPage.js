@@ -25,6 +25,7 @@ import { getschedulefiltered } from '../api/myCalender';
 import { COLORS } from '../constants/colors';
 import { getTopicDetails, getChapterDetails } from '../api/search';
 import { selectSearch } from '../store/student/search/selector';
+import i18n from '../i18n';
 
 const CalendarPage = ({ route, navigation }) => {
   const { user } = useSelector(selectUser);
@@ -45,7 +46,7 @@ const CalendarPage = ({ route, navigation }) => {
   useEffect(() => {
     const date = new Date();
     let day = date.getDate();
-    let month = date.getMonth() + 1;
+    let month = date.getMonth();
     let year = date.getFullYear();
 
     // This arrangement can be altered based on how we want the date's format to appear.
@@ -218,7 +219,7 @@ const CalendarPage = ({ route, navigation }) => {
             fontSize: 20,
           }}
         >
-          CANCEL
+          {i18n.t('cancel')}
         </Text>
       </TouchableOpacity>
     );
@@ -361,7 +362,7 @@ const CalendarPage = ({ route, navigation }) => {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         {isspinner ? (
-          <Text>Loading</Text>
+          <Text>{i18n.t('loading')}</Text>
         ) : (
           <CalendarList
             onVisibleMonthsChange={(months) => {
@@ -462,7 +463,7 @@ const CalendarPage = ({ route, navigation }) => {
                     </TouchableOpacity>
                   </View>
                 ) : (
-                  <Text>NoData</Text>
+                  <Text>{i18n.t('nodata')}</Text>
                 )}
               </View>
             </View>
@@ -490,7 +491,7 @@ const CalendarPage = ({ route, navigation }) => {
                 textAlign: 'center',
               }}
             >
-              Scheduled Topics
+              {i18n.t('scheduletopics')}
             </Text>
 
             {newEventsData?.length > 0 ? (
@@ -513,7 +514,7 @@ const CalendarPage = ({ route, navigation }) => {
                       fontSize: 18,
                     }}
                   >
-                    No Events
+                    {i18n.t('noevents')}
                   </Text>
                 </View>
                 <TouchableOpacity
@@ -535,7 +536,7 @@ const CalendarPage = ({ route, navigation }) => {
                       fontSize: 20,
                     }}
                   >
-                    CANCEL
+                    {i18n.t('cancel')}
                   </Text>
                 </TouchableOpacity>
               </>

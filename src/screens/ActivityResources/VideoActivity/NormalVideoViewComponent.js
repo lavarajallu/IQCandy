@@ -15,6 +15,7 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 //import Orientation from 'react-native-orientation-locker';
 //import { imageUrl } from '../../constants';
 import styles from './styles';
+import i18n from '../../../i18n';
 // import AWS from 'aws-sdk/dist/aws-sdk-react-native';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
@@ -270,7 +271,7 @@ const NormalVideoViewComponent = (props) => {
   //   (fullimg = 30), (playicon = 25), (subfont = 18), (progrsheight = 40);
   // }
   return loading ? (
-    <Text>Loading...</Text>
+    <Text>{i18n.t('loading')}</Text>
   ) : (
     <View style={styles.mainView}>
       <View

@@ -30,6 +30,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { updateProfile, getUserData } from '../../api/profile';
 import { selectMyProfile } from '../../store/student/MyProfile/selector';
 import { COLORS } from '../../constants/colors';
+import i18n from '../../i18n';
 
 const EditProfile = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -64,7 +65,7 @@ const EditProfile = ({ navigation }) => {
       '',
       [
         {
-          text: 'Cancel',
+          text: i18n.t('cancel'),
           onPress: () => console.log('Cancel Pressed'),
         },
         {
@@ -90,7 +91,6 @@ const EditProfile = ({ navigation }) => {
         quality: 1,
       });
       if (!result.canceled) {
-
         setProfilepic(result.assets[0].base64);
       }
       // return result;
@@ -181,11 +181,13 @@ const EditProfile = ({ navigation }) => {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <SafeAreaView style={{ flex: 0, backgroundColor: COLORS.appSecondaryColor }} />
+      <SafeAreaView
+        style={{ flex: 0, backgroundColor: COLORS.appSecondaryColor }}
+      />
       <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <Header
           backAction={backAction}
-          headerTitle={'Edit Profile'}
+          headerTitle={i18n.t('editprofile')}
           hedercolor={true}
         />
 
@@ -292,7 +294,7 @@ const EditProfile = ({ navigation }) => {
                   }}
                   iconName='person-outline'
                 />
-               {/*} <ValidatedTextInput
+                {/*} <ValidatedTextInput
                   editable={false}
                   label='Board Name'
                   placeholder='Enter your board name'
@@ -353,7 +355,7 @@ const EditProfile = ({ navigation }) => {
 
               <View style={{ marginBottom: 30 }}>
                 <Button
-                  title={'Update Profile'}
+                  title={i18n.t('updateprofile')}
                   style={{
                     width: width * 0.9,
                     height: 50,

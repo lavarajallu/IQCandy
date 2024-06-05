@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
 //import ChartView from 'react-native-highcharts';
 import ChartView from './HighChart.js';
+import i18n from '../../i18n/index.js';
 const TimeSpentChart = ({ topicsTimeTakenData = {} }) => {
   let [chartOptions, setChartOptions] = useState(null);
   let [chartConfig, setChartConfig] = useState(null);
@@ -99,11 +100,10 @@ const TimeSpentChart = ({ topicsTimeTakenData = {} }) => {
       setChartConfig(conf);
       setspinner(false);
     }
-
   }, [topicsTimeTakenData]);
 
   return spinner ? (
-    <Text>Loading....</Text>
+    <Text>{i18n.t('loading')}</Text>
   ) : (
     <View>
       <ChartView
@@ -135,7 +135,7 @@ const TimeSpentChart = ({ topicsTimeTakenData = {} }) => {
               alignItems: 'center',
             }}
           />
-          <Text style={{ marginLeft: 5 }}>Correct</Text>
+          <Text style={{ marginLeft: 5 }}>{i18n.t('correct')}</Text>
         </View>
         <View
           style={{
@@ -146,7 +146,7 @@ const TimeSpentChart = ({ topicsTimeTakenData = {} }) => {
           }}
         >
           <View style={{ width: 10, height: 10, backgroundColor: '#F94D48' }} />
-          <Text style={{ marginLeft: 5 }}>Incorrect</Text>
+          <Text style={{ marginLeft: 5 }}>{i18n.t('incorrect')}</Text>
         </View>
       </View>
     </View>

@@ -22,6 +22,7 @@ import { selectUser } from '../../../store/authManagement/selector';
 import { selectMyCourses } from '../../../store/student/myCourses/selector';
 import { getsummaryreport } from '../../../api/myLearning';
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
+import i18n from '../../../i18n';
 const PracticeSummary = ({ route, navigation }) => {
   const { questions } = textContent;
   const { user } = useSelector(selectUser);
@@ -168,7 +169,7 @@ const PracticeSummary = ({ route, navigation }) => {
               }}
             >
               <Text style={{ color: 'white', fontSize: 14 }}>
-                Review Answers
+                {i18n.t('reviewanswers')}
               </Text>
             </TouchableOpacity>
 

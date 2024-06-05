@@ -20,6 +20,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { VictoryPie } from 'victory-native';
 import ColumnChart from './ColumnChart.js';
 import TimeSpentChart from './TimeSpentChart';
+import i18n from '../../i18n';
 const windowWidth = Dimensions.get('window').width;
 // var graphicData = [
 //   { y: 20, x: '20%', name: 'Incomplete' },
@@ -50,7 +51,7 @@ class TopicAnalysis extends Component {
     };
   }
   componentDidMount() {
-    alert
+    alert;
     this.backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       this.backAction
@@ -90,9 +91,9 @@ class TopicAnalysis extends Component {
     }
   };
   getquestionstimespent() {
-  
     fetch(
-     'https://api.iqcandy.com/api/iqcandy/student/questionsAnalysis/' + this.props.data.reference_id,
+      'https://api.iqcandy.com/api/iqcandy/student/questionsAnalysis/' +
+        this.props.data.reference_id,
       {
         method: 'GET',
         headers: {
@@ -120,7 +121,8 @@ class TopicAnalysis extends Component {
   }
   getassesmentanalysis() {
     fetch(
-     'https://api.iqcandy.com/api/iqcandy/student/assessmentAnalysis/' + this.props.data.reference_id,
+      'https://api.iqcandy.com/api/iqcandy/student/assessmentAnalysis/' +
+        this.props.data.reference_id,
       {
         method: 'GET',
         headers: {
@@ -181,7 +183,7 @@ class TopicAnalysis extends Component {
     var userId = this.state.userDetails.userInfo.userId;
     var topicId = this.props.data.topicId;
     var universalTopicId = this.props.data.universalTopicId;
-  
+
     fetch(
       'https://api.iqcandy.com/api/iqcandy' +
         `/analytics/users/${userId}/topics/${topicId}/analysis?universalTopicId=${universalTopicId}`,
@@ -199,7 +201,7 @@ class TopicAnalysis extends Component {
           var topicAnalysisData = json.data;
           if (json.data.topicProgress?.totalProgress) {
             var completion = parseInt(json.data.topicProgress.totalProgress);
-           
+
             var completepercent = completion ? Math.round(completion) : 0;
             var incompletepercent = completion
               ? Math.round(100 - completion)
@@ -380,10 +382,8 @@ class TopicAnalysis extends Component {
       })
       .catch((error) => console.error(error));
   }
-  
-  onBack() {
-   
-  }
+
+  onBack() {}
 
   render() {
     const { data } = this.props;
@@ -397,7 +397,7 @@ class TopicAnalysis extends Component {
       '#6A5177',
       '#A3BA6D',
     ];
-   // const isTablet = DeviceConstants.isTablet; // false
+    // const isTablet = DeviceConstants.isTablet; // false
     var backheight = 30,
       headfont = 20,
       subfont = 15,
@@ -418,67 +418,217 @@ class TopicAnalysis extends Component {
     // }
     return (
       <SafeAreaView
-      style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
-    >
-      <Header backAction={this.backAction} headerTitle={'Topic Analysis'} />
-      <View style={[styles.container, styles.shadowProp]}>
-            <View style={{ flex: 1 }}>
-              <View style={{ flex: 0.1, flexDirection: 'row' }}>
-                <View style={{ flex: 1 }}>
+        style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
+      >
+        <Header backAction={this.backAction} headerTitle={'Topic Analysis'} />
+        <View style={[styles.container, styles.shadowProp]}>
+          <View style={{ flex: 1 }}>
+            <View style={{ flex: 0.1, flexDirection: 'row' }}>
+              <View style={{ flex: 1 }}>
+                <View
+                  style={{
+                    flex: 1,
+                    marginLeft: 20,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}
+                >
+                  <TouchableOpacity onPress={this.onBack.bind(this)}>
+                    <Image
+                      source={require('../../../assets/images/left-arrow.png')}
+                      style={{
+                        width: backheight,
+                        height: backheight,
+                        tintColor: 'white',
+                      }}
+                    />
+                  </TouchableOpacity>
+
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: headfont,
+                      marginLeft: 10,
+                      marginRight: 20,
+                    }}
+                  >
+                    {data.name} Analysis
+                  </Text>
+                </View>
+              </View>
+            </View>
+            <View
+              style={{
+                flex: 0.9,
+                backgroundColor: 'white',
+                marginLeft: 10,
+                marginRight: 10,
+                borderRadius: 20,
+                overflow: 'hidden',
+              }}
+            >
+              <ScrollView>
+                {this.state.loading ? (
                   <View
                     style={{
                       flex: 1,
-                      marginLeft: 20,
-                      flexDirection: 'row',
+                      justifyContent: 'center',
                       alignItems: 'center',
                     }}
                   >
-                    <TouchableOpacity onPress={this.onBack.bind(this)}>
-                      <Image
-                        source={require('../../../assets/images/left-arrow.png')}
-                        style={{
-                          width: backheight,
-                          height: backheight,
-                          tintColor: 'white',
-                        }}
-                      />
-                    </TouchableOpacity>
-
-                    <Text
-                      style={{
-                        color: 'white',
-                        fontSize: headfont,
-                        marginLeft: 10,
-                        marginRight: 20,
-                      }}
-                    >
-                      {data.name} Analysis
+                    <Text style={{ fontSize: subfont }}>
+                      {i18n.t('loading')}
                     </Text>
                   </View>
-                </View>
-              </View>
-              <View
-                style={{
-                  flex: 0.9,
-                  backgroundColor: 'white',
-                  marginLeft: 10,
-                  marginRight: 10,
-                  borderRadius: 20,
-                  overflow: 'hidden',
-                }}
-              >
-                <ScrollView>
-                  {this.state.loading ? (
+                ) : (
+                  <>
                     <View
                       style={{
-                        flex: 1,
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        width: windowWidth / 1.25,
+                        backgroundColor: colors.Themecolor,
+                        alignSelf: 'center',
+                        borderRadius: 10,
+                        marginVertical: 10,
                       }}
                     >
-                      <Text style={{ fontSize: subfont }}>Loading...</Text>
+                      <Text
+                        style={{
+                          textAlign: 'center',
+                          paddingVertical: paddingver,
+                          color: 'white',
+                          fontWeight: 'bold',
+                          fontSize: subfont,
+                        }}
+                      >
+                        Topic Analysis
+                      </Text>
                     </View>
-                  ) : (
+                    {this.state.topicpercentarray.length > 0 ? (
+                      <>
+                        <VictoryPie
+                          data={this.state.topicpercentarray}
+                          // width={250}
+                          height={pieheight}
+                          innerRadius={pieinner}
+                          animate={{
+                            duration: 2000,
+                          }}
+                          labels={({ datum }) => null}
+                          labelRadius={({ innerRadius }) => innerRadius + 5}
+                          colorScale={['#F94D48', '#A3BA6D']}
+                          style={{
+                            labels: {
+                              fill: 'white',
+                              fontSize: 15,
+                              fontWeight: 'bold',
+                              marginLeft: 8,
+                            },
+                          }}
+                        />
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-evenly',
+                          }}
+                        >
+                          {this.state.topicpercentarray.map((res, i) => (
+                            <View
+                              key={i}
+                              style={{
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                              }}
+                            >
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                }}
+                              >
+                                <View
+                                  style={{
+                                    height: smallcirlce,
+                                    width: smallcirlce,
+                                    borderRadius: smallcirlce / 2,
+                                    backgroundColor:
+                                      res.name === 'Incomplete'
+                                        ? '#F94D48'
+                                        : '#A3BA6D',
+                                  }}
+                                />
+                                <Text
+                                  style={{
+                                    marginLeft: 8,
+                                    fontSize: smallfont,
+                                  }}
+                                >
+                                  {res.name}({res.x})
+                                </Text>
+                              </View>
+                            </View>
+                          ))}
+                        </View>
+                      </>
+                    ) : (
+                      <Text style={{ textAlign: 'center' }}>
+                        {i18n.t('nodata')}
+                      </Text>
+                    )}
+                    {this.state.graphvalue > 0 ? (
+                      <>
+                        <VictoryPie
+                          data={this.state.topicactivitesdata}
+                          // width={250}
+                          height={pieheight}
+                          innerRadius={0}
+                          animate={{
+                            duration: 2000,
+                          }}
+                          labels={({ datum }) => null}
+                          colorScale={colorarray}
+                          // style={{ labels: { fill: "white", fontSize: 15, fontWeight: "bold" , marginLeft:8} }}
+                        />
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            marginHorizontal: 30,
+                            flexWrap: 'wrap',
+                            marginBottom: 20,
+                            justifyContent: 'center',
+                          }}
+                        >
+                          {this.state.topicactivitesdata.map((res, i) =>
+                            res.value ? (
+                              <View
+                                style={{
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                  marginLeft: 10,
+                                }}
+                              >
+                                <View
+                                  style={{
+                                    height: smallcirlce,
+                                    width: smallcirlce,
+                                    borderRadius: smallcirlce / 2,
+                                    backgroundColor: colorarray[i],
+                                  }}
+                                />
+                                <Text
+                                  style={{
+                                    marginLeft: 8,
+                                    fontSize: smallfont,
+                                  }}
+                                >
+                                  {res.name}({parseInt(res.percent)}%)
+                                </Text>
+                              </View>
+                            ) : null
+                          )}
+                        </View>
+                      </>
+                    ) : null}
+
                     <>
                       <View
                         style={{
@@ -493,239 +643,93 @@ class TopicAnalysis extends Component {
                           style={{
                             textAlign: 'center',
                             paddingVertical: paddingver,
-                            color: 'white',
                             fontWeight: 'bold',
+                            color: 'white',
                             fontSize: subfont,
                           }}
                         >
-                          Topic Analysis
+                          {i18n.t('performaceanalysisby')}
                         </Text>
                       </View>
-                      {this.state.topicpercentarray.length > 0 ? (
-                        <>
-                          <VictoryPie
-                            data={this.state.topicpercentarray}
-                            // width={250}
-                            height={pieheight}
-                            innerRadius={pieinner}
-                            animate={{
-                              duration: 2000,
-                            }}
-                            labels={({ datum }) => null}
-                            labelRadius={({ innerRadius }) => innerRadius + 5}
-                            colorScale={['#F94D48', '#A3BA6D']}
-                            style={{
-                              labels: {
-                                fill: 'white',
-                                fontSize: 15,
-                                fontWeight: 'bold',
-                                marginLeft: 8,
-                              },
-                            }}
-                          />
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              justifyContent: 'space-evenly',
-                            }}
-                          >
-                            {this.state.topicpercentarray.map((res, i) => (
-                              <View
-                                key={i}
-                                style={{
-                                  flexDirection: 'row',
-                                  justifyContent: 'center',
-                                }}
-                              >
-                                <View
-                                  style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                  }}
-                                >
-                                  <View
-                                    style={{
-                                      height: smallcirlce,
-                                      width: smallcirlce,
-                                      borderRadius: smallcirlce / 2,
-                                      backgroundColor:
-                                        res.name === 'Incomplete'
-                                          ? '#F94D48'
-                                          : '#A3BA6D',
-                                    }}
-                                  />
-                                  <Text
-                                    style={{
-                                      marginLeft: 8,
-                                      fontSize: smallfont,
-                                    }}
-                                  >
-                                    {res.name}({res.x})
-                                  </Text>
-                                </View>
-                              </View>
-                            ))}
-                          </View>
-                        </>
-                      ) : (
-                        <Text style={{ textAlign: 'center' }}>No Data</Text>
-                      )}
-                      {this.state.graphvalue > 0 ? (
-                        <>
-                          <VictoryPie
-                            data={this.state.topicactivitesdata}
-                            // width={250}
-                            height={pieheight}
-                            innerRadius={0}
-                            animate={{
-                              duration: 2000,
-                            }}
-                            labels={({ datum }) => null}
-                            colorScale={colorarray}
-                            // style={{ labels: { fill: "white", fontSize: 15, fontWeight: "bold" , marginLeft:8} }}
-                          />
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              marginHorizontal: 30,
-                              flexWrap: 'wrap',
-                              marginBottom: 20,
-                              justifyContent: 'center',
-                            }}
-                          >
-                            {this.state.topicactivitesdata.map((res, i) =>
-                              res.value ? (
-                                <View
-                                  style={{
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    marginLeft: 10,
-                                  }}
-                                >
-                                  <View
-                                    style={{
-                                      height: smallcirlce,
-                                      width: smallcirlce,
-                                      borderRadius: smallcirlce / 2,
-                                      backgroundColor: colorarray[i],
-                                    }}
-                                  />
-                                  <Text
-                                    style={{
-                                      marginLeft: 8,
-                                      fontSize: smallfont,
-                                    }}
-                                  >
-                                    {res.name}({parseInt(res.percent)}%)
-                                  </Text>
-                                </View>
-                              ) : null
-                            )}
-                          </View>
-                        </>
-                      ) : null}
-
-                      <>
+                      {this.state.quesloading ? (
                         <View
                           style={{
-                            width: windowWidth / 1.25,
-                            backgroundColor: colors.Themecolor,
-                            alignSelf: 'center',
-                            borderRadius: 10,
-                            marginVertical: 10,
+                            flex: 1,
+                            justifyContent: 'center',
+                            alignItems: 'center',
                           }}
                         >
-                          <Text
-                            style={{
-                              textAlign: 'center',
-                              paddingVertical: paddingver,
-                              fontWeight: 'bold',
-                              color: 'white',
-                              fontSize: subfont,
-                            }}
-                          >
-                            Performance Analysis By Question Difficulty
+                          <Text style={{ fontSize: headfont }}>
+                            {i18n.t('loading')}
                           </Text>
                         </View>
-                        {this.state.quesloading ? (
-                          <View
-                            style={{
-                              flex: 1,
-                              justifyContent: 'center',
-                              alignItems: 'center',
-                            }}
-                          >
-                            <Text style={{ fontSize: headfont }}>
-                              Loading...
-                            </Text>
-                          </View>
-                        ) : (
-                          <>
-                            <ColumnChart
-                              type="Easy"
-                              question={this.state.studenteasydaata?.Easy}
-                            />
+                      ) : (
+                        <>
+                          <ColumnChart
+                            type='Easy'
+                            question={this.state.studenteasydaata?.Easy}
+                          />
 
-                            <ColumnChart
-                              type="Medium"
-                              question={this.state.studenteasydaata?.Medium}
-                            />
+                          <ColumnChart
+                            type='Medium'
+                            question={this.state.studenteasydaata?.Medium}
+                          />
 
-                            <ColumnChart
-                              type="Hard"
-                              question={this.state.studenteasydaata?.Hard}
-                            />
-                            {this.state.loading ? (
+                          <ColumnChart
+                            type='Hard'
+                            question={this.state.studenteasydaata?.Hard}
+                          />
+                          {this.state.loading ? (
+                            <View
+                              style={{
+                                flex: 1,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                              }}
+                            >
+                              <Text style={{ fontSize: headfont }}>
+                                {i18n.t('loading')}
+                              </Text>
+                            </View>
+                          ) : (
+                            <>
                               <View
                                 style={{
-                                  flex: 1,
-                                  justifyContent: 'center',
-                                  alignItems: 'center',
+                                  width: windowWidth / 1.25,
+                                  backgroundColor: colors.Themecolor,
+                                  alignSelf: 'center',
+                                  borderRadius: 10,
+                                  marginVertical: 10,
                                 }}
                               >
-                                <Text style={{ fontSize: headfont }}>
-                                  Loading...
-                                </Text>
-                              </View>
-                            ) : (
-                              <>
-                                <View
+                                <Text
                                   style={{
-                                    width: windowWidth / 1.25,
-                                    backgroundColor: colors.Themecolor,
-                                    alignSelf: 'center',
-                                    borderRadius: 10,
-                                    marginVertical: 10,
+                                    textAlign: 'center',
+                                    paddingVertical: paddingver,
+                                    color: 'white',
+                                    fontWeight: 'bold',
+                                    fontSize: subfont,
                                   }}
                                 >
-                                  <Text
-                                    style={{
-                                      textAlign: 'center',
-                                      paddingVertical: paddingver,
-                                      color: 'white',
-                                      fontWeight: 'bold',
-                                      fontSize: subfont,
-                                    }}
-                                  >
-                                    Time Taken For Each Question
-                                  </Text>
-                                </View>
-                                <TimeSpentChart
-                                  topicsTimeTakenData={
-                                    this.state.topicanalysisdata
-                                  }
-                                />
-                              </>
-                            )}
-                          </>
-                        )}
-                      </>
+                                  {i18n.t('timetakenby')}
+                                </Text>
+                              </View>
+                              <TimeSpentChart
+                                topicsTimeTakenData={
+                                  this.state.topicanalysisdata
+                                }
+                              />
+                            </>
+                          )}
+                        </>
+                      )}
                     </>
-                  )}
-                </ScrollView>
-              </View>
+                  </>
+                )}
+              </ScrollView>
             </View>
-       </View>
+          </View>
+        </View>
       </SafeAreaView>
     );
   }

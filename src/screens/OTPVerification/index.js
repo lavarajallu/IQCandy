@@ -16,6 +16,7 @@ import { generateOtp, verifyOtp } from '../../api/auth';
 import styles from './styles';
 import { selectUser } from '../../store/authManagement/selector';
 import { COLORS } from '../../constants/colors';
+import i18n from '../../i18n';
 
 const OTPVerification = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -108,8 +109,8 @@ const OTPVerification = ({ route, navigation }) => {
               )}
             </Text>
             <ValidatedTextInput
-              label='OTP'
-              placeholder='Enter OTP'
+              label={i18n.t('otp')}
+              placeholder={i18n.t('enterotp')}
               value={otp}
               onChangeText={setOtp}
               validation={{
@@ -124,14 +125,14 @@ const OTPVerification = ({ route, navigation }) => {
             style={[styles.buttonContainer, { justifyContent: 'space-evenly' }]}
           >
             <Button
-              title={'NEXT'}
+              title={i18n.t('next')}
               style={styles.button}
               textStyle={styles.buttonText}
               onPress={() => nextOtp()} // Call the function to handle login
             />
             {seconds === 0 && (
               <Button
-                title={'RESEND OTP'}
+                title={i18n.t('resendotp')}
                 colors={[COLORS.secondary, COLORS.dark]}
                 style={styles.button}
                 textStyle={styles.buttonText}

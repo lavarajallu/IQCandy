@@ -20,6 +20,7 @@ import {
 } from '../../../api/myLearning';
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
 import { selectUser } from '../../../store/authManagement/selector';
+import i18n from '../../../i18n';
 
 const PreviousQuestionPapers = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -69,10 +70,7 @@ const PreviousQuestionPapers = ({ navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header
-        backAction={backAction}
-        headerTitle={'Previous Question Papers'}
-      />
+      <Header backAction={backAction} headerTitle={i18n.t('pqp')} />
       <View style={[styles.container, styles.shadowProp]}>
         <FlatList
           data={questionPapers?.items}

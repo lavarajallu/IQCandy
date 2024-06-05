@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { COLORS } from '../constants/colors';
 import { SHADOW_STYLES } from '../constants/helpers';
+import i18n from '../i18n';
 
 const { width, height } = Dimensions.get('window');
 
@@ -23,14 +24,14 @@ const AttemptsAnalysisCard = ({
           backgroundColor1,
           [
             testResult?.lighteningCount
-              ? 'Lightning Fast: ' + testResult?.lighteningCount
-              : 'Lightning Fast: ' + 0,
+              ? i18n.t('lightiningfast') + ': ' + testResult?.lighteningCount
+              : i18n.t('lightiningfast') + ': ' + 0,
             testResult?.shotCount
-              ? 'What a Timing/Shot: ' + testResult?.shotCount
-              : 'What a Timing/Shot: ' + 0,
+              ? i18n.t('whatatimeshot') + ': ' + testResult?.shotCount
+              : i18n.t('whatatimeshot') + ': ' + 0,
             testResult?.extraInningCount
-              ? 'Extra Inning: ' + testResult?.extraInningCount
-              : 'Extra Inning: ' + 0,
+              ? i18n.t('extrainnings') + ': ' + testResult?.extraInningCount
+              : i18n.t('extrainnings') + ': ' + 0,
           ]
         )}
         {renderBox(

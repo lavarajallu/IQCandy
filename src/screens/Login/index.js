@@ -10,6 +10,7 @@ import {
   Platform,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { I18n } from 'i18n-js';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { imagePaths } from '../../constants/path';
@@ -20,7 +21,13 @@ import { validateEmail, validatePassword } from '../../constants/helpers';
 import styles from './styles';
 import Loader from '../../components/Loader';
 import { COLORS } from '../../constants/colors';
-
+// import th from "./../../i18n/th.json";
+// import en from "./../../i18n/en.json";
+// const i18n = new I18n({
+//   en,
+//   th,
+// });
+import i18n from './../../i18n';
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
   const { authentiCation } = imagePaths;
@@ -158,7 +165,7 @@ const Login = ({ navigation }) => {
           <View style={styles.inputContainer}>
             <ValidatedTextInput
               label='Email/Mobile Number'
-              placeholder='Enter your Email/Mobile Number'
+              placeholder={i18n.t('emailtextinput')}
               value={email}
               onChangeText={setEmail}
               validation={emailValidation}
@@ -167,7 +174,7 @@ const Login = ({ navigation }) => {
 
             <ValidatedTextInput
               label='Password'
-              placeholder='Enter your password'
+              placeholder={i18n.t('passwordtextinput')}
               value={password}
               onChangeText={setPassword}
               secureTextEntry
@@ -198,7 +205,7 @@ const Login = ({ navigation }) => {
                   </TouchableOpacity>
                 )}
 
-                <Text style={styles.remembertext}>{'Remember Me'}</Text>
+                <Text style={styles.remembertext}>{i18n.t('rememberme')}</Text>
               </View>
               <TouchableOpacity
                 style={{ flex: 0.5 }}
@@ -206,14 +213,16 @@ const Login = ({ navigation }) => {
                   navigation.navigate('ForgotPassword');
                 }}
               >
-                <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+                <Text style={styles.forgotPasswordText}>
+                  {i18n.t('forgotpassword')}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
 
           <View style={styles.buttonContainer}>
             <Button
-              title={'LOGIN'}
+              title={i18n.t('login')}
               style={styles.button}
               textStyle={styles.buttonText}
               onPress={handleLogin} // Call the function to handle login

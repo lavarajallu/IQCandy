@@ -1,10 +1,16 @@
 //My Courses.js
 
 import React, { useEffect, useState } from 'react';
-import { FlatList, Dimensions } from 'react-native';
+import {
+  FlatList,
+  Dimensions,
+  View,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
-
+import { COLORS } from '../../constants/colors';
 import CardHeaderLabel from '../../components/CardHeaderLabel';
 import CoursesCard from '../../components/CoursesCard';
 import ItemSeparator from '../../components/ItemSeparator';
@@ -12,6 +18,8 @@ import { selectMyCourses } from '../../store/student/myCourses/selector';
 
 import { getSubjects } from '../../api/myCourses';
 import { selectUser } from '../../store/authManagement/selector';
+import i18n from './../../i18n';
+import { getTopicsProgress } from '../../api/myTopicsInProgress';
 
 const MyCourses = (props) => {
   const dispatch = useDispatch();
@@ -27,21 +35,20 @@ const MyCourses = (props) => {
   const ITEM_WIDTH = SLIDE_WIDTH + 20;
   const SLIDER_WIDTH = viewportWidth;
   useEffect(() => {
-    if (user) {
-      const reqPayload = {
-        boardId: user?.userOrg.boardId,
-        gradeId: user?.userOrg.gradeId,
-        offset: 0,
-        limit: 1000,
-      };
+    const reqPayload = {
+      boardId: user?.userOrg.boardId,
+      gradeId: user?.userOrg.gradeId,
+      offset: 0,
+      limit: 1000,
+    };
 
-      getSubjects({
-        data: reqPayload,
-        dispatch,
-        userId: user?.userInfo?.userId,
-      });
-    }
-  }, [user]);
+    getSubjects({
+      data: reqPayload,
+      dispatch,
+      userId: user?.userInfo?.userId,
+    });
+  });
+  useEffect(() => {});
 
   const gotoChaptersPage = (item) => {
     navigation.navigate('MyChapters', { subjectItem: item });
@@ -62,13 +69,13 @@ const MyCourses = (props) => {
   return (
     <>
       <CardHeaderLabel
-        lHLabel={lhTitle ? lhTitle : 'My Courses'}
-        rHLabel={'View All'}
+        lHLabel={i18n.t('mylibrary')}
+        rHLabel={i18n.t('seeall')}
         onPress={seeAll}
       />
       <FlatList
         data={subjects?.items}
-        keyExtractor={(item) => item.idx}
+        keyExtractor={(item) => item.subjectId}
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         renderItem={renderItem}
