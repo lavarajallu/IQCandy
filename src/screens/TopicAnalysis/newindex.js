@@ -51,7 +51,6 @@ class TopicAnalysis extends Component {
     };
   }
   componentDidMount() {
-    alert;
     this.backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
       this.backAction

@@ -33,7 +33,6 @@ const OTPVerification = ({ route, navigation }) => {
 
   //Inside the component where you handle login logic
   const nextOtp = async () => {
-    console.log('userId', userId);
     const payload = {
       otp: otp,
     };

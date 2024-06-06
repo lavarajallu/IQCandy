@@ -114,7 +114,6 @@ const YtVideoActivityPro = ({ route, navigation }) => {
   }, [user]);
   useEffect(() => {
     if (Videoquestionsvideopro && Videoquestionsvideopro.length > 0) {
-      console.log('klsadjklsjkljsd', Videoquestionsvideopro);
       var newdata = [...Videoquestionsvideopro];
       newdata.sort(function (a, b) {
         let dateA = parseInt(a.timeInSec);
