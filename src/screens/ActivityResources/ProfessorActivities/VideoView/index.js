@@ -109,11 +109,11 @@ const VideoActivityPro = ({ route, navigation }) => {
       id: route.params.data.id,
       activityInfoId: route.params.data.activityInfoId,
     });
-    // getVideoquestionsvideopro({
-    //   dispatch,
-    //   userId: user?.userInfo?.userId,
-    //   activityId: route.params.data.id,
-    // });
+    getVideoquestionsvideopro({
+      dispatch,
+      userId: user?.userInfo?.userId,
+      activityId: route.params.data.id,
+    });
     const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
     setactivityStartTime(activityStartTime);
   }, [user]);
@@ -481,7 +481,7 @@ const VideoActivityPro = ({ route, navigation }) => {
           </TouchableOpacity>
         </View>
       )}
-      {/* <Modal isVisible={newmodal}>
+      <Modal isVisible={newmodal}>
         <View
           style={{
             flex: 1,
@@ -498,7 +498,7 @@ const VideoActivityPro = ({ route, navigation }) => {
             userDetails={user}
           />
         </View>
-      </Modal> */}
+      </Modal>
     </SafeAreaView>
   );
 };

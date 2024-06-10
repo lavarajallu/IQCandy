@@ -314,9 +314,9 @@ const NormalVideoViewComponent = (props) => {
                   }}
                 />
                 <View style={{ flex: 0.65 }}>
-                  {/* <View style={[styles.subright, { marginLeft: 22 }]}>
+                  <View style={[styles.subright, { marginLeft: 22 }]}>
                     {timesarray}
-                  </View> */}
+                  </View>
                 </View>
                 <View
                   style={{
