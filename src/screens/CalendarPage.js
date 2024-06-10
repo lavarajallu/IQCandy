@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
+import { useTranslation } from 'react-i18next';
 
 import {
   StyleSheet,
@@ -25,13 +26,14 @@ import { getschedulefiltered } from '../api/myCalender';
 import { COLORS } from '../constants/colors';
 import { getTopicDetails, getChapterDetails } from '../api/search';
 import { selectSearch } from '../store/student/search/selector';
-import i18n from '../i18n';
+import i18n from '../i18n/index1';
 
 const CalendarPage = ({ route, navigation }) => {
   const { user } = useSelector(selectUser);
   const dispatch = useDispatch();
   const { scheduledata } = useSelector(selectmyCalender);
   const { topicDetails, chapterDetails } = useSelector(selectSearch);
+  const { t } = useTranslation(); //i18n instance
 
   const [visiblemonths, setvisiblemonths] = useState([]);
   const [isspinner, setisspinner] = useState(false);
@@ -219,7 +221,7 @@ const CalendarPage = ({ route, navigation }) => {
             fontSize: 20,
           }}
         >
-          {i18n.t('cancel')}
+          {t('cancel')}
         </Text>
       </TouchableOpacity>
     );
@@ -362,7 +364,7 @@ const CalendarPage = ({ route, navigation }) => {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         {isspinner ? (
-          <Text>{i18n.t('loading')}</Text>
+          <Text>{t('loading')}</Text>
         ) : (
           <CalendarList
             onVisibleMonthsChange={(months) => {
@@ -463,7 +465,7 @@ const CalendarPage = ({ route, navigation }) => {
                     </TouchableOpacity>
                   </View>
                 ) : (
-                  <Text>{i18n.t('nodata')}</Text>
+                  <Text>{t('nodata')}</Text>
                 )}
               </View>
             </View>
@@ -491,7 +493,7 @@ const CalendarPage = ({ route, navigation }) => {
                 textAlign: 'center',
               }}
             >
-              {i18n.t('scheduletopics')}
+              {t('scheduletopics')}
             </Text>
 
             {newEventsData?.length > 0 ? (
@@ -514,7 +516,7 @@ const CalendarPage = ({ route, navigation }) => {
                       fontSize: 18,
                     }}
                   >
-                    {i18n.t('noevents')}
+                    {t('noevents')}
                   </Text>
                 </View>
                 <TouchableOpacity
@@ -536,7 +538,7 @@ const CalendarPage = ({ route, navigation }) => {
                       fontSize: 20,
                     }}
                   >
-                    {i18n.t('cancel')}
+                    {t('cancel')}
                   </Text>
                 </TouchableOpacity>
               </>

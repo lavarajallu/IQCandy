@@ -10,7 +10,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COLORS } from '../constants/colors';
 import { getAlphabetLetter, formatTime } from '../utils/questionUtils';
 import CustomButton from './CustomButton';
-import i18n from '../i18n';
+import i18n from '../i18n/index1';
+import { useTranslation } from 'react-i18next';
 
 const QuizComponent = ({
   questions,
@@ -23,6 +24,7 @@ const QuizComponent = ({
   const [currentQuestion, setCurrentQuestion] = useState(currentQuestionData);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [examStarted, setExamStarted] = useState(false);
+  const { t } = useTranslation(); //i18n instance
 
   const handleStartExam = () => {
     setExamStarted(true);
@@ -98,14 +100,14 @@ const QuizComponent = ({
         <View style={styles.buttonContainer}>
           {newquestionid > 0 && (
             <CustomButton
-              title={i18n.t('previous')}
+              title={t('previous')}
               onPress={handlePrevQuestion}
               color={COLORS.previousButtonColor}
             />
           )}
           {newquestionid < questions.length - 1 && (
             <CustomButton
-              title={i18n.t('next')}
+              title={t('next')}
               onPress={handleNextQuestion}
               disabled={selectedAnswer === null}
               color={COLORS.nextButtonColor}
@@ -113,7 +115,7 @@ const QuizComponent = ({
           )}
           {newquestionid === questions.length - 1 && (
             <CustomButton
-              title={i18n.t('submit')}
+              title={t('submit')}
               onPress={handleSubmit}
               color={COLORS.submitButtonColor}
             />

@@ -11,6 +11,7 @@ import {
 import DynamicHeader from '../../components/DynamicHeader';
 import ChaptersList from '../../components/ChaptersList';
 import Modal from 'react-native-modal';
+import { useTranslation } from 'react-i18next';
 
 import { textContent } from '../../constants/content';
 import { goBack } from '../../utils/navigationUtils'; // Import the common function
@@ -21,7 +22,7 @@ import { getValidaPackages } from '../../api/validatePackages';
 import { selectValidatePackage } from '../../store/student/validatePackages/selector';
 import { COLORS } from '../../constants/colors';
 import styles from './styles';
-import i18n from '../../i18n';
+import i18n from '../../i18n/index1';
 
 const MyChapters = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -30,6 +31,8 @@ const MyChapters = ({ route, navigation }) => {
   const { subjectItem } = route.params;
   const { validatePackage } = useSelector(selectValidatePackage);
   const [isvisible, setVisible] = useState(false);
+  const { t } = useTranslation(); //i18n instance
+
   const goToTopics = (item) => {
     navigation.navigate('MyTopics', {
       chapterItem: item,
@@ -87,7 +90,7 @@ const MyChapters = ({ route, navigation }) => {
           // Handle back button press
         }}
         imageSource={{ uri: subjectItem?.image }}
-        labels={[chapters?.items?.length + ' ' + i18n.t('chapters')]}
+        labels={[chapters?.items?.length + ' ' + t('chapters')]}
       />
 
       <ChaptersList

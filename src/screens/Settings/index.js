@@ -11,25 +11,28 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+
 import { selectUser } from '../../store/authManagement/selector';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from '../../components/Header';
 import { goBack } from '../../utils/navigationUtils';
+import { useTranslation } from 'react-i18next';
 
 import { COLORS } from '../../constants/colors';
-import i18n from '../../i18n';
+import i18n from '../../i18n/index1';
 
 const Settings = ({ navigation }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectUser);
   const [langaugae, setlangaugae] = useState('');
+  const { t, i18n } = useTranslation(); //i18n instance
 
   useEffect(() => {
     getData();
   }, []);
   getData = async () => {
     try {
-      const localevalue = await AsyncStorage.getItem('@localevalue');
+      const localevalue = await AsyncStorage.getItem('settings.lang');
 
       if (localevalue) {
         setlangaugae(localevalue);
@@ -54,8 +57,9 @@ const Settings = ({ navigation }) => {
       {
         text: 'OK',
         onPress: async () => {
-          i18n.locale = value;
-          await AsyncStorage.setItem('@localevalue', value);
+          //  i18n.locale = value;
+          i18n.changeLanguage(value);
+          await AsyncStorage.setItem('settings.lang', value);
           setlangaugae(value);
           navigation.navigate('DrawerNavigation', { type: 'reset' });
         },
@@ -69,13 +73,13 @@ const Settings = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <Header
         backAction={backAction}
-        headerTitle={i18n.t('settings')}
+        headerTitle={t('settings')}
         hedercolor={true}
       />
       <View style={styles.container}>
         <View>
           <Text style={{ marginLeft: 20, fontSize: 16 }}>
-            {i18n.t('changelanguage')}:
+            {t('changelanguage')}:
           </Text>
         </View>
         <View style={{ flex: 1, marginTop: 10 }}>

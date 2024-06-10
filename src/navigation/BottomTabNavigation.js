@@ -4,8 +4,9 @@ import React from 'react';
 import { Platform, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import i18n from '../i18n';
+import i18n from '../i18n/index1';
 import { CalendarPage, HomeScreen, SearchPage, ProfilePage } from '../screens';
+import { useTranslation } from 'react-i18next';
 
 import { COLORS } from '../constants/colors';
 import Notifications from '../screens/Notifications';
@@ -28,6 +29,8 @@ const screenOptions = {
 };
 
 const BottomTabNavigation = ({ route }) => {
+  const { t } = useTranslation(); //i18n instance
+
   return (
     <Tab.Navigator
       initialRouteName='Home'
@@ -37,7 +40,7 @@ const BottomTabNavigation = ({ route }) => {
         name='Home'
         component={HomeScreen}
         options={({ navigation }) => ({
-          tabBarLabel: i18n.t('home'),
+          tabBarLabel: t('home'),
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <Icon name='home' size={size} color={color} />
@@ -62,7 +65,7 @@ const BottomTabNavigation = ({ route }) => {
         component={SearchPage}
         options={{
           headerShown: false,
-          tabBarLabel: i18n.t('search'),
+          tabBarLabel: t('search'),
           tabBarIcon: ({ color, size }) => (
             <Icon name='search' size={size} color={color} />
           ),
@@ -86,7 +89,7 @@ const BottomTabNavigation = ({ route }) => {
         component={CalendarPage}
         options={{
           headerShown: false,
-          tabBarLabel: i18n.t('calendar'),
+          tabBarLabel: t('calendar'),
           tabBarIcon: ({ color, size }) => (
             <Icon name='calendar' size={size} color={color} />
           ),

@@ -18,8 +18,9 @@ import { selectMyCourses } from '../../store/student/myCourses/selector';
 
 import { getSubjects } from '../../api/myCourses';
 import { selectUser } from '../../store/authManagement/selector';
-import i18n from './../../i18n';
+import i18n from '../../i18n/index1';
 import { getTopicsProgress } from '../../api/myTopicsInProgress';
+import { useTranslation } from 'react-i18next';
 
 const MyCourses = (props) => {
   const dispatch = useDispatch();
@@ -28,6 +29,8 @@ const MyCourses = (props) => {
   const { subjects } = useSelector(selectMyCourses);
   const { lhTitle } = props;
   const navigation = useNavigation();
+  const { t } = useTranslation();
+
   const { width: viewportWidth, height: viewportHeight } =
     Dimensions.get('window');
   const SLIDE_WIDTH = Math.round(viewportWidth / 2.6);
@@ -47,8 +50,7 @@ const MyCourses = (props) => {
       dispatch,
       userId: user?.userInfo?.userId,
     });
-  });
-  useEffect(() => {});
+  }, [user]);
 
   const gotoChaptersPage = (item) => {
     navigation.navigate('MyChapters', { subjectItem: item });
@@ -69,8 +71,8 @@ const MyCourses = (props) => {
   return (
     <>
       <CardHeaderLabel
-        lHLabel={i18n.t('mylibrary')}
-        rHLabel={i18n.t('seeall')}
+        lHLabel={t('mylibrary')}
+        rHLabel={t('seeall')}
         onPress={seeAll}
       />
       <FlatList

@@ -25,7 +25,8 @@ import { selectUser } from '../../../store/authManagement/selector';
 import { selectMyCourses } from '../../../store/student/myCourses/selector';
 import { getreviewsolutionsPractice } from '../../../api/myLearning';
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
-import i18n from '../../../i18n';
+import i18n from '../../../i18n/index1';
+import { useTranslation } from 'react-i18next';
 
 const PracticeSolutions = ({ route, navigation }) => {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -36,6 +37,7 @@ const PracticeSolutions = ({ route, navigation }) => {
   const [questionsarray, setquestionarray] = useState([]);
   const [answerobj, setanswerobj] = useState({});
   const [loading, setloading] = useState(false);
+  const { t } = useTranslation(); //i18n instance
 
   const { user } = useSelector(selectUser);
   const { practiceSolutionsData } = useSelector(selectMyLearning);
@@ -308,7 +310,7 @@ const PracticeSolutions = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={i18n.t('reviewanswers')} />
+      <Header backAction={backAction} headerTitle={t('reviewanswers')} />
       <View style={{ flex: 1 }}>
         <View
           style={{
@@ -344,7 +346,7 @@ const PracticeSolutions = ({ route, navigation }) => {
                     alignItems: 'center',
                   }}
                 >
-                  <Text style={{ fontSize: heafont }}>{i18n.t('loading')}</Text>
+                  <Text style={{ fontSize: heafont }}>{t('loading')}</Text>
                 </View>
               ) : (
                 <View style={styles.questionsview}>
@@ -508,7 +510,7 @@ const PracticeSolutions = ({ route, navigation }) => {
                 alignItems: 'center',
               }}
             >
-              <Text style={{ fontSize: 13 }}>{i18n.t('loading')}</Text>
+              <Text style={{ fontSize: 13 }}>{t('loading')}</Text>
             </View>
           )}
         </View>
@@ -553,7 +555,7 @@ const PracticeSolutions = ({ route, navigation }) => {
                       color: COLORS.appSecondaryColor,
                     }}
                   >
-                    {i18n.t('previous')}
+                    {t('previous')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -585,7 +587,7 @@ const PracticeSolutions = ({ route, navigation }) => {
                       color: COLORS.appSecondaryColor,
                     }}
                   >
-                    {i18n.t('done')}
+                    {t('done')}
                   </Text>
                 </TouchableOpacity>
               ) : (
@@ -608,7 +610,7 @@ const PracticeSolutions = ({ route, navigation }) => {
                       color: COLORS.appSecondaryColor,
                     }}
                   >
-                    {i18n.t('next')}
+                    {t('next')}
                   </Text>
                 </TouchableOpacity>
               )}

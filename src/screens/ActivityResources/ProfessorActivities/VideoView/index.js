@@ -11,6 +11,8 @@ import {
   Button,
   Platform,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
+
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
 
 import VideoQuestionModal from './VideoQuestionModal';
@@ -29,7 +31,7 @@ import {
 } from '../../../../api/myCourses';
 import moment from 'moment';
 import getVideoId from 'get-video-id';
-import i18n from '../../../../i18n';
+import i18n from '../../../../i18n/index1';
 
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
@@ -44,6 +46,8 @@ const VideoActivityPro = ({ route, navigation }) => {
     Videoquestionsvideopro,
   } = useSelector(selectMyCourses);
   const { user } = useSelector(selectUser);
+  const { t } = useTranslation(); //i18n instance
+
   const dispatch = useDispatch();
   const video = React.useRef(null);
   const [normalvideodata, setnormalvideodata] = useState(null);
@@ -406,7 +410,7 @@ const VideoActivityPro = ({ route, navigation }) => {
               alignItems: 'center',
             }}
           >
-            <Text style={{ fontSize: 15 }}>{i18n.t('loading')}</Text>
+            <Text style={{ fontSize: 15 }}>{t('loading')}</Text>
           </View>
         )}
       </View>
@@ -438,7 +442,7 @@ const VideoActivityPro = ({ route, navigation }) => {
                 color: COLORS.appSecondaryColor,
               }}
             >
-              {i18n.t('previousactivity')}
+              {t('previousactivity')}
             </Text>
           </TouchableOpacity>
 
@@ -461,7 +465,7 @@ const VideoActivityPro = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                {i18n.t('nextactivity')}
+                {t('nextactivity')}
               </Text>
             ) : (
               <Text
@@ -471,7 +475,7 @@ const VideoActivityPro = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                {i18n.t('done')}
+                {t('done')}
               </Text>
             )}
           </TouchableOpacity>

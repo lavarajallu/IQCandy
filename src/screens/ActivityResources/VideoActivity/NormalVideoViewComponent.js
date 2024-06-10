@@ -8,14 +8,14 @@ import {
   View,
   Dimensions,
 } from 'react-native';
-//import DeviceConstants from 'react-native-device-constants';
-//import FastImage from 'react-native-fast-image';
+import { useTranslation } from 'react-i18next';
+
 import Video from 'react-native-video';
 import * as ScreenOrientation from 'expo-screen-orientation';
 //import Orientation from 'react-native-orientation-locker';
 //import { imageUrl } from '../../constants';
 import styles from './styles';
-import i18n from '../../../i18n';
+import i18n from '../../../i18n/index1';
 // import AWS from 'aws-sdk/dist/aws-sdk-react-native';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
@@ -34,6 +34,7 @@ const NormalVideoViewComponent = (props) => {
   const [pausedtime, setPausedTime] = useState(null);
 
   const [currentTime, setCurrentTime] = useState(0);
+  const { t } = useTranslation(); //i18n instance
 
   const [duration, setDuration] = useState(0);
   const [data, setData] = useState(null);
@@ -271,7 +272,7 @@ const NormalVideoViewComponent = (props) => {
   //   (fullimg = 30), (playicon = 25), (subfont = 18), (progrsheight = 40);
   // }
   return loading ? (
-    <Text>{i18n.t('loading')}</Text>
+    <Text>{t('loading')}</Text>
   ) : (
     <View style={styles.mainView}>
       <View

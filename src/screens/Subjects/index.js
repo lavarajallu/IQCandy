@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 //import Pdf from 'react-native-pdf';
+import { useTranslation } from 'react-i18next';
 
 import { goBack } from '../../utils/navigationUtils';
 import { COLORS } from '../../constants/colors';
@@ -19,13 +20,14 @@ import { selectUser } from '../../store/authManagement/selector';
 import { selectMyCourses } from '../../store/student/myCourses/selector';
 import ItemSeparator from '../../components/ItemSeparator';
 import CoursesCard from '../../components/CoursesCard';
-import i18n from '../../i18n';
+import i18n from '../../i18n/index1';
 
 const Subjects = ({ route, navigation }) => {
   const { notesActivityData } = useSelector(selectMyCourses);
   const { user } = useSelector(selectUser);
   const dispatch = useDispatch();
   const { subjects } = useSelector(selectMyCourses);
+  const { t } = useTranslation(); //i18n instance
 
   const backAction = () => {
     goBack(navigation);
@@ -45,7 +47,7 @@ const Subjects = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={i18n.t('subjects')} />
+      <Header backAction={backAction} headerTitle={t('subjects')} />
       <View style={[styles.container, styles.shadowProp]}>
         <FlatList
           data={subjects?.items}

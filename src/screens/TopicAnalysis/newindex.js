@@ -15,12 +15,10 @@ import {
 import { goBack } from '../../utils/navigationUtils';
 import { COLORS } from '../../constants/colors';
 import Header from '../../components/Header';
-//import styles from "./styles"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { VictoryPie } from 'victory-native';
 import ColumnChart from './ColumnChart.js';
 import TimeSpentChart from './TimeSpentChart';
-import i18n from '../../i18n';
 const windowWidth = Dimensions.get('window').width;
 // var graphicData = [
 //   { y: 20, x: '20%', name: 'Incomplete' },
@@ -475,9 +473,7 @@ class TopicAnalysis extends Component {
                       alignItems: 'center',
                     }}
                   >
-                    <Text style={{ fontSize: subfont }}>
-                      {i18n.t('loading')}
-                    </Text>
+                    <Text style={{ fontSize: subfont }}>{"t('loading')"}</Text>
                   </View>
                 ) : (
                   <>
@@ -570,7 +566,7 @@ class TopicAnalysis extends Component {
                       </>
                     ) : (
                       <Text style={{ textAlign: 'center' }}>
-                        {i18n.t('nodata')}
+                        {"t('nodata')"}
                       </Text>
                     )}
                     {this.state.graphvalue > 0 ? (
@@ -647,7 +643,7 @@ class TopicAnalysis extends Component {
                             fontSize: subfont,
                           }}
                         >
-                          {i18n.t('performaceanalysisby')}
+                          {"t('performaceanalysisby')"}
                         </Text>
                       </View>
                       {this.state.quesloading ? (
@@ -659,7 +655,7 @@ class TopicAnalysis extends Component {
                           }}
                         >
                           <Text style={{ fontSize: headfont }}>
-                            {i18n.t('loading')}
+                            {"t('loading')"}
                           </Text>
                         </View>
                       ) : (
@@ -687,7 +683,7 @@ class TopicAnalysis extends Component {
                               }}
                             >
                               <Text style={{ fontSize: headfont }}>
-                                {i18n.t('loading')}
+                                {"t('loading')"}
                               </Text>
                             </View>
                           ) : (
@@ -710,7 +706,7 @@ class TopicAnalysis extends Component {
                                     fontSize: subfont,
                                   }}
                                 >
-                                  {i18n.t('timetakenby')}
+                                  {"t('timetakenby')"}
                                 </Text>
                               </View>
                               <TimeSpentChart

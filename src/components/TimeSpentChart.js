@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import ChartView from './HighChart.js';
-import i18n from '../i18n/index.js';
+import i18n from '../i18n/index1.js';
+import { useTranslation } from 'react-i18next';
 
 const TimeSpentChart = ({ testResult }) => {
   // const { testResult } = props;
@@ -9,6 +10,7 @@ const TimeSpentChart = ({ testResult }) => {
   let [showdata, setData] = useState(true);
   let [chartConfig, setChartConfig] = useState(null);
   let [spinner, setspinner] = useState(true);
+  const { t } = useTranslation(); //i18n instance
 
   useEffect(() => {
     if (testResult) {
@@ -105,7 +107,7 @@ const TimeSpentChart = ({ testResult }) => {
 
   return spinner ? (
     <Text style={{ textAlign: 'center', fontSize: headfont }}>
-      {i18n.t('loading')}
+      {t('loading')}
     </Text>
   ) : showdata ? (
     <View>
@@ -165,7 +167,7 @@ const TimeSpentChart = ({ testResult }) => {
             }}
           />
           <Text style={{ marginLeft: 10, fontSize: headfont }}>
-            {i18n.t('correct')}
+            {t('correct')}
           </Text>
         </View>
         <View
@@ -184,14 +186,14 @@ const TimeSpentChart = ({ testResult }) => {
             }}
           />
           <Text style={{ marginLeft: 10, fontSize: headfont }}>
-            {i18n.t('incorrect')}
+            {t('incorrect')}
           </Text>
         </View>
       </View>
     </View>
   ) : (
     <Text style={{ textAlign: 'center', fontSize: headfont }}>
-      {i18n.t('nodata')}
+      {t('nodata')}
     </Text>
   );
 };

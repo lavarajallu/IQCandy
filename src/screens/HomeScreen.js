@@ -14,7 +14,8 @@ import {
 import { useSelector } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
 import MyCourses from './MyCourses';
-import i18n from './../i18n';
+import i18n from '../i18n/index1';
+import { useTranslation } from 'react-i18next';
 
 import TopicsInProgress from './TopicsInProgress';
 import MyLearning from './MyLearning';
@@ -89,6 +90,8 @@ async function registerForPushNotificationsAsync() {
 }
 
 const HomeScreen = ({ route, navigation }) => {
+  const { t } = useTranslation(); //i18n instance
+
   const { user } = useSelector(selectUser);
   const { logos } = imagePaths;
   const [expoPushToken, setExpoPushToken] = useState('');
@@ -121,7 +124,7 @@ const HomeScreen = ({ route, navigation }) => {
     //     await sendPushNotification(pushtoken);
     //   }
     // });
-  });
+  }, []);
   const getversion = () => {
     fetch(`https://api.iqcandy.com/api/iqcandy/app-version/latest`, {
       method: 'GET',
@@ -258,16 +261,16 @@ const HomeScreen = ({ route, navigation }) => {
         </View>
 
         <View style={{ flex: platformValue, marginTop: 10 }}>
-          <MyCourses lhTitle={i18n.t('mylibrary')} navigation={navigation} />
+          <MyCourses lhTitle={t('mylibrary')} navigation={navigation} />
         </View>
 
         <View style={{ flex: platformValue, marginTop: 10 }}>
-          <MyLearning lhTitle={i18n.t('mylearning')} navigation={navigation} />
+          <MyLearning lhTitle={t('mylearning')} navigation={navigation} />
         </View>
         <View style={{ flex: 0.05 }}></View>
         <View style={{ flex: platformValue, padding: 0, marginTop: 20 }}>
           <TopicsInProgress
-            lhTitle={i18n.t('mytopicsinprogress')}
+            lhTitle={t('mytopicsinprogress')}
             navigation={navigation}
           />
         </View>

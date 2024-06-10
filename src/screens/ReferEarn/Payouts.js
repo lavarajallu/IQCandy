@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { COLORS } from '../../constants/colors';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
 import { SHADOW_STYLES } from '../../constants/helpers';
 import { selectUser } from '../../store/authManagement/selector';
@@ -17,7 +18,7 @@ import { getPayoutData } from '../../api/referAndEarn';
 import { useSelector, useDispatch } from 'react-redux';
 import React, { useEffect, useState } from 'react';
 import { Colors } from 'react-native-activity-rings/dist/src/Themes';
-import i18n from '../../i18n';
+import i18n from '../../i18n/index1';
 const { width } = Dimensions.get('window');
 
 const commonStyles = {
@@ -100,6 +101,8 @@ const commonStyles = {
 
 const Payouts = (props) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation(); //i18n instance
+
   const { user } = useSelector(selectUser);
   const { payoutData } = useSelector(selectReferandEarn);
   const [paymemntload, setPaymentLoad] = useState(true);
@@ -278,7 +281,7 @@ const Payouts = (props) => {
         </View>
         {paymemntload ? (
           <View style={commonStyles.mainView}>
-            <Text style={{ fontSize: 15 }}>{i18n.t('loading')}</Text>
+            <Text style={{ fontSize: 15 }}>{t('loading')}</Text>
           </View>
         ) : payoutData?.items?.length > 0 ? (
           <ScrollView horizontal>
@@ -297,7 +300,7 @@ const Payouts = (props) => {
             </View>
             <View style={commonStyles.buttonContainer}>
               <View style={commonStyles.button}>
-                <Text style={commonStyles.buttonText}>{i18n.t('nodata')}</Text>
+                <Text style={commonStyles.buttonText}>{t('nodata')}</Text>
               </View>
             </View>
           </View>

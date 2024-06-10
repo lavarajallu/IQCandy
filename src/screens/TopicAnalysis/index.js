@@ -13,6 +13,8 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
+
 import { goBack } from '../../utils/navigationUtils';
 import { COLORS } from '../../constants/colors';
 import Header from '../../components/Header';
@@ -23,11 +25,13 @@ import PieChart from 'react-native-pie-chart';
 import TimeSpentChart from './TimeSpentChart';
 import { selectUser } from '../../store/authManagement/selector';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
-import i18n from '../../i18n';
+import i18n from '../../i18n/index1';
 
 const windowWidth = Dimensions.get('window').width;
 const TopicAnalysis = ({ route, navigation }) => {
   const { user } = useSelector(selectUser);
+  const { t } = useTranslation(); //i18n instance
+
   const dispatch = useDispatch();
   const [spinner, setspinner] = useState(true);
   const [isvisible, setisvisible] = useState(false);
@@ -267,7 +271,7 @@ const TopicAnalysis = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={i18n.t('topicanalysis')} />
+      <Header backAction={backAction} headerTitle={t('topicanalysis')} />
       <View style={[styles.container, styles.shadowProp]}>
         <View style={{ flex: 1 }}>
           <View
@@ -289,7 +293,7 @@ const TopicAnalysis = ({ route, navigation }) => {
                     alignItems: 'center',
                   }}
                 >
-                  <Text style={{ fontSize: subfont }}>{i18n.t('loading')}</Text>
+                  <Text style={{ fontSize: subfont }}>{t('loading')}</Text>
                 </View>
               ) : (
                 <>
@@ -376,9 +380,7 @@ const TopicAnalysis = ({ route, navigation }) => {
                       </View>
                     </>
                   ) : (
-                    <Text style={{ textAlign: 'center' }}>
-                      {i18n.t('nodata')}
-                    </Text>
+                    <Text style={{ textAlign: 'center' }}>{t('nodata')}</Text>
                   )}
                   {graphvalue > 0 ? (
                     <>
@@ -457,7 +459,7 @@ const TopicAnalysis = ({ route, navigation }) => {
                           fontSize: subfont,
                         }}
                       >
-                        {i18n.t('performaceanalysisby')}
+                        {t('performaceanalysisby')}
                       </Text>
                     </View>
                     {quesloading ? (
@@ -469,7 +471,7 @@ const TopicAnalysis = ({ route, navigation }) => {
                         }}
                       >
                         <Text style={{ fontSize: headfont }}>
-                          {i18n.t('loading')}
+                          {t('loading')}
                         </Text>
                       </View>
                     ) : (
@@ -497,7 +499,7 @@ const TopicAnalysis = ({ route, navigation }) => {
                             }}
                           >
                             <Text style={{ fontSize: headfont }}>
-                              {i18n.t('loading')}
+                              {t('loading')}
                             </Text>
                           </View>
                         ) : (
@@ -520,7 +522,7 @@ const TopicAnalysis = ({ route, navigation }) => {
                                   fontSize: subfont,
                                 }}
                               >
-                                {i18n.t('timetakenby')}
+                                {t('timetakenby')}
                               </Text>
                             </View>
                             <TimeSpentChart

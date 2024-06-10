@@ -18,17 +18,20 @@ import { COLORS } from '../../../constants/colors';
 import Header from '../../../components/Header';
 import styles from './styles';
 import Modal from 'react-native-modal';
+import { useTranslation } from 'react-i18next';
 
 import { getValidaPackages } from '../../../api/validatePackages';
 import { selectValidatePackage } from '../../../store/student/validatePackages/selector';
 import { getPracticeChapters } from '../../../api/myLearning';
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
 import { selectUser } from '../../../store/authManagement/selector';
-import i18n from '../../../i18n';
+import i18n from '../../../i18n/index1';
 
 const MyPracticeChapters = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const [chaptersData, setChaptersData] = useState([]);
+  const { t } = useTranslation(); //i18n instance
+
   const [loadingData, setLoadingData] = useState(true);
   const [newchapters, setnewChapters] = useState([]);
   const [validatepackage, setvalidatePackage] = useState({});
@@ -551,7 +554,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
         <View style={styles.mainview}>
           {loadingData ? (
             <View>
-              <Text style={{ textAlign: 'center' }}>{i18n.t('loading')}</Text>
+              <Text style={{ textAlign: 'center' }}>{t('loading')}</Text>
             </View>
           ) : (
             <View style={styles.mainView}>
@@ -579,7 +582,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
                 }}
               >
                 <Text style={{ marginLeft: 10, fontSize: 20 }}>
-                  {i18n.t('gowith')}
+                  {t('gowith')}
                 </Text>
                 <TouchableOpacity
                   onPress={onReview}
@@ -594,7 +597,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
                     style={{ width: 20, height: 20 }}
                   />
                   <Text style={{ marginLeft: 15, fontSize: 13 }}>
-                    {i18n.t('reviewprevioustest')}
+                    {t('reviewprevioustest')}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -610,7 +613,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
                     style={{ width: 20, height: 20 }}
                   />
                   <Text style={{ marginLeft: 15, fontSize: 13 }}>
-                    {i18n.t('startnewtest')}
+                    {t('startnewtest')}
                   </Text>
                 </TouchableOpacity>
               </View>

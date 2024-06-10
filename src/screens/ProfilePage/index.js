@@ -18,10 +18,13 @@ import styles from './styles';
 import { getUserData } from '../../api/profile';
 import { selectMyProfile } from '../../store/student/MyProfile/selector';
 import { COLORS } from '../../constants/colors';
-import i18n from '../../i18n';
+import i18n from '../../i18n/index1';
 // import { setBranches } from '../../store/authManagement/slice';
+import { useTranslation } from 'react-i18next';
 
 const ProfilePage = () => {
+  const { t } = useTranslation(); //i18n instance
+
   const dispatch = useDispatch();
   const { user } = useSelector(selectUser);
   const [firstName, setFirstName] = useState('Phanendra');
@@ -112,7 +115,7 @@ const ProfilePage = () => {
                 {Math.round(profilePercent * 100) > 100
                   ? 100
                   : Math.round(profilePercent * 100)}
-                % {i18n.t('complete')}
+                % {t('complete')}
               </Text>
             </View>
           </View>
@@ -130,9 +133,9 @@ const ProfilePage = () => {
             >
               <View style={{ paddingBottom: 20 }}>
                 <ValidatedTextInput
-                  label={i18n.t('firstname')}
+                  label={t('firstname')}
                   editable={false}
-                  placeholder={i18n.t('firstname')}
+                  placeholder={t('firstname')}
                   value={firstName}
                   onChangeText={setFirstName}
                   validation={''}
@@ -140,8 +143,8 @@ const ProfilePage = () => {
                 />
                 <ValidatedTextInput
                   editable={false}
-                  label={i18n.t('lastname')}
-                  placeholder={i18n.t('lastname')}
+                  label={t('lastname')}
+                  placeholder={t('lastname')}
                   value={lastName}
                   onChangeText={setLastName}
                   validation={''}
@@ -149,8 +152,8 @@ const ProfilePage = () => {
                 />
                 <ValidatedTextInput
                   editable={false}
-                  label={i18n.t('mobilenumber')}
-                  placeholder={i18n.t('mobilenumber')}
+                  label={t('mobilenumber')}
+                  placeholder={t('mobilenumber')}
                   value={mobileNumber}
                   inputMode={'numeric'}
                   keyboardType={'number-pad'}
@@ -163,8 +166,8 @@ const ProfilePage = () => {
                 />
                 <ValidatedTextInput
                   editable={false}
-                  label={i18n.t('email')}
-                  placeholder={i18n.t('email')}
+                  label={t('email')}
+                  placeholder={t('email')}
                   value={email}
                   onChangeText={setEmail}
                   validation={{

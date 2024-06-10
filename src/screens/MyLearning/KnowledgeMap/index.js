@@ -28,6 +28,7 @@ import {
 } from '../../../api/myLearning';
 import { getChapters } from '../../../api/myCourses';
 import { selectMyCourses } from '../../../store/student/myCourses/selector';
+import { useTranslation } from 'react-i18next';
 
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
 import { selectUser } from '../../../store/authManagement/selector';
@@ -36,10 +37,12 @@ import { getValidaPackages } from '../../../api/validatePackages';
 import { selectValidatePackage } from '../../../store/student/validatePackages/selector';
 import { getTopicDetails } from '../../../api/search';
 import { selectSearch } from '../../../store/student/search/selector';
-import i18n from '../../../i18n';
+import i18n from '../../../i18n/index1';
 
 const KnowledgeMap = ({ route, navigation }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation(); //i18n instance
+
   const { user } = useSelector(selectUser);
   const { subjectsInfo, heatMapData, topicsBySubject } =
     useSelector(selectMyLearning);
@@ -245,7 +248,7 @@ const KnowledgeMap = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={i18n.t('knowledgemap')} />
+      <Header backAction={backAction} headerTitle={t('knowledgemap')} />
       <View style={[styles.container, styles.shadowProp]}>
         <DropDownSearch
           placeholderText={'Select Subject'}
@@ -266,7 +269,7 @@ const KnowledgeMap = ({ route, navigation }) => {
           <Loader loading={loading} />
         ) : (
           <View>
-            <Text>{i18n.t('nodata')}</Text>
+            <Text>{t('nodata')}</Text>
           </View>
         )}
 

@@ -21,10 +21,13 @@ import { selectValidatePackage } from '../../store/student/validatePackages/sele
 import { selectSearch } from '../../store/student/search/selector';
 import { COLORS } from '../../constants/colors';
 import styles from './styles';
-import i18n from '../../i18n';
+import i18n from '../../i18n/index1';
+import { useTranslation } from 'react-i18next';
 
 const Search = (props) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation(); //i18n instance
+
   const { user } = useSelector(selectUser);
   const [searchvalue, setSearchValue] = useState('');
   const [searchList, setSearchList] = useState([]);
@@ -158,7 +161,7 @@ const Search = (props) => {
             //     ? true
             //     : false
             // }
-            placeholder={i18n.t('searchplaceholder')}
+            placeholder={t('searchplaceholder')}
             placeholderTextColor={'grey'}
             style={styles.searchtext}
             onChangeText={onChangeText}
@@ -187,7 +190,7 @@ const Search = (props) => {
           />
         ) : noData ? (
           <View style={styles.spinnerview}>
-            <Text>{i18n.t('nodata')}</Text>
+            <Text>{t('nodata')}</Text>
           </View>
         ) : null}
       </View>

@@ -1,6 +1,7 @@
 //PreAssessment
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import {
   View,
@@ -24,9 +25,11 @@ import styles from './styles';
 import { selectUser } from '../../../store/authManagement/selector';
 import { selectMyCourses } from '../../../store/student/myCourses/selector';
 import { getreviewsolutions } from '../../../api/myCourses';
-import i18n from '../../../i18n';
+import i18n from '../../../i18n/index1';
 const ReviewAnswers = ({ route, navigation }) => {
   const [selectedItem, setSelectedItem] = useState(null);
+  const { t } = useTranslation(); //i18n instance
+
   const [isvisible, setisvisible] = useState(false);
   const [finalarray, setfinalarray] = useState([]);
   const [spinner, setspinnser] = useState(false);
@@ -304,7 +307,7 @@ const ReviewAnswers = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={i18n.t('reviewanswers')} />
+      <Header backAction={backAction} headerTitle={t('reviewanswers')} />
       <View style={{ flex: 1 }}>
         <View
           style={{
@@ -340,7 +343,7 @@ const ReviewAnswers = ({ route, navigation }) => {
                     alignItems: 'center',
                   }}
                 >
-                  <Text style={{ fontSize: heafont }}>{i18n.t('loading')}</Text>
+                  <Text style={{ fontSize: heafont }}>{t('loading')}</Text>
                 </View>
               ) : (
                 <View style={styles.questionsview}>
@@ -504,7 +507,7 @@ const ReviewAnswers = ({ route, navigation }) => {
                 alignItems: 'center',
               }}
             >
-              <Text style={{ fontSize: 13 }}>{i18n.t('loading')}</Text>
+              <Text style={{ fontSize: 13 }}>{t('loading')}</Text>
             </View>
           )}
         </View>
@@ -549,7 +552,7 @@ const ReviewAnswers = ({ route, navigation }) => {
                       color: COLORS.appSecondaryColor,
                     }}
                   >
-                    {i18n.t('previous')}
+                    {t('previous')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -581,7 +584,7 @@ const ReviewAnswers = ({ route, navigation }) => {
                       color: COLORS.appSecondaryColor,
                     }}
                   >
-                    {i18n.t('done')}
+                    {t('done')}
                   </Text>
                 </TouchableOpacity>
               ) : (
@@ -604,7 +607,7 @@ const ReviewAnswers = ({ route, navigation }) => {
                       color: COLORS.appSecondaryColor,
                     }}
                   >
-                    {i18n.t('next')}
+                    {t('next')}
                   </Text>
                 </TouchableOpacity>
               )}

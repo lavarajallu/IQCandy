@@ -11,11 +11,13 @@ import CoursesCard from '../../components/CoursesCard';
 import ItemSeparator from '../../components/ItemSeparator';
 import { selectMyTopicsProgress } from '../../store/student/myTopicProgress/selector';
 import { selectSearch } from '../../store/student/search/selector';
-import i18n from './../../i18n';
+import i18n from '../../i18n/index1';
 
 import { getTopicsProgress } from '../../api/myTopicsInProgress';
 import { selectUser } from '../../store/authManagement/selector';
 import { getTopicDetails, getChapterDetails } from '../../api/search';
+import { useTranslation } from 'react-i18next';
+
 const TopicsInProgress = (props) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectUser);
@@ -24,6 +26,8 @@ const TopicsInProgress = (props) => {
   const navigation = useNavigation();
   const { topicDetails, chapterDetails } = useSelector(selectSearch);
   const [selectedItem, setSelectedItem] = useState(null);
+  const { t } = useTranslation();
+
   useEffect(() => {
     if (user) {
       const reqPayload = {
@@ -83,8 +87,8 @@ const TopicsInProgress = (props) => {
   return (
     <>
       <CardHeaderLabel
-        lHLabel={i18n.t('mytopicsinprogress')}
-        rHLabel={i18n.t('seeall')}
+        lHLabel={t('mytopicsinprogress')}
+        rHLabel={t('seeall')}
         onPress={seeAll}
       />
       {progressTopics?.length > 0 ? (
@@ -100,7 +104,7 @@ const TopicsInProgress = (props) => {
         <View
           style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         >
-          <Text>{i18n.t('nodata')}</Text>
+          <Text>{t('nodata')}</Text>
         </View>
       )}
     </>

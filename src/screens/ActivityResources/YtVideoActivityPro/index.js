@@ -29,13 +29,18 @@ import {
   getVideoquestions,
 } from '../../../api/myCourses';
 import moment from 'moment';
-import i18n from '../../../i18n';
+
+import { useTranslation } from 'react-i18next';
+
+import i18n from '../../../i18n/index1';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
 const YtVideoActivity = ({ route, navigation }) => {
   const { questions } = textContent;
   const { topicItem, chapterItem, subjectItem, from, data, data1 } =
     route.params;
+  const { t } = useTranslation(); //i18n instance
+
   const {
     notesActivityData,
     videoActivityData,
@@ -436,7 +441,7 @@ const YtVideoActivity = ({ route, navigation }) => {
               alignItems: 'center',
             }}
           >
-            <Text style={{ fontSize: 15 }}>{i18n.t('loading')}</Text>
+            <Text style={{ fontSize: 15 }}>{t('loading')}</Text>
           </View>
         )}
       </View>
@@ -468,7 +473,7 @@ const YtVideoActivity = ({ route, navigation }) => {
                 color: COLORS.appSecondaryColor,
               }}
             >
-              {i18n.t('previousactivity')}
+              {t('previousactivity')}
             </Text>
           </TouchableOpacity>
 
@@ -491,7 +496,7 @@ const YtVideoActivity = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                {i18n.t('nextactivity')}
+                {t('nextactivity')}
               </Text>
             ) : (
               <Text
@@ -501,7 +506,7 @@ const YtVideoActivity = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                {i18n.t('done')}
+                {t('done')}
               </Text>
             )}
           </TouchableOpacity>

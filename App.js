@@ -9,7 +9,7 @@ import AppNavigation from './src/navigation/AppNavigation';
 import StatusBarComponent from './src/components/StatusBarComponent';
 import store from './src/store';
 // import { AppProvider } from './src/hooks/AppContext';
-
+import './src/i18n';
 const App = () => {
   let [fontsLoaded] = Font.useFonts({
     'mulish-light': require('./assets/fonts/Mulish-Regular.ttf'),

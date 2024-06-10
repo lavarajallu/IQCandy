@@ -37,12 +37,15 @@ import {
 } from '../../../api/myLearning';
 import Modal from 'react-native-modal';
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
-import i18n from '../../../i18n';
+import i18n from '../../../i18n/index1';
+import { useTranslation } from 'react-i18next';
 
 const PrePaperAssessment = ({ route, navigation }) => {
   //const { questions } = textContent;
   const { topicItem, chapterItem, subjectItem, from, data } = route.params;
   const { user } = useSelector(selectUser);
+  const { t } = useTranslation(); //i18n instance
+
   const {
     prepaerQuestionsData,
     prepaerQuestionbyid,
@@ -440,7 +443,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                       alignSelf: 'center',
                     }}
                   >
-                    <Text>{i18n.t('loading')}</Text>
+                    <Text>{t('loading')}</Text>
                   </View>
                 ) : (
                   <ScrollView>
@@ -586,9 +589,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                           ]}
                           onPress={onPrevioussub}
                         >
-                          <Text style={styles.buttontext}>
-                            {i18n.t('previous')}
-                          </Text>
+                          <Text style={styles.buttontext}>{t('previous')}</Text>
                         </TouchableOpacity>
                       </View>
                     )}
@@ -605,9 +606,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                           ]}
                           onPress={onSubmitTestsub}
                         >
-                          <Text style={styles.buttontext}>
-                            {i18n.t('done')}
-                          </Text>
+                          <Text style={styles.buttontext}>{t('done')}</Text>
                         </TouchableOpacity>
                       ) : (
                         <TouchableOpacity
@@ -621,9 +620,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                           ]}
                           onPress={onNextsub}
                         >
-                          <Text style={styles.buttontext}>
-                            {i18n.t('next')}
-                          </Text>
+                          <Text style={styles.buttontext}>{t('next')}</Text>
                         </TouchableOpacity>
                       )}
                     </View>
@@ -645,7 +642,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                   style={styles.innerbuttonview}
                 >
                   <Text style={{ color: COLORS.appSecondaryColor }}>
-                    {i18n.t('goback')}
+                    {t('goback')}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -653,7 +650,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                   style={styles.innerbuttonview}
                 >
                   <Text style={{ color: COLORS.appSecondaryColor }}>
-                    {i18n.t('reviewprevioustest')}
+                    {t('reviewprevioustest')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -661,9 +658,9 @@ const PrePaperAssessment = ({ route, navigation }) => {
           </View>
         ) : (
           <View style={styles.mainVew}>
-            <Text>{i18n.t('nodata')}</Text>
+            <Text>{t('nodata')}</Text>
             <TouchableOpacity onPress={() => backAction()}>
-              <Text>{i18n.t('nodata')}</Text>
+              <Text>{t('nodata')}</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -723,7 +720,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                   }}
                 >
                   <Text style={{ color: 'white', fontSize: 15 }}>
-                    {i18n.t('cancel')}
+                    {t('cancel')}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -774,7 +771,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                 marginTop: 10,
               }}
             >
-              {timeUp ? i18n.t('timeupsubmit') : i18n.t('areyousuresubmit')}
+              {timeUp ? t('timeupsubmit') : t('areyousuresubmit')}
             </Text>
             <View
               style={{
@@ -793,7 +790,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                   }}
                 >
                   <Text style={{ color: 'white', fontSize: 14 }}>
-                    {i18n.t('cancel')}
+                    {t('cancel')}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -807,7 +804,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                   }}
                 >
                   <Text style={{ color: 'white', fontSize: 14 }}>
-                    {i18n.t('submit')}
+                    {t('submit')}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -825,7 +822,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
       <View style={[styles.container, styles.shadowProp]}>
         {loading ? (
           <View style={styles.mainVew}>
-            <Text>{i18n.t('loading')}</Text>
+            <Text>{t('loading')}</Text>
           </View>
         ) : testQuestionsDataa.length > 0 &&
           Object.keys(selectedItem).length > 0 ? (
@@ -855,7 +852,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
             </View>
             {spinner ? (
               <View style={styles.mainVew}>
-                <Text style={{ fontSize: 13 }}>{i18n.t('loading')}</Text>
+                <Text style={{ fontSize: 13 }}>{t('loading')}</Text>
               </View>
             ) : (
               <>
@@ -940,7 +937,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                             onPress={onPrevious}
                           >
                             <Text style={styles.buttontext}>
-                              {i18n.t('previous')}
+                              {t('previous')}
                             </Text>
                           </TouchableOpacity>
                         </View>
@@ -958,9 +955,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                             ]}
                             onPress={onSubmitTest}
                           >
-                            <Text style={styles.buttontext}>
-                              {i18n.t('submit')}
-                            </Text>
+                            <Text style={styles.buttontext}>{t('submit')}</Text>
                           </TouchableOpacity>
                         ) : (
                           <TouchableOpacity
@@ -974,9 +969,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                             ]}
                             onPress={onNext}
                           >
-                            <Text style={styles.buttontext}>
-                              {i18n.t('next')}
-                            </Text>
+                            <Text style={styles.buttontext}>{t('next')}</Text>
                           </TouchableOpacity>
                         )}
                       </View>
@@ -999,7 +992,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                   style={styles.innerbuttonview}
                 >
                   <Text style={{ color: COLORS.appSecondaryColor }}>
-                    {i18n.t('goback')}
+                    {t('goback')}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -1007,7 +1000,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                   style={styles.innerbuttonview}
                 >
                   <Text style={{ color: COLORS.appSecondaryColor }}>
-                    {i18n.t('reviewprevioustest')}
+                    {t('reviewprevioustest')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -1015,9 +1008,9 @@ const PrePaperAssessment = ({ route, navigation }) => {
           </View>
         ) : (
           <View style={styles.mainVew}>
-            <Text>{i18n.t('nodata')}</Text>
+            <Text>{t('nodata')}</Text>
             <TouchableOpacity onPress={() => backAction()}>
-              <Text>{i18n.t('goback')}</Text>
+              <Text>{t('goback')}</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -1077,7 +1070,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                   }}
                 >
                   <Text style={{ color: 'white', fontSize: 15 }}>
-                    {i18n.t('cancel')}
+                    {t('cancel')}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -1128,7 +1121,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                 marginTop: 10,
               }}
             >
-              {timeUp ? i18n.t('timeupsubmit') : i18n.t('areyousuresubmit')}
+              {timeUp ? t('timeupsubmit') : t('areyousuresubmit')}
             </Text>
             <View
               style={{
@@ -1147,7 +1140,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                   }}
                 >
                   <Text style={{ color: 'white', fontSize: 14 }}>
-                    {i18n.t('cancel')}
+                    {t('cancel')}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -1161,7 +1154,7 @@ const PrePaperAssessment = ({ route, navigation }) => {
                   }}
                 >
                   <Text style={{ color: 'white', fontSize: 14 }}>
-                    {i18n.t('submit')}
+                    {t('submit')}
                   </Text>
                 </View>
               </TouchableOpacity>

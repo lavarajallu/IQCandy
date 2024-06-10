@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
+import { useTranslation } from 'react-i18next';
 
 import { goBack } from '../../../utils/navigationUtils';
 import { COLORS } from '../../../constants/colors';
@@ -21,8 +22,10 @@ import { selectUser } from '../../../store/authManagement/selector';
 import { getassesmentsdata } from '../../../api/myCourses';
 import { selectMyCourses } from '../../../store/student/myCourses/selector';
 import styles from './styles';
-import i18n from '../../../i18n';
+import i18n from '../../../i18n/index1';
 const ReviewTests = ({ route, navigation }) => {
+  const { t } = useTranslation(); //i18n instance
+
   const [isvisible, setisvisible] = useState(false);
   const [testdata, settestdata] = useState([]);
   const [spinner, setSpinner] = useState(true);
@@ -91,7 +94,7 @@ const ReviewTests = ({ route, navigation }) => {
         style={styles.itemview}
       >
         <Text style={styles.itemtext}>
-          {i18n.t('test')} {index + 1}{' '}
+          {t('test')} {index + 1}{' '}
           <Text style={{ marginLeft: 5 }}>({item.score})</Text>
         </Text>
         <View style={styles.itembottomview}>
@@ -183,7 +186,7 @@ const ReviewTests = ({ route, navigation }) => {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <Header backAction={backAction} headerTitle={i18n.t('reviewtests')} />
+      <Header backAction={backAction} headerTitle={t('reviewtests')} />
       <View style={styles.mainview}>
         {getassesmenttests?.length > 0 ? (
           <FlatList

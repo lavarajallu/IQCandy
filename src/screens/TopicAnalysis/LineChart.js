@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
-//import ChartView from 'react-native-highcharts';
+import { useTranslation } from 'react-i18next';
 import ChartView from './HighChart.js';
-import i18n from '../../i18n/index.js';
+import i18n from '../../i18n/index1.js';
 const TimeSpentChart = ({ topicsTimeTakenData = {} }) => {
   let [chartOptions, setChartOptions] = useState(null);
   let [chartConfig, setChartConfig] = useState(null);
   let [spinner, setspinner] = useState(true);
+
+  const { t } = useTranslation(); //i18n instance
+
   useEffect(() => {
     if (topicsTimeTakenData && Object.keys(topicsTimeTakenData).length) {
       let labels = [];
@@ -103,7 +106,7 @@ const TimeSpentChart = ({ topicsTimeTakenData = {} }) => {
   }, [topicsTimeTakenData]);
 
   return spinner ? (
-    <Text>{i18n.t('loading')}</Text>
+    <Text>{t('loading')}</Text>
   ) : (
     <View>
       <ChartView
@@ -135,7 +138,7 @@ const TimeSpentChart = ({ topicsTimeTakenData = {} }) => {
               alignItems: 'center',
             }}
           />
-          <Text style={{ marginLeft: 5 }}>{i18n.t('correct')}</Text>
+          <Text style={{ marginLeft: 5 }}>{t('correct')}</Text>
         </View>
         <View
           style={{
@@ -146,7 +149,7 @@ const TimeSpentChart = ({ topicsTimeTakenData = {} }) => {
           }}
         >
           <View style={{ width: 10, height: 10, backgroundColor: '#F94D48' }} />
-          <Text style={{ marginLeft: 5 }}>{i18n.t('incorrect')}</Text>
+          <Text style={{ marginLeft: 5 }}>{t('incorrect')}</Text>
         </View>
       </View>
     </View>

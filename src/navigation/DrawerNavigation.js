@@ -16,7 +16,7 @@ import { selectUser } from '../store/authManagement/selector';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import i18n from '../i18n';
+import i18n from '../i18n/index1';
 
 import { COLORS } from '../constants/colors';
 import BottomTabNavigation from './BottomTabNavigation';
@@ -27,25 +27,28 @@ import ProfilePage from '../screens/ProfilePage';
 import ChangePassword from '../screens/ChangePassword';
 import Settings from '../screens/Settings';
 import { clearUser } from '../store/authManagement/slice';
+import { useTranslation } from 'react-i18next';
 
 // Create a Drawer Navigator
 const Drawer = createDrawerNavigator();
 
 const CustomDrawerContent = (props) => {
+  const { t } = useTranslation(); //i18n instance
+
   const dispatch = useDispatch();
   const { user } = useSelector(selectUser);
 
   const handleLogout = () => {
     Alert.alert(
-      i18n.t('logout'),
-      i18n.t('logoutmessage'),
+      t('logout'),
+      t('logoutmessage'),
       [
         {
-          text: i18n.t('cancel'),
+          text: t('cancel'),
           style: 'cancel',
         },
         {
-          text: i18n.t('ok'),
+          text: t('ok'),
           onPress: async () => {
             await AsyncStorage.removeItem('userToken');
             await AsyncStorage.removeItem('userInfo');
@@ -131,7 +134,7 @@ const CustomDrawerContent = (props) => {
             color: COLORS.black,
           }}
         >
-          {i18n.t('logout')}
+          {t('logout')}
         </Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -139,6 +142,8 @@ const CustomDrawerContent = (props) => {
 };
 
 const DrawerNavigation = () => {
+  const { t } = useTranslation(); //i18n instance
+
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
@@ -159,7 +164,7 @@ const DrawerNavigation = () => {
             textAlign: 'left',
             fontSize: 14,
           },
-          drawerLabel: i18n.t('home'),
+          drawerLabel: t('home'),
           title: 'IQ Candy',
           headerTitleAlign: 'center',
           headerTintColor: COLORS.whiteColor,
@@ -212,8 +217,8 @@ const DrawerNavigation = () => {
             textAlign: 'left',
             fontSize: 14,
           },
-          drawerLabel: i18n.t('profile'),
-          title: i18n.t('profile'),
+          drawerLabel: t('profile'),
+          title: t('profile'),
           headerTintColor: COLORS.whiteColor,
           headerStyle: {
             backgroundColor: COLORS.appSecondaryColor,
@@ -296,8 +301,8 @@ const DrawerNavigation = () => {
             textAlign: 'left',
             fontSize: 14,
           },
-          drawerLabel: i18n.t('changepassword'),
-          title: i18n.t('changepassword'),
+          drawerLabel: t('changepassword'),
+          title: t('changepassword'),
           headerTintColor: COLORS.whiteColor,
           headerStyle: {
             backgroundColor: COLORS.appSecondaryColor,
@@ -327,8 +332,8 @@ const DrawerNavigation = () => {
             textAlign: 'left',
             fontSize: 14,
           },
-          drawerLabel: i18n.t('contactus'),
-          title: i18n.t('contactus'),
+          drawerLabel: t('contactus'),
+          title: t('contactus'),
           headerTintColor: COLORS.whiteColor,
           headerStyle: {
             backgroundColor: COLORS.appSecondaryColor,

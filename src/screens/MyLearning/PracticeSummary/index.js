@@ -10,6 +10,7 @@ import {
   Text,
   ScrollView,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { goBack } from '../../../utils/navigationUtils';
 import { COLORS } from '../../../constants/colors';
@@ -22,12 +23,13 @@ import { selectUser } from '../../../store/authManagement/selector';
 import { selectMyCourses } from '../../../store/student/myCourses/selector';
 import { getsummaryreport } from '../../../api/myLearning';
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
-import i18n from '../../../i18n';
+import i18n from '../../../i18n/index1';
 const PracticeSummary = ({ route, navigation }) => {
   const { questions } = textContent;
   const { user } = useSelector(selectUser);
   const { summaryDataPractice } = useSelector(selectMyLearning);
   const dispatch = useDispatch();
+  const { t } = useTranslation(); //i18n instance
 
   const [testResult, setTestResult] = useState({});
   const { data, testId } = route.params;
@@ -169,7 +171,7 @@ const PracticeSummary = ({ route, navigation }) => {
               }}
             >
               <Text style={{ color: 'white', fontSize: 14 }}>
-                {i18n.t('reviewanswers')}
+                {t('reviewanswers')}
               </Text>
             </TouchableOpacity>
 

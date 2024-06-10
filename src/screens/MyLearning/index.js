@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import LearningCard from '../../components/LearningCard';
 import Swiper from 'react-native-swiper';
 import { COLORS } from '../../constants/colors';
-import i18n from './../../i18n';
+import i18n from '../../i18n/index1';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../../store/authManagement/selector';
 
@@ -13,6 +13,7 @@ import { getTopicsProgress } from '../../api/myTopicsInProgress';
 
 import { textContent } from '../../constants/content';
 import ItemSeparator from '../../components/ItemSeparator';
+import { useTranslation } from 'react-i18next';
 
 import { selectMyTopicsProgress } from '../../store/student/myTopicProgress/selector';
 
@@ -24,6 +25,7 @@ const MyLearning = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectUser);
   const { progressTopics } = useSelector(selectMyTopicsProgress);
+  const { t } = useTranslation();
 
   const [learningdata, setlearningdata] = useState('');
   const { learningData } = textContent;
@@ -58,7 +60,7 @@ const MyLearning = () => {
 
   return (
     <>
-      <CardHeaderLabel lHLabel={i18n.t('mylearning')} />
+      <CardHeaderLabel lHLabel={t('mylearning')} />
 
       <FlatList
         data={learningdata}

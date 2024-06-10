@@ -17,6 +17,7 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import MathJax from 'react-native-mathjax';
+import { useTranslation } from 'react-i18next';
 
 import { goBack } from '../../../utils/navigationUtils';
 import { COLORS } from '../../../constants/colors';
@@ -35,10 +36,12 @@ import {
 } from '../../../api/myLearning';
 import Modal from 'react-native-modal';
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
-import i18n from '../../../i18n';
+import i18n from '../../../i18n/index1';
 
 const PracticeAssesment = ({ route, navigation }) => {
   const { questions } = textContent;
+  const { t } = useTranslation(); //i18n instance
+
   const { topicItem, chapterItem, subjectItem, from, data } = route.params;
   const { user } = useSelector(selectUser);
   const { testQuestionsData, questionDatabyId, endTesetdatapractice } =
@@ -445,12 +448,12 @@ const PracticeAssesment = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={i18n.t('practicetest')} />
+      <Header backAction={backAction} headerTitle={t('practicetest')} />
 
       <View style={[styles.container, styles.shadowProp]}>
         {loading ? (
           <View style={styles.mainVew}>
-            <Text>{i18n.t('loading')}</Text>
+            <Text>{t('loading')}</Text>
           </View>
         ) : testQuestionsDataa.length > 0 &&
           Object.keys(selectedItem).length > 0 ? (
@@ -474,7 +477,7 @@ const PracticeAssesment = ({ route, navigation }) => {
             </View>
             {spinner ? (
               <View style={styles.mainVew}>
-                <Text style={{ fontSize: 13 }}>{i18n.t('loading')}</Text>
+                <Text style={{ fontSize: 13 }}>{t('loading')}</Text>
               </View>
             ) : (
               <>
@@ -559,7 +562,7 @@ const PracticeAssesment = ({ route, navigation }) => {
                             onPress={onPrevious}
                           >
                             <Text style={styles.buttontext}>
-                              {i18n.t('previous')}
+                              {t('previous')}
                             </Text>
                           </TouchableOpacity>
                         </View>
@@ -591,9 +594,7 @@ const PracticeAssesment = ({ route, navigation }) => {
                             ]}
                             onPress={onNext}
                           >
-                            <Text style={styles.buttontext}>
-                              {i18n.t('next')}
-                            </Text>
+                            <Text style={styles.buttontext}>{t('next')}</Text>
                           </TouchableOpacity>
                         )}
                       </View>
@@ -616,7 +617,7 @@ const PracticeAssesment = ({ route, navigation }) => {
                   style={styles.innerbuttonview}
                 >
                   <Text style={{ color: COLORS.appSecondaryColor }}>
-                    {i18n.t('goback')}
+                    {t('goback')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -624,9 +625,9 @@ const PracticeAssesment = ({ route, navigation }) => {
           </View>
         ) : (
           <View style={styles.mainVew}>
-            <Text>{i18n.t('nodata')}</Text>
+            <Text>{t('nodata')}</Text>
             <TouchableOpacity onPress={() => backAction()}>
-              <Text>{i18n.t('goback')}</Text>
+              <Text>{t('goback')}</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -686,7 +687,7 @@ const PracticeAssesment = ({ route, navigation }) => {
                   }}
                 >
                   <Text style={{ color: 'white', fontSize: 15 }}>
-                    {i18n.t('cancel')}
+                    {t('cancel')}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -737,7 +738,7 @@ const PracticeAssesment = ({ route, navigation }) => {
                 marginTop: 10,
               }}
             >
-              {timeUp ? i18n.t('timeupsubmit') : i18n.t('areyousuresubmit')}
+              {timeUp ? t('timeupsubmit') : t('areyousuresubmit')}
             </Text>
             <View
               style={{
@@ -756,7 +757,7 @@ const PracticeAssesment = ({ route, navigation }) => {
                   }}
                 >
                   <Text style={{ color: 'white', fontSize: 14 }}>
-                    {i18n.t('cancel')}
+                    {t('cancel')}
                   </Text>
                 </View>
               </TouchableOpacity>

@@ -19,7 +19,8 @@ import {
   getQuestionPaperByTopicIdRequest,
   getGateQuestionPaperByTopicIdRequest,
 } from '../../../api/myCourses';
-import i18n from '../../../i18n';
+import i18n from '../../../i18n/index1';
+import { useTranslation } from 'react-i18next';
 
 const tabs = [
   { id: 1, title: 'Acadamics' },
@@ -27,6 +28,8 @@ const tabs = [
 ];
 const TopicQuestionpapertype = ({ route, navigation }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation(); //i18n instance
+
   const { topicitem, questionpapertype, questionpaper } = route.params;
   const { user } = useSelector(selectUser);
   const { QuestionPaperByTopicIdRequest, GateQuestionPaperByTopicIdRequests } =
@@ -210,7 +213,7 @@ const TopicQuestionpapertype = ({ route, navigation }) => {
                             alignSelf: 'center',
                           }}
                         >
-                          <Text>{i18n.t('loading')}</Text>
+                          <Text>{t('loading')}</Text>
                         </View>
                       ) : (
                         <ScrollView>
@@ -415,7 +418,7 @@ const TopicQuestionpapertype = ({ route, navigation }) => {
                                 onPress={onPrevioussub}
                               >
                                 <Text style={styles.buttontext}>
-                                  {i18n.t('previous')}
+                                  {t('previous')}
                                 </Text>
                               </TouchableOpacity>
                             </View>
@@ -435,7 +438,7 @@ const TopicQuestionpapertype = ({ route, navigation }) => {
                                 onPress={onSubmitTestsub}
                               >
                                 <Text style={styles.buttontext}>
-                                  {i18n.t('done')}
+                                  {t('done')}
                                 </Text>
                               </TouchableOpacity>
                             ) : (
@@ -451,7 +454,7 @@ const TopicQuestionpapertype = ({ route, navigation }) => {
                                 onPress={onNextsub}
                               >
                                 <Text style={styles.buttontext}>
-                                  {i18n.t('next')}
+                                  {t('next')}
                                 </Text>
                               </TouchableOpacity>
                             )}
@@ -468,7 +471,7 @@ const TopicQuestionpapertype = ({ route, navigation }) => {
                       alignItems: 'center',
                     }}
                   >
-                    <Text>{i18n.t('nodata')}</Text>
+                    <Text>{t('nodata')}</Text>
                   </View>
                 )
               ) : GateQuestionPaperByTopicIdRequests &&
@@ -483,7 +486,7 @@ const TopicQuestionpapertype = ({ route, navigation }) => {
                           alignSelf: 'center',
                         }}
                       >
-                        <Text>{i18n.t('loading')}</Text>
+                        <Text>{t('loading')}</Text>
                       </View>
                     ) : (
                       <ScrollView>
@@ -688,7 +691,7 @@ const TopicQuestionpapertype = ({ route, navigation }) => {
                               onPress={onPreviousgatesub}
                             >
                               <Text style={styles.buttontext}>
-                                {i18n.t('previous')}
+                                {t('previous')}
                               </Text>
                             </TouchableOpacity>
                           </View>
@@ -707,9 +710,7 @@ const TopicQuestionpapertype = ({ route, navigation }) => {
                               ]}
                               onPress={onSubmitgateTestsub}
                             >
-                              <Text style={styles.buttontext}>
-                                {i18n.t('done')}
-                              </Text>
+                              <Text style={styles.buttontext}>{t('done')}</Text>
                             </TouchableOpacity>
                           ) : (
                             <TouchableOpacity
@@ -723,9 +724,7 @@ const TopicQuestionpapertype = ({ route, navigation }) => {
                               ]}
                               onPress={onNextgatesub}
                             >
-                              <Text style={styles.buttontext}>
-                                {i18n.t('next')}
-                              </Text>
+                              <Text style={styles.buttontext}>{t('next')}</Text>
                             </TouchableOpacity>
                           )}
                         </View>
@@ -741,7 +740,7 @@ const TopicQuestionpapertype = ({ route, navigation }) => {
                     alignItems: 'center',
                   }}
                 >
-                  <Text>{i18n.t('nodata')}</Text>
+                  <Text>{t('nodata')}</Text>
                 </View>
               )}
             </View>

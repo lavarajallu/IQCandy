@@ -18,6 +18,8 @@ import { textContent } from '../../../constants/content';
 import SubjectsList from './SubjectsList';
 import LearningAnalysisCard from './LearningAnalysisCard';
 import PerformancesCard from '../../../components/PerformancesCard';
+import { useTranslation } from 'react-i18next';
+
 import {
   getAssessmentSubjects,
   getPieChartData,
@@ -25,12 +27,14 @@ import {
   getChapterData,
 } from '../../../api/myLearning';
 import { selectUser } from '../../../store/authManagement/selector';
-import i18n from '../../../i18n';
+import i18n from '../../../i18n/index1';
 
 const { width } = Dimensions.get('window');
 
 const LearningAnalysis = ({ navigation }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation(); //i18n instance
+
   const { user } = useSelector(selectUser);
   const { subjectsInfo, pieChartData, previousTestData, chapterData } =
     useSelector((state) => state.myLearning);
@@ -272,10 +276,7 @@ const LearningAnalysis = ({ navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header
-        backAction={backAction}
-        headerTitle={i18n.t('learninganalysis')}
-      />
+      <Header backAction={backAction} headerTitle={t('learninganalysis')} />
       <View style={[styles.container, styles.shadowProp]}>
         <ScrollView>
           {subjectsInfo?.items?.length > 0 && (
@@ -287,7 +288,7 @@ const LearningAnalysis = ({ navigation }) => {
 
           {chapterAvgData?.length > 0 ? (
             <PerformancesCard
-              cardTitle={i18n.t('courseprogressavg')}
+              cardTitle={t('courseprogressavg')}
               size={width / 1.8}
               minValue={0}
               maxValue={100}
@@ -312,7 +313,7 @@ const LearningAnalysis = ({ navigation }) => {
             />
           ) : (
             <PerformancesCard
-              cardTitle={i18n.t('courseprogressavg')}
+              cardTitle={t('courseprogressavg')}
               size={width / 1.8}
               minValue={0}
               maxValue={100}
@@ -335,9 +336,7 @@ const LearningAnalysis = ({ navigation }) => {
 
           {bloomsData.length > 0 && (
             <View style={styles.activityView}>
-              <Text style={styles.activityheadtext}>
-                {i18n.t('bloomtaxonomy')}
-              </Text>
+              <Text style={styles.activityheadtext}>{t('bloomtaxonomy')}</Text>
 
               <ActivityRings data={bloomsData} config={activityConfig} />
               <View style={styles.activtyBottomView}>
@@ -365,7 +364,7 @@ const LearningAnalysis = ({ navigation }) => {
             chapterAvgData.map((res, i) => (
               <LearningAnalysisCard
                 key={i}
-                cardTitle={i18n.t('friction')}
+                cardTitle={t('friction')}
                 data={res}
               />
             ))
@@ -378,7 +377,7 @@ const LearningAnalysis = ({ navigation }) => {
                 marginTop: 20,
               }}
             >
-              <Text>{i18n.t('nodata')}</Text>
+              <Text>{t('nodata')}</Text>
             </View>
           )}
         </ScrollView>

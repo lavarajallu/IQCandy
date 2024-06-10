@@ -8,36 +8,26 @@ import {
   View,
   Dimensions,
 } from 'react-native';
-//import DeviceConstants from 'react-native-device-constants';
-//import FastImage from 'react-native-fast-image';
+
 import Video from 'react-native-video';
 import * as ScreenOrientation from 'expo-screen-orientation';
-//import Orientation from 'react-native-orientation-locker';
-//import { imageUrl } from '../../constants';
+
 import styles from './styles';
-import i18n from '../../../../i18n';
-// import AWS from 'aws-sdk/dist/aws-sdk-react-native';
+import i18n from '../../../../i18n/index1';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
-// const credentials = new AWS.Crendentials({ accessKeyId: 'AKIAZR3HR6PZJ3FGC25V', secretAccessKey: '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'})
-// const s3 = new AWS.S3({ credentials, signatureVersion: 'v1', region: 'ap-south-1'});
-// var timesarray = [];
-
-// var initial = 0;
-
-// const windowHeigh = Dimensions.get('window').height;
+import { useTranslation } from 'react-i18next';
 const NormalVideoViewComponent = (props) => {
   const playerRef = useRef(null);
   const { questionsArray } = props;
-  // let [spinner, setSpinner] = useState(true);
   let [normaldata, setNormlaData] = useState(props.data);
-  // let [visisted, setVisited] = useState(false);
   let [pausedtime, setPausedTime] = useState(null);
 
   let [currentTime, setCurrentTime] = useState(0);
 
   let [duration, setDuration] = useState(0);
   let [data, setData] = useState(null);
+  const { t } = useTranslation(); //i18n instance
 
   let [show, setShow] = useState(null);
   let [questiondisplay, setQuestionDisplay] = useState(null);
@@ -237,7 +227,7 @@ const NormalVideoViewComponent = (props) => {
   //   (fullimg = 30), (playicon = 25), (subfont = 18), (progrsheight = 40);
   // }
   return loading ? (
-    <Text>{i18n.t('loading')}</Text>
+    <Text>{t('loading')}</Text>
   ) : (
     <View style={styles.mainView}>
       <View

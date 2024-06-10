@@ -12,6 +12,7 @@ import {
   Platform,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
+import { useTranslation } from 'react-i18next';
 
 import VideoQuestionModal from './VideoQuestionModal';
 import Modal from 'react-native-modal';
@@ -28,7 +29,7 @@ import {
   getVideoquestionsvideopro,
 } from '../../../../api/myCourses';
 import moment from 'moment';
-import i18n from '../../../../i18n';
+import i18n from '../../../../i18n/index1';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
 const YtVideoActivityPro = ({ route, navigation }) => {
@@ -51,6 +52,7 @@ const YtVideoActivityPro = ({ route, navigation }) => {
   const [activityStartTime, setactivityStartTime] = useState(null);
   const [showfullscreen, setfullscreen] = useState(false);
   const [videosdata, setvideoquestionsdata] = useState({});
+  const { t } = useTranslation(); //i18n instance
 
   const backAction = () => {
     //updateAnalytics();
@@ -370,7 +372,7 @@ const YtVideoActivityPro = ({ route, navigation }) => {
               alignItems: 'center',
             }}
           >
-            <Text style={{ fontSize: 15 }}>{i18n.t('loading')}</Text>
+            <Text style={{ fontSize: 15 }}>{t('loading')}</Text>
           </View>
         )}
       </View>
@@ -402,7 +404,7 @@ const YtVideoActivityPro = ({ route, navigation }) => {
                 color: COLORS.appSecondaryColor,
               }}
             >
-              {i18n.t('previousactivity')}
+              {t('previousactivity')}
             </Text>
           </TouchableOpacity>
 
@@ -425,7 +427,7 @@ const YtVideoActivityPro = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                {i18n.t('nextactivity')}
+                {t('nextactivity')}
               </Text>
             ) : (
               <Text
@@ -435,7 +437,7 @@ const YtVideoActivityPro = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                {i18n.t('done')}
+                {t('done')}
               </Text>
             )}
           </TouchableOpacity>

@@ -9,7 +9,8 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { COLORS } from '../../constants/colors';
 import { capitalizeFirstLetter } from '../../constants/helpers';
-import i18n from '../../i18n';
+import i18n from '../../i18n/index1';
+import { useTranslation } from 'react-i18next';
 
 const getIconByType = (type) => {
   switch (type) {
@@ -54,19 +55,22 @@ const GenericContactCard = ({ contactInfo, contactType }) => {
   );
 };
 
-const ContactUs = () => (
-  <View style={styles.container}>
-    {/* <GenericContactCard contactInfo='+66-035950595' contactType='phone' /> */}
-    <GenericContactCard
-      contactInfo='admin@iqcandy.com'
-      contactType={i18n.t('email')}
-    />
-    <GenericContactCard
-      contactInfo='https://www.iqcandy.com/'
-      contactType={i18n.t('website')}
-    />
-  </View>
-);
+const ContactUs = () => {
+  const { t } = useTranslation(); //i18n instance
+  return (
+    <View style={styles.container}>
+      {/* <GenericContactCard contactInfo='+66-035950595' contactType='phone' /> */}
+      <GenericContactCard
+        contactInfo='admin@iqcandy.com'
+        contactType={t('email')}
+      />
+      <GenericContactCard
+        contactInfo='https://www.iqcandy.com/'
+        contactType={t('website')}
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

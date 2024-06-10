@@ -15,8 +15,10 @@ import { slides } from '../constants/config';
 import { setUser } from '../store/authManagement/slice';
 import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import i18n from './../i18n';
+import i18n from '../i18n/index1';
 import { selectUser } from '../store/authManagement/selector';
+import { useTranslation } from 'react-i18next';
+
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
 function OnboardingScreen({ navigation }) {
@@ -24,6 +26,7 @@ function OnboardingScreen({ navigation }) {
   const { user, loginthrought } = useSelector(selectUser);
   const [viewlanguage, setviewlanguage] = useState(false);
   const [thisscreen, setthisscreen] = useState(false);
+  const { t, i18n } = useTranslation(); //i18n instance
 
   useEffect(() => {
     if (loginthrought) {
@@ -43,8 +46,9 @@ function OnboardingScreen({ navigation }) {
   };
 
   const onLanguage = async (value) => {
-    i18n.locale = value;
-    await AsyncStorage.setItem('@localevalue', value);
+    // i18n.locale = value;
+    i18n.changeLanguage(value);
+    await AsyncStorage.setItem('settings.lang', value);
     navigation.navigate('Login');
   };
 

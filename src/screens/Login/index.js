@@ -21,14 +21,12 @@ import { validateEmail, validatePassword } from '../../constants/helpers';
 import styles from './styles';
 import Loader from '../../components/Loader';
 import { COLORS } from '../../constants/colors';
-// import th from "./../../i18n/th.json";
-// import en from "./../../i18n/en.json";
-// const i18n = new I18n({
-//   en,
-//   th,
-// });
-import i18n from './../../i18n';
+import { useTranslation } from 'react-i18next';
+
+import i18n from '../../i18n/index1';
 const Login = ({ navigation }) => {
+  const { t } = useTranslation();
+
   const dispatch = useDispatch();
   const { authentiCation } = imagePaths;
   const [email, setEmail] = useState('');
@@ -55,7 +53,7 @@ const Login = ({ navigation }) => {
         setPushToken(JSON.stringify(token));
       }
     });
-  });
+  }, []);
   //Inside the component where you handle login logic
   const handleLogin = async () => {
     // Validate email
@@ -165,7 +163,7 @@ const Login = ({ navigation }) => {
           <View style={styles.inputContainer}>
             <ValidatedTextInput
               label='Email/Mobile Number'
-              placeholder={i18n.t('emailtextinput')}
+              placeholder={t('emailtextinput')}
               value={email}
               onChangeText={setEmail}
               validation={emailValidation}
@@ -174,7 +172,7 @@ const Login = ({ navigation }) => {
 
             <ValidatedTextInput
               label='Password'
-              placeholder={i18n.t('passwordtextinput')}
+              placeholder={t('passwordtextinput')}
               value={password}
               onChangeText={setPassword}
               secureTextEntry
@@ -205,7 +203,7 @@ const Login = ({ navigation }) => {
                   </TouchableOpacity>
                 )}
 
-                <Text style={styles.remembertext}>{i18n.t('rememberme')}</Text>
+                <Text style={styles.remembertext}>{t('rememberme')}</Text>
               </View>
               <TouchableOpacity
                 style={{ flex: 0.5 }}
@@ -214,7 +212,7 @@ const Login = ({ navigation }) => {
                 }}
               >
                 <Text style={styles.forgotPasswordText}>
-                  {i18n.t('forgotpassword')}
+                  {t('forgotpassword')}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -222,7 +220,7 @@ const Login = ({ navigation }) => {
 
           <View style={styles.buttonContainer}>
             <Button
-              title={i18n.t('login')}
+              title={t('login')}
               style={styles.button}
               textStyle={styles.buttonText}
               onPress={handleLogin} // Call the function to handle login

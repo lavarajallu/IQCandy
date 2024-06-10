@@ -1,5 +1,4 @@
 // content.js
-import i18n from '../i18n';
 export const textContent = {
   buttonLabels: {
     getStarted: 'GET STARTED',
@@ -185,7 +184,7 @@ export const textContent = {
     {
       id: 1,
       progress: '80',
-      title: i18n.t('mypractice'),
+      title: 'My Practice',
       description: 'Role Readiness Score',
       type: 'my_practice',
       image_uri: require('../../assets/images/my_learning/practice.png'),
@@ -194,7 +193,7 @@ export const textContent = {
     {
       id: 2,
       progress: '30',
-      title: i18n.t('learninganalysis'),
+      title: 'Learning Analysis',
       description: 'Role Readiness Score',
       type: 'learning_analysis',
       image_uri: require('../../assets/images/my_learning/learning_analysis.png'),
@@ -203,7 +202,7 @@ export const textContent = {
     {
       id: 3,
       progress: '50',
-      title: i18n.t('knowledgemap'),
+      title: 'Knowledge Map',
       description: 'Role Readiness Score',
       type: 'knowledge_map',
       image_uri: require('../../assets/images/my_learning/heatmap.png'),
@@ -212,7 +211,7 @@ export const textContent = {
     {
       id: 4,
       progress: '40',
-      title: i18n.t('leaderboard'),
+      title: 'LeaderBoard',
       description: 'Role Readiness Score',
       type: 'leader_board',
       image_uri: require('../../assets/images/my_learning/leader_board.png'),

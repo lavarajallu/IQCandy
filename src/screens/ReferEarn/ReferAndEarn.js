@@ -4,17 +4,19 @@ import Button from '../../components/Button';
 import { COLORS } from '../../constants/colors';
 import { upperCaseText } from '../../constants/helpers';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { getReferalCode } from '../../api/referAndEarn';
 const { width, height } = Dimensions.get('window');
 import { selectUser } from '../../store/authManagement/selector';
 import { selectReferandEarn } from '../../store/student/referAndEarn/selector';
-import i18n from '../../i18n';
+import i18n from '../../i18n/index1';
 
 const ReferAndEarn = (props) => {
   const { referCode } = props;
   const [spinner, setSpinner] = useState(true);
   const [referalcode, setReferalCode] = useState('null');
+  const { t } = useTranslation(); //i18n instance
 
   useEffect(() => {
     if (referCode && Object.keys(referCode).length > 0) {
@@ -58,15 +60,15 @@ const ReferAndEarn = (props) => {
       </View>
 
       <View style={styles.contentContainer}>
-        <Text style={styles.title}>{i18n.t('referhelptext')}</Text>
+        <Text style={styles.title}>{t('referhelptext')}</Text>
 
-        <Text style={styles.description}>{i18n.t('referhelptext2')}</Text>
+        <Text style={styles.description}>{t('referhelptext2')}</Text>
 
-        <Text style={styles.referCodeLabel}>{i18n.t('yourreferecode')}</Text>
+        <Text style={styles.referCodeLabel}>{t('yourreferecode')}</Text>
 
         <View style={styles.referCodeContainer}>
           {spinner ? (
-            <Text>{i18n.t('loading')}</Text>
+            <Text>{t('loading')}</Text>
           ) : (
             <Text style={styles.referCodeText}>{referalcode}</Text>
           )}
@@ -75,7 +77,7 @@ const ReferAndEarn = (props) => {
         <View style={styles.buttonContainer}>
           <Button
             style={styles.button}
-            title={i18n.t('refernow')}
+            title={t('refernow')}
             textStyle={styles.buttonText}
             onPress={() => onRefer()}
           />

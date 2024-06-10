@@ -10,6 +10,7 @@ import {
   Text,
   ScrollView,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { goBack } from '../../../utils/navigationUtils';
 import { COLORS } from '../../../constants/colors';
@@ -21,11 +22,13 @@ import TimeSpentCard from '../../../components/TimeSpentCard';
 import { selectUser } from '../../../store/authManagement/selector';
 import { selectMyCourses } from '../../../store/student/myCourses/selector';
 import { getsummaryreport } from '../../../api/myCourses';
-import i18n from '../../../i18n';
+import i18n from '../../../i18n/index1';
 const Summary = ({ route, navigation }) => {
   const { questions } = textContent;
   const { user } = useSelector(selectUser);
   const { summaryData } = useSelector(selectMyCourses);
+  const { t } = useTranslation(); //i18n instance
+
   const dispatch = useDispatch();
 
   const [testResult, setTestResult] = useState({});
@@ -201,7 +204,7 @@ const Summary = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={i18n.t('summary')} />
+      <Header backAction={backAction} headerTitle={t('summary')} />
 
       <View style={[styles.container, styles.shadowProp]}>
         <ScrollView>
@@ -211,7 +214,7 @@ const Summary = ({ route, navigation }) => {
             {/* Performance Card View */}
 
             <PerformancesCard
-              cardTitle={i18n.t('performance')}
+              cardTitle={t('performance')}
               size={width / 1.8}
               minValue={0}
               maxValue={100}
@@ -232,7 +235,7 @@ const Summary = ({ route, navigation }) => {
             />
             {/* Attempts AnalysisCard */}
             <AttemptsAnalysisCard
-              title={i18n.t('attemptanalysis')}
+              title={t('attemptanalysis')}
               data1='0'
               data2='5'
               backgroundColor1={COLORS.rightInfo}
@@ -243,7 +246,7 @@ const Summary = ({ route, navigation }) => {
             {/*  TimeSpent Card */}
             {testResult?.questions?.length > 0 ? (
               <TimeSpentCard
-                cardTitle={i18n.t('timespent')}
+                cardTitle={t('timespent')}
                 testResult={testResult}
               />
             ) : null}
@@ -256,7 +259,7 @@ const Summary = ({ route, navigation }) => {
                 style={[styles.button, styles.nextActivityButton]}
                 onPress={handleNextActivity}
               >
-                <Text style={styles.buttonText}>{i18n.t('nextactivity')}</Text>
+                <Text style={styles.buttonText}>{t('nextactivity')}</Text>
               </TouchableOpacity>
             </View>
           ) : (
@@ -278,7 +281,7 @@ const Summary = ({ route, navigation }) => {
               }}
             >
               <Text style={{ color: 'white', fontSize: 14 }}>
-                {i18n.t('reviewanswers')}
+                {t('reviewanswers')}
               </Text>
             </TouchableOpacity>
           )}

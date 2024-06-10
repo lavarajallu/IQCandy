@@ -18,7 +18,8 @@ import YoutubePlayer from 'react-native-youtube-iframe';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
 import styles from './styles';
-import i18n from '../../../../i18n';
+import { useTranslation } from 'react-i18next';
+
 var initial = 0;
 let interval;
 // import AWS from 'aws-sdk/dist/aws-sdk-react-native';
@@ -33,6 +34,7 @@ const NormalVideoViewComponent = (props) => {
   let [youtubedata, setyoutubedata] = useState(props.data);
   // let [visisted, setVisited] = useState(false);
   let [pausedtime, setPausedTime] = useState(null);
+  const { t } = useTranslation(); //i18n instance
 
   let [currentTime, setCurrentTime] = useState(0);
 
@@ -342,7 +344,7 @@ const NormalVideoViewComponent = (props) => {
   // }
   return loading ? (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>{i18n.t('loading')}</Text>
+      <Text>{t('loading')}</Text>
     </View>
   ) : (
     <View style={styles.mainView}>

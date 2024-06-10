@@ -14,6 +14,7 @@ import {
 //import Pdf from 'react-native-pdf';
 import Pdf from 'react-native-pdf';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
+import { useTranslation } from 'react-i18next';
 
 import { goBack } from '../../../../utils/navigationUtils';
 import { COLORS } from '../../../../constants/colors';
@@ -27,7 +28,7 @@ import {
 } from '../../../../api/myCourses';
 import { WebView } from 'react-native-webview';
 import moment from 'moment';
-import i18n from '../../../../i18n';
+import i18n from '../../../../i18n/index1';
 const ProfPdfViewNew = ({ route, navigation }) => {
   const { questions } = textContent;
   const [page, setPage] = useState(null);
@@ -36,6 +37,8 @@ const ProfPdfViewNew = ({ route, navigation }) => {
   const { notesActivityDataProf, getupdateanalyticsNotes } =
     useSelector(selectMyCourses);
   const { user } = useSelector(selectUser);
+  const { t } = useTranslation(); //i18n instance
+
   const dispatch = useDispatch();
   const [newnotesActvityData, setNotestActivitydata] = useState('');
   const [laoding, setLoading] = useState(true);
@@ -333,7 +336,7 @@ const ProfPdfViewNew = ({ route, navigation }) => {
               alignItems: 'center',
             }}
           >
-            <Text style={{ fontSize: 14 }}>{i18n.t('loading')}</Text>
+            <Text style={{ fontSize: 14 }}>{t('loading')}</Text>
           </View>
         ) : isPdf ? (
           nodataurl ? (
@@ -344,7 +347,7 @@ const ProfPdfViewNew = ({ route, navigation }) => {
                 alignItems: 'center',
               }}
             >
-              <Text style={{ fontSize: 14 }}>{i18n.t('nodata')}</Text>
+              <Text style={{ fontSize: 14 }}>{t('nodata')}</Text>
             </View>
           ) : (
             <View style={{ flex: 1 }}>
@@ -453,7 +456,7 @@ const ProfPdfViewNew = ({ route, navigation }) => {
                           }}
                         >
                           {'<'}
-                          {i18n.t('previous')}
+                          {t('previous')}
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -495,7 +498,7 @@ const ProfPdfViewNew = ({ route, navigation }) => {
                             color: COLORS.appSecondaryColor,
                           }}
                         >
-                          {i18n.t('next')}
+                          {t('next')}
                           {'>'}
                         </Text>
                       </TouchableOpacity>
@@ -543,7 +546,7 @@ const ProfPdfViewNew = ({ route, navigation }) => {
               color: COLORS.appSecondaryColor,
             }}
           >
-            {i18n.t('previousactivity')}
+            {t('previousactivity')}
           </Text>
         </TouchableOpacity>
 
@@ -566,7 +569,7 @@ const ProfPdfViewNew = ({ route, navigation }) => {
                 color: COLORS.appSecondaryColor,
               }}
             >
-              {i18n.t('nextactivity')}
+              {t('nextactivity')}
             </Text>
           ) : (
             <Text
@@ -576,7 +579,7 @@ const ProfPdfViewNew = ({ route, navigation }) => {
                 color: COLORS.appSecondaryColor,
               }}
             >
-              {i18n.t('done')}
+              {t('done')}
             </Text>
           )}
         </TouchableOpacity>

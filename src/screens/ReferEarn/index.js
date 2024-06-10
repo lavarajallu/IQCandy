@@ -11,6 +11,8 @@ import {
   ScrollView,
   TextInput,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
+
 import { COLORS } from '../../constants/colors';
 import Instructions from './Instructions';
 import ReferAndEarn from './ReferAndEarn';
@@ -26,7 +28,7 @@ import { getReferalCode, postPayouts } from '../../api/referAndEarn';
 import { selectUser } from '../../store/authManagement/selector';
 import { selectReferandEarn } from '../../store/student/referAndEarn/selector';
 import { validateAccountPoint } from '../../constants/helpers';
-import i18n from '../../i18n';
+import i18n from '../../i18n/index1';
 const { width } = Dimensions.get('window');
 const options = [
   { value: 'bank_account', label: 'Bank Account' },
@@ -34,6 +36,8 @@ const options = [
 ];
 const ReferEarn = ({ route, navigation }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation(); //i18n instance
+
   const { user } = useSelector(selectUser);
   const { referCode, postPayout } = useSelector(selectReferandEarn);
   var [accountTypevalue, setaccounttypevalue] = useState('bank_account');
@@ -134,7 +138,7 @@ const ReferEarn = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={i18n.t('referearn')} />
+      <Header backAction={backAction} headerTitle={t('referearn')} />
       <View style={[styles.container, styles.shadowProp]}>
         <View style={styles.tabBarContainer}>
           <View style={styles.tabsContainer}>
@@ -258,17 +262,13 @@ const ReferEarn = ({ route, navigation }) => {
                     onPress={() => setnewmodal(false)}
                     style={styles.modalbutton}
                   >
-                    <Text style={styles.modalbuttontext}>
-                      {i18n.t('cancel')}
-                    </Text>
+                    <Text style={styles.modalbuttontext}>{t('cancel')}</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={onsubmitreddem}
                     style={styles.modalbutton}
                   >
-                    <Text style={styles.modalbuttontext}>
-                      {i18n.t('submit')}
-                    </Text>
+                    <Text style={styles.modalbuttontext}>{t('submit')}</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -397,13 +397,13 @@ const ReferEarn = ({ route, navigation }) => {
                 onPress={() => setnewmodal(false)}
                 style={styles.modalbutton}
               >
-                <Text style={styles.modalbuttontext}>{i18n.t('cancel')}</Text>
+                <Text style={styles.modalbuttontext}>{t('cancel')}</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={onsubmitreddem}
                 style={styles.modalbutton}
               >
-                <Text style={styles.modalbuttontext}>{i18n.t('submit')}</Text>
+                <Text style={styles.modalbuttontext}>{t('submit')}</Text>
               </TouchableOpacity>
             </View>
           </View>

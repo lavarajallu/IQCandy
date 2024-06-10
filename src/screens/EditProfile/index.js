@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import { useTranslation } from 'react-i18next';
 
 import { imagePaths } from '../../constants/path';
 import * as Progress from 'react-native-progress';
@@ -30,12 +31,14 @@ import * as ImagePicker from 'expo-image-picker';
 import { updateProfile, getUserData } from '../../api/profile';
 import { selectMyProfile } from '../../store/student/MyProfile/selector';
 import { COLORS } from '../../constants/colors';
-import i18n from '../../i18n';
+import i18n from '../../i18n/index1';
 
 const EditProfile = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const [firstName, setFirstName] = useState('Phanendra');
+  const { t } = useTranslation(); //i18n instance
+
   const [lastName, setLastName] = useState('Reddy');
   const [email, setEmail] = useState('phani@gmail.com');
   const [universityName, setUniversityNamae] = useState('GVPCEW');
@@ -65,7 +68,7 @@ const EditProfile = ({ navigation }) => {
       '',
       [
         {
-          text: i18n.t('cancel'),
+          text: t('cancel'),
           onPress: () => console.log('Cancel Pressed'),
         },
         {
@@ -187,7 +190,7 @@ const EditProfile = ({ navigation }) => {
       <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <Header
           backAction={backAction}
-          headerTitle={i18n.t('editprofile')}
+          headerTitle={t('editprofile')}
           hedercolor={true}
         />
 
@@ -355,7 +358,7 @@ const EditProfile = ({ navigation }) => {
 
               <View style={{ marginBottom: 30 }}>
                 <Button
-                  title={i18n.t('updateprofile')}
+                  title={t('updateprofile')}
                   style={{
                     width: width * 0.9,
                     height: 50,

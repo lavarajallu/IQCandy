@@ -1,6 +1,7 @@
 //PreAssessment
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import {
   View,
@@ -36,11 +37,13 @@ import {
   getQuestionByIdReattemptapi,
 } from '../../../api/myCourses';
 import Modal from 'react-native-modal';
-import i18n from '../../../i18n';
+import i18n from '../../../i18n/index1';
 const PreAssessment = ({ route, navigation }) => {
   const { questions } = textContent;
   const { topicItem, chapterItem, subjectItem, from, data } = route.params;
   const { user } = useSelector(selectUser);
+  const { t } = useTranslation(); //i18n instance
+
   const {
     testQuestionsData,
     questionDatabyId,
@@ -404,7 +407,7 @@ const PreAssessment = ({ route, navigation }) => {
       <View style={[styles.container, styles.shadowProp]}>
         {loading ? (
           <View style={styles.mainVew}>
-            <Text>{i18n.t('loading')}</Text>
+            <Text>{t('loading')}</Text>
           </View>
         ) : testQuestionsDataa.length > 0 &&
           Object.keys(selectedItem).length > 0 ? (
@@ -434,7 +437,7 @@ const PreAssessment = ({ route, navigation }) => {
             </View>
             {spinner ? (
               <View style={styles.mainVew}>
-                <Text style={{ fontSize: 13 }}>{i18n.t('loading')}</Text>
+                <Text style={{ fontSize: 13 }}>{t('loading')}</Text>
               </View>
             ) : (
               <>
@@ -519,7 +522,7 @@ const PreAssessment = ({ route, navigation }) => {
                             onPress={onPrevious}
                           >
                             <Text style={styles.buttontext}>
-                              {i18n.t('previous')}
+                              {t('previous')}
                             </Text>
                           </TouchableOpacity>
                         </View>
@@ -537,9 +540,7 @@ const PreAssessment = ({ route, navigation }) => {
                             ]}
                             onPress={onSubmitTest}
                           >
-                            <Text style={styles.buttontext}>
-                              {i18n.t('submit')}
-                            </Text>
+                            <Text style={styles.buttontext}>{t('submit')}</Text>
                           </TouchableOpacity>
                         ) : (
                           <TouchableOpacity
@@ -553,9 +554,7 @@ const PreAssessment = ({ route, navigation }) => {
                             ]}
                             onPress={onNext}
                           >
-                            <Text style={styles.buttontext}>
-                              {i18n.t('next')}
-                            </Text>
+                            <Text style={styles.buttontext}>{t('next')}</Text>
                           </TouchableOpacity>
                         )}
                       </View>
@@ -578,7 +577,7 @@ const PreAssessment = ({ route, navigation }) => {
                   style={styles.innerbuttonview}
                 >
                   <Text style={{ color: COLORS.appSecondaryColor }}>
-                    {i18n.t('goback')}
+                    {t('goback')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -586,7 +585,7 @@ const PreAssessment = ({ route, navigation }) => {
           </View>
         ) : (
           <View style={styles.mainVew}>
-            <Text style={{ fontSize: 13 }}>{i18n.t('loading')}</Text>
+            <Text style={{ fontSize: 13 }}>{t('loading')}</Text>
           </View>
         )}
       </View>
@@ -645,7 +644,7 @@ const PreAssessment = ({ route, navigation }) => {
                   }}
                 >
                   <Text style={{ color: 'white', fontSize: 15 }}>
-                    {i18n.t('cancel')}
+                    {t('cancel')}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -659,7 +658,7 @@ const PreAssessment = ({ route, navigation }) => {
                   }}
                 >
                   <Text style={{ color: 'white', fontSize: 15 }}>
-                    {i18n.t('ok')}
+                    {t('ok')}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -690,7 +689,7 @@ const PreAssessment = ({ route, navigation }) => {
                 marginTop: 10,
               }}
             >
-              {timeUp ? i18n.t('timeauto') : i18n.t('areyousuresubmit')}
+              {timeUp ? t('timeauto') : t('areyousuresubmit')}
             </Text>
             <View
               style={{
@@ -709,7 +708,7 @@ const PreAssessment = ({ route, navigation }) => {
                   }}
                 >
                   <Text style={{ color: 'white', fontSize: 14 }}>
-                    {i18n.t('cancel')}
+                    {t('cancel')}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -723,7 +722,7 @@ const PreAssessment = ({ route, navigation }) => {
                   }}
                 >
                   <Text style={{ color: 'white', fontSize: 14 }}>
-                    {i18n.t('submit')}
+                    {t('submit')}
                   </Text>
                 </View>
               </TouchableOpacity>

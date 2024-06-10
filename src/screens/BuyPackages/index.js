@@ -34,10 +34,12 @@ import {
   paymentapi,
   razorapyapi,
 } from '../../api/validatePackages';
+import { useTranslation } from 'react-i18next';
+
 import { selectValidatePackage } from '../../store/student/validatePackages/selector';
 import styles from './styles';
 import { setgetassesmentsdata } from '../../store/student/myCourses/slice';
-import i18n from '../../i18n';
+import i18n from '../../i18n/index1';
 const BuyPackages = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectUser);
@@ -48,6 +50,8 @@ const BuyPackages = ({ route, navigation }) => {
     razorpaydata,
     paymentapidata,
   } = useSelector(selectValidatePackage);
+  const { t } = useTranslation(); //i18n instance
+
   const [subjects, setSubjects] = useState([]);
   const [setPackage, setsetPackage] = useState({});
   const [total, settotal] = useState(0);
@@ -461,7 +465,7 @@ const BuyPackages = ({ route, navigation }) => {
                   alignItems: 'center',
                 }}
               >
-                <Text style={{ fontSize: 12 }}>{i18n.t('nodata')}</Text>
+                <Text style={{ fontSize: 12 }}>{t('nodata')}</Text>
               </View>
             )}
 
