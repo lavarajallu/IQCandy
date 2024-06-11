@@ -194,10 +194,10 @@ const DrawerNavigation = () => {
               }}
             >
               <Image
-                source={require('../../assets/images/editicon.png')}
+                source={require('../../assets/images/dots.png')}
                 style={{
-                  width: 10,
-                  height: 10,
+                  width: 15,
+                  height: 15,
                   tintColor: COLORS.appSecondaryColor,
                 }}
               />

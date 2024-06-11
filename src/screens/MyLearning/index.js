@@ -35,7 +35,7 @@ const MyLearning = () => {
       dispatch,
       userId: user?.userInfo?.userId,
     });
-  });
+  }, []);
   useEffect(() => {}, [progressTopics]);
 
   const gotoLearningType = (item) => {

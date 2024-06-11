@@ -43,7 +43,7 @@ const TopicsInProgress = (props) => {
         userId: user?.userInfo?.userId,
       });
     }
-  });
+  }, [user]);
   useEffect(() => {}, [progressTopics]);
   const gotoChaptersPage = (item) => {
     setSelectedItem(item);
