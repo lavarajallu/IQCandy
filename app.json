@@ -57,7 +57,8 @@
         "@config-plugins/react-native-blob-util",
         "@config-plugins/react-native-pdf"
       ],
-      "expo-font"
+      "expo-font",
+      "expo-localization"
     ],
     "owner": "smartgen"
   }

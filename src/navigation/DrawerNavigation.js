@@ -184,22 +184,19 @@ const DrawerNavigation = () => {
               style={{
                 marginRight: 10,
                 backgroundColor: 'white',
-                width: 20,
-                height: 20,
+                width: 24,
+                height: 24,
                 borderWidth: 1,
                 borderColor: 'white',
-                borderRadius: 20 / 2,
+                borderRadius: 12,
                 justifyContent: 'center',
                 alignItems: 'center',
               }}
             >
-              <Image
-                source={require('../../assets/images/dots.png')}
-                style={{
-                  width: 15,
-                  height: 15,
-                  tintColor: COLORS.appSecondaryColor,
-                }}
+              <IonIcon
+                name='globe-outline'
+                size={24}
+                color={COLORS.appSecondaryColor}
               />
             </TouchableOpacity>
           ),
