@@ -8,13 +8,14 @@ import {
   View,
   Dimensions,
 } from 'react-native';
-//import DeviceConstants from 'react-native-device-constants';
-//import FastImage from 'react-native-fast-image';
+import { useTranslation } from 'react-i18next';
+
 import Video from 'react-native-video';
 import * as ScreenOrientation from 'expo-screen-orientation';
 //import Orientation from 'react-native-orientation-locker';
 //import { imageUrl } from '../../constants';
 import styles from './styles';
+import i18n from '../../../i18n/index1';
 // import AWS from 'aws-sdk/dist/aws-sdk-react-native';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
@@ -33,6 +34,7 @@ const NormalVideoViewComponent = (props) => {
   const [pausedtime, setPausedTime] = useState(null);
 
   const [currentTime, setCurrentTime] = useState(0);
+  const { t } = useTranslation(); //i18n instance
 
   const [duration, setDuration] = useState(0);
   const [data, setData] = useState(null);
@@ -159,6 +161,7 @@ const NormalVideoViewComponent = (props) => {
     setCurrentTime(parseInt(data?.currentTime));
     const elapsed_sec = parseInt(data?.currentTime);
     let result = newarr?.filter((o1) => parseInt(o1) === elapsed_sec);
+
     if (elapsed_sec === result[0]) {
       var newdata = questionsarray.filter(
         (o1) => parseInt(o1.timeInSec) === result[0]
@@ -269,7 +272,7 @@ const NormalVideoViewComponent = (props) => {
   //   (fullimg = 30), (playicon = 25), (subfont = 18), (progrsheight = 40);
   // }
   return loading ? (
-    <Text>Loading...</Text>
+    <Text>{t('loading')}</Text>
   ) : (
     <View style={styles.mainView}>
       <View
@@ -293,6 +296,7 @@ const NormalVideoViewComponent = (props) => {
               }} // Can be a URL or a local file.
               ref={playerRef}
               paused={isPlaying}
+              progressUpdateInterval={900}
               //controls={true}
               // fullscreen={true}                          // Store referenc              // Callback when video cannot be loaded
               style={{
@@ -354,9 +358,9 @@ const NormalVideoViewComponent = (props) => {
                   }}
                 />
                 <View style={{ flex: 0.65 }}>
-                  {/* <View style={[styles.subright, { marginLeft: 22 }]}>
+                  <View style={[styles.subright, { marginLeft: 22 }]}>
                     {timesarray}
-                  </View> */}
+                  </View>
                 </View>
                 <View
                   style={{

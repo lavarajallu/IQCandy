@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
+import { useTranslation } from 'react-i18next';
 
 import {
-  Alert,
-  BackHandler,
   StyleSheet,
   Dimensions,
   FlatList,
@@ -27,27 +26,54 @@ import { getschedulefiltered } from '../api/myCalender';
 import { COLORS } from '../constants/colors';
 import { getTopicDetails, getChapterDetails } from '../api/search';
 import { selectSearch } from '../store/student/search/selector';
+import i18n from '../i18n/index1';
 
 const CalendarPage = ({ route, navigation }) => {
   const { user } = useSelector(selectUser);
   const dispatch = useDispatch();
   const { scheduledata } = useSelector(selectmyCalender);
   const { topicDetails, chapterDetails } = useSelector(selectSearch);
+  const { t } = useTranslation(); //i18n instance
 
-  const [items, setItems] = useState({
-    '2023-12-01': [{ name: 'Event 1' }],
-    '2023-12-02': [{ name: 'Event 2A' }, { name: 'Event 2B' }],
-    // Add more data as needed
-  });
   const [visiblemonths, setvisiblemonths] = useState([]);
   const [isspinner, setisspinner] = useState(false);
   const [showmodal, setshowmodal] = useState(false);
   const [evemnsdata, setevemnsdata] = useState([]);
   const [markeddata, setmarkeddata] = useState([]);
-  const [neweventsdata, setneweventsdata] = useState([]);
+  const [newEventsData, setNewEventsData] = useState([]);
   const [newmodal, setnewmodal] = useState(false);
   const [eventtapped, seteventtapped] = useState(null);
   const [selectedItem, setSelectedItem] = useState({});
+
+  useEffect(() => {
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth();
+    let year = date.getFullYear();
+
+    // This arrangement can be altered based on how we want the date's format to appear.
+    let currentDate = `${year}-${month}-${day}`;
+    // 3-6-2024
+    var monthsarraya = [];
+    var obj1 = {
+      dateString: currentDate,
+      day: day,
+      month: month,
+      timestamp: 1717372800000,
+      year: year,
+    };
+    var obj2 = {
+      dateString: currentDate,
+      day: day,
+      month: month + 1,
+      timestamp: 1717372800000,
+      year: year,
+    };
+    monthsarraya.push(obj1);
+    monthsarraya.push(obj2);
+
+    getevents(monthsarraya);
+  }, []);
 
   const getmonts = (months) => {
     setvisiblemonths(months);
@@ -77,16 +103,12 @@ const CalendarPage = ({ route, navigation }) => {
     return self.indexOf(value) === index;
   };
   useEffect(() => {
-   /// alert(JSON.stringify(scheduledata))
     if (scheduledata && scheduledata?.length > 0) {
       var newarray = [];
       scheduledata?.map((res, i) => {
         newarray.push(moment.utc(res.scheduleDate).format('YYYY-MM-DD'));
       });
       const uniqueAges = newarray?.filter(unique);
-
-      var newmarkedarray = [];
-      var newitemsarray = [];
       var newobj = {};
       var newmarkedobjarr = {};
       uniqueAges.map((res, i) => {
@@ -123,17 +145,17 @@ const CalendarPage = ({ route, navigation }) => {
   }, [scheduledata]);
   const onDayPress = (day) => {
     var result = [];
-    if (Object.keys(evemnsdata).length > 0) {
-      const keys = Object.keys(evemnsdata);
+    if (Object?.keys(evemnsdata).length > 0) {
+      const keys = Object?.keys(evemnsdata);
       keys.forEach((key, index) => {
-        if (key === day.dateString) {
+        if (key === day?.dateString) {
           result = evemnsdata[key];
         }
       });
-      setneweventsdata(result);
+      setNewEventsData(result);
       setnewmodal(true);
     } else {
-      setneweventsdata([]);
+      setNewEventsData([]);
       setnewmodal(true);
     }
   };
@@ -199,7 +221,7 @@ const CalendarPage = ({ route, navigation }) => {
             fontSize: 20,
           }}
         >
-          CANCEL
+          {t('cancel')}
         </Text>
       </TouchableOpacity>
     );
@@ -275,11 +297,13 @@ const CalendarPage = ({ route, navigation }) => {
     setSelectedItem(item);
     var subjectId = additionalitem?.subjectId;
     var chapterId = additionalitem?.chapterId;
+    var boardId = user?.userOrg?.boardId;
+    var gradeId = user?.userOrg?.gradeId;
 
     var topicId = item.scheduleTypeId;
     var url =
       'https://api.iqcandy.com/api/iqcandy' +
-      `/universities/${user?.userOrg?.universityId}/branches/${user?.userOrg?.branchId}/semesters/${user?.userOrg?.semesterId}/subjects/${subjectId}/chapters/${chapterId}`;
+      `/boards/${boardId}/grades/${gradeId}/subjects/${subjectId}/chapters/${chapterId}`;
     fetch(url, {
       method: 'GET',
       headers: {
@@ -294,7 +318,7 @@ const CalendarPage = ({ route, navigation }) => {
             var chapterDetails = json.data;
             var url =
               'https://api.iqcandy.com/api/iqcandy' +
-              `/universities/${user?.userOrg?.universityId}/branches/${user?.userOrg?.branchId}/semesters/${user?.userOrg?.semesterId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}`;
+              `/boards/${boardId}/grades/${gradeId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}`;
             fetch(url, {
               method: 'GET',
               headers: {
@@ -331,6 +355,7 @@ const CalendarPage = ({ route, navigation }) => {
 
         return false;
       });
+      gotoChaptersPage(item);
 
       return item;
     });
@@ -339,7 +364,7 @@ const CalendarPage = ({ route, navigation }) => {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         {isspinner ? (
-          <Text>Loading</Text>
+          <Text>{t('loading')}</Text>
         ) : (
           <CalendarList
             onVisibleMonthsChange={(months) => {
@@ -367,7 +392,6 @@ const CalendarPage = ({ route, navigation }) => {
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: 'red',
             }}
           >
             <View
@@ -441,7 +465,7 @@ const CalendarPage = ({ route, navigation }) => {
                     </TouchableOpacity>
                   </View>
                 ) : (
-                  <Text>NoData</Text>
+                  <Text>{t('nodata')}</Text>
                 )}
               </View>
             </View>
@@ -469,16 +493,16 @@ const CalendarPage = ({ route, navigation }) => {
                 textAlign: 'center',
               }}
             >
-              Scheduled Topics
+              {t('scheduletopics')}
             </Text>
 
-            {neweventsdata.length > 0 ? (
+            {newEventsData?.length > 0 ? (
               <>
                 <FlatList
                   style={{ marginBottom: 30 }}
                   keyExtractor={(item) => item.additionalInfo.scheduleId}
                   ListFooterComponent={renderfootor}
-                  data={neweventsdata}
+                  data={newEventsData}
                   renderItem={newrenderitem}
                 />
               </>
@@ -492,7 +516,7 @@ const CalendarPage = ({ route, navigation }) => {
                       fontSize: 18,
                     }}
                   >
-                    No Events
+                    {t('noevents')}
                   </Text>
                 </View>
                 <TouchableOpacity
@@ -514,7 +538,7 @@ const CalendarPage = ({ route, navigation }) => {
                       fontSize: 20,
                     }}
                   >
-                    CANCEL
+                    {t('cancel')}
                   </Text>
                 </TouchableOpacity>
               </>

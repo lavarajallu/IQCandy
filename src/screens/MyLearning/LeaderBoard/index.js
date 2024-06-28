@@ -28,12 +28,15 @@ import {
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
 import { selectUser } from '../../../store/authManagement/selector';
 import RuleBookModal from '../../../components/RuleBookModal';
+import i18n from '../../../i18n/index1';
+import { useTranslation } from 'react-i18next';
 
 const LeaderBoard = ({ navigation }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectUser);
   const [ruleVisible, setRuleVisible] = useState(false);
   const { leaderBoardData, rulBookCriteria } = useSelector(selectMyLearning);
+  const { t } = useTranslation(); //i18n instance
 
   useEffect(() => {
     if (user) {
@@ -65,7 +68,7 @@ const LeaderBoard = ({ navigation }) => {
       <Header
         backAction={backAction}
         onRuleBook={() => onRuleBook()}
-        headerTitle={'Leader Board'}
+        headerTitle={t('leaderboard')}
         rightIcon={true}
       />
       {leaderBoardData?.leaderBoard?.length > 0 ? (
@@ -162,7 +165,7 @@ const LeaderBoard = ({ navigation }) => {
         </>
       ) : (
         <View style={[styles.loadingView, { backgroundColor: 'white' }]}>
-          <Text>No Data</Text>
+          <Text>{t('nodata')}</Text>
         </View>
       )}
       {rulBookCriteria ? (

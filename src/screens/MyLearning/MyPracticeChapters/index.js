@@ -18,16 +18,20 @@ import { COLORS } from '../../../constants/colors';
 import Header from '../../../components/Header';
 import styles from './styles';
 import Modal from 'react-native-modal';
+import { useTranslation } from 'react-i18next';
 
 import { getValidaPackages } from '../../../api/validatePackages';
 import { selectValidatePackage } from '../../../store/student/validatePackages/selector';
 import { getPracticeChapters } from '../../../api/myLearning';
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
 import { selectUser } from '../../../store/authManagement/selector';
+import i18n from '../../../i18n/index1';
 
 const MyPracticeChapters = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const [chaptersData, setChaptersData] = useState([]);
+  const { t } = useTranslation(); //i18n instance
+
   const [loadingData, setLoadingData] = useState(true);
   const [newchapters, setnewChapters] = useState([]);
   const [validatepackage, setvalidatePackage] = useState({});
@@ -116,8 +120,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
   const backAction = () => {
     goBack(navigation);
   };
-  const onEventPress = (data) => {
-  };
+  const onEventPress = (data) => {};
   const onItem = (item, index, type, newindex) => {
     if (index === 1) {
       if (item.testType === 'subject' || item.testType === 'Subject') {
@@ -225,9 +228,29 @@ const MyPracticeChapters = ({ route, navigation }) => {
           }
         }
       } else {
-        
-          if (item.testType === 'subject' || item.testType === 'Subject') {
-            if (newindex > 0) {
+        if (item.testType === 'subject' || item.testType === 'Subject') {
+          if (newindex > 0) {
+            if (
+              newchapters?.attempts
+                ?.map((pta) => pta.chapterId)
+                .includes(item.chapterId)
+            ) {
+              setSelectedItem(item);
+              setNewModal(true);
+            } else {
+              navigation.navigate('PracticeAssesment', {
+                data: item,
+                subjectData: subjectItem,
+                type: 'Subject',
+                attempttime: 1,
+              });
+            }
+          } else {
+            alert('Please complete before chapter first');
+          }
+        } else {
+          if (newindex > 0) {
+            if (item.testType === 'chapter' || item.testType === 'Chapter') {
               if (
                 newchapters?.attempts
                   ?.map((pta) => pta.chapterId)
@@ -239,44 +262,22 @@ const MyPracticeChapters = ({ route, navigation }) => {
                 navigation.navigate('PracticeAssesment', {
                   data: item,
                   subjectData: subjectItem,
-                  type: 'Subject',
-                  attempttime: 1,
-                });
-              }
-            } else {
-              alert('Please complete before chapter first');
-            }
-          } else {
-            if (newindex > 0) {
-              if (item.testType === 'chapter' || item.testType === 'Chapter') {
-                if (
-                  newchapters?.attempts
-                    ?.map((pta) => pta.chapterId)
-                    .includes(item.chapterId)
-                ) {
-                  setSelectedItem(item);
-                  setNewModal(true);
-                } else {
-                  navigation.navigate('PracticeAssesment', {
-                    data: item,
-                    subjectData: subjectItem,
-                    type: 'Chapter',
-                    attempttime: 1,
-                  });
-                }
-              } else {
-                navigation.navigate('PracticeAssesment', {
-                  data: item,
-                  subjectData: subjectItem,
                   type: 'Chapter',
                   attempttime: 1,
                 });
               }
             } else {
-              alert('Please complete before chapter first');
+              navigation.navigate('PracticeAssesment', {
+                data: item,
+                subjectData: subjectItem,
+                type: 'Chapter',
+                attempttime: 1,
+              });
             }
+          } else {
+            alert('Please complete before chapter first');
           }
-       
+        }
       }
     }
   };
@@ -553,7 +554,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
         <View style={styles.mainview}>
           {loadingData ? (
             <View>
-              <Text style={{ textAlign: 'center' }}>Loading...</Text>
+              <Text style={{ textAlign: 'center' }}>{t('loading')}</Text>
             </View>
           ) : (
             <View style={styles.mainView}>
@@ -580,7 +581,9 @@ const MyPracticeChapters = ({ route, navigation }) => {
                   borderTopRightRadius: 15,
                 }}
               >
-                <Text style={{ marginLeft: 10, fontSize: 20 }}>Go With..</Text>
+                <Text style={{ marginLeft: 10, fontSize: 20 }}>
+                  {t('gowith')}
+                </Text>
                 <TouchableOpacity
                   onPress={onReview}
                   style={{
@@ -594,7 +597,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
                     style={{ width: 20, height: 20 }}
                   />
                   <Text style={{ marginLeft: 15, fontSize: 13 }}>
-                    Review Previous Test
+                    {t('reviewprevioustest')}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -610,7 +613,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
                     style={{ width: 20, height: 20 }}
                   />
                   <Text style={{ marginLeft: 15, fontSize: 13 }}>
-                    Start New Test
+                    {t('startnewtest')}
                   </Text>
                 </TouchableOpacity>
               </View>

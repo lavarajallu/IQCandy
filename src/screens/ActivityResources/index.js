@@ -133,7 +133,7 @@ const ActivityResources = ({ route, navigation }) => {
         topicId: topicItem?.topicId,
       });
     }
-  }, [route]);
+  }, [user]);
   useEffect(() => {
     if (recommendedtopics && recommendedtopics.length > 0) {
       const filteredRecommendedTopics =

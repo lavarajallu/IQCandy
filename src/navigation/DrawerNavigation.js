@@ -16,6 +16,7 @@ import { selectUser } from '../store/authManagement/selector';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import i18n from '../i18n/index1';
 
 import { COLORS } from '../constants/colors';
 import BottomTabNavigation from './BottomTabNavigation';
@@ -24,26 +25,30 @@ import ReferEarn from '../screens/ReferEarn';
 import ContactUs from '../screens/ContactUs';
 import ProfilePage from '../screens/ProfilePage';
 import ChangePassword from '../screens/ChangePassword';
+import Settings from '../screens/Settings';
 import { clearUser } from '../store/authManagement/slice';
+import { useTranslation } from 'react-i18next';
 
 // Create a Drawer Navigator
 const Drawer = createDrawerNavigator();
 
 const CustomDrawerContent = (props) => {
+  const { t } = useTranslation(); //i18n instance
+
   const dispatch = useDispatch();
   const { user } = useSelector(selectUser);
 
   const handleLogout = () => {
     Alert.alert(
-      'Logout',
-      'Are you sure you want to logout?',
+      t('logout'),
+      t('logoutmessage'),
       [
         {
-          text: 'Cancel',
+          text: t('cancel'),
           style: 'cancel',
         },
         {
-          text: 'OK',
+          text: t('ok'),
           onPress: async () => {
             await AsyncStorage.removeItem('userToken');
             await AsyncStorage.removeItem('userInfo');
@@ -129,7 +134,7 @@ const CustomDrawerContent = (props) => {
             color: COLORS.black,
           }}
         >
-          Log out
+          {t('logout')}
         </Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -137,6 +142,8 @@ const CustomDrawerContent = (props) => {
 };
 
 const DrawerNavigation = () => {
+  const { t } = useTranslation(); //i18n instance
+
   return (
     <Drawer.Navigator
       drawerContent={(props) => <CustomDrawerContent {...props} />}
@@ -157,7 +164,7 @@ const DrawerNavigation = () => {
             textAlign: 'left',
             fontSize: 14,
           },
-          drawerLabel: 'Home',
+          drawerLabel: t('home'),
           title: 'IQ Candy',
           headerTitleAlign: 'center',
           headerTintColor: COLORS.whiteColor,
@@ -171,6 +178,28 @@ const DrawerNavigation = () => {
             fontSize: 16,
           },
           headerShadowVisible: false,
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Settings')}
+              style={{
+                marginRight: 10,
+                backgroundColor: 'white',
+                width: 24,
+                height: 24,
+                borderWidth: 1,
+                borderColor: 'white',
+                borderRadius: 12,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <IonIcon
+                name='globe-outline'
+                size={24}
+                color={COLORS.appSecondaryColor}
+              />
+            </TouchableOpacity>
+          ),
           drawerIcon: () => (
             <IonIcon name='home-outline' size={24} color={COLORS.black} />
           ),
@@ -185,8 +214,8 @@ const DrawerNavigation = () => {
             textAlign: 'left',
             fontSize: 14,
           },
-          drawerLabel: 'My Profile',
-          title: 'My Profile',
+          drawerLabel: t('profile'),
+          title: t('profile'),
           headerTintColor: COLORS.whiteColor,
           headerStyle: {
             backgroundColor: COLORS.appSecondaryColor,
@@ -269,8 +298,8 @@ const DrawerNavigation = () => {
             textAlign: 'left',
             fontSize: 14,
           },
-          drawerLabel: 'Change Password',
-          title: 'Change Password',
+          drawerLabel: t('changepassword'),
+          title: t('changepassword'),
           headerTintColor: COLORS.whiteColor,
           headerStyle: {
             backgroundColor: COLORS.appSecondaryColor,
@@ -300,8 +329,8 @@ const DrawerNavigation = () => {
             textAlign: 'left',
             fontSize: 14,
           },
-          drawerLabel: 'Contact Us',
-          title: 'Contact Us',
+          drawerLabel: t('contactus'),
+          title: t('contactus'),
           headerTintColor: COLORS.whiteColor,
           headerStyle: {
             backgroundColor: COLORS.appSecondaryColor,

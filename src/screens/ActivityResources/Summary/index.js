@@ -10,6 +10,7 @@ import {
   Text,
   ScrollView,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 import { goBack } from '../../../utils/navigationUtils';
 import { COLORS } from '../../../constants/colors';
@@ -21,10 +22,13 @@ import TimeSpentCard from '../../../components/TimeSpentCard';
 import { selectUser } from '../../../store/authManagement/selector';
 import { selectMyCourses } from '../../../store/student/myCourses/selector';
 import { getsummaryreport } from '../../../api/myCourses';
+import i18n from '../../../i18n/index1';
 const Summary = ({ route, navigation }) => {
   const { questions } = textContent;
   const { user } = useSelector(selectUser);
   const { summaryData } = useSelector(selectMyCourses);
+  const { t } = useTranslation(); //i18n instance
+
   const dispatch = useDispatch();
 
   const [testResult, setTestResult] = useState({});
@@ -200,7 +204,7 @@ const Summary = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={'Summary '} />
+      <Header backAction={backAction} headerTitle={t('summary')} />
 
       <View style={[styles.container, styles.shadowProp]}>
         <ScrollView>
@@ -210,7 +214,7 @@ const Summary = ({ route, navigation }) => {
             {/* Performance Card View */}
 
             <PerformancesCard
-              cardTitle='Performance'
+              cardTitle={t('performance')}
               size={width / 1.8}
               minValue={0}
               maxValue={100}
@@ -231,7 +235,7 @@ const Summary = ({ route, navigation }) => {
             />
             {/* Attempts AnalysisCard */}
             <AttemptsAnalysisCard
-              title='Attempts Analysis'
+              title={t('attemptanalysis')}
               data1='0'
               data2='5'
               backgroundColor1={COLORS.rightInfo}
@@ -241,7 +245,10 @@ const Summary = ({ route, navigation }) => {
 
             {/*  TimeSpent Card */}
             {testResult?.questions?.length > 0 ? (
-              <TimeSpentCard cardTitle='Time Spent' testResult={testResult} />
+              <TimeSpentCard
+                cardTitle={t('timespent')}
+                testResult={testResult}
+              />
             ) : null}
 
             {/* Button Container Like Botttom Buttons Next and Previous Buttons */}
@@ -252,16 +259,8 @@ const Summary = ({ route, navigation }) => {
                 style={[styles.button, styles.nextActivityButton]}
                 onPress={handleNextActivity}
               >
-                <Text style={styles.buttonText}>Next Activity</Text>
+                <Text style={styles.buttonText}>{t('nextactivity')}</Text>
               </TouchableOpacity>
-              {/* <TouchableOpacity
-                style={[styles.button, styles.previousActivityButton]}
-                onPress={handlePreviousActivity}
-              >
-                <Text style={[styles.buttonText, styles.prevText]}>
-                  Previous Activity
-                </Text>
-              </TouchableOpacity> */}
             </View>
           ) : (
             <View style={styles.buttonContainer} />
@@ -282,7 +281,7 @@ const Summary = ({ route, navigation }) => {
               }}
             >
               <Text style={{ color: 'white', fontSize: 14 }}>
-                Review Answers
+                {t('reviewanswers')}
               </Text>
             </TouchableOpacity>
           )}

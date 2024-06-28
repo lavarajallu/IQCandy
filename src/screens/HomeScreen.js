@@ -14,6 +14,9 @@ import {
 import { useSelector } from 'react-redux';
 import { ScrollView } from 'react-native-gesture-handler';
 import MyCourses from './MyCourses';
+import i18n from '../i18n/index1';
+import { useTranslation } from 'react-i18next';
+
 import TopicsInProgress from './TopicsInProgress';
 import MyLearning from './MyLearning';
 import { selectUser } from '../store/authManagement/selector';
@@ -87,6 +90,8 @@ async function registerForPushNotificationsAsync() {
 }
 
 const HomeScreen = ({ route, navigation }) => {
+  const { t } = useTranslation(); //i18n instance
+
   const { user } = useSelector(selectUser);
   const { logos } = imagePaths;
   const [expoPushToken, setExpoPushToken] = useState('');
@@ -95,9 +100,6 @@ const HomeScreen = ({ route, navigation }) => {
   const responseListener = useRef();
 
   useEffect(() => {
-    // registerForPushNotificationsAsync().then((token) =>
-    //   setExpoPushToken(token)
-    // );
     getversion();
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
@@ -116,12 +118,12 @@ const HomeScreen = ({ route, navigation }) => {
   }, []);
   const platformValue = Platform.OS === 'ios' ? 0.32 : 0.36;
   useEffect(() => {
-    AsyncStorage.getItem('pushtoken').then(async (pushtoken) => {
-      if (pushtoken) {
-        // Dispatch an action to update the Redux state with the token
-        await sendPushNotification(pushtoken);
-      }
-    });
+    // AsyncStorage.getItem('pushtoken').then(async (pushtoken) => {
+    //   if (pushtoken) {
+    //     // Dispatch an action to update the Redux state with the token
+    //     await sendPushNotification(pushtoken);
+    //   }
+    // });
   }, []);
   const getversion = () => {
     fetch(`https://api.iqcandy.com/api/iqcandy/app-version/latest`, {
@@ -259,16 +261,16 @@ const HomeScreen = ({ route, navigation }) => {
         </View>
 
         <View style={{ flex: platformValue, marginTop: 10 }}>
-          <MyCourses navigation={navigation} />
+          <MyCourses lhTitle={t('mylibrary')} navigation={navigation} />
         </View>
 
         <View style={{ flex: platformValue, marginTop: 10 }}>
-          <MyLearning navigation={navigation} />
+          <MyLearning lhTitle={t('mylearning')} navigation={navigation} />
         </View>
         <View style={{ flex: 0.05 }}></View>
         <View style={{ flex: platformValue, padding: 0, marginTop: 20 }}>
           <TopicsInProgress
-            lhTitle={'My Topics In Progress'}
+            lhTitle={t('mytopicsinprogress')}
             navigation={navigation}
           />
         </View>

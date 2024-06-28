@@ -1,6 +1,7 @@
 //PreAssessment
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import {
   View,
@@ -24,8 +25,11 @@ import styles from './styles';
 import { selectUser } from '../../../store/authManagement/selector';
 import { selectMyCourses } from '../../../store/student/myCourses/selector';
 import { getreviewsolutions } from '../../../api/myCourses';
+import i18n from '../../../i18n/index1';
 const ReviewAnswers = ({ route, navigation }) => {
   const [selectedItem, setSelectedItem] = useState(null);
+  const { t } = useTranslation(); //i18n instance
+
   const [isvisible, setisvisible] = useState(false);
   const [finalarray, setfinalarray] = useState([]);
   const [spinner, setspinnser] = useState(false);
@@ -89,7 +93,6 @@ const ReviewAnswers = ({ route, navigation }) => {
       setSelectedItem(reviewsolquestions[0]);
       setquestionno(0);
       setspinnser(false);
-      
     }
   }, [reviewsolquestions]);
   const backAction = () => {
@@ -122,7 +125,6 @@ const ReviewAnswers = ({ route, navigation }) => {
       ];
       textstyle = [styles.circletext, { fontSize: subfont }];
     } else {
-      
       viewstyle = [
         styles.borderfilled,
         { height: itemheight, width: itemheight, borderRadius: itemheight / 2 },
@@ -150,14 +152,15 @@ const ReviewAnswers = ({ route, navigation }) => {
     });
   };
   const returnBoxColor = (option) => {
-  
-
-    const correctAnswer = selectedItem?.solution.split(',')
-    if (selectedItem.solution == option.key || correctAnswer.includes(option.key)) {
-      return 'green'
+    const correctAnswer = selectedItem?.solution.split(',');
+    if (
+      selectedItem.solution == option.key ||
+      correctAnswer.includes(option.key)
+    ) {
+      return 'green';
     } else if (selectedItem.userAnswer == option.key) {
-      return 'red'
-      return ''
+      return 'red';
+      return '';
     }
   };
   const rednerAnswerItem = ({ item, index }) => {
@@ -266,7 +269,7 @@ const ReviewAnswers = ({ route, navigation }) => {
       setloading(true);
       setquestionno((questionno) => {
         setTimeout(() => {
-          var nextItem = questionsarray[questionno+1];
+          var nextItem = questionsarray[questionno + 1];
           setloading(false);
           setSelectedItem(nextItem);
         }, 1500);
@@ -287,7 +290,7 @@ const ReviewAnswers = ({ route, navigation }) => {
       setloading(true);
       setquestionno((questionno) => {
         setTimeout(() => {
-          var nextItem = questionsarray[questionno-1];
+          var nextItem = questionsarray[questionno - 1];
           setloading(false);
           setSelectedItem(nextItem);
         }, 1500);
@@ -304,7 +307,7 @@ const ReviewAnswers = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={'Review Answers'} />
+      <Header backAction={backAction} headerTitle={t('reviewanswers')} />
       <View style={{ flex: 1 }}>
         <View
           style={{
@@ -340,7 +343,7 @@ const ReviewAnswers = ({ route, navigation }) => {
                     alignItems: 'center',
                   }}
                 >
-                  <Text style={{ fontSize: heafont }}>Loading....</Text>
+                  <Text style={{ fontSize: heafont }}>{t('loading')}</Text>
                 </View>
               ) : (
                 <View style={styles.questionsview}>
@@ -504,7 +507,7 @@ const ReviewAnswers = ({ route, navigation }) => {
                 alignItems: 'center',
               }}
             >
-              <Text style={{ fontSize: 13 }}>Loading......</Text>
+              <Text style={{ fontSize: 13 }}>{t('loading')}</Text>
             </View>
           )}
         </View>
@@ -549,7 +552,7 @@ const ReviewAnswers = ({ route, navigation }) => {
                       color: COLORS.appSecondaryColor,
                     }}
                   >
-                    Previous
+                    {t('previous')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -581,7 +584,7 @@ const ReviewAnswers = ({ route, navigation }) => {
                       color: COLORS.appSecondaryColor,
                     }}
                   >
-                    Done
+                    {t('done')}
                   </Text>
                 </TouchableOpacity>
               ) : (
@@ -604,7 +607,7 @@ const ReviewAnswers = ({ route, navigation }) => {
                       color: COLORS.appSecondaryColor,
                     }}
                   >
-                    Next
+                    {t('next')}
                   </Text>
                 </TouchableOpacity>
               )}

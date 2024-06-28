@@ -12,6 +12,7 @@ import {
   Platform,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
+import { useTranslation } from 'react-i18next';
 
 import VideoQuestionModal from './VideoQuestionModal';
 import Modal from 'react-native-modal';
@@ -28,6 +29,7 @@ import {
   getVideoquestionsvideopro,
 } from '../../../../api/myCourses';
 import moment from 'moment';
+import i18n from '../../../../i18n/index1';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
 const YtVideoActivityPro = ({ route, navigation }) => {
@@ -50,6 +52,7 @@ const YtVideoActivityPro = ({ route, navigation }) => {
   const [activityStartTime, setactivityStartTime] = useState(null);
   const [showfullscreen, setfullscreen] = useState(false);
   const [videosdata, setvideoquestionsdata] = useState({});
+  const { t } = useTranslation(); //i18n instance
 
   const backAction = () => {
     //updateAnalytics();
@@ -103,17 +106,16 @@ const YtVideoActivityPro = ({ route, navigation }) => {
       id: route.params.data.id,
       activityInfoId: route.params.data.activityInfoId,
     });
-    // getVideoquestionsvideopro({
-    //   dispatch,
-    //   userId: user?.userInfo?.userId,
-    //   activityId: route.params.data.id,
-    // });
+    getVideoquestionsvideopro({
+      dispatch,
+      userId: user?.userInfo?.userId,
+      activityId: route.params.data.id,
+    });
     const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
     setactivityStartTime(activityStartTime);
   }, [user]);
   useEffect(() => {
     if (Videoquestionsvideopro && Videoquestionsvideopro.length > 0) {
-      console.log('klsadjklsjkljsd', Videoquestionsvideopro);
       var newdata = [...Videoquestionsvideopro];
       newdata.sort(function (a, b) {
         let dateA = parseInt(a.timeInSec);
@@ -370,7 +372,7 @@ const YtVideoActivityPro = ({ route, navigation }) => {
               alignItems: 'center',
             }}
           >
-            <Text style={{ fontSize: 15 }}>Loading...</Text>
+            <Text style={{ fontSize: 15 }}>{t('loading')}</Text>
           </View>
         )}
       </View>
@@ -402,7 +404,7 @@ const YtVideoActivityPro = ({ route, navigation }) => {
                 color: COLORS.appSecondaryColor,
               }}
             >
-              Previous Activity
+              {t('previousactivity')}
             </Text>
           </TouchableOpacity>
 
@@ -425,7 +427,7 @@ const YtVideoActivityPro = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                Next Activity
+                {t('nextactivity')}
               </Text>
             ) : (
               <Text
@@ -435,13 +437,13 @@ const YtVideoActivityPro = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                Done
+                {t('done')}
               </Text>
             )}
           </TouchableOpacity>
         </View>
       )}
-      {/* <Modal isVisible={newmodal}>
+      <Modal isVisible={newmodal}>
         <View
           style={{
             flex: 1,
@@ -458,7 +460,7 @@ const YtVideoActivityPro = ({ route, navigation }) => {
             userDetails={user}
           />
         </View>
-      </Modal> */}
+      </Modal>
     </SafeAreaView>
   );
 };

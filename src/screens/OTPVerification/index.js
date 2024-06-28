@@ -16,11 +16,14 @@ import { generateOtp, verifyOtp } from '../../api/auth';
 import styles from './styles';
 import { selectUser } from '../../store/authManagement/selector';
 import { COLORS } from '../../constants/colors';
+import i18n from '../../i18n/index1';
+import { useTranslation } from 'react-i18next';
 
 const OTPVerification = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { userId } = route.params;
   const { user, reSendOtpTime } = useSelector(selectUser);
+  const { t } = useTranslation(); //i18n instance
 
   const { authentiCation } = imagePaths;
   const [otp, setOtp] = useState({
@@ -32,7 +35,6 @@ const OTPVerification = ({ route, navigation }) => {
 
   //Inside the component where you handle login logic
   const nextOtp = async () => {
-    console.log('userId', userId);
     const payload = {
       otp: otp,
     };
@@ -108,8 +110,8 @@ const OTPVerification = ({ route, navigation }) => {
               )}
             </Text>
             <ValidatedTextInput
-              label='OTP'
-              placeholder='Enter OTP'
+              label={t('otp')}
+              placeholder={t('enterotp')}
               value={otp}
               onChangeText={setOtp}
               validation={{
@@ -124,14 +126,14 @@ const OTPVerification = ({ route, navigation }) => {
             style={[styles.buttonContainer, { justifyContent: 'space-evenly' }]}
           >
             <Button
-              title={'NEXT'}
+              title={t('next')}
               style={styles.button}
               textStyle={styles.buttonText}
               onPress={() => nextOtp()} // Call the function to handle login
             />
             {seconds === 0 && (
               <Button
-                title={'RESEND OTP'}
+                title={t('resendotp')}
                 colors={[COLORS.secondary, COLORS.dark]}
                 style={styles.button}
                 textStyle={styles.buttonText}

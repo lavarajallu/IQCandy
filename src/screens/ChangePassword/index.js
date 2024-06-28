@@ -7,11 +7,15 @@ import { validatePassword } from '../../constants/helpers';
 import { changePassword } from '../../api/auth';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../../store/authManagement/selector';
+import i18n from '../../i18n/index1';
+import { useTranslation } from 'react-i18next';
 
 const { width, height } = Dimensions.get('window');
 
 const ChangePassword = ({ navigation }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation(); //i18n instance
+
   const { user, changePassworddata } = useSelector(selectUser);
   const [oldPassword, setOldPassword] = useState('');
   const [password, setPassword] = useState('');
@@ -124,8 +128,8 @@ const ChangePassword = ({ navigation }) => {
       </View>
       <View style={styles.inputContainer}>
         <ValidatedTextInput
-          label='Old Password'
-          placeholder='Enter old password'
+          label={t('oldpassword')}
+          placeholder={t('oldpassword')}
           secureTextEntry
           value={oldPassword}
           onChangeText={setOldPassword}
@@ -134,8 +138,8 @@ const ChangePassword = ({ navigation }) => {
         />
 
         <ValidatedTextInput
-          label='New Password'
-          placeholder='Enter new password'
+          label={t('newpassword')}
+          placeholder={t('newpassword')}
           secureTextEntry
           value={password}
           keyboardType={'default'}
@@ -146,8 +150,8 @@ const ChangePassword = ({ navigation }) => {
         />
 
         <ValidatedTextInput
-          label='Confirm Password'
-          placeholder='Confirm password'
+          label={t('confirmpassword')}
+          placeholder={t('confirmpassword')}
           secureTextEntry
           value={confirmPassword}
           keyboardType={'default'}
@@ -160,7 +164,7 @@ const ChangePassword = ({ navigation }) => {
 
       <View style={styles.buttonContainer}>
         <Button
-          title={'Update Password'}
+          title={t('updatepassword')}
           style={styles.button}
           textStyle={styles.buttonText}
           onPress={() => handleChangePassword()}

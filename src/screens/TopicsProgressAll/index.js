@@ -11,6 +11,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 //import Pdf from 'react-native-pdf';
+import { useTranslation } from 'react-i18next';
 
 import { goBack } from '../../utils/navigationUtils';
 import { COLORS } from '../../constants/colors';
@@ -21,6 +22,7 @@ import ItemSeparator from '../../components/ItemSeparator';
 import CoursesCard from '../../components/CoursesCard';
 import { getChapterDetails } from '../../api/search';
 import { selectSearch } from '../../store/student/search/selector';
+import i18n from '../../i18n/index1';
 
 const TopicsProgressAll = ({ route, navigation }) => {
   const { progressTopics } = useSelector(selectMyTopicsProgress);
@@ -28,6 +30,7 @@ const TopicsProgressAll = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState({});
   const { chapterDetails } = useSelector(selectSearch);
+  const { t } = useTranslation(); //i18n instance
 
   const backAction = () => {
     goBack(navigation);
@@ -76,25 +79,16 @@ const TopicsProgressAll = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={'Topics In Progress'} />
+      <Header backAction={backAction} headerTitle={t('mytopicsinprogress')} />
       <View style={[styles.container, styles.shadowProp]}>
-      <FlatList
-         data={progressTopics}
+        <FlatList
+          data={progressTopics}
           keyExtractor={(item) => item.idx}
           horizontal={false}
           showsHorizontalScrollIndicator={false}
           renderItem={renderItem}
           numColumns={2} // Set the number of columns to 2
-        //   ItemSeparatorComponent={ItemSeparator}
         />
-        {/* <FlatList
-          data={progressTopics}
-          keyExtractor={(item) => item.idx}
-          //horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          renderItem={renderItem}
-          ItemSeparatorComponent={ItemSeparator}
-        /> */}
       </View>
     </SafeAreaView>
   );

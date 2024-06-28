@@ -18,6 +18,8 @@ import YoutubePlayer from 'react-native-youtube-iframe';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
 import styles from './styles';
+import { useTranslation } from 'react-i18next';
+
 var initial = 0;
 let interval;
 // import AWS from 'aws-sdk/dist/aws-sdk-react-native';
@@ -32,6 +34,7 @@ const NormalVideoViewComponent = (props) => {
   let [youtubedata, setyoutubedata] = useState(props.data);
   // let [visisted, setVisited] = useState(false);
   let [pausedtime, setPausedTime] = useState(null);
+  const { t } = useTranslation(); //i18n instance
 
   let [currentTime, setCurrentTime] = useState(0);
 
@@ -134,7 +137,7 @@ const NormalVideoViewComponent = (props) => {
           //   })
         }
       }
-    }, 500);
+    }, 1000);
   };
   handleReady = (data) => {
     this._youTubeRef?.getDuration().then((getDuration) => {
@@ -341,7 +344,7 @@ const NormalVideoViewComponent = (props) => {
   // }
   return loading ? (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Loading...</Text>
+      <Text>{t('loading')}</Text>
     </View>
   ) : (
     <View style={styles.mainView}>
@@ -387,7 +390,7 @@ const NormalVideoViewComponent = (props) => {
                 }}
               />
             )}
-            {/* <TouchableOpacity
+            <TouchableOpacity
               onPress={onfullscreen}
               style={{
                 top: fullscreen ? 50 : 50,
@@ -417,7 +420,7 @@ const NormalVideoViewComponent = (props) => {
                   }}
                 />
               )}
-            </TouchableOpacity> */}
+            </TouchableOpacity>
 
             <>
               <View
@@ -439,9 +442,9 @@ const NormalVideoViewComponent = (props) => {
                     }}
                   />
                   <View style={{ flex: 0.65 }}>
-                    {/* <View style={[styles.subright, { marginLeft: 5 }]}>
+                    <View style={[styles.subright, { marginLeft: 5 }]}>
                       {timesarray}
-                    </View> */}
+                    </View>
                   </View>
                   <View
                     style={{

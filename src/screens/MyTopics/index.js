@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../store/authManagement/selector';
 import { selectMyCourses } from '../../store/student/myCourses/selector';
 import { getTopics } from '../../api/myCourses';
+import i18n from '../../i18n/index1';
+import { useTranslation } from 'react-i18next';
 
 const MyTopics = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -15,6 +17,7 @@ const MyTopics = ({ route, navigation }) => {
     PreviousQuestionPaperByCount,
     GatePreviousQuestionPaperByCount,
   } = useSelector(selectMyCourses);
+  const { t } = useTranslation(); //i18n instance
 
   useEffect(() => {
     if (user) {
@@ -60,7 +63,7 @@ const MyTopics = ({ route, navigation }) => {
           }
         }}
         imageSource={{ uri: chapterItem?.image }}
-        labels={[topics?.items?.length + ' Topics']}
+        labels={[topics?.items?.length + ' ' + t('topics')]}
       />
 
       <TopicsList

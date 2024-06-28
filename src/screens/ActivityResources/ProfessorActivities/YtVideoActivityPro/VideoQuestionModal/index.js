@@ -29,14 +29,11 @@ class VideoQuestionModal extends Component {
     };
   }
   componentDidMount() {
-    console.log(JSON.stringify(this.props.questionsArray))
     if (this.props.questionsArray) {
-      this.setState(
-        {
-          questiondata: this.props.questionsArray,
-          loading: false,
-        }
-      );
+      this.setState({
+        questiondata: this.props.questionsArray,
+        loading: false,
+      });
     }
   }
 
@@ -44,34 +41,31 @@ class VideoQuestionModal extends Component {
     var obj = {
       attemptStartedAt: this.state.startdate,
       attemptEndedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
-      userTestId:this.props.data.userTestId,
-      questionId:this.props.questionsArray.questionId,
+      userTestId: this.props.data.userTestId,
+      questionId: this.props.questionsArray.questionId,
       userAnswer: data.key,
     };
-    
 
     const token = await AsyncStorage.getItem('userToken');
     var userId = this.props.userDetails.userInfo.userId;
     var activityDimId = this.props.activitydata.activityDimId;
-    var questionId = this.props.questionsArray.questionId
+    var questionId = this.props.questionsArray.questionId;
     var assignedActivityId = this.props.activitydata.assignedActivityId;
-    var  index = data.index
-    
+    var index = data.index;
+
     if (token) {
-     
-      const url = `https://api.iqcandy.com/api/iqcandy/analytics/users/${userId}/activities/${activityDimId}/videos/test-questions/${questionId}/validate`
+      const url = `https://api.iqcandy.com/api/iqcandy/analytics/users/${userId}/activities/${activityDimId}/videos/test-questions/${questionId}/validate`;
 
       fetch(url, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          jwt:token,
+          jwt: token,
         },
         body: JSON.stringify(obj),
       })
         .then((response) => response.json())
         .then((json) => {
-
           const response = json;
           if (
             response &&
@@ -91,11 +85,10 @@ class VideoQuestionModal extends Component {
         })
         .catch((error) => console.error(error));
     }
-
   }
 
   onTryfirst() {
-    var newoptions = this.state.questiondata.options
+    var newoptions = this.state.questiondata.options;
     this.setState({
       attempt: true,
       answerobj: {},

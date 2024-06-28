@@ -28,6 +28,7 @@ import {
 } from '../../../api/myLearning';
 import { getChapters } from '../../../api/myCourses';
 import { selectMyCourses } from '../../../store/student/myCourses/selector';
+import { useTranslation } from 'react-i18next';
 
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
 import { selectUser } from '../../../store/authManagement/selector';
@@ -36,9 +37,12 @@ import { getValidaPackages } from '../../../api/validatePackages';
 import { selectValidatePackage } from '../../../store/student/validatePackages/selector';
 import { getTopicDetails } from '../../../api/search';
 import { selectSearch } from '../../../store/student/search/selector';
+import i18n from '../../../i18n/index1';
 
 const KnowledgeMap = ({ route, navigation }) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation(); //i18n instance
+
   const { user } = useSelector(selectUser);
   const { subjectsInfo, heatMapData, topicsBySubject } =
     useSelector(selectMyLearning);
@@ -60,7 +64,7 @@ const KnowledgeMap = ({ route, navigation }) => {
       const payload = {
         boardId: user.userOrg.boardId,
         gradeId: user.userOrg.gradeId,
-      //  branchId: user.userOrg.branchId,
+        //  branchId: user.userOrg.branchId,
       };
       getAssessmentSubjects({
         data: payload,
@@ -169,8 +173,8 @@ const KnowledgeMap = ({ route, navigation }) => {
     const chappayload = {
       universityId: user.userOrg.universityId,
       boardId: user.userOrg.boardId,
-      gradeId: user.userOrg.gradeId, 
-       semesterId: user.userOrg.semesterId,
+      gradeId: user.userOrg.gradeId,
+      semesterId: user.userOrg.semesterId,
       subjectId: newSubjectList[sub - 1].id,
       offset: 0,
       limit: 1000,
@@ -230,21 +234,21 @@ const KnowledgeMap = ({ route, navigation }) => {
   }, [topicDetails]);
   const gotoActivity = (item) => {
     var validpackages = validatePackage;
-   
+
     if (item.chapterId === chapters?.items?.[0]?.chapterId) {
       setonClick(true);
       navigatetopage(item);
     } else {
       setonClick(true);
       navigatetopage(item);
-    } 
+    }
   };
 
   return (
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={'Knowledge Map'} />
+      <Header backAction={backAction} headerTitle={t('knowledgemap')} />
       <View style={[styles.container, styles.shadowProp]}>
         <DropDownSearch
           placeholderText={'Select Subject'}
@@ -265,7 +269,7 @@ const KnowledgeMap = ({ route, navigation }) => {
           <Loader loading={loading} />
         ) : (
           <View>
-            <Text>No Data...</Text>
+            <Text>{t('nodata')}</Text>
           </View>
         )}
 

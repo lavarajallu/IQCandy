@@ -21,9 +21,13 @@ import { selectValidatePackage } from '../../store/student/validatePackages/sele
 import { selectSearch } from '../../store/student/search/selector';
 import { COLORS } from '../../constants/colors';
 import styles from './styles';
+import i18n from '../../i18n/index1';
+import { useTranslation } from 'react-i18next';
 
 const Search = (props) => {
   const dispatch = useDispatch();
+  const { t } = useTranslation(); //i18n instance
+
   const { user } = useSelector(selectUser);
   const [searchvalue, setSearchValue] = useState('');
   const [searchList, setSearchList] = useState([]);
@@ -61,7 +65,6 @@ const Search = (props) => {
     });
   };
   useEffect(() => {
-    
     if (searchData && searchData.length > 0) {
       setSearchList(searchData);
       setSpinner(false);
@@ -118,28 +121,29 @@ const Search = (props) => {
     }
   };
   useEffect(() => {
-    if(searchList && searchList.length > 0){
+    if (searchList && searchList.length > 0) {
       if (topicDetails && Object.keys(topicDetails).length > 0) {
         setSearchList([]);
         setSearchValue('');
-        navigation.navigate('ActivityResources', { from : 'search',
+        navigation.navigate('ActivityResources', {
+          from: 'search',
           topicItem: { ...selectedItem, ['image']: topicDetails.image },
           chapterItem: {},
         });
       }
     }
-  
   }, [topicDetails]);
   useEffect(() => {
-    if(searchList && searchList.length > 0){
-    if (chapterDetails && Object.keys(chapterDetails).length > 0) {
-      setSearchList([]);
-      setSearchValue('');
-      navigation.navigate('MyTopics', { from : 'search',
-        chapterItem: { ...selectedItem, ['image']: chapterDetails.image },
-      });
+    if (searchList && searchList.length > 0) {
+      if (chapterDetails && Object.keys(chapterDetails).length > 0) {
+        setSearchList([]);
+        setSearchValue('');
+        navigation.navigate('MyTopics', {
+          from: 'search',
+          chapterItem: { ...selectedItem, ['image']: chapterDetails.image },
+        });
+      }
     }
-  }
   }, [chapterDetails]);
   const onYes = () => {
     navigation.navigate('BuyPackages');
@@ -157,7 +161,7 @@ const Search = (props) => {
             //     ? true
             //     : false
             // }
-            placeholder={'Search for Chapters and Topics...'}
+            placeholder={t('searchplaceholder')}
             placeholderTextColor={'grey'}
             style={styles.searchtext}
             onChangeText={onChangeText}
@@ -177,21 +181,18 @@ const Search = (props) => {
           <View style={styles.spinnerview}>
             <ActivityIndicator />
           </View>
-        ) : 
-       
-          searchList?.length > 0 ? (
-            <FlatList
-              data={searchList}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.name}
-              //ItemSeparatorComponent={this.itemseperator.bind(this)}
-            />
-          ) : noData ? (
-            <View style={styles.spinnerview}>
-              <Text>No Data</Text>
-            </View>
-          ) : null
-        }
+        ) : searchList?.length > 0 ? (
+          <FlatList
+            data={searchList}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.name}
+            //ItemSeparatorComponent={this.itemseperator.bind(this)}
+          />
+        ) : noData ? (
+          <View style={styles.spinnerview}>
+            <Text>{t('nodata')}</Text>
+          </View>
+        ) : null}
       </View>
     </View>
   );
