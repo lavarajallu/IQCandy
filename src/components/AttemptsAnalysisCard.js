@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { COLORS } from '../constants/colors';
 import { SHADOW_STYLES } from '../constants/helpers';
+import { useTranslation } from 'react-i18next';
 
 const { width, height } = Dimensions.get('window');
 
@@ -14,6 +15,8 @@ const AttemptsAnalysisCard = ({
 
   testResult,
 }) => {
+  const { t } = useTranslation(); //i18n instance
+
   return (
     <View style={styles.cardContainer}>
       <Text style={styles.cardTitle}>{title}</Text>
@@ -23,14 +26,14 @@ const AttemptsAnalysisCard = ({
           backgroundColor1,
           [
             testResult?.lighteningCount
-              ? 'Lightning Fast: ' + testResult?.lighteningCount
-              : 'Lightning Fast: ' + 0,
+              ? t('lightiningfast') + ': ' + testResult?.lighteningCount
+              : t('lightiningfast') + ': ' + 0,
             testResult?.shotCount
-              ? 'What a Timing/Shot: ' + testResult?.shotCount
-              : 'What a Timing/Shot: ' + 0,
+              ? t('whatatimeshot') + ': ' + testResult?.shotCount
+              : t('whatatimeshot') + ': ' + 0,
             testResult?.extraInningCount
-              ? 'Extra Inning: ' + testResult?.extraInningCount
-              : 'Extra Inning: ' + 0,
+              ? t('extrainnings') + ': ' + testResult?.extraInningCount
+              : t('extrainnings') + ': ' + 0,
           ]
         )}
         {renderBox(

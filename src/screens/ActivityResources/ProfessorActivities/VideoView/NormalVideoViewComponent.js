@@ -8,35 +8,26 @@ import {
   View,
   Dimensions,
 } from 'react-native';
-//import DeviceConstants from 'react-native-device-constants';
-//import FastImage from 'react-native-fast-image';
+
 import Video from 'react-native-video';
 import * as ScreenOrientation from 'expo-screen-orientation';
-//import Orientation from 'react-native-orientation-locker';
-//import { imageUrl } from '../../constants';
+
 import styles from './styles';
-// import AWS from 'aws-sdk/dist/aws-sdk-react-native';
+import i18n from '../../../../i18n/index1';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
-// const credentials = new AWS.Crendentials({ accessKeyId: 'AKIAZR3HR6PZJ3FGC25V', secretAccessKey: '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'})
-// const s3 = new AWS.S3({ credentials, signatureVersion: 'v1', region: 'ap-south-1'});
-// var timesarray = [];
-
-// var initial = 0;
-
-// const windowHeigh = Dimensions.get('window').height;
+import { useTranslation } from 'react-i18next';
 const NormalVideoViewComponent = (props) => {
   const playerRef = useRef(null);
   const { questionsArray } = props;
-  // let [spinner, setSpinner] = useState(true);
   let [normaldata, setNormlaData] = useState(props.data);
-  // let [visisted, setVisited] = useState(false);
   let [pausedtime, setPausedTime] = useState(null);
 
   let [currentTime, setCurrentTime] = useState(0);
 
   let [duration, setDuration] = useState(0);
   let [data, setData] = useState(null);
+  const { t } = useTranslation(); //i18n instance
 
   let [show, setShow] = useState(null);
   let [questiondisplay, setQuestionDisplay] = useState(null);
@@ -129,24 +120,22 @@ const NormalVideoViewComponent = (props) => {
     }
   };
   onProgress = (data) => {
-    setCurrentTime(parseInt(data.currentTime));
-    const elapsed_sec = parseInt(data.currentTime);
-    let result = newarr.filter((o1) => parseInt(o1) === parseInt(elapsed_sec));
+    //this.checkForPoints(parseInt(data.currentTime))
+    setCurrentTime(parseInt(data?.currentTime));
+    const elapsed_sec = parseInt(data?.currentTime);
+    let result = newarr?.filter((o1) => parseInt(o1) === elapsed_sec);
 
     if (elapsed_sec === result[0]) {
-      if (parseInt(elapsed_sec) === pausedtime) {
-      } else {
-        var newdata = questionsarray.filter(
-          (o1) => parseInt(o1.question.timeinsec) === result[0]
-        );
-        //parseInt(this.state.questionsarray[0].question.timeinsec) ===
-        setisplaying(true);
-        setData(newdata[0]);
-        setShow(true);
-        setPausedTime(result[0]);
-        props.onPause(newdata[0]);
-        //this.setState({ isPlaying: true,data:this.state.questiondisplay,show: true},()=>this.props.onPause(this.state.data));
-      }
+      var newdata = questionsarray.filter(
+        (o1) => parseInt(o1.timeInSec) === result[0]
+      );
+      //parseInt(this.state.questionsarray[0].question.timeinsec) ===
+      setisplaying(true);
+      setData(newdata[0]);
+      setShow(true);
+      setPausedTime(result[0]);
+      props.onPause(newdata[0]);
+      //this.setState({ isPlaying: true,data:this.state.questiondisplay,show: true},()=>this.props.onPause(this.state.data));
     }
   };
   onRewatch = (data) => {
@@ -238,7 +227,7 @@ const NormalVideoViewComponent = (props) => {
   //   (fullimg = 30), (playicon = 25), (subfont = 18), (progrsheight = 40);
   // }
   return loading ? (
-    <Text>Loading...</Text>
+    <Text>{t('loading')}</Text>
   ) : (
     <View style={styles.mainView}>
       <View
@@ -272,13 +261,14 @@ const NormalVideoViewComponent = (props) => {
                 right: 0,
                 elevation: 20,
               }}
+              progressUpdateInterval={900}
               onLoad={onLoad}
               onError={(err) => console.log('errorrr', err)}
               resizeMode={fullscreen ? 'cover' : 'contain'}
               onProgress={onProgress}
             />
             {/* This is video fullscreen or halfscreen icons */}
-            {/* <TouchableOpacity
+            <TouchableOpacity
               onPress={onfullscreen}
               style={{
                 top: fullscreen ? 50 : 50,
@@ -308,7 +298,7 @@ const NormalVideoViewComponent = (props) => {
                   }}
                 />
               )}
-            </TouchableOpacity> */}
+            </TouchableOpacity>
             <View
               style={[
                 styles.absview,
@@ -324,9 +314,9 @@ const NormalVideoViewComponent = (props) => {
                   }}
                 />
                 <View style={{ flex: 0.65 }}>
-                  {/* <View style={[styles.subright, { marginLeft: 22 }]}>
+                  <View style={[styles.subright, { marginLeft: 22 }]}>
                     {timesarray}
-                  </View> */}
+                  </View>
                 </View>
                 <View
                   style={{

@@ -19,7 +19,6 @@ axiosInstance.interceptors.request.use(
     if (authToken) {
       config.headers.jwt = authToken;
     }
-    console.log('Request Config:', config);
     return config;
   },
   (error) => {

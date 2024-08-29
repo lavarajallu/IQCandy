@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
+import { useTranslation } from 'react-i18next';
 
 import { goBack } from '../../../utils/navigationUtils';
 import { COLORS } from '../../../constants/colors';
@@ -21,7 +22,10 @@ import { selectUser } from '../../../store/authManagement/selector';
 import { getassesmentsdata } from '../../../api/myCourses';
 import { selectMyCourses } from '../../../store/student/myCourses/selector';
 import styles from './styles';
+import i18n from '../../../i18n/index1';
 const ReviewTests = ({ route, navigation }) => {
+  const { t } = useTranslation(); //i18n instance
+
   const [isvisible, setisvisible] = useState(false);
   const [testdata, settestdata] = useState([]);
   const [spinner, setSpinner] = useState(true);
@@ -53,27 +57,27 @@ const ReviewTests = ({ route, navigation }) => {
   useState(() => {
     var newarra = [];
     if (getassesmenttests && getassesmenttests.length > 0) {
-      var filteredArray = getassesmenttests.filter(function(itm){
+      var filteredArray = getassesmenttests.filter(function (itm) {
         return itm.status === 'completed';
-      });      
-      settestdata(filteredArray)
-    //   getassesmenttests.map((res, i) => {
-    //     if (res.status === 'completed') {
-    //       newarra.push(res);
-    //     }
-    //   });
-    //   if (newarra) {
-    //     settestdata((testdata) => {
-    //       setSpinner(false);
-    //       return newarra;
-    //     });
-    //   } else {
-    //     settestdata((newarra) => {
-    //       setSpinner(false);
-    //       return [];
-    //     });
-    //   }
-     }
+      });
+      settestdata(filteredArray);
+      //   getassesmenttests.map((res, i) => {
+      //     if (res.status === 'completed') {
+      //       newarra.push(res);
+      //     }
+      //   });
+      //   if (newarra) {
+      //     settestdata((testdata) => {
+      //       setSpinner(false);
+      //       return newarra;
+      //     });
+      //   } else {
+      //     settestdata((newarra) => {
+      //       setSpinner(false);
+      //       return [];
+      //     });
+      //   }
+    }
   }, [getassesmenttests]);
   const onTest = (item) => {
     navigation.navigate('Summary', {
@@ -90,7 +94,7 @@ const ReviewTests = ({ route, navigation }) => {
         style={styles.itemview}
       >
         <Text style={styles.itemtext}>
-          {'Test'} {index + 1}{' '}
+          {t('test')} {index + 1}{' '}
           <Text style={{ marginLeft: 5 }}>({item.score})</Text>
         </Text>
         <View style={styles.itembottomview}>
@@ -182,14 +186,14 @@ const ReviewTests = ({ route, navigation }) => {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <Header backAction={backAction} headerTitle={'Review Tests'} />
+      <Header backAction={backAction} headerTitle={t('reviewtests')} />
       <View style={styles.mainview}>
         {getassesmenttests?.length > 0 ? (
           <FlatList
             removeClippedSubviews={false}
-            data={getassesmenttests.filter(function(itm){
+            data={getassesmenttests.filter(function (itm) {
               return itm.status === 'completed';
-            })   }
+            })}
             keyExtractor={(item) => item.id}
             horizontal={false}
             showsHorizontalScrollIndicator={false}

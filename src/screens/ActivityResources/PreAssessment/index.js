@@ -1,6 +1,7 @@
 //PreAssessment
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import {
   View,
@@ -36,10 +37,13 @@ import {
   getQuestionByIdReattemptapi,
 } from '../../../api/myCourses';
 import Modal from 'react-native-modal';
+import i18n from '../../../i18n/index1';
 const PreAssessment = ({ route, navigation }) => {
   const { questions } = textContent;
   const { topicItem, chapterItem, subjectItem, from, data } = route.params;
   const { user } = useSelector(selectUser);
+  const { t } = useTranslation(); //i18n instance
+
   const {
     testQuestionsData,
     questionDatabyId,
@@ -403,7 +407,7 @@ const PreAssessment = ({ route, navigation }) => {
       <View style={[styles.container, styles.shadowProp]}>
         {loading ? (
           <View style={styles.mainVew}>
-            <Text>Loading...</Text>
+            <Text>{t('loading')}</Text>
           </View>
         ) : testQuestionsDataa.length > 0 &&
           Object.keys(selectedItem).length > 0 ? (
@@ -433,7 +437,7 @@ const PreAssessment = ({ route, navigation }) => {
             </View>
             {spinner ? (
               <View style={styles.mainVew}>
-                <Text style={{ fontSize: 13 }}>Loading....</Text>
+                <Text style={{ fontSize: 13 }}>{t('loading')}</Text>
               </View>
             ) : (
               <>
@@ -517,7 +521,9 @@ const PreAssessment = ({ route, navigation }) => {
                             ]}
                             onPress={onPrevious}
                           >
-                            <Text style={styles.buttontext}>Previous</Text>
+                            <Text style={styles.buttontext}>
+                              {t('previous')}
+                            </Text>
                           </TouchableOpacity>
                         </View>
                       )}
@@ -534,7 +540,7 @@ const PreAssessment = ({ route, navigation }) => {
                             ]}
                             onPress={onSubmitTest}
                           >
-                            <Text style={styles.buttontext}>Submit</Text>
+                            <Text style={styles.buttontext}>{t('submit')}</Text>
                           </TouchableOpacity>
                         ) : (
                           <TouchableOpacity
@@ -548,7 +554,7 @@ const PreAssessment = ({ route, navigation }) => {
                             ]}
                             onPress={onNext}
                           >
-                            <Text style={styles.buttontext}>Next</Text>
+                            <Text style={styles.buttontext}>{t('next')}</Text>
                           </TouchableOpacity>
                         )}
                       </View>
@@ -571,23 +577,15 @@ const PreAssessment = ({ route, navigation }) => {
                   style={styles.innerbuttonview}
                 >
                   <Text style={{ color: COLORS.appSecondaryColor }}>
-                    GO BACK
+                    {t('goback')}
                   </Text>
                 </TouchableOpacity>
-                {/* <TouchableOpacity
-                  onPress={() => backAction()}
-                  style={styles.innerbuttonview}
-                >
-                  <Text style={{ color: COLORS.appSecondaryColor }}>
-                    Review Previous Tests
-                  </Text>
-                </TouchableOpacity> */}
               </View>
             </View>
           </View>
         ) : (
           <View style={styles.mainVew}>
-            <Text style={{ fontSize: 13 }}>Loading....</Text>
+            <Text style={{ fontSize: 13 }}>{t('loading')}</Text>
           </View>
         )}
       </View>
@@ -645,7 +643,9 @@ const PreAssessment = ({ route, navigation }) => {
                     backgroundColor: 'red',
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 15 }}>CANCEL</Text>
+                  <Text style={{ color: 'white', fontSize: 15 }}>
+                    {t('cancel')}
+                  </Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => onStartTest()}>
@@ -657,7 +657,9 @@ const PreAssessment = ({ route, navigation }) => {
                     backgroundColor: 'green',
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 15 }}>OK</Text>
+                  <Text style={{ color: 'white', fontSize: 15 }}>
+                    {t('ok')}
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -680,14 +682,6 @@ const PreAssessment = ({ route, navigation }) => {
               marginVertical: 15,
             }}
           >
-            {/* <Image
-                  source={require('../../assets/images/finger.png')}
-                  style={{
-                    width: 96 / 1.5,
-                    height: 96 / 1.5,
-                    alignSelf: 'center',
-                  }}
-                /> */}
             <Text
               style={{
                 fontSize: 20,
@@ -695,9 +689,7 @@ const PreAssessment = ({ route, navigation }) => {
                 marginTop: 10,
               }}
             >
-              {timeUp
-                ? 'Time up! Test will be submitte automatcally'
-                : 'Are you sure you want to submit assessment?'}
+              {timeUp ? t('timeauto') : t('areyousuresubmit')}
             </Text>
             <View
               style={{
@@ -715,7 +707,9 @@ const PreAssessment = ({ route, navigation }) => {
                     borderRadius: 20,
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 14 }}>Cancel</Text>
+                  <Text style={{ color: 'white', fontSize: 14 }}>
+                    {t('cancel')}
+                  </Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={onSubmit}>
@@ -727,7 +721,9 @@ const PreAssessment = ({ route, navigation }) => {
                     borderRadius: 20,
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 14 }}>Submit</Text>
+                  <Text style={{ color: 'white', fontSize: 14 }}>
+                    {t('submit')}
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>

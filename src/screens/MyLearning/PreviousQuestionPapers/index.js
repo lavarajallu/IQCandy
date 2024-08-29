@@ -13,6 +13,7 @@ import { goBack } from '../../../utils/navigationUtils';
 import { COLORS } from '../../../constants/colors';
 import Header from '../../../components/Header';
 import PreQuestionPaperCard from '../../../components/PreQuestionPaperCard';
+import { useTranslation } from 'react-i18next';
 
 import {
   getPreviousQuesPaperTypes,
@@ -20,10 +21,13 @@ import {
 } from '../../../api/myLearning';
 import { selectMyLearning } from '../../../store/student/myLearning/selector';
 import { selectUser } from '../../../store/authManagement/selector';
+import i18n from '../../../i18n/index1';
 
 const PreviousQuestionPapers = ({ navigation }) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectUser);
+  const { t } = useTranslation(); //i18n instance
+
   const { previousQuesPaperTypes, questionPapers } =
     useSelector(selectMyLearning);
   useEffect(() => {
@@ -69,10 +73,7 @@ const PreviousQuestionPapers = ({ navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header
-        backAction={backAction}
-        headerTitle={'Previous Question Papers'}
-      />
+      <Header backAction={backAction} headerTitle={t('pqp')} />
       <View style={[styles.container, styles.shadowProp]}>
         <FlatList
           data={questionPapers?.items}

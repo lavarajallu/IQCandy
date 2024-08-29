@@ -11,6 +11,8 @@ import {
   Button,
   Platform,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
+
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
 
 import VideoQuestionModal from './VideoQuestionModal';
@@ -29,6 +31,7 @@ import {
 } from '../../../../api/myCourses';
 import moment from 'moment';
 import getVideoId from 'get-video-id';
+import i18n from '../../../../i18n/index1';
 
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
@@ -43,6 +46,8 @@ const VideoActivityPro = ({ route, navigation }) => {
     Videoquestionsvideopro,
   } = useSelector(selectMyCourses);
   const { user } = useSelector(selectUser);
+  const { t } = useTranslation(); //i18n instance
+
   const dispatch = useDispatch();
   const video = React.useRef(null);
   const [normalvideodata, setnormalvideodata] = useState(null);
@@ -104,11 +109,11 @@ const VideoActivityPro = ({ route, navigation }) => {
       id: route.params.data.id,
       activityInfoId: route.params.data.activityInfoId,
     });
-    // getVideoquestionsvideopro({
-    //   dispatch,
-    //   userId: user?.userInfo?.userId,
-    //   activityId: route.params.data.id,
-    // });
+    getVideoquestionsvideopro({
+      dispatch,
+      userId: user?.userInfo?.userId,
+      activityId: route.params.data.id,
+    });
     const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
     setactivityStartTime(activityStartTime);
   }, [user]);
@@ -405,7 +410,7 @@ const VideoActivityPro = ({ route, navigation }) => {
               alignItems: 'center',
             }}
           >
-            <Text style={{ fontSize: 15 }}>Loading...</Text>
+            <Text style={{ fontSize: 15 }}>{t('loading')}</Text>
           </View>
         )}
       </View>
@@ -437,7 +442,7 @@ const VideoActivityPro = ({ route, navigation }) => {
                 color: COLORS.appSecondaryColor,
               }}
             >
-              Previous Activity
+              {t('previousactivity')}
             </Text>
           </TouchableOpacity>
 
@@ -460,7 +465,7 @@ const VideoActivityPro = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                Next Activity
+                {t('nextactivity')}
               </Text>
             ) : (
               <Text
@@ -470,13 +475,13 @@ const VideoActivityPro = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                Done
+                {t('done')}
               </Text>
             )}
           </TouchableOpacity>
         </View>
       )}
-      {/* <Modal isVisible={newmodal}>
+      <Modal isVisible={newmodal}>
         <View
           style={{
             flex: 1,
@@ -493,7 +498,7 @@ const VideoActivityPro = ({ route, navigation }) => {
             userDetails={user}
           />
         </View>
-      </Modal> */}
+      </Modal>
     </SafeAreaView>
   );
 };

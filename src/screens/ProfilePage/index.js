@@ -18,9 +18,13 @@ import styles from './styles';
 import { getUserData } from '../../api/profile';
 import { selectMyProfile } from '../../store/student/MyProfile/selector';
 import { COLORS } from '../../constants/colors';
+import i18n from '../../i18n/index1';
 // import { setBranches } from '../../store/authManagement/slice';
+import { useTranslation } from 'react-i18next';
 
 const ProfilePage = () => {
+  const { t } = useTranslation(); //i18n instance
+
   const dispatch = useDispatch();
   const { user } = useSelector(selectUser);
   const [firstName, setFirstName] = useState('Phanendra');
@@ -102,7 +106,7 @@ const ProfilePage = () => {
             <View style={styles.headingview}>
               <Text style={styles.headingtext}>{firstName}</Text>
               <Progress.Bar
-                progress={(profilePercent)}
+                progress={profilePercent}
                 width={width / 1.8}
                 color={'white'}
                 unfilledColor={'rgba(255,255,255,0.6)'}
@@ -111,7 +115,7 @@ const ProfilePage = () => {
                 {Math.round(profilePercent * 100) > 100
                   ? 100
                   : Math.round(profilePercent * 100)}
-                % complete
+                % {t('complete')}
               </Text>
             </View>
           </View>
@@ -129,9 +133,9 @@ const ProfilePage = () => {
             >
               <View style={{ paddingBottom: 20 }}>
                 <ValidatedTextInput
-                  label='First Name'
+                  label={t('firstname')}
                   editable={false}
-                  placeholder='Enter your first name'
+                  placeholder={t('firstname')}
                   value={firstName}
                   onChangeText={setFirstName}
                   validation={''}
@@ -139,8 +143,8 @@ const ProfilePage = () => {
                 />
                 <ValidatedTextInput
                   editable={false}
-                  label='Last Name'
-                  placeholder='Enter your last name'
+                  label={t('lastname')}
+                  placeholder={t('lastname')}
                   value={lastName}
                   onChangeText={setLastName}
                   validation={''}
@@ -148,8 +152,8 @@ const ProfilePage = () => {
                 />
                 <ValidatedTextInput
                   editable={false}
-                  label='Contact'
-                  placeholder='Enter your number'
+                  label={t('mobilenumber')}
+                  placeholder={t('mobilenumber')}
                   value={mobileNumber}
                   inputMode={'numeric'}
                   keyboardType={'number-pad'}
@@ -162,8 +166,8 @@ const ProfilePage = () => {
                 />
                 <ValidatedTextInput
                   editable={false}
-                  label='Email'
-                  placeholder='Enter your email Id'
+                  label={t('email')}
+                  placeholder={t('email')}
                   value={email}
                   onChangeText={setEmail}
                   validation={{

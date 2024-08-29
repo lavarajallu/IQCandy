@@ -37,14 +37,15 @@ import PracticeSummary from './MyLearning/PracticeSummary';
 import ReviewPractice from './MyLearning/ReviewPractice';
 import ReviewAnswers from './ActivityResources/ReviewAnswers';
 import PracticeSolutions from './MyLearning/PracticeSolutions';
-import TopicQuestionpapertype from './MyTopics/TopicQuestionpapertype/index'
-import ProfPdfViewNew from './ActivityResources/ProfessorActivities/PdfView'
-import VideoActivityPro from './ActivityResources/ProfessorActivities/VideoView'
-import YtVideoActivityPro from './ActivityResources/ProfessorActivities/YtVideoActivityPro'
-import YtVideoActivity from './ActivityResources/YtVideoActivityPro'
-import RecommendedActivityResources from './ActivityResources/RecommendedActivities'
-import TopicAnalysis from './TopicAnalysis'
-import VersionUpdate from './VersionUpdate'
+import TopicQuestionpapertype from './MyTopics/TopicQuestionpapertype/index';
+import ProfPdfViewNew from './ActivityResources/ProfessorActivities/PdfView';
+import VideoActivityPro from './ActivityResources/ProfessorActivities/VideoView';
+import YtVideoActivityPro from './ActivityResources/ProfessorActivities/YtVideoActivityPro';
+import YtVideoActivity from './ActivityResources/YtVideoActivityPro';
+import RecommendedActivityResources from './ActivityResources/RecommendedActivities';
+import TopicAnalysis from './TopicAnalysis';
+import VersionUpdate from './VersionUpdate';
+import Settings from './Settings';
 export {
   Login,
   Register,
@@ -92,5 +93,6 @@ export {
   YtVideoActivity,
   RecommendedActivityResources,
   VersionUpdate,
-  TopicAnalysis
+  TopicAnalysis,
+  Settings,
 };

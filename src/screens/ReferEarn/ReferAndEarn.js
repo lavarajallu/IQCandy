@@ -4,16 +4,19 @@ import Button from '../../components/Button';
 import { COLORS } from '../../constants/colors';
 import { upperCaseText } from '../../constants/helpers';
 import { useSelector, useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 import { getReferalCode } from '../../api/referAndEarn';
 const { width, height } = Dimensions.get('window');
 import { selectUser } from '../../store/authManagement/selector';
 import { selectReferandEarn } from '../../store/student/referAndEarn/selector';
+import i18n from '../../i18n/index1';
 
 const ReferAndEarn = (props) => {
   const { referCode } = props;
   const [spinner, setSpinner] = useState(true);
   const [referalcode, setReferalCode] = useState('null');
+  const { t } = useTranslation(); //i18n instance
 
   useEffect(() => {
     if (referCode && Object.keys(referCode).length > 0) {
@@ -32,15 +35,11 @@ const ReferAndEarn = (props) => {
     const options = {
       title: 'IQ Candy',
       subject: 'Referal Invite',
-      message:
-        'HI Your Referal code is  ' +
-        referalcode
+      message: 'HI Your Referal code is  ' + referalcode,
     };
     try {
       const result = await Share.share({
-        message:
-          'HI Your Referal code is ' +
-          referalcode
+        message: 'HI Your Referal code is ' + referalcode,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -61,19 +60,15 @@ const ReferAndEarn = (props) => {
       </View>
 
       <View style={styles.contentContainer}>
-        <Text style={styles.title}>Refer now & earn up to 100 Points</Text>
+        <Text style={styles.title}>{t('referhelptext')}</Text>
 
-        <Text style={styles.description}>
-          Share your code with your friends and get Reward Points.
-        </Text>
+        <Text style={styles.description}>{t('referhelptext2')}</Text>
 
-        <Text style={styles.referCodeLabel}>
-          {upperCaseText(`Your referral code`)}
-        </Text>
+        <Text style={styles.referCodeLabel}>{t('yourreferecode')}</Text>
 
         <View style={styles.referCodeContainer}>
           {spinner ? (
-            <Text>Loading...</Text>
+            <Text>{t('loading')}</Text>
           ) : (
             <Text style={styles.referCodeText}>{referalcode}</Text>
           )}
@@ -82,7 +77,7 @@ const ReferAndEarn = (props) => {
         <View style={styles.buttonContainer}>
           <Button
             style={styles.button}
-            title={'REFER NOW'}
+            title={t('refernow')}
             textStyle={styles.buttonText}
             onPress={() => onRefer()}
           />

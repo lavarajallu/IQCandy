@@ -29,13 +29,18 @@ import {
   getVideoquestions,
 } from '../../../api/myCourses';
 import moment from 'moment';
-import * as ScreenOrientation from 'expo-screen-orientation';
+
+import { useTranslation } from 'react-i18next';
+
+import i18n from '../../../i18n/index1';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
 const YtVideoActivity = ({ route, navigation }) => {
   const { questions } = textContent;
   const { topicItem, chapterItem, subjectItem, from, data, data1 } =
     route.params;
+  const { t } = useTranslation(); //i18n instance
+
   const {
     notesActivityData,
     videoActivityData,
@@ -101,12 +106,12 @@ const YtVideoActivity = ({ route, navigation }) => {
       userId: user?.userInfo?.userId,
       activityDimId: activityDimId,
     });
-    // getVideoquestions({
-    //   dispatch,
-    //   userId: user?.userInfo?.userId,
-    //   activityDimId: activityDimId,
-    //   assignedActivityId: data.assignedActivityId,
-    // });
+    getVideoquestions({
+      dispatch,
+      userId: user?.userInfo?.userId,
+      activityDimId: activityDimId,
+      assignedActivityId: data.assignedActivityId,
+    });
     const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
     setactivityStartTime(activityStartTime);
   }, [user]);
@@ -436,7 +441,7 @@ const YtVideoActivity = ({ route, navigation }) => {
               alignItems: 'center',
             }}
           >
-            <Text style={{ fontSize: 15 }}>Loading...</Text>
+            <Text style={{ fontSize: 15 }}>{t('loading')}</Text>
           </View>
         )}
       </View>
@@ -468,7 +473,7 @@ const YtVideoActivity = ({ route, navigation }) => {
                 color: COLORS.appSecondaryColor,
               }}
             >
-              Previous Activity
+              {t('previousactivity')}
             </Text>
           </TouchableOpacity>
 
@@ -491,7 +496,7 @@ const YtVideoActivity = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                Next Activity
+                {t('nextactivity')}
               </Text>
             ) : (
               <Text
@@ -501,13 +506,13 @@ const YtVideoActivity = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                Done
+                {t('done')}
               </Text>
             )}
           </TouchableOpacity>
         </View>
       )}
-      {/* <Modal isVisible={newmodal}>
+      <Modal isVisible={newmodal}>
         <View
           style={{
             flex: 1,
@@ -524,7 +529,7 @@ const YtVideoActivity = ({ route, navigation }) => {
             activitydata={data}
           />
         </View>
-      </Modal> */}
+      </Modal>
     </SafeAreaView>
   );
 };

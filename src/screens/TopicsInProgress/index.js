@@ -1,21 +1,23 @@
 //My Courses.js
 
 import React, { useEffect, useState } from 'react';
-import { FlatList ,Text,View} from 'react-native';
+import { FlatList, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import CardHeaderLabel from '../../components/CardHeaderLabel';
 import CoursesCard from '../../components/CoursesCard';
 
-import { textContent } from '../../constants/content';
 import ItemSeparator from '../../components/ItemSeparator';
 import { selectMyTopicsProgress } from '../../store/student/myTopicProgress/selector';
 import { selectSearch } from '../../store/student/search/selector';
+import i18n from '../../i18n/index1';
 
 import { getTopicsProgress } from '../../api/myTopicsInProgress';
 import { selectUser } from '../../store/authManagement/selector';
 import { getTopicDetails, getChapterDetails } from '../../api/search';
+import { useTranslation } from 'react-i18next';
+
 const TopicsInProgress = (props) => {
   const dispatch = useDispatch();
   const { user } = useSelector(selectUser);
@@ -24,6 +26,8 @@ const TopicsInProgress = (props) => {
   const navigation = useNavigation();
   const { topicDetails, chapterDetails } = useSelector(selectSearch);
   const [selectedItem, setSelectedItem] = useState(null);
+  const { t } = useTranslation();
+
   useEffect(() => {
     if (user) {
       const reqPayload = {
@@ -40,8 +44,7 @@ const TopicsInProgress = (props) => {
       });
     }
   }, [user]);
-  useEffect(()=>{
-  },[progressTopics])
+  useEffect(() => {}, [progressTopics]);
   const gotoChaptersPage = (item) => {
     setSelectedItem(item);
     getChapterDetails({
@@ -53,26 +56,19 @@ const TopicsInProgress = (props) => {
       branchId: user?.userOrg?.branchId,
       semesterId: user?.userOrg?.semesterId,
     });
-    // navigation.navigate('ActivityResources', {
-    //   topicItem: item,
-    //   chapterItem: chapterItem,
-    //   subjectItem: subjectItem,
-    //   from: 'topics',
-    // });
   };
   useEffect(() => {
-    if(selectedItem){
+    if (selectedItem) {
       if (chapterDetails && Object.keys(chapterDetails).length > 0) {
         setSelectedItem(null);
         navigation.navigate('ActivityResources', {
           topicItem: { ...selectedItem },
           chapterItem: chapterDetails,
-  
+
           from: 'progresstopics',
         });
       }
     }
-    
   }, [chapterDetails]);
 
   const renderItem = ({ item }) => (
@@ -80,7 +76,7 @@ const TopicsInProgress = (props) => {
       item={item}
       onChange={() => gotoChaptersPage(item)}
       title={'topics'}
-      fromscreen={"progresstopics"}
+      fromscreen={'progresstopics'}
     />
   );
 
@@ -91,25 +87,26 @@ const TopicsInProgress = (props) => {
   return (
     <>
       <CardHeaderLabel
-        lHLabel={lhTitle ? lhTitle : 'My Courses'}
-        rHLabel={'View All'}
+        lHLabel={t('mytopicsinprogress')}
+        rHLabel={t('seeall')}
         onPress={seeAll}
       />
-      {progressTopics?.length > 0 ?
-       
-      <FlatList
-        data={progressTopics}
-        keyExtractor={(item) => item.topicId}
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        renderItem={renderItem}
-        ItemSeparatorComponent={ItemSeparator}
-      /> :
-      <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-      <Text>No Data</Text>
-              </View>
-             
-    }
+      {progressTopics?.length > 0 ? (
+        <FlatList
+          data={progressTopics}
+          keyExtractor={(item) => item.topicId}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          renderItem={renderItem}
+          ItemSeparatorComponent={ItemSeparator}
+        />
+      ) : (
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+          <Text>{t('nodata')}</Text>
+        </View>
+      )}
     </>
   );
 };

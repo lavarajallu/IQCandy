@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import { useTranslation } from 'react-i18next';
 
 import { imagePaths } from '../../constants/path';
 import * as Progress from 'react-native-progress';
@@ -30,11 +31,14 @@ import * as ImagePicker from 'expo-image-picker';
 import { updateProfile, getUserData } from '../../api/profile';
 import { selectMyProfile } from '../../store/student/MyProfile/selector';
 import { COLORS } from '../../constants/colors';
+import i18n from '../../i18n/index1';
 
 const EditProfile = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const [firstName, setFirstName] = useState('Phanendra');
+  const { t } = useTranslation(); //i18n instance
+
   const [lastName, setLastName] = useState('Reddy');
   const [email, setEmail] = useState('phani@gmail.com');
   const [universityName, setUniversityNamae] = useState('GVPCEW');
@@ -64,7 +68,7 @@ const EditProfile = ({ navigation }) => {
       '',
       [
         {
-          text: 'Cancel',
+          text: t('cancel'),
           onPress: () => console.log('Cancel Pressed'),
         },
         {
@@ -90,7 +94,6 @@ const EditProfile = ({ navigation }) => {
         quality: 1,
       });
       if (!result.canceled) {
-
         setProfilepic(result.assets[0].base64);
       }
       // return result;
@@ -181,11 +184,13 @@ const EditProfile = ({ navigation }) => {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <SafeAreaView style={{ flex: 0, backgroundColor: COLORS.appSecondaryColor }} />
+      <SafeAreaView
+        style={{ flex: 0, backgroundColor: COLORS.appSecondaryColor }}
+      />
       <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
         <Header
           backAction={backAction}
-          headerTitle={'Edit Profile'}
+          headerTitle={t('editprofile')}
           hedercolor={true}
         />
 
@@ -292,7 +297,7 @@ const EditProfile = ({ navigation }) => {
                   }}
                   iconName='person-outline'
                 />
-               {/*} <ValidatedTextInput
+                {/*} <ValidatedTextInput
                   editable={false}
                   label='Board Name'
                   placeholder='Enter your board name'
@@ -353,7 +358,7 @@ const EditProfile = ({ navigation }) => {
 
               <View style={{ marginBottom: 30 }}>
                 <Button
-                  title={'Update Profile'}
+                  title={t('updateprofile')}
                   style={{
                     width: width * 0.9,
                     height: 50,

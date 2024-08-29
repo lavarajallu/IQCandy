@@ -1,5 +1,4 @@
 // content.js
-
 export const textContent = {
   buttonLabels: {
     getStarted: 'GET STARTED',
@@ -164,7 +163,7 @@ export const textContent = {
       labelColor: '#c44921',
       activeBarColor: '#c44921',
     },
-    
+
     {
       name: 'Average',
       labelColor: '#d88414',
@@ -194,7 +193,7 @@ export const textContent = {
     {
       id: 2,
       progress: '30',
-      title: 'Learning Overview',
+      title: 'Learning Analysis',
       description: 'Role Readiness Score',
       type: 'learning_analysis',
       image_uri: require('../../assets/images/my_learning/learning_analysis.png'),
@@ -212,7 +211,7 @@ export const textContent = {
     {
       id: 4,
       progress: '40',
-      title: 'Leader Board',
+      title: 'LeaderBoard',
       description: 'Role Readiness Score',
       type: 'leader_board',
       image_uri: require('../../assets/images/my_learning/leader_board.png'),

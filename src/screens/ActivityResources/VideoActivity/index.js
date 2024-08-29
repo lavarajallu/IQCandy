@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
 import * as ScreenOrientation from 'expo-screen-orientation';
+import { useTranslation } from 'react-i18next';
 
 import VideoQuestionModal from './VideoQuestionModal';
 import Modal from 'react-native-modal';
@@ -32,10 +33,13 @@ import {
   getVideoquestions,
 } from '../../../api/myCourses';
 import moment from 'moment';
+import i18n from '../../../i18n/index1';
 var windowWidth = Dimensions.get('window').width;
 var windowHeight = Dimensions.get('window').height;
 const VideoActivity = ({ route, navigation }) => {
   const { questions } = textContent;
+  const { t } = useTranslation(); //i18n instance
+
   const { topicItem, chapterItem, subjectItem, from, data, data1 } =
     route.params;
   const {
@@ -109,12 +113,12 @@ const VideoActivity = ({ route, navigation }) => {
       userId: user?.userInfo?.userId,
       activityDimId: activityDimId,
     });
-    // getVideoquestions({
-    //   dispatch,
-    //   userId: user?.userInfo?.userId,
-    //   activityDimId: activityDimId,
-    //   assignedActivityId: data.assignedActivityId,
-    // });
+    getVideoquestions({
+      dispatch,
+      userId: user?.userInfo?.userId,
+      activityDimId: activityDimId,
+      assignedActivityId: data.assignedActivityId,
+    });
     const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
     setactivityStartTime(activityStartTime);
   }, [user]);
@@ -224,6 +228,7 @@ const VideoActivity = ({ route, navigation }) => {
       Object.keys(Videoquestionassesdata).length > 0
     ) {
       setvideodetailsquestion(Videoquestionassesdata);
+      //alert(true)
       setnewmodal(true);
     }
   }, [Videoquestionassesdata]);
@@ -467,7 +472,7 @@ const VideoActivity = ({ route, navigation }) => {
               alignItems: 'center',
             }}
           >
-            <Text style={{ fontSize: 15 }}>Loading...</Text>
+            <Text style={{ fontSize: 15 }}>{t('loading')}</Text>
           </View>
         )}
       </View>
@@ -499,7 +504,7 @@ const VideoActivity = ({ route, navigation }) => {
                 color: COLORS.appSecondaryColor,
               }}
             >
-              Previous Activity
+              {t('previousactivity')}
             </Text>
           </TouchableOpacity>
 
@@ -522,7 +527,7 @@ const VideoActivity = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                Next Activity
+                {t('nextactivity')}
               </Text>
             ) : (
               <Text
@@ -532,13 +537,13 @@ const VideoActivity = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                Done
+                {t('done')}
               </Text>
             )}
           </TouchableOpacity>
         </View>
       )}
-      {/* <Modal isVisible={newmodal}>
+      <Modal isVisible={newmodal}>
         <View
           style={{
             flex: 1,
@@ -555,7 +560,7 @@ const VideoActivity = ({ route, navigation }) => {
             activitydata={data}
           />
         </View>
-      </Modal> */}
+      </Modal>
     </SafeAreaView>
   );
 };

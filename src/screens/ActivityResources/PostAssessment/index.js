@@ -34,12 +34,17 @@ import {
   endTestapi,
   getQuestionByIdReattemptapi,
 } from '../../../api/myCourses';
+import { useTranslation } from 'react-i18next';
+
 import Modal from 'react-native-modal';
+import i18n from '../../../i18n/index1';
 
 const PostAssessment = ({ route, navigation }) => {
   const { questions } = textContent;
   const { topicItem, chapterItem, subjectItem, from, data } = route.params;
   const { user } = useSelector(selectUser);
+  const { t } = useTranslation(); //i18n instance
+
   const {
     testQuestionsData,
     questionDatabyId,
@@ -583,7 +588,7 @@ const PostAssessment = ({ route, navigation }) => {
       <View style={[styles.container, styles.shadowProp]}>
         {loading ? (
           <View style={styles.mainVew}>
-            <Text>Loading...</Text>
+            <Text>{t('loading')}</Text>
           </View>
         ) : testQuestionsDataa.length > 0 &&
           Object.keys(selectedItem).length > 0 ? (
@@ -613,7 +618,7 @@ const PostAssessment = ({ route, navigation }) => {
             </View>
             {spinner ? (
               <View style={styles.mainVew}>
-                <Text style={{ fontSize: 13 }}>Loading....</Text>
+                <Text style={{ fontSize: 13 }}>{t('loading')}</Text>
               </View>
             ) : (
               <>
@@ -697,7 +702,9 @@ const PostAssessment = ({ route, navigation }) => {
                             ]}
                             onPress={onPrevious}
                           >
-                            <Text style={styles.buttontext}>Previous</Text>
+                            <Text style={styles.buttontext}>
+                              {t('previous')}
+                            </Text>
                           </TouchableOpacity>
                         </View>
                       )}
@@ -728,7 +735,7 @@ const PostAssessment = ({ route, navigation }) => {
                             ]}
                             onPress={onNext}
                           >
-                            <Text style={styles.buttontext}>Next</Text>
+                            <Text style={styles.buttontext}>{t('next')}</Text>
                           </TouchableOpacity>
                         )}
                       </View>
@@ -751,7 +758,7 @@ const PostAssessment = ({ route, navigation }) => {
                   style={styles.innerbuttonview}
                 >
                   <Text style={{ color: COLORS.appSecondaryColor }}>
-                    GO BACK
+                    {t('goback')}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -759,7 +766,7 @@ const PostAssessment = ({ route, navigation }) => {
                   style={styles.innerbuttonview}
                 >
                   <Text style={{ color: COLORS.appSecondaryColor }}>
-                    Review Previous Tests
+                    {t('reviewprevioustest')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -790,7 +797,7 @@ const PostAssessment = ({ route, navigation }) => {
                   style={styles.innerbuttonview}
                 >
                   <Text style={{ color: COLORS.appSecondaryColor }}>
-                    Review Previous Tests
+                    {t('reviewprevioustest')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -802,13 +809,15 @@ const PostAssessment = ({ route, navigation }) => {
                   alignItems: 'center',
                 }}
               >
-                <Text style={{ color: COLORS.appSecondaryColor }}>Go Back</Text>
+                <Text style={{ color: COLORS.appSecondaryColor }}>
+                  {t('goback')}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
         ) : (
           <View style={styles.mainVew}>
-            <Text style={{ fontSize: 13 }}>Loading....</Text>
+            <Text style={{ fontSize: 13 }}>{t('loading')}</Text>
           </View>
         )}
       </View>
@@ -840,7 +849,7 @@ const PostAssessment = ({ route, navigation }) => {
                 color: COLORS.appSecondaryColor,
               }}
             >
-              Previous Activity
+              {t('previousactivity')}
             </Text>
           </TouchableOpacity>
 
@@ -863,7 +872,7 @@ const PostAssessment = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                Next Activity
+                {t('nextactivity')}
               </Text>
             ) : (
               <Text
@@ -873,7 +882,7 @@ const PostAssessment = ({ route, navigation }) => {
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                Done
+                {t('done')}
               </Text>
             )}
           </TouchableOpacity>
@@ -932,7 +941,9 @@ const PostAssessment = ({ route, navigation }) => {
                     backgroundColor: 'red',
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 15 }}>CANCEL</Text>
+                  <Text style={{ color: 'white', fontSize: 15 }}>
+                    {t('cancel')}
+                  </Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => onStartTest()}>
@@ -944,7 +955,9 @@ const PostAssessment = ({ route, navigation }) => {
                     backgroundColor: 'green',
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 15 }}>OK</Text>
+                  <Text style={{ color: 'white', fontSize: 15 }}>
+                    {t('ok')}
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -982,9 +995,7 @@ const PostAssessment = ({ route, navigation }) => {
                 marginTop: 10,
               }}
             >
-              {timeUp
-                ? 'Time up! Please submit your assessment'
-                : 'Are you sure you want to submit assessment?'}
+              {timeUp ? t('timeupsubmit') : t('areyousuresubmit')}
             </Text>
             <View
               style={{
@@ -1002,7 +1013,9 @@ const PostAssessment = ({ route, navigation }) => {
                     borderRadius: 20,
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 14 }}>CANCEL</Text>
+                  <Text style={{ color: 'white', fontSize: 14 }}>
+                    {t('cancel')}
+                  </Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity onPress={onSubmit}>
@@ -1014,7 +1027,9 @@ const PostAssessment = ({ route, navigation }) => {
                     borderRadius: 20,
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: 14 }}>SUBMIT</Text>
+                  <Text style={{ color: 'white', fontSize: 14 }}>
+                    {t('submit')}
+                  </Text>
                 </View>
               </TouchableOpacity>
             </View>

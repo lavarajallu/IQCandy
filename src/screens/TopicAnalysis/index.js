@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -14,27 +13,32 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
+
 import { goBack } from '../../utils/navigationUtils';
 import { COLORS } from '../../constants/colors';
 import Header from '../../components/Header';
 //import styles from "./styles"
 import ColumnChart from './ColumnChart.js';
-import PieChart from 'react-native-pie-chart'
+import PieChart from 'react-native-pie-chart';
 
 import TimeSpentChart from './TimeSpentChart';
 import { selectUser } from '../../store/authManagement/selector';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
+import i18n from '../../i18n/index1';
 
 const windowWidth = Dimensions.get('window').width;
 const TopicAnalysis = ({ route, navigation }) => {
   const { user } = useSelector(selectUser);
+  const { t } = useTranslation(); //i18n instance
+
   const dispatch = useDispatch();
   const [spinner, setspinner] = useState(true);
   const [isvisible, setisvisible] = useState(false);
   const [weblinkdata, setweblinkdata] = useState(null);
   const [analyticsData, setanalyticsData] = useState({});
   const [topicpercentarray, settopicpercentarray] = useState([]);
-  const [completeincomplearray,setcompleteincomplearray] = useState([])
+  const [completeincomplearray, setcompleteincomplearray] = useState([]);
   const [topicactivitesdata, settopicactivitesdata] = useState([]);
   const [tableHead, settableHead] = useState([]);
   const [tableData, settableData] = useState([]);
@@ -46,13 +50,11 @@ const TopicAnalysis = ({ route, navigation }) => {
   const [graphvalue, setgraphvalue] = useState(0);
   const [userDetails, setuserDetails] = useState('');
   const [topicanalysisdata, settopicanalysisdata] = useState('');
-  const [datanewprogressitemlist,setnewprogressitemlist] = useState([])
+  const [datanewprogressitemlist, setnewprogressitemlist] = useState([]);
 
   useEffect(() => {
-
-
     fetchdata();
-  }, [user])
+  }, [user]);
   const fetchdata = async () => {
     const authToken = await AsyncStorage.getItem('userToken');
     var userId = user?.userInfo.userId;
@@ -60,7 +62,7 @@ const TopicAnalysis = ({ route, navigation }) => {
     var universalTopicId = route.params.data.universalTopicId;
     fetch(
       'https://api.iqcandy.com/api/iqcandy' +
-      `/analytics/users/${userId}/topics/${topicId}/analysis?universalTopicId=${universalTopicId}`,
+        `/analytics/users/${userId}/topics/${topicId}/analysis?universalTopicId=${universalTopicId}`,
       {
         method: 'GET',
         headers: {
@@ -84,52 +86,51 @@ const TopicAnalysis = ({ route, navigation }) => {
             //   x: 'Incomplete',
             // };
             var obj2 = {
-              percentage: incompletepercent+"%",
+              percentage: incompletepercent + '%',
               color: '#F94D48',
-              name: "Incomplete"
-            }
+              name: 'Incomplete',
+            };
             var obj1 = {
-              percentage: completepercent+"%",
+              percentage: completepercent + '%',
               color: '#A3BA6D',
-              name: "Complete"
-            }
+              name: 'Complete',
+            };
             // var obj2 = {
             //   y: completepercent,
             //   x: "Complete",
             //  // name: 'Complete',
             // };
-            const widthAndHeight = 250
-            const series = [completepercent, incompletepercent]
-            const sliceColor = ['#A3BA6D', '#F94D48']
+            const widthAndHeight = 250;
+            const series = [completepercent, incompletepercent];
+            const sliceColor = ['#A3BA6D', '#F94D48'];
             var newarr = [];
             newarr.push(obj1);
             newarr.push(obj2);
-            settopicpercentarray(series)
-            setcompleteincomplearray(newarr)
-            setloading(false)
+            settopicpercentarray(series);
+            setcompleteincomplearray(newarr);
+            setloading(false);
           } else {
             var obj1 = {
               percentage: 100,
               color: '#F94D48',
-              name: "Incomplete"
-            }
+              name: 'Incomplete',
+            };
             var obj2 = {
               percentage: 0,
               color: '#A3BA6D',
-              name: "Complete"
-            }
-            const series = [0, 100]
+              name: 'Complete',
+            };
+            const series = [0, 100];
             var newarr = [];
             newarr.push(obj1);
             newarr.push(obj2);
-            settopicpercentarray(series)
-            setloading(false)
-
+            settopicpercentarray(series);
+            setloading(false);
           }
           if (topicAnalysisData?.userTestQuestions?.length) {
             var timeSpentData = json.data.timeSpent;
             let progressItemList = [];
-            let newprogressitemlist = []
+            let newprogressitemlist = [];
             if (timeSpentData?.length > 0) {
               const timeSpendActivities = timeSpentData.filter(
                 (tsd) => !['pre', 'post'].includes(tsd.activityType)
@@ -138,14 +139,14 @@ const TopicAnalysis = ({ route, navigation }) => {
                 (accum, item) => accum + Math.round(item.timeSpent),
                 0
               );
-            
+
               timeSpendActivities.map((tsd) => {
                 let keyName = !['pre', 'post'].includes(tsd.activityType)
                   ? tsd.activityType === 'conceptual_video'
                     ? 'CONCEPTUAL VIDEO'
                     : tsd.activityType === 'html5'
-                      ? 'NOTES'
-                      : tsd.activityType
+                    ? 'NOTES'
+                    : tsd.activityType
                   : '';
                 if (keyName) {
                   let progressItem = {
@@ -154,9 +155,11 @@ const TopicAnalysis = ({ route, navigation }) => {
                     value: tsd,
                     percent: (tsd.timeSpent / totalSpentTime).toFixed(2) * 100,
                   };
-                  let newitem = Math.round((tsd.timeSpent * 100) / totalSpentTime)
+                  let newitem = Math.round(
+                    (tsd.timeSpent * 100) / totalSpentTime
+                  );
                   progressItemList.push(progressItem);
-                  newprogressitemlist.push(newitem)
+                  newprogressitemlist.push(newitem);
                 }
               });
             }
@@ -166,7 +169,7 @@ const TopicAnalysis = ({ route, navigation }) => {
             progressItemList.map((res, i) => {
               graphvalue = graphvalue + res.percent;
             });
-          
+
             if (topicAnalysisData?.userTestQuestions?.length) {
               var diffLevelTopicAnalysisObj = {};
               var questionAnalysis = [];
@@ -233,36 +236,29 @@ const TopicAnalysis = ({ route, navigation }) => {
               });
             }
             setloading((loading) => {
-              settopicanalysisdata(json.data)
-              settopicactivitesdata(progressItemList)
-              setnewprogressitemlist(newprogressitemlist)
-              setgraphvalue(graphvalue)
-              settableHead(tableHead)
-              settableData(tableData)
-              setstudenteasydaata(diffLevelTopicAnalysisObj)
+              settopicanalysisdata(json.data);
+              settopicactivitesdata(progressItemList);
+              setnewprogressitemlist(newprogressitemlist);
+              setgraphvalue(graphvalue);
+              settableHead(tableHead);
+              settableData(tableData);
+              setstudenteasydaata(diffLevelTopicAnalysisObj);
               if (tableData || diffLevelTopicAnalysisObj) {
-                setquesloading(false)
-
+                setquesloading(false);
               }
-              return false
-            })
-
+              return false;
+            });
           } else {
-            setquesloading(false)
-
+            setquesloading(false);
           }
         }
       })
       .catch((error) => console.error(error));
-  }
+  };
   const backAction = () => {
-    goBack(navigation)
-
-  }
-  var colorarray = [
-    '#F94D48',
-    '#30A6DC',
-  ];
+    goBack(navigation);
+  };
+  var colorarray = ['#F94D48', '#30A6DC'];
   var backheight = 30,
     headfont = 20,
     subfont = 15,
@@ -275,10 +271,9 @@ const TopicAnalysis = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={'Topic Analysis'} />
+      <Header backAction={backAction} headerTitle={t('topicanalysis')} />
       <View style={[styles.container, styles.shadowProp]}>
         <View style={{ flex: 1 }}>
-
           <View
             style={{
               flex: 1,
@@ -298,7 +293,7 @@ const TopicAnalysis = ({ route, navigation }) => {
                     alignItems: 'center',
                   }}
                 >
-                  <Text style={{ fontSize: subfont }}>Loading...</Text>
+                  <Text style={{ fontSize: subfont }}>{t('loading')}</Text>
                 </View>
               ) : (
                 <>
@@ -325,14 +320,19 @@ const TopicAnalysis = ({ route, navigation }) => {
                   </View>
                   {topicpercentarray?.length > 0 ? (
                     <>
-                    <View style={{justifyContent:"center",alignItems:"center"}}>
-                      <PieChart
-                        widthAndHeight={250}
-                        series={topicpercentarray}
-                        sliceColor={['#A3BA6D', '#F94D48']}
-                        coverRadius={0.45}
-                        coverFill={'#FFF'}
-                      />
+                      <View
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <PieChart
+                          widthAndHeight={250}
+                          series={topicpercentarray}
+                          sliceColor={['#A3BA6D', '#F94D48']}
+                          coverRadius={0.45}
+                          coverFill={'#FFF'}
+                        />
                       </View>
                       <View
                         style={{
@@ -346,7 +346,7 @@ const TopicAnalysis = ({ route, navigation }) => {
                             style={{
                               flexDirection: 'row',
                               justifyContent: 'center',
-                              marginVertical:10
+                              marginVertical: 10,
                             }}
                           >
                             <View
@@ -380,26 +380,30 @@ const TopicAnalysis = ({ route, navigation }) => {
                       </View>
                     </>
                   ) : (
-                    <Text style={{ textAlign: 'center' }}>No Data</Text>
+                    <Text style={{ textAlign: 'center' }}>{t('nodata')}</Text>
                   )}
                   {graphvalue > 0 ? (
-                    
                     <>
-                    <View style={{justifyContent:"center",alignItems:"center"}}>
-                      <PieChart
-                        widthAndHeight={250}
-                        series={datanewprogressitemlist}
-                        sliceColor={colorarray}
-                        coverRadius={0.45}
-                        coverFill={'#FFF'}
-                      />
+                      <View
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}
+                      >
+                        <PieChart
+                          widthAndHeight={250}
+                          series={datanewprogressitemlist}
+                          sliceColor={colorarray}
+                          coverRadius={0.45}
+                          coverFill={'#FFF'}
+                        />
                       </View>
                       <View
                         style={{
                           flexDirection: 'row',
                           marginHorizontal: 30,
                           flexWrap: 'wrap',
-                          marginVertical:10,
+                          marginVertical: 10,
                           marginBottom: 20,
                           justifyContent: 'center',
                         }}
@@ -411,7 +415,6 @@ const TopicAnalysis = ({ route, navigation }) => {
                                 flexDirection: 'row',
                                 alignItems: 'center',
                                 marginLeft: 10,
-                                
                               }}
                             >
                               <View
@@ -456,7 +459,7 @@ const TopicAnalysis = ({ route, navigation }) => {
                           fontSize: subfont,
                         }}
                       >
-                        Performance Analysis By Question Difficulty
+                        {t('performaceanalysisby')}
                       </Text>
                     </View>
                     {quesloading ? (
@@ -468,23 +471,23 @@ const TopicAnalysis = ({ route, navigation }) => {
                         }}
                       >
                         <Text style={{ fontSize: headfont }}>
-                          Loading...
+                          {t('loading')}
                         </Text>
                       </View>
                     ) : (
                       <>
                         <ColumnChart
-                          type="Easy"
+                          type='Easy'
                           question={studenteasydaata?.Easy}
                         />
 
                         <ColumnChart
-                          type="Medium"
+                          type='Medium'
                           question={studenteasydaata?.Medium}
                         />
 
                         <ColumnChart
-                          type="Hard"
+                          type='Hard'
                           question={studenteasydaata?.Hard}
                         />
                         {loading ? (
@@ -496,7 +499,7 @@ const TopicAnalysis = ({ route, navigation }) => {
                             }}
                           >
                             <Text style={{ fontSize: headfont }}>
-                              Loading...
+                              {t('loading')}
                             </Text>
                           </View>
                         ) : (
@@ -519,13 +522,11 @@ const TopicAnalysis = ({ route, navigation }) => {
                                   fontSize: subfont,
                                 }}
                               >
-                                Time Taken For Each Question
+                                {t('timetakenby')}
                               </Text>
                             </View>
                             <TimeSpentChart
-                              topicsTimeTakenData={
-                                topicanalysisdata
-                              }
+                              topicsTimeTakenData={topicanalysisdata}
                             />
                           </>
                         )}
@@ -539,9 +540,8 @@ const TopicAnalysis = ({ route, navigation }) => {
         </View>
       </View>
     </SafeAreaView>
-  )
-}
-
+  );
+};
 
 const styles = StyleSheet.create({
   headerText: {

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import ChartView from './HighChart.js';
+import i18n from '../i18n/index1.js';
+import { useTranslation } from 'react-i18next';
 
 const TimeSpentChart = ({ testResult }) => {
   // const { testResult } = props;
@@ -8,6 +10,7 @@ const TimeSpentChart = ({ testResult }) => {
   let [showdata, setData] = useState(true);
   let [chartConfig, setChartConfig] = useState(null);
   let [spinner, setspinner] = useState(true);
+  const { t } = useTranslation(); //i18n instance
 
   useEffect(() => {
     if (testResult) {
@@ -103,7 +106,9 @@ const TimeSpentChart = ({ testResult }) => {
     smallbox = 10;
 
   return spinner ? (
-    <Text style={{ textAlign: 'center', fontSize: headfont }}>Loading....</Text>
+    <Text style={{ textAlign: 'center', fontSize: headfont }}>
+      {t('loading')}
+    </Text>
   ) : showdata ? (
     <View>
       {/* <ChartWeb
@@ -161,7 +166,9 @@ const TimeSpentChart = ({ testResult }) => {
               alignItems: 'center',
             }}
           />
-          <Text style={{ marginLeft: 10, fontSize: headfont }}>CORRECT</Text>
+          <Text style={{ marginLeft: 10, fontSize: headfont }}>
+            {t('correct')}
+          </Text>
         </View>
         <View
           style={{
@@ -178,12 +185,16 @@ const TimeSpentChart = ({ testResult }) => {
               backgroundColor: '#F94D48',
             }}
           />
-          <Text style={{ marginLeft: 10, fontSize: headfont }}>IN CORRECT</Text>
+          <Text style={{ marginLeft: 10, fontSize: headfont }}>
+            {t('incorrect')}
+          </Text>
         </View>
       </View>
     </View>
   ) : (
-    <Text style={{ textAlign: 'center', fontSize: headfont }}>No Data</Text>
+    <Text style={{ textAlign: 'center', fontSize: headfont }}>
+      {t('nodata')}
+    </Text>
   );
 };
 

@@ -11,6 +11,7 @@ import {
 import DynamicHeader from '../../components/DynamicHeader';
 import ChaptersList from '../../components/ChaptersList';
 import Modal from 'react-native-modal';
+import { useTranslation } from 'react-i18next';
 
 import { textContent } from '../../constants/content';
 import { goBack } from '../../utils/navigationUtils'; // Import the common function
@@ -21,6 +22,7 @@ import { getValidaPackages } from '../../api/validatePackages';
 import { selectValidatePackage } from '../../store/student/validatePackages/selector';
 import { COLORS } from '../../constants/colors';
 import styles from './styles';
+import i18n from '../../i18n/index1';
 
 const MyChapters = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -29,6 +31,8 @@ const MyChapters = ({ route, navigation }) => {
   const { subjectItem } = route.params;
   const { validatePackage } = useSelector(selectValidatePackage);
   const [isvisible, setVisible] = useState(false);
+  const { t } = useTranslation(); //i18n instance
+
   const goToTopics = (item) => {
     navigation.navigate('MyTopics', {
       chapterItem: item,
@@ -41,7 +45,7 @@ const MyChapters = ({ route, navigation }) => {
       const payload = {
         boardId: user.userOrg.boardId,
         gradeId: user.userOrg.gradeId,
-        subjectId:  subjectItem?.subjectId,
+        subjectId: subjectItem?.subjectId,
         // universityId: user.userOrg.universityId,
         // branchId: user.userOrg.branchId,
         // semesterId: user.userOrg.semesterId,
@@ -49,7 +53,7 @@ const MyChapters = ({ route, navigation }) => {
         offset: 0,
         limit: 1000,
       };
-      
+
       getChapters({
         data: payload,
         dispatch,
@@ -72,17 +76,21 @@ const MyChapters = ({ route, navigation }) => {
       <DynamicHeader
         title={subjectItem?.name}
         backAction={() => {
-          if(route.params.from === 'search'){
-            navigation.navigate('DrawerNavigation', {from:"mychapters",navigation:navigation});
-          
-          }else{
-            navigation.navigate('DrawerNavigation', {from:"mychapters",navigation:navigation});
-            
+          if (route.params.from === 'search') {
+            navigation.navigate('DrawerNavigation', {
+              from: 'mychapters',
+              navigation: navigation,
+            });
+          } else {
+            navigation.navigate('DrawerNavigation', {
+              from: 'mychapters',
+              navigation: navigation,
+            });
           }
           // Handle back button press
         }}
         imageSource={{ uri: subjectItem?.image }}
-        labels={[chapters?.items?.length + ' Chapters']}
+        labels={[chapters?.items?.length + ' ' + t('chapters')]}
       />
 
       <ChaptersList
@@ -90,7 +98,7 @@ const MyChapters = ({ route, navigation }) => {
         user={user}
         onChange={(item) => goToTopics(item)}
         onlockmodal={onlockmodal}
-       // validatePackage={validatePackage ? validatePackage : null}
+        // validatePackage={validatePackage ? validatePackage : null}
       />
       <Modal isVisible={isvisible}>
         <View style={styles.modalview}>

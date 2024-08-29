@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import ChartView from './HighChart.js';
+import { useTranslation } from 'react-i18next';
 const TimeSpentChart = ({ topicsTimeTakenData = {} }) => {
   let [chartOptions, setChartOptions] = useState(null);
   let [chartConfig, setChartConfig] = useState(null);
   let [data, setData] = useState(true);
+  const { t } = useTranslation(); //i18n instance
 
   let [spinner, setspinner] = useState(true);
   useEffect(() => {
@@ -88,7 +90,6 @@ const TimeSpentChart = ({ topicsTimeTakenData = {} }) => {
       setspinner(false);
       setData(false);
     }
-
   }, [topicsTimeTakenData]);
   //var isTablet = DeviceConstants.isTablet;
   var circle = 10,
@@ -97,7 +98,7 @@ const TimeSpentChart = ({ topicsTimeTakenData = {} }) => {
   //   (circle = 20), (newsize = 20);
   // }
   return spinner ? (
-    <Text style={{ textAlign: 'center' }}>Loading....</Text>
+    <Text style={{ textAlign: 'center' }}>{t('loading')}</Text>
   ) : data ? (
     <View>
       <ChartView
@@ -129,7 +130,9 @@ const TimeSpentChart = ({ topicsTimeTakenData = {} }) => {
               alignItems: 'center',
             }}
           />
-          <Text style={{ marginLeft: 5, fontSize: newsize }}>Correct</Text>
+          <Text style={{ marginLeft: 5, fontSize: newsize }}>
+            {t('correct')}
+          </Text>
         </View>
         <View
           style={{
@@ -146,12 +149,14 @@ const TimeSpentChart = ({ topicsTimeTakenData = {} }) => {
               backgroundColor: '#F94D48',
             }}
           />
-          <Text style={{ marginLeft: 5, fontSize: newsize }}>Incorrect</Text>
+          <Text style={{ marginLeft: 5, fontSize: newsize }}>
+            {t('incorrect')}
+          </Text>
         </View>
       </View>
     </View>
   ) : (
-    <Text style={{ textAlign: 'center' }}>No Data</Text>
+    <Text style={{ textAlign: 'center' }}>{t('nodata')}</Text>
   );
 };
 

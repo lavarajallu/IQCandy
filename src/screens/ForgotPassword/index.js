@@ -15,11 +15,14 @@ import ValidatedTextInput from '../../components/ValidatedTextInput';
 import Button from '../../components/Button';
 import { forgotPassword } from '../../api/auth';
 import styles from './styles';
+import i18n from '../../i18n/index1';
+import { useTranslation } from 'react-i18next';
 
 const ForgotPassword = ({ navigation }) => {
   const dispatch = useDispatch();
   const { authentiCation } = imagePaths;
   const [emailorPhoneValue, setEmailorPhoneValue] = useState('');
+  const { t } = useTranslation(); //i18n instance
 
   //Inside the component where you handle login logic
   const handleForgotPassword = async () => {
@@ -75,7 +78,7 @@ const ForgotPassword = ({ navigation }) => {
 
           <View style={styles.buttonContainer}>
             <Button
-              title={'SUBMIT'}
+              title={t('submit')}
               style={styles.button}
               textStyle={styles.buttonText}
               onPress={handleForgotPassword} // Call the function to handle login
