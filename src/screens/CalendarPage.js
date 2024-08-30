@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
-import { useTranslation } from 'react-i18next';
 
 import {
+  Alert,
+  BackHandler,
   StyleSheet,
   Dimensions,
   FlatList,
@@ -26,25 +27,27 @@ import { getschedulefiltered } from '../api/myCalender';
 import { COLORS } from '../constants/colors';
 import { getTopicDetails, getChapterDetails } from '../api/search';
 import { selectSearch } from '../store/student/search/selector';
-import i18n from '../i18n/index1';
 
 const CalendarPage = ({ route, navigation }) => {
   const { user } = useSelector(selectUser);
   const dispatch = useDispatch();
   const { scheduledata } = useSelector(selectmyCalender);
   const { topicDetails, chapterDetails } = useSelector(selectSearch);
-  const { t } = useTranslation(); //i18n instance
 
+  const [items, setItems] = useState({
+    '2023-12-01': [{ name: 'Event 1' }],
+    '2023-12-02': [{ name: 'Event 2A' }, { name: 'Event 2B' }],
+    // Add more data as needed
+  });
   const [visiblemonths, setvisiblemonths] = useState([]);
   const [isspinner, setisspinner] = useState(false);
   const [showmodal, setshowmodal] = useState(false);
   const [evemnsdata, setevemnsdata] = useState([]);
   const [markeddata, setmarkeddata] = useState([]);
-  const [newEventsData, setNewEventsData] = useState([]);
+  const [neweventsdata, setneweventsdata] = useState([]);
   const [newmodal, setnewmodal] = useState(false);
   const [eventtapped, seteventtapped] = useState(null);
   const [selectedItem, setSelectedItem] = useState({});
-
   useEffect(() => {
     const date = new Date();
     let day = date.getDate();
@@ -74,7 +77,6 @@ const CalendarPage = ({ route, navigation }) => {
 
     getevents(monthsarraya);
   }, []);
-
   const getmonts = (months) => {
     setvisiblemonths(months);
     setisspinner(false);
@@ -93,6 +95,7 @@ const CalendarPage = ({ route, navigation }) => {
         .format('YYYY-MM-DD HH:mm:ss'),
       toDate: moment(enddate).endOf('month').format('YYYY-MM-DD HH:mm:ss'),
     };
+    console.log('dfjdflkjdf', data);
     getschedulefiltered({
       dispatch,
       data: data,
@@ -103,59 +106,122 @@ const CalendarPage = ({ route, navigation }) => {
     return self.indexOf(value) === index;
   };
   useEffect(() => {
-    if (scheduledata && scheduledata?.length > 0) {
-      var newarray = [];
-      scheduledata?.map((res, i) => {
-        newarray.push(moment.utc(res.scheduleDate).format('YYYY-MM-DD'));
-      });
-      const uniqueAges = newarray?.filter(unique);
+    if (Object.keys(scheduledata).length) {
       var newobj = {};
       var newmarkedobjarr = {};
-      uniqueAges.map((res, i) => {
-        var subobjarr = [];
-        scheduledata.map((newres, i) => {
-          if (res === moment.utc(newres.scheduleDate).format('YYYY-MM-DD')) {
-            subobjarr.push(newres);
-          }
+      if (scheduledata && scheduledata?.userSchedules.length > 0) {
+        var newarray = [];
+        scheduledata?.userSchedules.map((res, i) => {
+          newarray.push(moment.utc(res.scheduleDate).format('YYYY-MM-DD'));
         });
-        newobj[res] = subobjarr;
-      });
-      uniqueAges.map((res, i) => {
-        var newmarkedobj = {};
-        scheduledata.map((newres, i) => {
-          if (res === moment.utc(newres.scheduleDate).format('YYYY-MM-DD')) {
-            newmarkedobj = {
-              customStyles: {
-                container: {
-                  backgroundColor: COLORS.appSecondaryColor,
-                },
-                text: {
-                  color: 'white',
-                  fontWeight: 'bold',
-                },
-              },
-            };
-          }
+        console.log(
+          'dkflasdfjlkdsflkdsjfdfd                    ',
+          scheduledata
+        );
+        const uniqueAges = newarray?.filter(unique);
+
+        var newmarkedarray = [];
+        var newitemsarray = [];
+
+        uniqueAges.map((res, i) => {
+          var subobjarr = [];
+          scheduledata.userSchedules.map((newres, i) => {
+            if (res === moment.utc(newres.scheduleDate).format('YYYY-MM-DD')) {
+              subobjarr.push(newres);
+            }
+          });
+          newobj[res] = subobjarr;
         });
-        newmarkedobjarr[res] = newmarkedobj;
-      });
+        uniqueAges.map((res, i) => {
+          var newmarkedobj = {};
+          scheduledata.userSchedules.map((newres, i) => {
+            if (res === moment.utc(newres.scheduleDate).format('YYYY-MM-DD')) {
+              newmarkedobj = {
+                customStyles: {
+                  container: {
+                    backgroundColor: '#7cb5ec',
+                  },
+                  text: {
+                    color: 'white',
+                    fontWeight: 'bold',
+                  },
+                },
+              };
+            }
+          });
+          newmarkedobjarr[res] = newmarkedobj;
+        });
+      }
+      if (scheduledata && scheduledata?.userAnnouncements.length > 0) {
+        //alert(JSON.stringify(scheduledata.userAnnouncements));
+        var newarray = [];
+        scheduledata?.userAnnouncements.map((res, i) => {
+          newarray.push(moment.utc(res.scheduleDate).format('YYYY-MM-DD'));
+        });
+        const uniqueAges = newarray?.filter(unique);
+        // var newobj = {};
+        //var newmarkedobjarr = {};
+        uniqueAges.map((res, i) => {
+          var subobjarr = [];
+          scheduledata.userAnnouncements.map((newres, i) => {
+            if (res === moment.utc(newres.scheduleDate).format('YYYY-MM-DD')) {
+              subobjarr.push(newres);
+            }
+          });
+          newobj[res] = subobjarr;
+        });
+        uniqueAges.map((res, i) => {
+          var newmarkedobj = {};
+          scheduledata.userAnnouncements.map((newres, i) => {
+            if (res === moment.utc(newres.scheduleDate).format('YYYY-MM-DD')) {
+              newmarkedobj = {
+                customStyles: {
+                  container: {
+                    backgroundColor: COLORS.appSecondaryColor,
+                  },
+                  text: {
+                    color: 'white',
+                    fontWeight: 'bold',
+                  },
+                },
+              };
+            }
+          });
+
+          newmarkedobjarr[res] = newmarkedobj;
+        });
+      }
       setevemnsdata(newobj);
       setmarkeddata(newmarkedobjarr);
     }
   }, [scheduledata]);
   const onDayPress = (day) => {
+    //data => moment(data.scheduleDate).format('YYYY-MM-DD') === day.dateStringconst result
     var result = [];
-    if (Object?.keys(evemnsdata).length > 0) {
-      const keys = Object?.keys(evemnsdata);
+    // console.log('dattaaa', day, this.state.evemnsdata);
+    if (Object.keys(evemnsdata).length > 0) {
+      const keys = Object.keys(evemnsdata);
       keys.forEach((key, index) => {
-        if (key === day?.dateString) {
+        if (key === day.dateString) {
           result = evemnsdata[key];
         }
       });
-      setNewEventsData(result);
-      setnewmodal(true);
+      // console.log('result', result);
+      //  if(result.length > 0){
+      if (result[0].scheduleType === 'topic') {
+        setneweventsdata(result);
+        setnewmodal(true);
+      } else {
+        setneweventsdata(result);
+        setnewmodal(true);
+      }
+
+      // this.setState({ neweventsdata: result }, () => {
+      //   this.setState({ newmodal: true });
+      // });
+      // //  }
     } else {
-      setNewEventsData([]);
+      setneweventsdata([]);
       setnewmodal(true);
     }
   };
@@ -187,6 +253,7 @@ const CalendarPage = ({ route, navigation }) => {
     );
   };
   const renderEmptyDate = () => {
+    // console.log('dknkldnfdf');
     return (
       <View
         style={{ height: 15, flex: 1, alignItems: 'center', marginTop: 30 }}
@@ -221,75 +288,131 @@ const CalendarPage = ({ route, navigation }) => {
             fontSize: 20,
           }}
         >
-          {t('cancel')}
+          CANCEL
         </Text>
       </TouchableOpacity>
     );
   };
   const newrenderitem = ({ item }) => {
-    // var newdate = moment.utc(item.scheduleDate).format('LT')
+    //console.log('itemitem', item);
     var newdate = new Date(item.scheduleDate).setTime(
       new Date(item.scheduleDate).getTime() + 1 * 60 * 60 * 1000
     );
     var enddate = moment.utc(newdate).format('LT');
+    if (item.scheduleType === 'topic') {
+      // var newdate = moment.utc(item.scheduleDate).format('LT')
 
-    var additionalinfo = JSON.parse(item.additionalInfo);
-    return (
-      <View style={{ height: 90, marginBottom: 20 }}>
-        <View
-          style={{ flex: 1, flexDirection: 'row', backgroundColor: 'white' }}
-        >
+      var additionalinfo = JSON.parse(item.additionalInfo);
+      return (
+        <View style={{ height: 90, marginBottom: 20 }}>
           <View
-            style={{
-              flex: 0.25,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
+            style={{ flex: 1, flexDirection: 'row', backgroundColor: 'white' }}
           >
-            <Text style={{ color: COLORS.appSecondaryColor, fontSize: 12 }}>
-              {moment.utc(new Date(item.scheduleDate)).format('MM/DD')}
-            </Text>
-            <Text style={{ color: COLORS.appSecondaryColor, fontSize: 12 }}>
-              {moment.utc(new Date(item.scheduleDate)).format('ddd')}
-            </Text>
-          </View>
-          <View
-            style={{
-              flex: 0.55,
-              justifyContent: 'space-evenly',
-              alignItems: 'flex-start',
-            }}
-          >
-            <Text
+            <View
               style={{
-                fontSize: 15,
-                fontWeight: 'bold',
-                color: COLORS.appSecondaryColor,
+                flex: 0.25,
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
             >
-              {additionalinfo.title}
-            </Text>
-            <Text style={{ fontSize: 13, color: COLORS.appSecondaryColor }}>
-              {moment.utc(item.scheduleDate).format('LT')}-{enddate}
-            </Text>
-          </View>
-          <View
-            style={{
-              flex: 0.2,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => ongo(item)}
-              style={{ backgroundColor: COLORS.appSecondaryColor, padding: 20 }}
+              <Text style={{ color: COLORS.appSecondaryColor, fontSize: 12 }}>
+                {moment.utc(new Date(item.scheduleDate)).format('MM/DD')}
+              </Text>
+              <Text style={{ color: COLORS.appSecondaryColor, fontSize: 12 }}>
+                {moment.utc(new Date(item.scheduleDate)).format('ddd')}
+              </Text>
+            </View>
+            <View
+              style={{
+                flex: 0.55,
+                justifyContent: 'space-evenly',
+                alignItems: 'flex-start',
+              }}
             >
-              <Text style={{ fontWeight: 'bold', color: 'white' }}>GO</Text>
-            </TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                  color: COLORS.appSecondaryColor,
+                }}
+              >
+                {additionalinfo.title}
+              </Text>
+              <Text style={{ fontSize: 13, color: COLORS.appSecondaryColor }}>
+                {moment.utc(item.scheduleDate).format('LT')}-{enddate}
+              </Text>
+            </View>
+            <View
+              style={{
+                flex: 0.2,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => ongo(item)}
+                style={{
+                  backgroundColor: COLORS.appSecondaryColor,
+                  padding: 20,
+                }}
+              >
+                <Text style={{ fontWeight: 'bold', color: 'white' }}>GO</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
-    );
+      );
+    } else {
+      return (
+        <View style={{ height: 90, marginBottom: 20 }}>
+          <View
+            style={{ flex: 1, flexDirection: 'row', backgroundColor: 'white' }}
+          >
+            <View
+              style={{
+                flex: 0.25,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <Text style={{ color: COLORS.appSecondaryColor, fontSize: 12 }}>
+                {moment.utc(new Date(item.fromDate)).format('MM/DD')}
+              </Text>
+              <Text style={{ color: COLORS.appSecondaryColor, fontSize: 12 }}>
+                {moment.utc(new Date(item.fromDate)).format('ddd')}
+              </Text>
+            </View>
+            <View
+              style={{
+                flex: 0.55,
+                justifyContent: 'space-evenly',
+                alignItems: 'flex-start',
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                  color: COLORS.appSecondaryColor,
+                }}
+              >
+                {item.title}
+              </Text>
+              {/* <Text style={{ fontSize: 13, color: COLORS.appSecondaryColor }}>
+                {moment.utc(item.scheduleDate).format('LT')}-{enddate}
+              </Text> */}
+            </View>
+            <View
+              style={{
+                flex: 0.2,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            ></View>
+          </View>
+        </View>
+      );
+    }
   };
   const gotoChaptersPage = async (item) => {
     var additionalitem = JSON.parse(item?.additionalInfo);
@@ -297,13 +420,12 @@ const CalendarPage = ({ route, navigation }) => {
     setSelectedItem(item);
     var subjectId = additionalitem?.subjectId;
     var chapterId = additionalitem?.chapterId;
-    var boardId = user?.userOrg?.boardId;
-    var gradeId = user?.userOrg?.gradeId;
 
     var topicId = item.scheduleTypeId;
     var url =
-      'https://api.iqcandy.com/api/iqcandy' +
-      `/boards/${boardId}/grades/${gradeId}/subjects/${subjectId}/chapters/${chapterId}`;
+      'https://api.myprofessor.in/api/my-professor' +
+      `/universities/${user?.userOrg?.universityId}/branches/${user?.userOrg?.branchId}/semesters/${user?.userOrg?.semesterId}/subjects/${subjectId}/chapters/${chapterId}`;
+    console.log('dckkd', url);
     fetch(url, {
       method: 'GET',
       headers: {
@@ -314,11 +436,14 @@ const CalendarPage = ({ route, navigation }) => {
       .then((response) => response.json())
       .then((json) => {
         if (json) {
+          console.log('Dvnkdsvkl;sd', json);
+
           if (json.data) {
             var chapterDetails = json.data;
             var url =
-              'https://api.iqcandy.com/api/iqcandy' +
-              `/boards/${boardId}/grades/${gradeId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}`;
+              'https://api.myprofessor.in/api/my-professor' +
+              `/universities/${user?.userOrg?.universityId}/branches/${user?.userOrg?.branchId}/semesters/${user?.userOrg?.semesterId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}`;
+            console.log('dckkd', url);
             fetch(url, {
               method: 'GET',
               headers: {
@@ -329,6 +454,8 @@ const CalendarPage = ({ route, navigation }) => {
               .then((response) => response.json())
               .then((json) => {
                 if (json) {
+                  console.log('Dvnkdsvkl;sd', json);
+
                   if (json.data) {
                     additionalitem['topicId'] = item.scheduleTypeId;
                     additionalitem['image'] = json.data.image;
@@ -355,7 +482,6 @@ const CalendarPage = ({ route, navigation }) => {
 
         return false;
       });
-      gotoChaptersPage(item);
 
       return item;
     });
@@ -364,7 +490,7 @@ const CalendarPage = ({ route, navigation }) => {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         {isspinner ? (
-          <Text>{t('loading')}</Text>
+          <Text>Loading</Text>
         ) : (
           <CalendarList
             onVisibleMonthsChange={(months) => {
@@ -392,6 +518,7 @@ const CalendarPage = ({ route, navigation }) => {
               flex: 1,
               justifyContent: 'center',
               alignItems: 'center',
+              backgroundColor: 'red',
             }}
           >
             <View
@@ -465,7 +592,7 @@ const CalendarPage = ({ route, navigation }) => {
                     </TouchableOpacity>
                   </View>
                 ) : (
-                  <Text>{t('nodata')}</Text>
+                  <Text>NoData</Text>
                 )}
               </View>
             </View>
@@ -493,16 +620,16 @@ const CalendarPage = ({ route, navigation }) => {
                 textAlign: 'center',
               }}
             >
-              {t('scheduletopics')}
+              Scheduled Topics
             </Text>
 
-            {newEventsData?.length > 0 ? (
+            {neweventsdata.length > 0 ? (
               <>
                 <FlatList
                   style={{ marginBottom: 30 }}
-                  keyExtractor={(item) => item.additionalInfo.scheduleId}
+                  //  keyExtractor={(item) => item.additionalInfo.scheduleId}
                   ListFooterComponent={renderfootor}
-                  data={newEventsData}
+                  data={neweventsdata}
                   renderItem={newrenderitem}
                 />
               </>
@@ -516,7 +643,7 @@ const CalendarPage = ({ route, navigation }) => {
                       fontSize: 18,
                     }}
                   >
-                    {t('noevents')}
+                    No Events
                   </Text>
                 </View>
                 <TouchableOpacity
@@ -538,7 +665,7 @@ const CalendarPage = ({ route, navigation }) => {
                       fontSize: 20,
                     }}
                   >
-                    {t('cancel')}
+                    CANCEL
                   </Text>
                 </TouchableOpacity>
               </>
