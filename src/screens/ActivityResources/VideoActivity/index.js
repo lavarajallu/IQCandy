@@ -138,40 +138,55 @@ const VideoActivity = ({ route, navigation }) => {
       setvideoquestionsdata(newdata);
     }
   }, [videoquestionsdata]);
+
   useEffect(() => {
     if (videoActivityData && Object.keys(videoActivityData).length > 0) {
       if (data.activityType === 'conceptual_video') {
-        var VIMEO_ID = getVideoId(videoActivityData.url);
-        fetch(`https://player.vimeo.com/video/${VIMEO_ID.id}/config`, {
-          method: 'GET',
-          headers: {
-            Referer: 'https://login.iqcandy.com/',
-          },
-        })
-          .then((res) => res.json())
-          .then((res) => {
-            if (res.title === 'Sorry') {
-              setnormalvideodata(videoActivityData);
-            } else {
-              setnormalvideodata(videoActivityData);
-              setvimeothumbnailurl(res.video.thumbs['640']);
-              setvimeourl(
-                res.request.files.hls.cdns[res.request.files.hls.default_cdn]
-                  .url
-              );
-              setvimeovideo(res.video);
-            }
+        const VIMEO_ID = getVideoId(videoActivityData?.url);
+        if (VIMEO_ID.id) {
+          fetch(`https://player.vimeo.com/video/${VIMEO_ID.id}/config`, {
+            method: 'GET',
+            headers: {
+              Referer: 'https://login.iqcandy.com/',
+            },
           })
-          .catch((err) => {
-            setnormalvideodata(videoActivityData);
-          });
+            .then((res) => {
+              if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+              }
+              return res.json();
+            })
+            .then((res) => {
+              console.log('Vimeo Response:', res);
+
+              if (res.title === 'Sorry') {
+                // Handle case where video is restricted or unavailable
+                setnormalvideodata(videoActivityData);
+              } else {
+                // Update state with Vimeo data
+                setnormalvideodata(videoActivityData);
+                setvimeothumbnailurl(res.video.thumbs['640']);
+                setvimeourl(
+                  res.request.files.hls.cdns[res.request.files.hls.default_cdn]
+                    .url
+                );
+                setvimeovideo(res.video);
+              }
+            })
+            .catch((err) => {
+              console.error('Error fetching Vimeo data:', JSON.stringify(err));
+              setnormalvideodata(videoActivityData); // Fallback to normal video data
+            });
+        } else {
+          console.error('Invalid Vimeo URL:', videoActivityData.url);
+          setnormalvideodata(videoActivityData); // Fallback to normal video data
+        }
       } else {
         setnormalvideodata(videoActivityData);
       }
-
-      // setnormalvideodata(videoActivityData);
     }
   }, [videoActivityData]);
+
   const onActivityNext = (currentTime, duration) => {
     if (currentTime) {
       updateAnalytics(currentTime, duration);

@@ -29,8 +29,8 @@ const Login = ({ navigation }) => {
 
   const dispatch = useDispatch();
   const { authentiCation } = imagePaths;
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('student2@iqcandy.com');
+  const [password, setPassword] = useState('IQcandy@2023');
   // Loading state
   const [pushtoken, setPushToken] = useState('');
   const [loading, setLoading] = useState(false);
@@ -54,6 +54,11 @@ const Login = ({ navigation }) => {
       }
     });
   }, []);
+
+  const handleLoader = () => {
+    setLoading(false);
+  };
+
   //Inside the component where you handle login logic
   const handleLogin = async () => {
     // Validate email
@@ -101,7 +106,7 @@ const Login = ({ navigation }) => {
       deviceToken: pushtoken,
     };
 
-    await loginUser({ data: reqPayload, navigation, dispatch });
+    await loginUser({ data: reqPayload, navigation, dispatch, handleLoader });
     setLoading(false);
   };
   const onCheck = async (value) => {
