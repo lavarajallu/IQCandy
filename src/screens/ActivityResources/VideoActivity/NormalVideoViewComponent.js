@@ -302,25 +302,30 @@ const NormalVideoViewComponent = (props) => {
       >
         <View style={{ flex: 1 }}>
           <View style={{ flex: 1 }}>
-            {/* <WebView
-              source={{ uri: 'https://player.vimeo.com/video/347119375' }} // Use Vimeo player URL with video ID
-              style={{ flex: 1 }}
-              javaScriptEnabled={true}
-              domStorageEnabled={true}
-              mediaPlaybackRequiresUserAction={false} // Allow autoplay
-              onError={(e) =>
-                console.log('Error loading video:', e.nativeEvent)
-              }
-              onLoadEnd={() => console.log('Video loaded successfully')}
-            /> */}
-            {Vimeo && props.activityType === 'conceptual_video' ? (
-              <Vimeo
-                videoId={getVideoId(props.data.url)} // Pass the video ID as a prop
+            {props?.activityType === 'conceptual_video' ? (
+              <WebView
+                source={{
+                  uri: `https://player.vimeo.com/video/${
+                    getVideoId(props.data.url)?.id
+                  }`,
+                }} // Use Vimeo player URL with video ID: public 76979871
+                style={{ flex: 1 }}
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
+                mediaPlaybackRequiresUserAction={false} // Allow autoplay
+                onError={(e) =>
+                  console.log('Error loading video:', e.nativeEvent)
+                }
+                onLoadEnd={() => console.log('Video loaded successfully')}
+              />
+            ) : (
+              /* <Vimeo
+                videoId={getVideoId(props.data.url)?.id}
+                //videoId={getVideoId(props.data.url)} // Pass the video ID as a prop
                 style={styles.video} // Optional: styling the iframe
                 params={'api=1&autoplay=0'}
                 handlers={videoCallbacks}
-              />
-            ) : (
+              /> */
               <Video
                 source={{
                   uri: normaldata.url,

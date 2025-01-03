@@ -50,7 +50,7 @@ const MyCourses = (props) => {
       dispatch,
       userId: user?.userInfo?.userId,
     });
-  }, [user]);
+  }, []);
 
   const gotoChaptersPage = (item) => {
     navigation.navigate('MyChapters', { subjectItem: item });
