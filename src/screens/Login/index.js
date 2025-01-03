@@ -29,8 +29,8 @@ const Login = ({ navigation }) => {
 
   const dispatch = useDispatch();
   const { authentiCation } = imagePaths;
-  const [email, setEmail] = useState('student2@iqcandy.com');
-  const [password, setPassword] = useState('IQcandy@2023');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   // Loading state
   const [pushtoken, setPushToken] = useState('');
   const [loading, setLoading] = useState(false);
