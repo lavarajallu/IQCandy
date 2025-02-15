@@ -192,6 +192,7 @@ const ActivityResources = ({ route, navigation }) => {
       let payload = {
         userId: user?.userInfo.userId,
         scheduleType: 'topic',
+        userType: user?.role?.roleName,
         scheduleTypeId: topicItem.topicId,
         scheduleDate: dataFormat,
         additionalInfo: JSON.stringify({
@@ -200,6 +201,7 @@ const ActivityResources = ({ route, navigation }) => {
           title: topicItem?.topicName,
         }),
       };
+      console.log('dmmm///////', payload);
       addtocalenderPost({
         dispatch,
         userId: user?.userInfo?.userId,
@@ -234,12 +236,14 @@ const ActivityResources = ({ route, navigation }) => {
       scheduleType: 'topic',
       scheduleTypeId: topicItem.topicId,
       scheduleDate: dataFormat,
+      userType: user?.role?.roleName,
       additionalInfo: JSON.stringify({
         subjectId: subjectId,
         chapterId: chapterId,
         title: topicItem?.topicName,
       }),
     };
+    console.log('updateeeee', scheduledata.id, payload);
     addtocalenderPut({
       dispatch,
       userId: user?.userInfo?.userId,
@@ -343,6 +347,7 @@ const ActivityResources = ({ route, navigation }) => {
           scheduleType: 'topic',
           scheduleTypeId: topicItem.topicId,
           scheduleDate: dataFormat,
+          userType: user?.role?.roleName,
           additionalInfo: JSON.stringify({
             semesterId: user?.userOrg.semesterId,
             subjectId: subjectId,
@@ -350,6 +355,7 @@ const ActivityResources = ({ route, navigation }) => {
             title: topicItem?.topicName,
           }),
         };
+        console.log('dflkafkdf.dmf.,df', payload);
         addtocalenderPost({
           dispatch,
           userId: user?.userInfo?.userId,

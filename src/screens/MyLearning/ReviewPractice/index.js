@@ -47,6 +47,7 @@ const ReviewPractice = ({ route, navigation }) => {
     // return true;
   };
   useState(() => {
+    console.log('useruseruser', user);
     var userId = user?.userInfo.userId;
     var universityId = user?.userOrg.universityId;
     var subjectId = route.params.data.subjectId;
@@ -64,6 +65,7 @@ const ReviewPractice = ({ route, navigation }) => {
       type = 'Subject';
       url = `/universities/${universityId}/subjects/${subjectId}/practice-tests/${type}/list?userId=${userId}`;
     }
+    console.log('dlkflkdflkdflkdf//////////////////', url);
     getassesmentsdatapractice({
       dispatch,
       userId: user?.userInfo?.userId,
@@ -89,6 +91,7 @@ const ReviewPractice = ({ route, navigation }) => {
     navigation.navigate('PracticeSummary', {
       data: item,
       testId: item.userTestId,
+      subjectData: route?.params.subjectData,
     });
   };
   return (
@@ -96,105 +99,107 @@ const ReviewPractice = ({ route, navigation }) => {
       <Header backAction={backAction} headerTitle={'Review Tests'} />
       <ScrollView style={styles.mainview}>
         {assesmentDataPractice.length > 0
-          ? assesmentDataPractice.filter(function(itm){
-            return itm.status === 'completed';
-          }) .map((item, i) => (
-              <TouchableOpacity
-                key={i}
-                onPress={() => onTest(item)}
-                style={styles.itemview}
-              >
-                <Text style={styles.itemtext}>
-                  {'Test'} {i + 1}{' '}
-                </Text>
-                <View style={styles.itembottomview}>
-                  <View style={styles.itemsubview}>
-                    {/* {analysis.map((res,j)=> */}
-                    <View>
-                      <View style={styles.progressview}>
-                        <View
-                          style={[
-                            styles.progresssubview,
-                            {
-                              backgroundColor:
-                                item.analysis === 'Poor' ? '#c54721' : 'grey',
-                            },
-                          ]}
-                        />
-                        <View style={styles.emptyview} />
+          ? assesmentDataPractice
+              .filter(function (itm) {
+                return itm.status === 'completed';
+              })
+              .map((item, i) => (
+                <TouchableOpacity
+                  key={i}
+                  onPress={() => onTest(item)}
+                  style={styles.itemview}
+                >
+                  <Text style={styles.itemtext}>
+                    {'Test'} {i + 1}{' '}
+                  </Text>
+                  <View style={styles.itembottomview}>
+                    <View style={styles.itemsubview}>
+                      {/* {analysis.map((res,j)=> */}
+                      <View>
+                        <View style={styles.progressview}>
+                          <View
+                            style={[
+                              styles.progresssubview,
+                              {
+                                backgroundColor:
+                                  item.analysis === 'Poor' ? '#c54721' : 'grey',
+                              },
+                            ]}
+                          />
+                          <View style={styles.emptyview} />
+                        </View>
+                        <Text style={styles.analysistext}>{'Poor'}</Text>
                       </View>
-                      <Text style={styles.analysistext}>{'Poor'}</Text>
+                      {/* )} */}
                     </View>
-                    {/* )} */}
-                  </View>
-                  <View style={styles.itemsubview}>
-                    {/* {analysis.map((res,j)=> */}
-                    <View>
-                      <View style={styles.progressview}>
-                        <View
-                          style={[
-                            styles.progresssubview,
-                            {
-                              backgroundColor:
-                                item.analysis === 'Average'
-                                  ? '#d88414'
-                                  : 'grey',
-                            },
-                          ]}
-                        />
-                        <View style={styles.emptyview} />
+                    <View style={styles.itemsubview}>
+                      {/* {analysis.map((res,j)=> */}
+                      <View>
+                        <View style={styles.progressview}>
+                          <View
+                            style={[
+                              styles.progresssubview,
+                              {
+                                backgroundColor:
+                                  item.analysis === 'Average'
+                                    ? '#d88414'
+                                    : 'grey',
+                              },
+                            ]}
+                          />
+                          <View style={styles.emptyview} />
+                        </View>
+                        <Text style={styles.analysistext}>{'Average'}</Text>
                       </View>
-                      <Text style={styles.analysistext}>{'Average'}</Text>
+                      {/* )} */}
                     </View>
-                    {/* )} */}
-                  </View>
-                  <View style={styles.itemsubview}>
-                    {/* {analysis.map((res,j)=> */}
-                    <View>
-                      <View style={styles.progressview}>
-                        <View
-                          style={[
-                            styles.progresssubview,
-                            {
-                              backgroundColor:
-                                item.analysis === 'Fair' ? '#267093' : 'grey',
-                            },
-                          ]}
-                        />
-                        <View style={styles.emptyview} />
+                    <View style={styles.itemsubview}>
+                      {/* {analysis.map((res,j)=> */}
+                      <View>
+                        <View style={styles.progressview}>
+                          <View
+                            style={[
+                              styles.progresssubview,
+                              {
+                                backgroundColor:
+                                  item.analysis === 'Fair' ? '#267093' : 'grey',
+                              },
+                            ]}
+                          />
+                          <View style={styles.emptyview} />
+                        </View>
+                        <Text style={styles.analysistext}>{'Good'}</Text>
                       </View>
-                      <Text style={styles.analysistext}>{'Good'}</Text>
+                      {/* )} */}
                     </View>
-                    {/* )} */}
-                  </View>
-                  <View style={styles.itemsubview}>
-                    {/* {analysis.map((res,j)=> */}
-                    <View>
-                      <View style={styles.progressview}>
-                        <View
-                          style={[
-                            styles.progresssubview,
-                            {
-                              backgroundColor:
-                                item.analysis === 'Good' ? '#a4b96e' : 'grey',
-                            },
-                          ]}
-                        />
-                        <View
-                          style={{
-                            width: 60,
-                            height: 1,
-                            backgroundColor: 'transparent',
-                          }}
-                        />
+                    <View style={styles.itemsubview}>
+                      {/* {analysis.map((res,j)=> */}
+                      <View>
+                        <View style={styles.progressview}>
+                          <View
+                            style={[
+                              styles.progresssubview,
+                              {
+                                backgroundColor:
+                                  item.analysis === 'Good' ? '#a4b96e' : 'grey',
+                              },
+                            ]}
+                          />
+                          <View
+                            style={{
+                              width: 60,
+                              height: 1,
+                              backgroundColor: 'transparent',
+                            }}
+                          />
+                        </View>
+                        <Text style={styles.analysistext}>{'Excellent'}</Text>
                       </View>
-                      <Text style={styles.analysistext}>{'Excellent'}</Text>
+                      {/* )} */}
                     </View>
-                    {/* )} */}
                   </View>
-                </View>
-              </TouchableOpacity>
-            ))
+                </TouchableOpacity>
+              ))
           : null}
       </ScrollView>
     </SafeAreaView>

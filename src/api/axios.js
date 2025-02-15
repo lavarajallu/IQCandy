@@ -61,7 +61,13 @@ axiosInstance.interceptors.response.use(
 );
 
 // Update makeApiCall to use Axios
-const makeApiCall = async (endpoint, method = 'GET', body = null) => {
+const makeApiCall = async (
+  endpoint,
+  method = 'GET',
+  body = null,
+  payload,
+  pageName
+) => {
   try {
     const response = await axiosInstance.request({
       url: endpoint,
@@ -71,6 +77,9 @@ const makeApiCall = async (endpoint, method = 'GET', body = null) => {
 
     return response;
   } catch (error) {
+    if (pageName === 'loginPage') {
+      payload.handleLoader();
+    }
     console.error('Error during API call:', error);
     throw error;
   }

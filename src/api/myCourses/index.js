@@ -34,7 +34,7 @@ import {
   setytvideoActivitydata,
   setvalidatevideoquestiona,
   setvideoquestionassesdata,
-  setVideoquestionsvideopro
+  setVideoquestionsvideopro,
 } from '../../store/student/myCourses/slice';
 
 const getSubjects = async (payload) => {
@@ -176,6 +176,7 @@ const addtocalenderPost = async (payload) => {
   // Check for success and handle accordingly
   if (response) {
     const { data } = response;
+    console.log('/////////', response);
     payload.dispatch(setCalenderData(data));
   }
 };
@@ -186,8 +187,10 @@ const addtocalenderPut = async (payload) => {
   const body = payload.data;
   const response = await makeApiCall(endpoint, method, body);
   // Check for success and handle accordingly
+  console.log('put.......', response);
   if (response) {
     const { data } = response;
+    console.log('put.......', response);
     payload.dispatch(setaddtocalenderPut(data));
   }
 };
@@ -347,7 +350,7 @@ const validatevideoquestiona = async (payload) => {
   const endpoint = myCourses.validatevideoquestiona(payload);
   const method = 'POST';
   const body = payload.data;
-  const response = await makeApiCall(endpoint, method,body);
+  const response = await makeApiCall(endpoint, method, body);
   // Check for   success and handle accordingly
 
   if (response) {
@@ -483,6 +486,5 @@ export {
   getrecommendedtopicActivities,
   getVideoquestions,
   getAssessmentTestQuestionRequest,
- getVideoquestionsvideopro 
-
+  getVideoquestionsvideopro,
 };

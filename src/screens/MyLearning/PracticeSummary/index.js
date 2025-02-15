@@ -34,7 +34,10 @@ const PracticeSummary = ({ route, navigation }) => {
   const [testResult, setTestResult] = useState({});
   const { data, testId } = route.params;
   const backAction = () => {
-    goBack(navigation);
+    navigation.navigate('MyPracticeChapters', {
+      subjectItem: route?.params?.subjectData,
+    });
+    //goBack(navigation);
   };
 
   useState(() => {

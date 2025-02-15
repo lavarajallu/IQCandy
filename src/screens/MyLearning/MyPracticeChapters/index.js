@@ -43,6 +43,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
   const { validatePackage } = useSelector(selectValidatePackage);
 
   useEffect(() => {
+    console.log('.....', user);
     if (user) {
       // getValidaPackages({
       //   dispatch,
@@ -55,7 +56,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
         subjectId: subjectItem?.subjectId,
       });
     }
-  }, [user]);
+  }, []);
   useEffect(() => {
     const previousTestsData = chapertsInfo;
 
