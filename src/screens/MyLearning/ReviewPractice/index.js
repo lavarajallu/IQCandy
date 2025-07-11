@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Alert,
   BackHandler,
@@ -11,18 +11,18 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
+} from "react-native";
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
-import { goBack } from '../../../utils/navigationUtils';
-import { COLORS } from '../../../constants/colors';
-import Header from '../../../components/Header';
-import { selectUser } from '../../../store/authManagement/selector';
-import { getassesmentsdatapractice } from '../../../api/myLearning';
-import { selectMyCourses } from '../../../store/student/myCourses/selector';
-import styles from './styles';
-import { selectMyLearning } from '../../../store/student/myLearning/selector';
+import { goBack } from "../../../utils/navigationUtils";
+import { COLORS } from "../../../constants/colors";
+import Header from "../../../components/Header";
+import { selectUser } from "../../../store/authManagement/selector";
+import { getassesmentsdatapractice } from "../../../api/myLearning";
+import { selectMyCourses } from "../../../store/student/myCourses/selector";
+import styles from "./styles";
+import { selectMyLearning } from "../../../store/student/myLearning/selector";
 const ReviewPractice = ({ route, navigation }) => {
   const [isvisible, setisvisible] = useState(false);
   const [testdata, settestdata] = useState([]);
@@ -47,25 +47,28 @@ const ReviewPractice = ({ route, navigation }) => {
     // return true;
   };
   useState(() => {
-    console.log('useruseruser', user);
+    console.log("useruseruser", user);
     var userId = user?.userInfo.userId;
-    var universityId = user?.userOrg.universityId;
+    var universityId = user?.userOrg.universityId
+      ? user?.userOrg.universityId
+      : user?.userOrg?.boardId;
     var subjectId = route.params.data.subjectId;
     var type;
     var body;
     var url;
-    if (route.params.data.testType === 'Chapter') {
-      type = 'Chapter';
+    var typename = user?.userOrg.universityId ? "universities" : "boards";
+    if (route.params.data.testType === "Chapter") {
+      type = "Chapter";
       body = {
         chapterId: route.params.data.chapterId,
       };
       var chapterId = route.params.data.chapterId;
-      url = `/universities/${universityId}/subjects/${subjectId}/practice-tests/${type}/list?userId=${userId}&chapterId=${chapterId}&testType=Chapter`;
+      url = `/${typename}/${universityId}/subjects/${subjectId}/practice-tests/${type}/list?userId=${userId}&chapterId=${chapterId}&testType=Chapter`;
     } else {
-      type = 'Subject';
-      url = `/universities/${universityId}/subjects/${subjectId}/practice-tests/${type}/list?userId=${userId}`;
+      type = "Subject";
+      url = `/${typename}/${universityId}/subjects/${subjectId}/practice-tests/${type}/list?userId=${userId}`;
     }
-    console.log('dlkflkdflkdflkdf//////////////////', url);
+    console.log("dlkflkdflkdflkdf//////////////////", url);
     getassesmentsdatapractice({
       dispatch,
       userId: user?.userInfo?.userId,
@@ -76,7 +79,7 @@ const ReviewPractice = ({ route, navigation }) => {
     var newarra = [];
     if (assesmentDataPractice && assesmentDataPractice.length > 0) {
       assesmentDataPractice.map((res, i) => {
-        if (res.status === 'completed') {
+        if (res.status === "completed") {
           newarra.push(res);
         }
       });
@@ -88,7 +91,7 @@ const ReviewPractice = ({ route, navigation }) => {
     }
   }, [assesmentDataPractice]);
   const onTest = (item) => {
-    navigation.navigate('PracticeSummary', {
+    navigation.navigate("PracticeSummary", {
       data: item,
       testId: item.userTestId,
       subjectData: route?.params.subjectData,
@@ -96,12 +99,12 @@ const ReviewPractice = ({ route, navigation }) => {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <Header backAction={backAction} headerTitle={'Review Tests'} />
+      <Header backAction={backAction} headerTitle={"Review Tests"} />
       <ScrollView style={styles.mainview}>
         {assesmentDataPractice.length > 0
           ? assesmentDataPractice
               .filter(function (itm) {
-                return itm.status === 'completed';
+                return itm.status === "completed";
               })
               .map((item, i) => (
                 <TouchableOpacity
@@ -110,7 +113,7 @@ const ReviewPractice = ({ route, navigation }) => {
                   style={styles.itemview}
                 >
                   <Text style={styles.itemtext}>
-                    {'Test'} {i + 1}{' '}
+                    {"Test"} {i + 1}{" "}
                   </Text>
                   <View style={styles.itembottomview}>
                     <View style={styles.itemsubview}>
@@ -122,13 +125,13 @@ const ReviewPractice = ({ route, navigation }) => {
                               styles.progresssubview,
                               {
                                 backgroundColor:
-                                  item.analysis === 'Poor' ? '#c54721' : 'grey',
+                                  item.analysis === "Poor" ? "#c54721" : "grey",
                               },
                             ]}
                           />
                           <View style={styles.emptyview} />
                         </View>
-                        <Text style={styles.analysistext}>{'Poor'}</Text>
+                        <Text style={styles.analysistext}>{"Poor"}</Text>
                       </View>
                       {/* )} */}
                     </View>
@@ -141,15 +144,15 @@ const ReviewPractice = ({ route, navigation }) => {
                               styles.progresssubview,
                               {
                                 backgroundColor:
-                                  item.analysis === 'Average'
-                                    ? '#d88414'
-                                    : 'grey',
+                                  item.analysis === "Average"
+                                    ? "#d88414"
+                                    : "grey",
                               },
                             ]}
                           />
                           <View style={styles.emptyview} />
                         </View>
-                        <Text style={styles.analysistext}>{'Average'}</Text>
+                        <Text style={styles.analysistext}>{"Average"}</Text>
                       </View>
                       {/* )} */}
                     </View>
@@ -162,13 +165,13 @@ const ReviewPractice = ({ route, navigation }) => {
                               styles.progresssubview,
                               {
                                 backgroundColor:
-                                  item.analysis === 'Fair' ? '#267093' : 'grey',
+                                  item.analysis === "Fair" ? "#267093" : "grey",
                               },
                             ]}
                           />
                           <View style={styles.emptyview} />
                         </View>
-                        <Text style={styles.analysistext}>{'Good'}</Text>
+                        <Text style={styles.analysistext}>{"Good"}</Text>
                       </View>
                       {/* )} */}
                     </View>
@@ -181,7 +184,7 @@ const ReviewPractice = ({ route, navigation }) => {
                               styles.progresssubview,
                               {
                                 backgroundColor:
-                                  item.analysis === 'Good' ? '#a4b96e' : 'grey',
+                                  item.analysis === "Good" ? "#a4b96e" : "grey",
                               },
                             ]}
                           />
@@ -189,11 +192,11 @@ const ReviewPractice = ({ route, navigation }) => {
                             style={{
                               width: 60,
                               height: 1,
-                              backgroundColor: 'transparent',
+                              backgroundColor: "transparent",
                             }}
                           />
                         </View>
-                        <Text style={styles.analysistext}>{'Excellent'}</Text>
+                        <Text style={styles.analysistext}>{"Excellent"}</Text>
                       </View>
                       {/* )} */}
                     </View>

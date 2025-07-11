@@ -1,6 +1,6 @@
 //Post Assessment
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   View,
   Text,
@@ -10,31 +10,31 @@ import {
   Dimensions,
   Button,
   Platform,
-} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
+} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage"; // Make sure to import AsyncStorage or the storage library you're using
 
-import VideoQuestionModal from './VideoQuestionModal';
-import Modal from 'react-native-modal';
-import { goBack } from '../../../utils/navigationUtils';
-import { COLORS } from '../../../constants/colors';
-import Header from '../../../components/Header';
-import NormalVideoViewComponent from './NormalVideoViewComponent';
-import { textContent } from '../../../constants/content';
-import { selectUser } from '../../../store/authManagement/selector';
-import { selectMyCourses } from '../../../store/student/myCourses/selector';
+import VideoQuestionModal from "./VideoQuestionModal";
+import Modal from "react-native-modal";
+import { goBack } from "../../../utils/navigationUtils";
+import { COLORS } from "../../../constants/colors";
+import Header from "../../../components/Header";
+import NormalVideoViewComponent from "./NormalVideoViewComponent";
+import { textContent } from "../../../constants/content";
+import { selectUser } from "../../../store/authManagement/selector";
+import { selectMyCourses } from "../../../store/student/myCourses/selector";
 import {
   getVideoActivityDatayoutube,
   updateanalyticsNotes,
   getAssessmentTestQuestionRequest,
   getVideoquestions,
-} from '../../../api/myCourses';
-import moment from 'moment';
+} from "../../../api/myCourses";
+import moment from "moment";
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-import i18n from '../../../i18n/index1';
-var windowWidth = Dimensions.get('window').width;
-var windowHeight = Dimensions.get('window').height;
+import i18n from "../../../i18n/index1";
+var windowWidth = Dimensions.get("window").width;
+var windowHeight = Dimensions.get("window").height;
 const YtVideoActivity = ({ route, navigation }) => {
   const { questions } = textContent;
   const { topicItem, chapterItem, subjectItem, from, data, data1 } =
@@ -60,7 +60,7 @@ const YtVideoActivity = ({ route, navigation }) => {
   const [videosdata, setvideoquestionsdata] = useState([]);
   const backAction = () => {
     updateAnalytics();
-    navigation.navigate('ActivityResources', {
+    navigation.navigate("ActivityResources", {
       topicItem: route.params.topicItem,
       chapterItem: route.params.chapterItem,
       subjectItem: route.params.subjectItem,
@@ -89,7 +89,7 @@ const YtVideoActivity = ({ route, navigation }) => {
           ? route.params.topicItem.topicId
           : null,
         activityStartedAt: activityStartTime,
-        activityEndedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
+        activityEndedAt: moment().format("YYYY-MM-DD HH:mm:ss"),
         videoWatchedInSec: duration,
         videoPausedAt: newdata,
       };
@@ -112,7 +112,7 @@ const YtVideoActivity = ({ route, navigation }) => {
       activityDimId: activityDimId,
       assignedActivityId: data.assignedActivityId,
     });
-    const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
+    const activityStartTime = moment().format("YYYY-MM-DD HH:mm:ss");
     setactivityStartTime(activityStartTime);
   }, [user]);
   useEffect(() => {
@@ -153,7 +153,7 @@ const YtVideoActivity = ({ route, navigation }) => {
     }
 
     setTimeout(() => {
-      navigation.navigate('ActivityResources', {
+      navigation.navigate("ActivityResources", {
         topicItem: route.params.topicItem,
         chapterItem: route.params.chapterItem,
         subjectItem: route.params.subjectItem,
@@ -198,7 +198,7 @@ const YtVideoActivity = ({ route, navigation }) => {
     if (this.funcComRef) {
       setfullscreen(!showfullscreen);
       // setfullscreen((showfullscreen) => {
-      this.funcComRef('fullscreen', !showfullscreen);
+      this.funcComRef("fullscreen", !showfullscreen);
       //   return !showfullscreen;
       // });
     }
@@ -209,11 +209,11 @@ const YtVideoActivity = ({ route, navigation }) => {
     var index = route.params.index;
     if (newobj) {
       if (
-        newobj.activityType === 'obj' ||
-        newobj.activityType === 'post' ||
-        newobj.activityType === 'sub'
+        newobj.activityType === "obj" ||
+        newobj.activityType === "post" ||
+        newobj.activityType === "sub"
       ) {
-        navigation.navigate('PostAssessment', {
+        navigation.navigate("PostAssessment", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -223,13 +223,13 @@ const YtVideoActivity = ({ route, navigation }) => {
           from: route.params.from,
         });
       } else if (
-        newobj.activityType === 'pdf' ||
-        newobj.activityType === 'HTML5' ||
-        newobj.activityType === 'html5' ||
-        newobj.activityType === 'web' ||
-        newobj.activityType === 'games'
+        newobj.activityType === "pdf" ||
+        newobj.activityType === "HTML5" ||
+        newobj.activityType === "html5" ||
+        newobj.activityType === "web" ||
+        newobj.activityType === "games"
       ) {
-        navigation.navigate('NotesActivity', {
+        navigation.navigate("NotesActivity", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -238,8 +238,8 @@ const YtVideoActivity = ({ route, navigation }) => {
           topicItem: route.params.topicItem,
           from: route.params.from,
         });
-      } else if (newobj.activityType === 'pre') {
-        navigation.navigate('PreAssessment', {
+      } else if (newobj.activityType === "pre") {
+        navigation.navigate("PreAssessment", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -249,10 +249,10 @@ const YtVideoActivity = ({ route, navigation }) => {
           from: route.params.from,
         });
       } else if (
-        newobj.activityType === 'conceptual_video' ||
-        newobj.activityType === 'video'
+        newobj.activityType === "conceptual_video" ||
+        newobj.activityType === "video"
       ) {
-        navigation.navigate('VideoActivity', {
+        navigation.navigate("VideoActivity", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -261,8 +261,8 @@ const YtVideoActivity = ({ route, navigation }) => {
           topicItem: route.params.topicItem,
           from: route.params.from,
         });
-      } else if (newobj.activityType === 'youtube') {
-        navigation.navigate('YtVideoActivity', {
+      } else if (newobj.activityType === "youtube") {
+        navigation.navigate("YtVideoActivity", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -273,7 +273,7 @@ const YtVideoActivity = ({ route, navigation }) => {
         });
       }
     } else {
-      navigation.navigate('ActivityResources', {
+      navigation.navigate("ActivityResources", {
         topicItem: route.params.topicItem,
         chapterItem: route.params.chapterItem,
         subjectItem: route.params.subjectItem,
@@ -287,11 +287,11 @@ const YtVideoActivity = ({ route, navigation }) => {
     var index = route.params.index;
     if (newobj) {
       if (
-        newobj.activityType === 'obj' ||
-        newobj.activityType === 'post' ||
-        newobj.activityType === 'sub'
+        newobj.activityType === "obj" ||
+        newobj.activityType === "post" ||
+        newobj.activityType === "sub"
       ) {
-        navigation.navigate('PostAssessment', {
+        navigation.navigate("PostAssessment", {
           index: index - 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -301,13 +301,13 @@ const YtVideoActivity = ({ route, navigation }) => {
           from: route.params.from,
         });
       } else if (
-        newobj.activityType === 'pdf' ||
-        newobj.activityType === 'HTML5' ||
-        newobj.activityType === 'html5' ||
-        newobj.activityType === 'web' ||
-        newobj.activityType === 'games'
+        newobj.activityType === "pdf" ||
+        newobj.activityType === "HTML5" ||
+        newobj.activityType === "html5" ||
+        newobj.activityType === "web" ||
+        newobj.activityType === "games"
       ) {
-        navigation.navigate('NotesActivity', {
+        navigation.navigate("NotesActivity", {
           index: index - 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -316,18 +316,18 @@ const YtVideoActivity = ({ route, navigation }) => {
           topicItem: route.params.topicItem,
           from: route.params.from,
         });
-      } else if (newobj.activityType === 'pre') {
-        navigation.navigate('ActivityResources', {
+      } else if (newobj.activityType === "pre") {
+        navigation.navigate("ActivityResources", {
           topicItem: route.params.topicItem,
           chapterItem: route.params.chapterItem,
           subjectItem: route.params.subjectItem,
           from: route.params.from,
         });
       } else if (
-        newobj.activityType === 'conceptual_video' ||
-        newobj.activityType === 'video'
+        newobj.activityType === "conceptual_video" ||
+        newobj.activityType === "video"
       ) {
-        navigation.navigate('VideoActivity', {
+        navigation.navigate("VideoActivity", {
           index: index - 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -336,8 +336,8 @@ const YtVideoActivity = ({ route, navigation }) => {
           topicItem: route.params.topicItem,
           from: route.params.from,
         });
-      } else if (newobj.activityType === 'youtube') {
-        navigation.navigate('YtVideoActivity', {
+      } else if (newobj.activityType === "youtube") {
+        navigation.navigate("YtVideoActivity", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -348,7 +348,7 @@ const YtVideoActivity = ({ route, navigation }) => {
         });
       }
     } else {
-      navigation.navigate('ActivityResources', {
+      navigation.navigate("ActivityResources", {
         topicItem: route.params.topicItem,
         chapterItem: route.params.chapterItem,
         subjectItem: route.params.subjectItem,
@@ -358,15 +358,19 @@ const YtVideoActivity = ({ route, navigation }) => {
   };
   const onquestionSubmit = (value) => {
     setnewmodal(false);
-    this.funcComRef('questionsubmit', value);
+    if (this.funcComRef) {
+      this.funcComRef("questionsubmit", value);
+    }
   };
   const onRewatch = () => {
     setnewmodal(false);
-    this.funcComRef('rewatch', newdata);
+    if (this.funcComRef) {
+      this.funcComRef("rewatch", newdata);
+    }
   };
   const onback = () => {
     if (this.funcComRef) {
-      this.funcComRef('gettime', 'Val');
+      this.funcComRef("gettime", "Val");
     } else {
       goBack(navigation);
     }
@@ -376,11 +380,11 @@ const YtVideoActivity = ({ route, navigation }) => {
   var height;
   if (showfullscreen) {
     stylefull = {
-      height: showfullscreen ? '100%' : '80%',
-      alignSelf: 'center',
-      backgroundColor: 'white',
+      height: showfullscreen ? "100%" : "80%",
+      alignSelf: "center",
+      backgroundColor: "white",
       borderRadius: 20,
-      width: '95%',
+      width: "95%",
       // flex: 0.85,
       // backgroundColor: COLORS.whiteColor,
       // marginHorizontal: windowWidth * 0.03,
@@ -415,7 +419,7 @@ const YtVideoActivity = ({ route, navigation }) => {
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
       {showfullscreen ? null : (
-        <Header backAction={onback} headerTitle={'Youtube Video Activity'} />
+        <Header backAction={onback} headerTitle={"Youtube Video Activity"} />
       )}
       <View style={stylefull}>
         {normalvideodata ? (
@@ -437,22 +441,22 @@ const YtVideoActivity = ({ route, navigation }) => {
           <View
             style={{
               flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <Text style={{ fontSize: 15 }}>{t('loading')}</Text>
+            <Text style={{ fontSize: 15 }}>{t("loading")}</Text>
           </View>
         )}
       </View>
       {showfullscreen ? null : (
         <View
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
+            flexDirection: "row",
+            justifyContent: "space-between",
             marginLeft: 10,
             marginRight: 10,
-            alignItems: 'center',
+            alignItems: "center",
           }}
         >
           <TouchableOpacity
@@ -460,20 +464,20 @@ const YtVideoActivity = ({ route, navigation }) => {
             style={{
               height: 30,
               borderRadius: 20,
-              backgroundColor: 'white',
+              backgroundColor: "white",
               paddingHorizontal: 20,
-              justifyContent: 'center',
-              alignItems: 'center',
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             <Text
               style={{
-                textAlign: 'center',
+                textAlign: "center",
                 fontSize: 14,
                 color: COLORS.appSecondaryColor,
               }}
             >
-              {t('previousactivity')}
+              {t("previousactivity")}
             </Text>
           </TouchableOpacity>
 
@@ -482,31 +486,31 @@ const YtVideoActivity = ({ route, navigation }) => {
             style={{
               height: 30,
               borderRadius: 20,
-              backgroundColor: 'white',
+              backgroundColor: "white",
               paddingHorizontal: 20,
-              justifyContent: 'center',
-              alignItems: 'center',
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             {route.params.smartres[route.params.index + 1] ? (
               <Text
                 style={{
-                  textAlign: 'center',
+                  textAlign: "center",
                   fontSize: 14,
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                {t('nextactivity')}
+                {t("nextactivity")}
               </Text>
             ) : (
               <Text
                 style={{
-                  textAlign: 'center',
+                  textAlign: "center",
                   fontSize: 14,
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                {t('done')}
+                {t("done")}
               </Text>
             )}
           </TouchableOpacity>
@@ -516,8 +520,8 @@ const YtVideoActivity = ({ route, navigation }) => {
         <View
           style={{
             flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <VideoQuestionModal
@@ -536,13 +540,13 @@ const YtVideoActivity = ({ route, navigation }) => {
 
 export default YtVideoActivity;
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 const styless = StyleSheet.create({
   headerText: {
     fontSize: 16,
-    fontWeight: '700',
-    fontFamily: 'mulish-bold',
+    fontWeight: "700",
+    fontFamily: "mulish-bold",
     color: COLORS.whiteColor,
   },
   container: {

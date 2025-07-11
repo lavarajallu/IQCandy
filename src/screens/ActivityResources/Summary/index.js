@@ -1,6 +1,6 @@
 //Summary
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   View,
   SafeAreaView,
@@ -9,20 +9,20 @@ import {
   TouchableOpacity,
   Text,
   ScrollView,
-} from 'react-native';
-import { useTranslation } from 'react-i18next';
+} from "react-native";
+import { useTranslation } from "react-i18next";
 
-import { goBack } from '../../../utils/navigationUtils';
-import { COLORS } from '../../../constants/colors';
-import Header from '../../../components/Header';
-import { textContent } from '../../../constants/content';
-import PerformancesCard from '../../../components/PerformancesCard';
-import AttemptsAnalysisCard from '../../../components/AttemptsAnalysisCard';
-import TimeSpentCard from '../../../components/TimeSpentCard';
-import { selectUser } from '../../../store/authManagement/selector';
-import { selectMyCourses } from '../../../store/student/myCourses/selector';
-import { getsummaryreport } from '../../../api/myCourses';
-import i18n from '../../../i18n/index1';
+import { goBack } from "../../../utils/navigationUtils";
+import { COLORS } from "../../../constants/colors";
+import Header from "../../../components/Header";
+import { textContent } from "../../../constants/content";
+import PerformancesCard from "../../../components/PerformancesCard";
+import AttemptsAnalysisCard from "../../../components/AttemptsAnalysisCard";
+import TimeSpentCard from "../../../components/TimeSpentCard";
+import { selectUser } from "../../../store/authManagement/selector";
+import { selectMyCourses } from "../../../store/student/myCourses/selector";
+import { getsummaryreport } from "../../../api/myCourses";
+import i18n from "../../../i18n/index1";
 const Summary = ({ route, navigation }) => {
   const { questions } = textContent;
   const { user } = useSelector(selectUser);
@@ -34,14 +34,15 @@ const Summary = ({ route, navigation }) => {
   const [testResult, setTestResult] = useState({});
   const { data, testId } = route.params;
   const backAction = () => {
-    if (route.params.screen === 'reviewtests') {
+    //alert("hiii");
+    if (route.params.screen === "reviewtests") {
       goBack(navigation);
     } else {
-      navigation.navigate('ActivityResources', {
+      navigation.navigate("ActivityResources", {
         topicItem: route.params.topicItem,
         chapterItem: route.params.chapterItem,
         subjectItem: route.params.subjectItem,
-        from: 'topics',
+        from: "topics",
       });
     }
   };
@@ -52,11 +53,11 @@ const Summary = ({ route, navigation }) => {
     var index = route.params.index;
     if (newobj) {
       if (
-        newobj.activityType === 'obj' ||
-        newobj.activityType === 'post' ||
-        newobj.activityType === 'sub'
+        newobj.activityType === "obj" ||
+        newobj.activityType === "post" ||
+        newobj.activityType === "sub"
       ) {
-        navigation.navigate('PostAssessment', {
+        navigation.navigate("PostAssessment", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -66,13 +67,13 @@ const Summary = ({ route, navigation }) => {
           from: route.params.from,
         });
       } else if (
-        newobj.activityType === 'pdf' ||
-        newobj.activityType === 'HTML5' ||
-        newobj.activityType === 'html5' ||
-        newobj.activityType === 'web' ||
-        newobj.activityType === 'games'
+        newobj.activityType === "pdf" ||
+        newobj.activityType === "HTML5" ||
+        newobj.activityType === "html5" ||
+        newobj.activityType === "web" ||
+        newobj.activityType === "games"
       ) {
-        navigation.navigate('NotesActivity', {
+        navigation.navigate("NotesActivity", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -81,8 +82,8 @@ const Summary = ({ route, navigation }) => {
           topicItem: route.params.topicItem,
           from: route.params.from,
         });
-      } else if (newobj.activityType === 'pre') {
-        navigation.navigate('PreAssessment', {
+      } else if (newobj.activityType === "pre") {
+        navigation.navigate("PreAssessment", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -92,10 +93,10 @@ const Summary = ({ route, navigation }) => {
           from: route.params.from,
         });
       } else if (
-        newobj.activityType === 'conceptual_video' ||
-        newobj.activityType === 'video'
+        newobj.activityType === "conceptual_video" ||
+        newobj.activityType === "video"
       ) {
-        navigation.navigate('VideoActivity', {
+        navigation.navigate("VideoActivity", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -104,8 +105,8 @@ const Summary = ({ route, navigation }) => {
           topicItem: route.params.topicItem,
           from: route.params.from,
         });
-      } else if (newobj.activityType === 'youtube') {
-        navigation.navigate('YtVideoActivity', {
+      } else if (newobj.activityType === "youtube") {
+        navigation.navigate("YtVideoActivity", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -116,11 +117,11 @@ const Summary = ({ route, navigation }) => {
         });
       }
     } else {
-      navigation.navigate('ActivityResources', {
+      navigation.navigate("ActivityResources", {
         topicItem: route.params.topicItem,
         chapterItem: route.params.chapterItem,
         subjectItem: route.params.subjectItem,
-        from: 'topics',
+        from: "topics",
       });
     }
   };
@@ -149,33 +150,33 @@ const Summary = ({ route, navigation }) => {
         let resultObj = { ...previousAssessmentTestData };
         let wrongAnsCount = resultObj.questions.filter(
           (q) =>
-            q.analysis === 'Lost' ||
-            q.analysis === 'Un Answered' ||
-            q.analysis === 'Extra Time'
+            q.analysis === "Lost" ||
+            q.analysis === "Un Answered" ||
+            q.analysis === "Extra Time"
         ).length;
         let correctAnsCount = resultObj.questions.filter(
           (q) =>
-            q.analysis !== 'Lost' &&
-            q.analysis !== 'Un Answered' &&
-            q.analysis !== 'Extra Time'
+            q.analysis !== "Lost" &&
+            q.analysis !== "Un Answered" &&
+            q.analysis !== "Extra Time"
         ).length;
         let lostCount = resultObj.questions.filter(
-          (q) => q.analysis === 'Lost' || q.analysis === null
+          (q) => q.analysis === "Lost" || q.analysis === null
         ).length;
         let extraCount = resultObj.questions.filter(
-          (q) => q.analysis === 'Extra Time'
+          (q) => q.analysis === "Extra Time"
         ).length;
         let unAnsCount = resultObj.questions.filter(
-          (q) => q.analysis === 'Un Answered'
+          (q) => q.analysis === "Un Answered"
         ).length;
         let lighteningCount = resultObj.questions.filter(
-          (q) => q.analysis === 'Lightning Fast'
+          (q) => q.analysis === "Lightning Fast"
         ).length;
         let shotCount = resultObj.questions.filter(
-          (q) => q.analysis === 'What a Timing/ Shot'
+          (q) => q.analysis === "What a Timing/ Shot"
         ).length;
         let extraInningCount = resultObj.questions.filter(
-          (q) => q.analysis === 'Extra Innings/ Time'
+          (q) => q.analysis === "Extra Innings/ Time"
         ).length;
         resultObj.wrongAnsCount = wrongAnsCount;
         resultObj.correctAnsCount = correctAnsCount;
@@ -190,12 +191,12 @@ const Summary = ({ route, navigation }) => {
     }
   }, [summaryData]);
   const onViewSolutions = () => {
-    navigation.navigate('ReviewAnswers', {
+    navigation.navigate("ReviewAnswers", {
       activtydata: route.params.data,
       testid: route.params.testId,
       data: route.params.topicItem,
       topicsdata: route.params.chapterItem,
-      screen: 'summary',
+      screen: "summary",
       subjectData: route.params.subjectItem,
       from: route.params.from,
     });
@@ -204,40 +205,40 @@ const Summary = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={t('summary')} />
+      <Header backAction={backAction} headerTitle={t("summary")} />
 
       <View style={[styles.container, styles.shadowProp]}>
         <ScrollView>
           <View
-            style={{ flexDirection: 'column', justifyContent: 'space-evenly' }}
+            style={{ flexDirection: "column", justifyContent: "space-evenly" }}
           >
             {/* Performance Card View */}
 
             <PerformancesCard
-              cardTitle={t('performance')}
+              cardTitle={t("performance")}
               size={width / 1.8}
               minValue={0}
               maxValue={100}
               easeDuration={500}
               value={testResult?.userTestInfo?.score}
-              currentValueText='Score-o-meter'
+              currentValueText="Score-o-meter"
               needleHeightRatio={0.9}
               ringWidth={100}
               needleTransitionDuration={3000}
-              needleTransition='easeElastic'
+              needleTransition="easeElastic"
               segmentColors={COLORS.segmentColors}
               labelNoteStyle={{
                 fontSize: 16,
-                fontWeight: '700',
-                fontFamily: 'mulish-bold',
+                fontWeight: "700",
+                fontFamily: "mulish-bold",
               }}
               labelsList={textContent.labelsList}
             />
             {/* Attempts AnalysisCard */}
             <AttemptsAnalysisCard
-              title={t('attemptanalysis')}
-              data1='0'
-              data2='5'
+              title={t("attemptanalysis")}
+              data1="0"
+              data2="5"
               backgroundColor1={COLORS.rightInfo}
               backgroundColor2={COLORS.wrongInfo}
               testResult={testResult}
@@ -246,42 +247,42 @@ const Summary = ({ route, navigation }) => {
             {/*  TimeSpent Card */}
             {testResult?.questions?.length > 0 ? (
               <TimeSpentCard
-                cardTitle={t('timespent')}
+                cardTitle={t("timespent")}
                 testResult={testResult}
               />
             ) : null}
 
             {/* Button Container Like Botttom Buttons Next and Previous Buttons */}
           </View>
-          {route.params.testtype === 'pre' ? (
+          {route.params.testtype === "pre" ? (
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={[styles.button, styles.nextActivityButton]}
                 onPress={handleNextActivity}
               >
-                <Text style={styles.buttonText}>{t('nextactivity')}</Text>
+                <Text style={styles.buttonText}>{t("nextactivity")}</Text>
               </TouchableOpacity>
             </View>
           ) : (
             <View style={styles.buttonContainer} />
           )}
-          {route.params.testtype === 'pre' ? null : (
+          {route.params.testtype === "pre" ? null : (
             <TouchableOpacity
               onPress={onViewSolutions}
               style={{
                 height: 40,
                 width: 200,
-                alignSelf: 'center',
+                alignSelf: "center",
                 marginVertical: 30,
                 paddingHorizontal: 20,
                 backgroundColor: COLORS.appSecondaryColor,
-                justifyContent: 'center',
-                alignItems: 'center',
+                justifyContent: "center",
+                alignItems: "center",
                 borderRadius: 20,
               }}
             >
-              <Text style={{ color: 'white', fontSize: 14 }}>
-                {t('reviewanswers')}
+              <Text style={{ color: "white", fontSize: 14 }}>
+                {t("reviewanswers")}
               </Text>
             </TouchableOpacity>
           )}
@@ -293,13 +294,13 @@ const Summary = ({ route, navigation }) => {
 
 export default Summary;
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   headerText: {
     fontSize: 16,
-    fontWeight: '700',
-    fontFamily: 'mulish-bold',
+    fontWeight: "700",
+    fontFamily: "mulish-bold",
     color: COLORS.whiteColor,
   },
   container: {
@@ -318,17 +319,17 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
   buttonContainer: {
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    alignItems: "center",
     marginVertical: 40,
   },
   button: {
-    width: '78%',
+    width: "78%",
     height: 46,
     borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginVertical: 5,
   },
   nextActivityButton: {
@@ -341,10 +342,10 @@ const styles = StyleSheet.create({
   buttonText: {
     color: COLORS.whiteColor,
     fontSize: 16,
-    fontWeight: '700',
-    fontFamily: 'mulish-bold',
+    fontWeight: "700",
+    fontFamily: "mulish-bold",
   },
   prevText: {
-    color: '#6C6C6C',
+    color: "#6C6C6C",
   },
 });
