@@ -1,7 +1,7 @@
-import { StyleSheet, Dimensions, Platform } from "react-native";
+import { StyleSheet, Dimensions, Platform } from 'react-native';
 
-const { width, height } = Dimensions.get("window");
-import { COLORS } from "../../../constants/colors";
+const { width, height } = Dimensions.get('window');
+import { COLORS } from '../../../constants/colors';
 
 const styles = StyleSheet.create({
   mainScrollview: {
@@ -9,12 +9,12 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   scrollinside: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   headerText: {
     fontSize: 16,
-    fontWeight: "700",
-    fontFamily: "mulish-bold",
+    fontWeight: '700',
+    fontFamily: 'mulish-bold',
     color: COLORS.whiteColor,
   },
   container: {
@@ -34,34 +34,34 @@ const styles = StyleSheet.create({
   },
   mainVew: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   topView: {
     flex: 0.08,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   topViewheader: {
     fontSize: 14,
-    fontWeight: "700",
-    fontFamily: "mulish-medium",
+    fontWeight: '700',
+    fontFamily: 'mulish-medium',
     color: COLORS.black,
   },
   timerView: {
-    flexDirection: "row",
+    flexDirection: 'row',
     backgroundColor: COLORS.coursesColor,
     paddingHorizontal: 10,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     height: 40,
     borderRadius: 5,
   },
   timerText: {
     fontSize: 16,
-    fontWeight: "700",
-    fontFamily: "mulish-bold",
+    fontWeight: '700',
+    fontFamily: 'mulish-bold',
     color: COLORS.whiteColor,
   },
   questionidtext: {
@@ -71,60 +71,60 @@ const styles = StyleSheet.create({
   },
   mathjaxtext: {
     // backgroundColor: 'red',
-    width: "90%",
-    marginTop: Platform.OS === "android" ? 5 : 0,
+    width: '90%',
+    marginTop: Platform.OS === 'android' ? 5 : 0,
     // borderWidth: 2,
     // borderRadius:10,
     // borderColor: this.state.answerobj.user_answer === item.key ? topicindata.color : "lightgrey",
     marginLeft: 10,
-    justifyContent: "flex-start",
+    justifyContent: 'flex-start',
     // alignSelf: 'flex-start',
   },
   bottomView: {
     flex: 0.08,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     //marginLeft: 10,
     // marginRight: 10,
-    alignItems: "center",
+    alignItems: 'center',
   },
   bottomsubview: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   previousview: {
     flex: 0.5,
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
   },
   previousbutton: {
     backgroundColor: COLORS.appSecondaryColor,
     paddingHorizontal: 10,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttontext: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 15,
-    color: "white",
+    color: 'white',
   },
   nextbuttonView: {
     flex: 0.5,
-    justifyContent: "flex-start",
-    alignItems: "flex-end",
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
   },
   sorryview: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     marginHorizontal: 15,
   },
   sorrytext: {
     fontSize: 14,
-    textAlign: "center",
+    textAlign: 'center',
   },
   buttonViewsorry: {
-    flexDirection: "row",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     marginTop: 20,
   },
   innerbuttonview: {

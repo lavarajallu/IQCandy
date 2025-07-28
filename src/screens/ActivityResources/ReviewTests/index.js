@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Alert,
   BackHandler,
@@ -10,19 +10,19 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from "react-native";
+} from 'react-native';
 
-const { width, height } = Dimensions.get("window");
-import { useTranslation } from "react-i18next";
+const { width, height } = Dimensions.get('window');
+import { useTranslation } from 'react-i18next';
 
-import { goBack } from "../../../utils/navigationUtils";
-import { COLORS } from "../../../constants/colors";
-import Header from "../../../components/Header";
-import { selectUser } from "../../../store/authManagement/selector";
-import { getassesmentsdata } from "../../../api/myCourses";
-import { selectMyCourses } from "../../../store/student/myCourses/selector";
-import styles from "./styles";
-import i18n from "../../../i18n/index1";
+import { goBack } from '../../../utils/navigationUtils';
+import { COLORS } from '../../../constants/colors';
+import Header from '../../../components/Header';
+import { selectUser } from '../../../store/authManagement/selector';
+import { getassesmentsdata } from '../../../api/myCourses';
+import { selectMyCourses } from '../../../store/student/myCourses/selector';
+import styles from './styles';
+import i18n from '../../../i18n/index1';
 const ReviewTests = ({ route, navigation }) => {
   const { t } = useTranslation(); //i18n instance
 
@@ -56,10 +56,10 @@ const ReviewTests = ({ route, navigation }) => {
   }, [user]);
   useState(() => {
     var newarra = [];
-    console.log("getassesmenttests.....", getassesmenttests);
+    console.log('getassesmenttests.....', getassesmenttests);
     if (getassesmenttests && getassesmenttests.length > 0) {
       var filteredArray = getassesmenttests.filter(function (itm) {
-        return itm.status === "completed";
+        return itm.status === 'completed';
       });
       settestdata(filteredArray);
       //   getassesmenttests.map((res, i) => {
@@ -81,10 +81,10 @@ const ReviewTests = ({ route, navigation }) => {
     }
   }, [getassesmenttests]);
   const onTest = (item) => {
-    navigation.navigate("Summary", {
+    navigation.navigate('Summary', {
       data: item,
       testId: item.id,
-      screen: "reviewtests",
+      screen: 'reviewtests',
     });
   };
   const renderItem = ({ item, index }) => {
@@ -95,7 +95,7 @@ const ReviewTests = ({ route, navigation }) => {
         style={styles.itemview}
       >
         <Text style={styles.itemtext}>
-          {t("test")} {index + 1}{" "}
+          {t('test')} {index + 1}{' '}
           <Text style={{ marginLeft: 5 }}>({item.score})</Text>
         </Text>
         <View style={styles.itembottomview}>
@@ -108,13 +108,13 @@ const ReviewTests = ({ route, navigation }) => {
                     styles.progresssubview,
                     {
                       backgroundColor:
-                        item.analysis === "Poor" ? "#c54721" : "grey",
+                        item.analysis === 'Poor' ? '#c54721' : 'grey',
                     },
                   ]}
                 />
                 <View style={styles.emptyview} />
               </View>
-              <Text style={styles.analysistext}>{"Poor"}</Text>
+              <Text style={styles.analysistext}>{'Poor'}</Text>
             </View>
             {/* )} */}
           </View>
@@ -127,13 +127,13 @@ const ReviewTests = ({ route, navigation }) => {
                     styles.progresssubview,
                     {
                       backgroundColor:
-                        item.analysis === "Average" ? "#d88414" : "grey",
+                        item.analysis === 'Average' ? '#d88414' : 'grey',
                     },
                   ]}
                 />
                 <View style={styles.emptyview} />
               </View>
-              <Text style={styles.analysistext}>{"Average"}</Text>
+              <Text style={styles.analysistext}>{'Average'}</Text>
             </View>
             {/* )} */}
           </View>
@@ -146,13 +146,13 @@ const ReviewTests = ({ route, navigation }) => {
                     styles.progresssubview,
                     {
                       backgroundColor:
-                        item.analysis === "Fair" ? "#267093" : "grey",
+                        item.analysis === 'Fair' ? '#267093' : 'grey',
                     },
                   ]}
                 />
                 <View style={styles.emptyview} />
               </View>
-              <Text style={styles.analysistext}>{"Good"}</Text>
+              <Text style={styles.analysistext}>{'Good'}</Text>
             </View>
             {/* )} */}
           </View>
@@ -165,7 +165,7 @@ const ReviewTests = ({ route, navigation }) => {
                     styles.progresssubview,
                     {
                       backgroundColor:
-                        item.analysis === "Good" ? "#a4b96e" : "grey",
+                        item.analysis === 'Good' ? '#a4b96e' : 'grey',
                     },
                   ]}
                 />
@@ -173,11 +173,11 @@ const ReviewTests = ({ route, navigation }) => {
                   style={{
                     width: 60,
                     height: 1,
-                    backgroundColor: "transparent",
+                    backgroundColor: 'transparent',
                   }}
                 />
               </View>
-              <Text style={styles.analysistext}>{"Excellent"}</Text>
+              <Text style={styles.analysistext}>{'Excellent'}</Text>
             </View>
             {/* )} */}
           </View>
@@ -187,13 +187,13 @@ const ReviewTests = ({ route, navigation }) => {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <Header backAction={backAction} headerTitle={t("reviewtests")} />
+      <Header backAction={backAction} headerTitle={t('reviewtests')} />
       <View style={styles.mainview}>
         {getassesmenttests?.length > 0 ? (
           <FlatList
             removeClippedSubviews={false}
             data={getassesmenttests.filter(function (itm) {
-              return itm.status === "completed";
+              return itm.status === 'completed';
             })}
             keyExtractor={(item) => item.id}
             horizontal={false}
