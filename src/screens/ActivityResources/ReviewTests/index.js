@@ -56,6 +56,7 @@ const ReviewTests = ({ route, navigation }) => {
   }, [user]);
   useState(() => {
     var newarra = [];
+    console.log('getassesmenttests.....', getassesmenttests);
     if (getassesmenttests && getassesmenttests.length > 0) {
       var filteredArray = getassesmenttests.filter(function (itm) {
         return itm.status === 'completed';

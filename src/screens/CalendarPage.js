@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
-import { useTranslation } from 'react-i18next';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage"; // Make sure to import AsyncStorage or the storage library you're using
 
 import {
+  Alert,
+  BackHandler,
   StyleSheet,
   Dimensions,
   FlatList,
@@ -13,46 +14,48 @@ import {
   Text,
   TouchableWithoutFeedback,
   View,
-} from 'react-native';
-import { Agenda } from 'react-native-calendars';
-import moment from 'moment';
-import { CalendarList } from 'react-native-calendars';
-import Modal from 'react-native-modal';
-import { selectUser } from '../store/authManagement/selector';
-import { selectmyCalender } from '../store/student/myCalender/selector';
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-import { getschedulefiltered } from '../api/myCalender';
-import { COLORS } from '../constants/colors';
-import { getTopicDetails, getChapterDetails } from '../api/search';
-import { selectSearch } from '../store/student/search/selector';
-import i18n from '../i18n/index1';
+} from "react-native";
+import { Agenda } from "react-native-calendars";
+import moment from "moment";
+import { CalendarList } from "react-native-calendars";
+import Modal from "react-native-modal";
+import { selectUser } from "../store/authManagement/selector";
+import { selectmyCalender } from "../store/student/myCalender/selector";
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+import { getschedulefiltered } from "../api/myCalender";
+import { COLORS } from "../constants/colors";
+import { getTopicDetails, getChapterDetails } from "../api/search";
+import { selectSearch } from "../store/student/search/selector";
 
 const CalendarPage = ({ route, navigation }) => {
   const { user } = useSelector(selectUser);
   const dispatch = useDispatch();
   const { scheduledata } = useSelector(selectmyCalender);
   const { topicDetails, chapterDetails } = useSelector(selectSearch);
-  const { t } = useTranslation(); //i18n instance
 
+  const [items, setItems] = useState({
+    "2023-12-01": [{ name: "Event 1" }],
+    "2023-12-02": [{ name: "Event 2A" }, { name: "Event 2B" }],
+    // Add more data as needed
+  });
   const [visiblemonths, setvisiblemonths] = useState([]);
   const [isspinner, setisspinner] = useState(false);
   const [showmodal, setshowmodal] = useState(false);
   const [evemnsdata, setevemnsdata] = useState([]);
   const [markeddata, setmarkeddata] = useState([]);
-  const [newEventsData, setNewEventsData] = useState([]);
+  const [neweventsdata, setneweventsdata] = useState([]);
   const [newmodal, setnewmodal] = useState(false);
   const [eventtapped, seteventtapped] = useState(null);
   const [selectedItem, setSelectedItem] = useState({});
-
   useEffect(() => {
     const date = new Date();
-    let day = date.getDate();
-    let month = date.getMonth();
+    let day = String(date.getDate()).padStart(2, "0");
+    let month = String(date.getMonth() + 1).padStart(2, "0"); // +1 for correct month
     let year = date.getFullYear();
 
-    // This arrangement can be altered based on how we want the date's format to appear.
-    let currentDate = `${year}-${month}-${day}`;
+    let currentDate = `${year}-${month}-${day}`; // => "2025-07-05"
+
     // 3-6-2024
     var monthsarraya = [];
     var obj1 = {
@@ -71,10 +74,9 @@ const CalendarPage = ({ route, navigation }) => {
     };
     monthsarraya.push(obj1);
     monthsarraya.push(obj2);
-
+    console.log("monthsarraya", monthsarraya);
     getevents(monthsarraya);
   }, []);
-
   const getmonts = (months) => {
     setvisiblemonths(months);
     setisspinner(false);
@@ -82,17 +84,20 @@ const CalendarPage = ({ route, navigation }) => {
   };
 
   const getevents = (visiblemonths) => {
+    console.log("visiblemonths", visiblemonths[0]?.dateString);
     var startdate = moment(new Date(visiblemonths[0]?.dateString)); // Now
     var enddate = moment(
       new Date(visiblemonths[visiblemonths.length - 1]?.dateString)
     );
+    console.log("dkjnkjnjkdhkhkd", startdate);
     var data = {
       userId: user?.userInfo?.userId,
       fromDate: moment(startdate)
-        .startOf('month')
-        .format('YYYY-MM-DD HH:mm:ss'),
-      toDate: moment(enddate).endOf('month').format('YYYY-MM-DD HH:mm:ss'),
+        .startOf("month")
+        .format("YYYY-MM-DD HH:mm:ss"),
+      toDate: moment(enddate).endOf("month").format("YYYY-MM-DD HH:mm:ss"),
     };
+    console.log("dfjdflkjdf", data);
     getschedulefiltered({
       dispatch,
       data: data,
@@ -103,59 +108,125 @@ const CalendarPage = ({ route, navigation }) => {
     return self.indexOf(value) === index;
   };
   useEffect(() => {
-    if (scheduledata && scheduledata?.length > 0) {
-      var newarray = [];
-      scheduledata?.map((res, i) => {
-        newarray.push(moment.utc(res.scheduleDate).format('YYYY-MM-DD'));
-      });
-      const uniqueAges = newarray?.filter(unique);
+    if (Object.keys(scheduledata).length) {
+    //  alert(JSON.stringify(scheduledata?.userSchedules));
+      setisspinner(true);
       var newobj = {};
       var newmarkedobjarr = {};
-      uniqueAges.map((res, i) => {
-        var subobjarr = [];
-        scheduledata.map((newres, i) => {
-          if (res === moment.utc(newres.scheduleDate).format('YYYY-MM-DD')) {
-            subobjarr.push(newres);
-          }
+      if (scheduledata && scheduledata?.userSchedules.length > 0) {
+        var newarray = [];
+        scheduledata?.userSchedules.map((res, i) => {
+          newarray.push(moment.utc(res.scheduleDate).format("YYYY-MM-DD"));
         });
-        newobj[res] = subobjarr;
-      });
-      uniqueAges.map((res, i) => {
-        var newmarkedobj = {};
-        scheduledata.map((newres, i) => {
-          if (res === moment.utc(newres.scheduleDate).format('YYYY-MM-DD')) {
-            newmarkedobj = {
-              customStyles: {
-                container: {
-                  backgroundColor: COLORS.appSecondaryColor,
-                },
-                text: {
-                  color: 'white',
-                  fontWeight: 'bold',
-                },
-              },
-            };
-          }
+        console.log(
+          "dkflasdfjlkdsflkdsjfdfd                    ",
+          scheduledata
+        );
+        const uniqueAges = newarray?.filter(unique);
+
+        var newmarkedarray = [];
+        var newitemsarray = [];
+
+        uniqueAges.map((res, i) => {
+          var subobjarr = [];
+          scheduledata.userSchedules.map((newres, i) => {
+            if (res === moment.utc(newres.scheduleDate).format("YYYY-MM-DD")) {
+              subobjarr.push(newres);
+            }
+          });
+          newobj[res] = subobjarr;
         });
-        newmarkedobjarr[res] = newmarkedobj;
-      });
+        uniqueAges.map((res, i) => {
+          var newmarkedobj = {};
+          scheduledata.userSchedules.map((newres, i) => {
+            if (res === moment.utc(newres.scheduleDate).format("YYYY-MM-DD")) {
+              newmarkedobj = {
+                customStyles: {
+                  container: {
+                    backgroundColor: "#7cb5ec",
+                  },
+                  text: {
+                    color: "white",
+                    fontWeight: "bold",
+                  },
+                },
+              };
+            }
+          });
+          newmarkedobjarr[res] = newmarkedobj;
+        });
+      }
+      if (scheduledata && scheduledata?.userAnnouncements.length > 0) {
+        //alert(JSON.stringify(scheduledata.userAnnouncements));
+        var newarray = [];
+        scheduledata?.userAnnouncements.map((res, i) => {
+          newarray.push(moment.utc(res.scheduleDate).format("YYYY-MM-DD"));
+        });
+        const uniqueAges = newarray?.filter(unique);
+        // var newobj = {};
+        //var newmarkedobjarr = {};
+        uniqueAges.map((res, i) => {
+          var subobjarr = [];
+          scheduledata.userAnnouncements.map((newres, i) => {
+            if (res === moment.utc(newres.scheduleDate).format("YYYY-MM-DD")) {
+              subobjarr.push(newres);
+            }
+          });
+          newobj[res] = subobjarr;
+        });
+        uniqueAges.map((res, i) => {
+          var newmarkedobj = {};
+          scheduledata.userAnnouncements.map((newres, i) => {
+            if (res === moment.utc(newres.scheduleDate).format("YYYY-MM-DD")) {
+              newmarkedobj = {
+                customStyles: {
+                  container: {
+                    backgroundColor: COLORS.appSecondaryColor,
+                  },
+                  text: {
+                    color: "white",
+                    fontWeight: "bold",
+                  },
+                },
+              };
+            }
+          });
+
+          newmarkedobjarr[res] = newmarkedobj;
+        });
+      }
       setevemnsdata(newobj);
       setmarkeddata(newmarkedobjarr);
+      setisspinner(false);
     }
   }, [scheduledata]);
   const onDayPress = (day) => {
+    //data => moment(data.scheduleDate).format('YYYY-MM-DD') === day.dateStringconst result
     var result = [];
-    if (Object?.keys(evemnsdata).length > 0) {
-      const keys = Object?.keys(evemnsdata);
+    // console.log('dattaaa', day, this.state.evemnsdata);
+    if (Object.keys(evemnsdata).length > 0) {
+      const keys = Object.keys(evemnsdata);
       keys.forEach((key, index) => {
-        if (key === day?.dateString) {
+        if (key === day.dateString) {
           result = evemnsdata[key];
         }
       });
-      setNewEventsData(result);
-      setnewmodal(true);
+      console.log("result", result);
+      //  if(result.length > 0){
+      if (result[0]?.scheduleType === "topic") {
+        setneweventsdata(result);
+        setnewmodal(true);
+      } else {
+        setneweventsdata(result);
+        setnewmodal(true);
+      }
+
+      // this.setState({ neweventsdata: result }, () => {
+      //   this.setState({ newmodal: true });
+      // });
+      // //  }
     } else {
-      setNewEventsData([]);
+      setneweventsdata([]);
       setnewmodal(true);
     }
   };
@@ -166,30 +237,31 @@ const CalendarPage = ({ route, navigation }) => {
   const renderdataItem = ({ item }) => {
     return (
       <TouchableOpacity
-        testID={'item'}
+        testID={"item"}
         style={{
-          backgroundColor: 'white',
+          backgroundColor: "white",
           flex: 1,
           borderRadius: 5,
           padding: 10,
           marginRight: 10,
-          justifyContent: 'space-around',
+          justifyContent: "space-around",
           marginTop: 17,
         }}
         onPress={() => neweventTapped(item)}
       >
         <Text style={{ color: COLORS.appSecondaryColor }}>{item.title}</Text>
         <Text style={{ color: COLORS.appSecondaryColor }}>
-          {moment.utc(item.start).format('LT')} -{' '}
-          {moment.utc(item.end).format('LT')}
+          {moment.utc(item.start).format("LT")} -{" "}
+          {moment.utc(item.end).format("LT")}
         </Text>
       </TouchableOpacity>
     );
   };
   const renderEmptyDate = () => {
+    // console.log('dknkldnfdf');
     return (
       <View
-        style={{ height: 15, flex: 1, alignItems: 'center', marginTop: 30 }}
+        style={{ height: 15, flex: 1, alignItems: "center", marginTop: 30 }}
       >
         <Text>No events in this date</Text>
       </View>
@@ -208,135 +280,196 @@ const CalendarPage = ({ route, navigation }) => {
         style={{
           backgroundColor: COLORS.appSecondaryColor,
           padding: 10,
-          justifyContent: 'center',
+          justifyContent: "center",
           width: 200,
-          alignSelf: 'center',
+          alignSelf: "center",
         }}
       >
         <Text
           style={{
-            fontWeight: 'bold',
-            color: 'white',
-            textAlign: 'center',
+            fontWeight: "bold",
+            color: "white",
+            textAlign: "center",
             fontSize: 20,
           }}
         >
-          {t('cancel')}
+          CANCEL
         </Text>
       </TouchableOpacity>
     );
   };
   const newrenderitem = ({ item }) => {
-    // var newdate = moment.utc(item.scheduleDate).format('LT')
+    //console.log('itemitem', item);
     var newdate = new Date(item.scheduleDate).setTime(
       new Date(item.scheduleDate).getTime() + 1 * 60 * 60 * 1000
     );
-    var enddate = moment.utc(newdate).format('LT');
+    var enddate = moment.utc(newdate).format("LT");
+    if (item.scheduleType === "topic") {
+      // var newdate = moment.utc(item.scheduleDate).format('LT')
 
-    var additionalinfo = JSON.parse(item.additionalInfo);
-    return (
-      <View style={{ height: 90, marginBottom: 20 }}>
-        <View
-          style={{ flex: 1, flexDirection: 'row', backgroundColor: 'white' }}
-        >
+      var additionalinfo = JSON.parse(item.additionalInfo);
+      return (
+        <View style={{ height: 90, marginBottom: 20 }}>
           <View
-            style={{
-              flex: 0.25,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
+            style={{ flex: 1, flexDirection: "row", backgroundColor: "white" }}
           >
-            <Text style={{ color: COLORS.appSecondaryColor, fontSize: 12 }}>
-              {moment.utc(new Date(item.scheduleDate)).format('MM/DD')}
-            </Text>
-            <Text style={{ color: COLORS.appSecondaryColor, fontSize: 12 }}>
-              {moment.utc(new Date(item.scheduleDate)).format('ddd')}
-            </Text>
-          </View>
-          <View
-            style={{
-              flex: 0.55,
-              justifyContent: 'space-evenly',
-              alignItems: 'flex-start',
-            }}
-          >
-            <Text
+            <View
               style={{
-                fontSize: 15,
-                fontWeight: 'bold',
-                color: COLORS.appSecondaryColor,
+                flex: 0.25,
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              {additionalinfo.title}
-            </Text>
-            <Text style={{ fontSize: 13, color: COLORS.appSecondaryColor }}>
-              {moment.utc(item.scheduleDate).format('LT')}-{enddate}
-            </Text>
-          </View>
-          <View
-            style={{
-              flex: 0.2,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => ongo(item)}
-              style={{ backgroundColor: COLORS.appSecondaryColor, padding: 20 }}
+              <Text style={{ color: COLORS.appSecondaryColor, fontSize: 12 }}>
+                {moment.utc(new Date(item.scheduleDate)).format("MM/DD")}
+              </Text>
+              <Text style={{ color: COLORS.appSecondaryColor, fontSize: 12 }}>
+                {moment.utc(new Date(item.scheduleDate)).format("ddd")}
+              </Text>
+            </View>
+            <View
+              style={{
+                flex: 0.55,
+                justifyContent: "space-evenly",
+                alignItems: "flex-start",
+              }}
             >
-              <Text style={{ fontWeight: 'bold', color: 'white' }}>GO</Text>
-            </TouchableOpacity>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: "bold",
+                  color: COLORS.appSecondaryColor,
+                }}
+              >
+                {additionalinfo.title}
+              </Text>
+              <Text style={{ fontSize: 13, color: COLORS.appSecondaryColor }}>
+                {moment.utc(item.scheduleDate).format("LT")}-{enddate}
+              </Text>
+            </View>
+            <View
+              style={{
+                flex: 0.2,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => ongo(item)}
+                style={{
+                  backgroundColor: COLORS.appSecondaryColor,
+                  padding: 20,
+                }}
+              >
+                <Text style={{ fontWeight: "bold", color: "white" }}>GO</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
-    );
+      );
+    } else {
+      return (
+        <View style={{ height: 90, marginBottom: 20 }}>
+          <View
+            style={{ flex: 1, flexDirection: "row", backgroundColor: "white" }}
+          >
+            <View
+              style={{
+                flex: 0.25,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ color: COLORS.appSecondaryColor, fontSize: 12 }}>
+                {moment.utc(new Date(item.fromDate)).format("MM/DD")}
+              </Text>
+              <Text style={{ color: COLORS.appSecondaryColor, fontSize: 12 }}>
+                {moment.utc(new Date(item.fromDate)).format("ddd")}
+              </Text>
+            </View>
+            <View
+              style={{
+                flex: 0.55,
+                justifyContent: "space-evenly",
+                alignItems: "flex-start",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: "bold",
+                  color: COLORS.appSecondaryColor,
+                }}
+              >
+                {item.title}
+              </Text>
+              {/* <Text style={{ fontSize: 13, color: COLORS.appSecondaryColor }}>
+                {moment.utc(item.scheduleDate).format('LT')}-{enddate}
+              </Text> */}
+            </View>
+            <View
+              style={{
+                flex: 0.2,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            ></View>
+          </View>
+        </View>
+      );
+    }
   };
   const gotoChaptersPage = async (item) => {
     var additionalitem = JSON.parse(item?.additionalInfo);
-    const authToken = await AsyncStorage.getItem('userToken');
+    const authToken = await AsyncStorage.getItem("userToken");
     setSelectedItem(item);
     var subjectId = additionalitem?.subjectId;
     var chapterId = additionalitem?.chapterId;
-    var boardId = user?.userOrg?.boardId;
-    var gradeId = user?.userOrg?.gradeId;
-
+    console.log("user..........", user);
     var topicId = item.scheduleTypeId;
     var url =
-      'https://api.iqcandy.com/api/iqcandy' +
-      `/boards/${boardId}/grades/${gradeId}/subjects/${subjectId}/chapters/${chapterId}`;
+      "https://api.iqcandy.com/api/iqcandy" +
+      `/universities/${user?.userOrg?.universityId}/branches/${user?.userOrg?.branchId}/semesters/${user?.userOrg?.semesterId}/subjects/${subjectId}/chapters/${chapterId}`;
+    console.log("dckkd", url);
     fetch(url, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         jwt: authToken,
       },
     })
       .then((response) => response.json())
       .then((json) => {
+        console.log("Dvnkdsvkl;sd", json);
         if (json) {
+          console.log("Dvnkdsvkl;sd", json);
+
           if (json.data) {
             var chapterDetails = json.data;
             var url =
-              'https://api.iqcandy.com/api/iqcandy' +
-              `/boards/${boardId}/grades/${gradeId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}`;
+              "https://api.iqcandy.com/api/iqcandy" +
+              `/universities/${user?.userOrg?.universityId}/branches/${user?.userOrg?.branchId}/semesters/${user?.userOrg?.semesterId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}`;
+            console.log("dckkd,,,", url);
             fetch(url, {
-              method: 'GET',
+              method: "GET",
               headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
                 jwt: authToken,
               },
             })
               .then((response) => response.json())
               .then((json) => {
                 if (json) {
+                  console.log("Dvnkdsvkl;sd", json);
+
                   if (json.data) {
-                    additionalitem['topicId'] = item.scheduleTypeId;
-                    additionalitem['image'] = json.data.image;
-                    navigation.navigate('ActivityResources', {
+                    additionalitem["topicId"] = item.scheduleTypeId;
+                    additionalitem["image"] = json.data.image;
+                    navigation.navigate("ActivityResources", {
                       topicItem: { ...additionalitem },
                       chapterItem: chapterDetails,
 
-                      from: 'calender',
+                      from: "calender",
                     });
                   }
                 }
@@ -345,7 +478,7 @@ const CalendarPage = ({ route, navigation }) => {
           }
         }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.log(error));
   };
 
   const ongo = (item) => {
@@ -355,7 +488,6 @@ const CalendarPage = ({ route, navigation }) => {
 
         return false;
       });
-      gotoChaptersPage(item);
 
       return item;
     });
@@ -364,7 +496,7 @@ const CalendarPage = ({ route, navigation }) => {
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         {isspinner ? (
-          <Text>{t('loading')}</Text>
+          <Text>Loading</Text>
         ) : (
           <CalendarList
             onVisibleMonthsChange={(months) => {
@@ -380,7 +512,7 @@ const CalendarPage = ({ route, navigation }) => {
             renderEmptyData={renderEmptyDate}
             rowHasChanged={rowHasChanged}
             showClosingKnob
-            markingType={'custom'}
+            markingType={"custom"}
             markedDates={markeddata}
           />
         )}
@@ -390,26 +522,27 @@ const CalendarPage = ({ route, navigation }) => {
           <View
             style={{
               flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "red",
             }}
           >
             <View
               style={{
                 width: windowWidth / 1.2,
-                backgroundColor: 'white',
+                backgroundColor: "white",
                 marginVertical: 15,
               }}
             >
-              <View style={{ backgroundColor: 'white' }}>
+              <View style={{ backgroundColor: "white" }}>
                 <TouchableOpacity onPress={() => setshowmodal(false)}>
                   <Image
-                    source={require('../../assets/images/cancel.png')}
+                    source={require("../../assets/images/cancel.png")}
                     style={{
                       width: 30,
                       height: 30,
                       tintColor: COLORS.appSecondaryColor,
-                      alignSelf: 'flex-end',
+                      alignSelf: "flex-end",
                       marginVertical: 10,
                       marginRight: 10,
                     }}
@@ -419,27 +552,27 @@ const CalendarPage = ({ route, navigation }) => {
                   <View style={{ padding: 20 }}>
                     <View
                       style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        justifyContent: "center",
+                        alignItems: "center",
                       }}
                     >
-                      <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+                      <Text style={{ fontSize: 18, fontWeight: "bold" }}>
                         {eventtapped.title}
                       </Text>
                     </View>
                     <View
                       style={{
                         paddingVertical: 20,
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        justifyContent: "center",
+                        alignItems: "center",
                       }}
                     >
                       <Text style={{ fontSize: 15 }}>
-                        Event Start:{' '}
-                        {moment.utc(eventtapped.start).format('llll')}{' '}
+                        Event Start:{" "}
+                        {moment.utc(eventtapped.start).format("llll")}{" "}
                       </Text>
                       <Text style={{ fontSize: 15, marginTop: 10 }}>
-                        Event End: {moment.utc(eventtapped.end).format('llll')}
+                        Event End: {moment.utc(eventtapped.end).format("llll")}
                       </Text>
                     </View>
                     <TouchableOpacity
@@ -447,17 +580,17 @@ const CalendarPage = ({ route, navigation }) => {
                       style={{
                         height: 50,
                         width: 100,
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        justifyContent: "center",
+                        alignItems: "center",
                         backgroundColor: COLORS.appSecondaryColor,
-                        alignSelf: 'center',
+                        alignSelf: "center",
                       }}
                     >
                       <Text
                         style={{
                           fontSize: 18,
-                          color: 'white',
-                          fontWeight: 'bold',
+                          color: "white",
+                          fontWeight: "bold",
                         }}
                       >
                         sdsad
@@ -465,7 +598,7 @@ const CalendarPage = ({ route, navigation }) => {
                     </TouchableOpacity>
                   </View>
                 ) : (
-                  <Text>{t('nodata')}</Text>
+                  <Text>NoData</Text>
                 )}
               </View>
             </View>
@@ -473,50 +606,50 @@ const CalendarPage = ({ route, navigation }) => {
         </Modal>
       </TouchableWithoutFeedback>
       <Modal
-        testID={'modal'}
+        testID={"modal"}
         isVisible={newmodal}
         // onSwipeComplete={this.closenewmodal.bind(this)}
       >
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+        <View style={{ flex: 1, justifyContent: "center" }}>
           <View
             style={{
               height: windowHeight / 1.4,
-              backgroundColor: 'lightgrey',
+              backgroundColor: "lightgrey",
             }}
           >
             <Text
               style={{
                 fontSize: 16,
                 marginVertical: 20,
-                fontWeight: 'bold',
+                fontWeight: "bold",
                 color: COLORS.appSecondaryColor,
-                textAlign: 'center',
+                textAlign: "center",
               }}
             >
-              {t('scheduletopics')}
+              Scheduled Topics
             </Text>
 
-            {newEventsData?.length > 0 ? (
+            {neweventsdata.length > 0 ? (
               <>
                 <FlatList
                   style={{ marginBottom: 30 }}
-                  keyExtractor={(item) => item.additionalInfo.scheduleId}
+                  //  keyExtractor={(item) => item.additionalInfo.scheduleId}
                   ListFooterComponent={renderfootor}
-                  data={newEventsData}
+                  data={neweventsdata}
                   renderItem={newrenderitem}
                 />
               </>
             ) : (
               <>
-                <View style={{ alignItems: 'center' }}>
+                <View style={{ alignItems: "center" }}>
                   <Text
                     style={{
-                      fontWeight: 'bold',
+                      fontWeight: "bold",
                       color: COLORS.appSecondaryColor,
                       fontSize: 18,
                     }}
                   >
-                    {t('noevents')}
+                    No Events
                   </Text>
                 </View>
                 <TouchableOpacity
@@ -524,21 +657,21 @@ const CalendarPage = ({ route, navigation }) => {
                   style={{
                     backgroundColor: COLORS.appSecondaryColor,
                     padding: 10,
-                    justifyContent: 'center',
+                    justifyContent: "center",
                     width: 200,
-                    alignSelf: 'center',
+                    alignSelf: "center",
                     marginTop: 30,
                   }}
                 >
                   <Text
                     style={{
-                      fontWeight: 'bold',
-                      color: 'white',
-                      textAlign: 'center',
+                      fontWeight: "bold",
+                      color: "white",
+                      textAlign: "center",
                       fontSize: 20,
                     }}
                   >
-                    {t('cancel')}
+                    CANCEL
                   </Text>
                 </TouchableOpacity>
               </>

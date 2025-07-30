@@ -12,7 +12,7 @@ import {
   setReSendOtpTime,
   setChnagePassword,
   setUser,
-  setloginthrought
+  setloginthrought,
 } from '../../store/authManagement/slice';
 
 const loginUser = async (payload) => {
@@ -20,7 +20,8 @@ const loginUser = async (payload) => {
   const endpoint = auth.login;
   const method = 'POST';
   const body = payload.data;
-  const response = await makeApiCall(endpoint, method, body);
+  const pageName = 'loginPage';
+  const response = await makeApiCall(endpoint, method, body, payload, pageName);
   // Check for success and handle accordingly
   if (response) {
     const { data } = response;
@@ -61,7 +62,7 @@ const loginUser = async (payload) => {
       // Dispatch the setUser action to update the user state in Redux
 
       payload.dispatch(setUser(data));
-      payload.dispatch(setloginthrought(true))
+      payload.dispatch(setloginthrought(true));
       payload.dispatch(setUserEmail(data.userInfo.email));
       payload.navigation.navigate('DrawerNavigation');
     }

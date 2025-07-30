@@ -1,7 +1,7 @@
 // MyCourses API.js
 
-import { apiEndPoints } from '../../constants/variables';
-import { makeApiCall } from '../axios';
+import { apiEndPoints } from "../../constants/variables";
+import { makeApiCall } from "../axios";
 import {
   setActivities,
   setChapters,
@@ -34,13 +34,13 @@ import {
   setytvideoActivitydata,
   setvalidatevideoquestiona,
   setvideoquestionassesdata,
-  setVideoquestionsvideopro
-} from '../../store/student/myCourses/slice';
+  setVideoquestionsvideopro,
+} from "../../store/student/myCourses/slice";
 
 const getSubjects = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getSubjects(payload.userId);
-  const method = 'POST';
+  const method = "POST";
   const body = payload.data;
 
   const response = await makeApiCall(endpoint, method, body);
@@ -55,7 +55,7 @@ const getSubjects = async (payload) => {
 const getChapters = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getChapters(payload.userId);
-  const method = 'POST';
+  const method = "POST";
   const body = payload.data;
 
   const response = await makeApiCall(endpoint, method, body);
@@ -70,7 +70,7 @@ const getChapters = async (payload) => {
 const getTopics = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getTopics(payload.userId);
-  const method = 'POST';
+  const method = "POST";
   const body = payload.data;
 
   const response = await makeApiCall(endpoint, method, body);
@@ -84,7 +84,7 @@ const getTopics = async (payload) => {
 const getrecommendedtopics = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getrecommendedtopics(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
 
   const response = await makeApiCall(endpoint, method, body);
@@ -98,7 +98,7 @@ const getrecommendedtopics = async (payload) => {
 const getPreviousQuestionPaperByCount = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getPreviousQuestionPaperByCount(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
 
   const response = await makeApiCall(endpoint, method, body);
@@ -112,7 +112,7 @@ const getPreviousQuestionPaperByCount = async (payload) => {
 const getGatePreviousQuestionPaperCountByTopic = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getGatePreviousQuestionPaperCountByTopic(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
 
   const response = await makeApiCall(endpoint, method, body);
@@ -127,7 +127,7 @@ const getGatePreviousQuestionPaperCountByTopic = async (payload) => {
 const getActivities = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getActivities(payload.userId);
-  const method = 'POST';
+  const method = "POST";
   const body = payload.data;
 
   const response = await makeApiCall(endpoint, method, body);
@@ -141,7 +141,7 @@ const getActivities = async (payload) => {
 const getrecommendedtopicActivities = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getrecommendedtopicActivities(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
 
   const response = await makeApiCall(endpoint, method, body);
@@ -155,7 +155,7 @@ const getrecommendedtopicActivities = async (payload) => {
 const getprofessorresources = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getprofessorresources(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
 
   const response = await makeApiCall(endpoint, method, body);
@@ -169,32 +169,35 @@ const getprofessorresources = async (payload) => {
 const addtocalenderPost = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.addtocalender(payload.userId);
-  const method = 'POST';
+  const method = "POST";
   const body = payload.data;
 
   const response = await makeApiCall(endpoint, method, body);
   // Check for success and handle accordingly
   if (response) {
     const { data } = response;
+    console.log("/////////", response);
     payload.dispatch(setCalenderData(data));
   }
 };
 const addtocalenderPut = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.addtocalenderPut(payload);
-  const method = 'PUT';
+  const method = "PUT";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method, body);
   // Check for success and handle accordingly
+  console.log("put.......", response);
   if (response) {
     const { data } = response;
+    console.log("put.......", response);
     payload.dispatch(setaddtocalenderPut(data));
   }
 };
 const getCalenderDataapi = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getCalenderDataapi(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method, body);
 
@@ -207,7 +210,7 @@ const getCalenderDataapi = async (payload) => {
 const getTestQuestionsData = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getTestQuestionsData(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method, body);
 
@@ -220,7 +223,7 @@ const getTestQuestionsData = async (payload) => {
 const getQuestionById = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getQuestionById(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method, body);
 
@@ -233,7 +236,7 @@ const getQuestionById = async (payload) => {
 const validateAnswerapi = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.validateAnswer(payload);
-  const method = 'POST';
+  const method = "POST";
   const body = payload.data;
 
   const response = await makeApiCall(endpoint, method, body);
@@ -247,7 +250,7 @@ const validateAnswerapi = async (payload) => {
 const endTestapi = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.endtest(payload);
-  const method = 'POST';
+  const method = "POST";
   const body = payload.data;
 
   const response = await makeApiCall(endpoint, method, body);
@@ -260,7 +263,7 @@ const endTestapi = async (payload) => {
 const getsummaryreport = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getsummaryReport(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method, body);
 
@@ -273,7 +276,7 @@ const getsummaryreport = async (payload) => {
 const getQuestionByIdReattemptapi = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getQuestionByIdReattempt(payload);
-  const method = 'POST';
+  const method = "POST";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method, body);
   // Check for   success and handle accordingly
@@ -285,7 +288,7 @@ const getQuestionByIdReattemptapi = async (payload) => {
 const getNotesActivityData = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getNotesActivityData(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method);
   // Check for   success and handle accordingly
@@ -297,7 +300,7 @@ const getNotesActivityData = async (payload) => {
 const getNotesActivityDataProfe = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getNotesActivityDataProfe(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method);
   // Check for   success and handle accordingly
@@ -309,7 +312,7 @@ const getNotesActivityDataProfe = async (payload) => {
 const getVideoActivityData = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getNotesActivityData(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method);
   // Check for   success and handle accordingly
@@ -321,7 +324,7 @@ const getVideoActivityData = async (payload) => {
 const getVideoquestionsvideopro = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getVideoquestionsvideopro(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method);
   // Check for   success and handle accordingly
@@ -333,7 +336,7 @@ const getVideoquestionsvideopro = async (payload) => {
 const getAssessmentTestQuestionRequest = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getAssessmentTestQuestionRequest(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method);
   // Check for   success and handle accordingly
@@ -345,9 +348,9 @@ const getAssessmentTestQuestionRequest = async (payload) => {
 const validatevideoquestiona = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.validatevideoquestiona(payload);
-  const method = 'POST';
+  const method = "POST";
   const body = payload.data;
-  const response = await makeApiCall(endpoint, method,body);
+  const response = await makeApiCall(endpoint, method, body);
   // Check for   success and handle accordingly
 
   if (response) {
@@ -358,7 +361,7 @@ const validatevideoquestiona = async (payload) => {
 const getVideoquestions = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getvideoquestions(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method);
   // Check for   success and handle accordingly
@@ -370,7 +373,7 @@ const getVideoquestions = async (payload) => {
 const getVideoActivityDatayoutube = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getNotesActivityData(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method);
   // Check for   success and handle accordingly
@@ -382,7 +385,7 @@ const getVideoActivityDatayoutube = async (payload) => {
 const getVideoActivityDataProf = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getNotesActivityDataProfe(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method);
   // Check for   success and handle accordingly
@@ -392,12 +395,14 @@ const getVideoActivityDataProf = async (payload) => {
   }
 };
 const getassesmentsdata = async (payload) => {
+  console.log("kkkkkkk", payload);
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getassesmentsdata(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method, body);
   // Check for   success and handle accordingly
+  console.log("responseeeeee", response);
   if (response) {
     const { data } = response;
     payload.dispatch(setgetassesmentsdata(data));
@@ -406,7 +411,7 @@ const getassesmentsdata = async (payload) => {
 const updateanalyticsNotes = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.updateanalyticsNotes(payload);
-  const method = 'POST';
+  const method = "POST";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method, body);
   // Check for   success and handle accordingly
@@ -418,7 +423,7 @@ const updateanalyticsNotes = async (payload) => {
 const getreviewsolutions = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getreviewsolutions(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method, body);
   // Check for   success and handle accordingly
@@ -430,7 +435,7 @@ const getreviewsolutions = async (payload) => {
 const getQuestionPaperByTopicIdRequest = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getQuestionPaperByTopicIdRequest(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method, body);
   // Check for   success and handle accordingly
@@ -442,7 +447,7 @@ const getQuestionPaperByTopicIdRequest = async (payload) => {
 const getGateQuestionPaperByTopicIdRequest = async (payload) => {
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getGateQuestionPaperByTopicIdRequest(payload);
-  const method = 'GET';
+  const method = "GET";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method, body);
   // Check for   success and handle accordingly
@@ -483,6 +488,5 @@ export {
   getrecommendedtopicActivities,
   getVideoquestions,
   getAssessmentTestQuestionRequest,
- getVideoquestionsvideopro 
-
+  getVideoquestionsvideopro,
 };

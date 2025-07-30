@@ -54,6 +54,11 @@ const Login = ({ navigation }) => {
       }
     });
   }, []);
+
+  const handleLoader = () => {
+    setLoading(false);
+  };
+
   //Inside the component where you handle login logic
   const handleLogin = async () => {
     // Validate email
@@ -101,7 +106,7 @@ const Login = ({ navigation }) => {
       deviceToken: pushtoken,
     };
 
-    await loginUser({ data: reqPayload, navigation, dispatch });
+    await loginUser({ data: reqPayload, navigation, dispatch, handleLoader });
     setLoading(false);
   };
   const onCheck = async (value) => {

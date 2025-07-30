@@ -34,6 +34,7 @@ const Summary = ({ route, navigation }) => {
   const [testResult, setTestResult] = useState({});
   const { data, testId } = route.params;
   const backAction = () => {
+    //alert("hiii");
     if (route.params.screen === 'reviewtests') {
       goBack(navigation);
     } else {
@@ -41,7 +42,7 @@ const Summary = ({ route, navigation }) => {
         topicItem: route.params.topicItem,
         chapterItem: route.params.chapterItem,
         subjectItem: route.params.subjectItem,
-        from: 'topics',
+        from: route.params.from ? route.params.from : 'topics',
       });
     }
   };

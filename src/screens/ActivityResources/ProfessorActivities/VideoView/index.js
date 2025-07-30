@@ -81,13 +81,13 @@ const VideoActivityPro = ({ route, navigation }) => {
         subjectId: subjectItem?.subjectId
           ? subjectItem.subjectId
           : chapterItem?.subjectId
-          ? chapterItem.subjectId
-          : null,
+            ? chapterItem.subjectId
+            : null,
         chapterId: chapterItem?.chapterId
           ? chapterItem.chapterId
           : topicItem?.chapterId
-          ? topicItem.chapterId
-          : null,
+            ? topicItem.chapterId
+            : null,
         topicId: route.params.topicItem?.topicId
           ? route.params.topicItem.topicId
           : null,
@@ -329,14 +329,22 @@ const VideoActivityPro = ({ route, navigation }) => {
   };
   const onquestionSubmit = (value) => {
     setnewmodal(false);
-    this.funcComRef('questionsubmit', value);
+    if (this.funcComRef) {
+      this.funcComRef('questionsubmit', value);
+    }
   };
   const onRewatch = () => {
     setnewmodal(false);
-    this.funcComRef('rewatch', newdata);
+    if (this.funcComRef) {
+      this.funcComRef('rewatch', newdata);
+    }
   };
   const onback = () => {
-    this.funcComRef('gettime', 'Val');
+    if (this.funcComRef) {
+      this.funcComRef('gettime', 'Val');
+    } else {
+      goBack(navigation);
+    }
   };
   var stylefull;
   var width;

@@ -11,6 +11,7 @@ const getschedulefiltered = async (payload) => {
   const response = await makeApiCall(endpoint, method, body);
   // Check for success and handle accordingly
   if (response) {
+    //alert(JSON.stringify(response));
     const { data } = response;
     payload.dispatch(setschedulefiltered(data));
   }

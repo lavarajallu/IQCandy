@@ -100,9 +100,11 @@ const PreAssessment = ({ route, navigation }) => {
   useEffect(() => {
     if (testQuestionsData && testQuestionsData.length > 0) {
       if (data.activityType === 'pre') {
+        console.log('kkkkkkkk.......', testQuestionsData);
         if (testQuestionsData[0].analysis) {
           SetNodata(true);
           setsorryalert(true);
+          setTestId(testQuestionsData[0].id);
         } else {
           let questions = [];
           testQuestionsData.map((data) => {
@@ -180,6 +182,22 @@ const PreAssessment = ({ route, navigation }) => {
     return () => clearInterval(timerInterval);
 
     //  }, 1000);
+  };
+  const onReviewPostSummary = () => {
+    navigation.navigate('Summary', {
+      index: route.params.index,
+      type: 'reset',
+      testtype: 'prereview',
+      // testtype: data.activityType,
+      chapterItem: chapterItem,
+      subjectItem: subjectItem,
+      data: data,
+      testId: testId,
+      topicItem: topicItem,
+      smartres: route.params.smartres,
+      from: route.params.from,
+      // screen: "reviewtests",
+    });
   };
   const getQuestionByIddata = (id) => {
     var questionindex = id - 1;
@@ -578,6 +596,14 @@ const PreAssessment = ({ route, navigation }) => {
                 >
                   <Text style={{ color: COLORS.appSecondaryColor }}>
                     {t('goback')}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => onReviewPostSummary()}
+                  style={styles.innerbuttonview}
+                >
+                  <Text style={{ color: COLORS.appSecondaryColor }}>
+                    {t('reviewprevioustest')}
                   </Text>
                 </TouchableOpacity>
               </View>

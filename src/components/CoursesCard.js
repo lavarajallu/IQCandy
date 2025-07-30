@@ -16,9 +16,8 @@ const windowWidth = Dimensions.get('window').width;
 
 const CoursesCard = (props) => {
   const { item, onChange, title, fromscreen } = props;
-
   const chapterLocation = () => {};
-  ``;
+
   var cardcontainer;
   if (fromscreen === 'Fullsubjects') {
     var progreswwidth = width / 1.2,

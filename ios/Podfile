@@ -60,6 +60,30 @@ target 'MyProfessor' do
       :mac_catalyst_enabled => false
     )
 
+    # Disable bitcode for all pods
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings['ENABLE_BITCODE'] = 'NO'
+      end
+    end
+
+
+       # 👉 Strip Bitcode from Razorpay framework (if it exists)
+       require 'fileutils'
+       razorpay_framework_paths = [
+         "Pods/razorpay-pod/Pod/Razorpay.xcframework/ios-arm64/Razorpay.framework/Razorpay",
+         "Pods/razorpay-pod/Pod/Razorpay.xcframework/ios-arm64_x86_64-simulator/Razorpay.framework/Razorpay"
+       ]
+   
+       razorpay_framework_paths.each do |framework_path|
+         if File.exist?(framework_path)
+           puts "⚙️ Stripping bitcode from #{framework_path}"
+           system("xcrun bitcode_strip -r #{framework_path} -o #{framework_path}")
+         else
+           puts "⛔ Razorpay binary not found at #{framework_path}"
+         end
+       end
+
     # This is necessary for Xcode 14, because it signs resource bundles by default
     # when building for devices.
     installer.target_installation_results.pod_target_installation_results

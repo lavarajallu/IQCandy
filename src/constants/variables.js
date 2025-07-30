@@ -15,13 +15,14 @@ const apiEndPoints = {
       `/boards/${universityId}/grades?offset=0&limit=1000`,
   },
   calender: {
-    getschedulefiltered: (payload) => `/user-schedules/filtered`,
+    getschedulefiltered: (payload) => `/user-events/filtered`,
   },
   myCourses: {
     getSubjects: (userId) => `/analytics/users/${userId}/subjects`,
     getChapters: (userId) => `/analytics/users/${userId}/chapters`,
     getTopics: (userId) => `/analytics/users/${userId}/topics`,
-    getGatePreviousQuestionPaperCountByTopic:(payload) =>`/gate/question-papers/${payload.semesterId}/${payload.subjectId}/${payload.chapterId}/questions/count`,
+    getGatePreviousQuestionPaperCountByTopic: (payload) =>
+      `/gate/question-papers/${payload.semesterId}/${payload.subjectId}/${payload.chapterId}/questions/count`,
     getPreviousQuestionPaperByCount: (payload) =>
       `/question-papers/${payload.semesterId}/${payload.subjectId}/${payload.chapterId}/questions/count`,
     getActivities: (userId) => `/analytics/users/${userId}/activities`,
@@ -39,7 +40,7 @@ const apiEndPoints = {
       `/analytics/users/${payload.userId}/activities/${payload.activityDimId}/test/re-attempt?assignedActivityId=${payload.assignedActivityId}`,
     getNotesActivityData: (payload) =>
       `/analytics/users/${payload.userId}/activities/${payload.activityDimId}`,
-      getNotesActivityDataProfe:(payload)=>
+    getNotesActivityDataProfe: (payload) =>
       `/activities/${payload.id}/activity-info/${payload.activityInfoId}`,
     addtocalender: (payload) => `/user-schedules`,
     getCalenderDataapi: (payload) =>
@@ -55,14 +56,20 @@ const apiEndPoints = {
       `/analytics/users/${payload.userId}/assessments/${payload.userTestId}/review-questions?activityDimId=${payload.activityDimId}`,
     //getrecommendedtopics: (payload = `/recommended-topics/${payload.topicId}`),
     getrecommendedtopics: (payload) => `/recommended-topics/${payload.topicId}`,
-    getQuestionPaperByTopicIdRequest:(payload)=>`/question-papers/topics/${payload.topicId}/questions`,
-    getGateQuestionPaperByTopicIdRequest:(payload)=>`/gate/question-papers/topics/${payload.topicId}/questions`,
-    getrecommendedtopicActivities:(payload)=>`/recommended-topics/${payload.universalTopicId}/activities`,
-    validatevideoquestiona:(payload) => `analytics/users/${payload.userId}/activities/${payload.activityDimId}/videos/test-questions/${payload.questionId}/validate`,
-    getvideoquestions:(payload)=> `/analytics/users/${payload.userId}/activities/${payload.activityDimId}/videos/test-questions?assignedActivityId=${payload.assignedActivityId}`,
-    getAssessmentTestQuestionRequest:(payload)  =>
+    getQuestionPaperByTopicIdRequest: (payload) =>
+      `/question-papers/topics/${payload.topicId}/questions`,
+    getGateQuestionPaperByTopicIdRequest: (payload) =>
+      `/gate/question-papers/topics/${payload.topicId}/questions`,
+    getrecommendedtopicActivities: (payload) =>
+      `/recommended-topics/${payload.universalTopicId}/activities`,
+    validatevideoquestiona: (payload) =>
+      `analytics/users/${payload.userId}/activities/${payload.activityDimId}/videos/test-questions/${payload.questionId}/validate`,
+    getvideoquestions: (payload) =>
+      `/analytics/users/${payload.userId}/activities/${payload.activityDimId}/videos/test-questions?assignedActivityId=${payload.assignedActivityId}`,
+    getAssessmentTestQuestionRequest: (payload) =>
       `/analytics/users/${payload.userId}/activities/${payload.activityDimId}/test-questions/${payload.index}?assignedActivityId=${payload.assignedActivityId}&userTestId=${payload.testId}&questionId=${payload.questionId}`,
-    getVideoquestionsvideopro:(payload) =>  `/activities/${payload.activityId}/video-questions`
+    getVideoquestionsvideopro: (payload) =>
+      `/activities/${payload.activityId}/video-questions`,
   },
   topicsinProgress: {
     getTopicsProgress: (userId) =>
@@ -135,7 +142,7 @@ const apiEndPoints = {
   searchPage: {
     getSearchData: (payload) =>
       `/global-search?userId=${payload.userId}&searchValue=${payload.searchValue}`,
-    
+
     getTopicDetails: (payload) =>
       `/boards/${payload.boardId}/grades/${payload.gradeId}/subjects/${payload.subjectId}/chapters/${payload.chapterId}/topics/${payload.topicId}`,
     getChapterDetails: (payload) =>

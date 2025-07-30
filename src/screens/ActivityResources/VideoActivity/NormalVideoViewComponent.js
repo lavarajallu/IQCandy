@@ -11,6 +11,9 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import Video from 'react-native-video';
+import { Vimeo } from 'react-native-vimeo-iframe';
+import { WebView } from 'react-native-webview';
+import getVideoId from 'get-video-id';
 import * as ScreenOrientation from 'expo-screen-orientation';
 //import Orientation from 'react-native-orientation-locker';
 //import { imageUrl } from '../../constants';
@@ -271,6 +274,21 @@ const NormalVideoViewComponent = (props) => {
   // if (isTablet) {
   //   (fullimg = 30), (playicon = 25), (subfont = 18), (progrsheight = 40);
   // }
+
+  const handleVideoError = (err) => {
+    console.log('Video Playback Error:', err);
+    const { localizedDescription } = err.error;
+    alert(localizedDescription || 'An error occurred during video playback.');
+  };
+
+  const videoCallbacks = {
+    play: (data) => console.log('play: ', data),
+    pause: (data) => console.log('pause: ', data),
+    fullscreenchange: (data) => console.log('fullscreenchange: ', data),
+    ended: (data) => console.log('ended: ', data),
+    controlschange: (data) => console.log('controlschange: ', data),
+  };
+
   return loading ? (
     <Text>{t('loading')}</Text>
   ) : (
@@ -284,34 +302,56 @@ const NormalVideoViewComponent = (props) => {
       >
         <View style={{ flex: 1 }}>
           <View style={{ flex: 1 }}>
-            <Video
-              source={{
-                uri:
-                  props.activityType === 'conceptual_video'
-                    ? props.vimeourl
-                    : normaldata.url,
-                headers: {
-                  Referer: 'https://login.iqcandy.com/',
-                },
-              }} // Can be a URL or a local file.
-              ref={playerRef}
-              paused={isPlaying}
-              progressUpdateInterval={900}
-              //controls={true}
-              // fullscreen={true}                          // Store referenc              // Callback when video cannot be loaded
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                bottom: 0,
-                right: 0,
-                elevation: 20,
-              }}
-              onLoad={onLoad}
-              onError={(err) => console.log('errorrr', err)}
-              resizeMode={fullscreen ? 'cover' : 'contain'}
-              onProgress={onProgress}
-            />
+            {props?.activityType === 'conceptual_video' ? (
+              <WebView
+                source={{
+                  uri: `https://player.vimeo.com/video/${
+                    getVideoId(props.data.url)?.id
+                  }`,
+                }} // Use Vimeo player URL with video ID: public 76979871
+                style={{ flex: 1 }}
+                javaScriptEnabled={true}
+                domStorageEnabled={true}
+                mediaPlaybackRequiresUserAction={false} // Allow autoplay
+                onError={(e) =>
+                  console.log('Error loading video:', e.nativeEvent)
+                }
+                onLoadEnd={() => console.log('Video loaded successfully')}
+              />
+            ) : (
+              /* <Vimeo
+                videoId={getVideoId(props.data.url)?.id}
+                //videoId={getVideoId(props.data.url)} // Pass the video ID as a prop
+                style={styles.video} // Optional: styling the iframe
+                params={'api=1&autoplay=0'}
+                handlers={videoCallbacks}
+              /> */
+              <Video
+                source={{
+                  uri: normaldata.url,
+                  headers: {
+                    Referer: 'https://login.iqcandy.com/',
+                  },
+                }} // Can be a URL or a local file.
+                ref={playerRef}
+                paused={isPlaying}
+                progressUpdateInterval={900}
+                //controls={true}
+                // fullscreen={true}                          // Store referenc              // Callback when video cannot be loaded
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  bottom: 0,
+                  right: 0,
+                  elevation: 20,
+                }}
+                onLoad={onLoad}
+                onError={handleVideoError}
+                resizeMode={fullscreen ? 'cover' : 'contain'}
+                onProgress={onProgress}
+              />
+            )}
             <TouchableOpacity
               onPress={onfullscreen}
               style={{
@@ -480,6 +520,15 @@ const NormalVideoViewComponent = (props) => {
               </View>
             </View>
           </View>
+          {/* <WebView
+            source={{ uri: 'https://player.vimeo.com/video/927025543' }}
+            style={{ flex: 1 }}
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+            onError={(e) => console.log('Error loading video:', e.nativeEvent)}
+            onLoadEnd={() => console.log('Video loaded successfully')}
+            mediaPlaybackRequiresUserAction={false} // Allow autoplay if needed
+          /> */}
         </View>
       </View>
     </View>

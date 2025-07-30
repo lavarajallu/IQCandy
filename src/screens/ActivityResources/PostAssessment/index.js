@@ -100,6 +100,11 @@ const PostAssessment = ({ route, navigation }) => {
   useEffect(() => {
     if (testQuestionsData && testQuestionsData.length > 0) {
       if (data.activityType === 'post') {
+        console.log(
+          'kkkkkkkk...........',
+          testQuestionsData[0].analysis,
+          testQuestionsData.length
+        );
         if (testQuestionsData[0].analysis && testQuestionsData.length === 1) {
           setsorryalertone(true);
         } else if (
