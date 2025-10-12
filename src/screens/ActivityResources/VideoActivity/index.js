@@ -1,6 +1,6 @@
 //Post Assessment
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   View,
   Text,
@@ -10,32 +10,32 @@ import {
   Dimensions,
   Button,
   Platform,
-} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
-import * as ScreenOrientation from 'expo-screen-orientation';
-import { useTranslation } from 'react-i18next';
+} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage"; // Make sure to import AsyncStorage or the storage library you're using
+import * as ScreenOrientation from "expo-screen-orientation";
+import { useTranslation } from "react-i18next";
 
-import VideoQuestionModal from './VideoQuestionModal';
-import Modal from 'react-native-modal';
-import { goBack } from '../../../utils/navigationUtils';
-import { COLORS } from '../../../constants/colors';
-import Header from '../../../components/Header';
-import NormalVideoViewComponent from './NormalVideoViewComponent';
-import { textContent } from '../../../constants/content';
-import { selectUser } from '../../../store/authManagement/selector';
-import { selectMyCourses } from '../../../store/student/myCourses/selector';
-import getVideoId from 'get-video-id';
+import VideoQuestionModal from "./VideoQuestionModal";
+import Modal from "react-native-modal";
+import { goBack } from "../../../utils/navigationUtils";
+import { COLORS } from "../../../constants/colors";
+import Header from "../../../components/Header";
+import NormalVideoViewComponent from "./NormalVideoViewComponent";
+import { textContent } from "../../../constants/content";
+import { selectUser } from "../../../store/authManagement/selector";
+import { selectMyCourses } from "../../../store/student/myCourses/selector";
+import getVideoId from "get-video-id";
 
 import {
   getVideoActivityData,
   updateanalyticsNotes,
   getAssessmentTestQuestionRequest,
   getVideoquestions,
-} from '../../../api/myCourses';
-import moment from 'moment';
-import i18n from '../../../i18n/index1';
-var windowWidth = Dimensions.get('window').width;
-var windowHeight = Dimensions.get('window').height;
+} from "../../../api/myCourses";
+import moment from "moment";
+import i18n from "../../../i18n/index1";
+var windowWidth = Dimensions.get("window").width;
+var windowHeight = Dimensions.get("window").height;
 const VideoActivity = ({ route, navigation }) => {
   const { questions } = textContent;
   const { t } = useTranslation(); //i18n instance
@@ -57,15 +57,15 @@ const VideoActivity = ({ route, navigation }) => {
   const [newdata, setdata] = useState({});
   const [activityStartTime, setactivityStartTime] = useState(null);
   const [showfullscreen, setfullscreen] = useState(false);
-  const [vimeothumbnailurl, setvimeothumbnailurl] = useState('');
-  const [vimeourl, setvimeourl] = useState('');
+  const [vimeothumbnailurl, setvimeothumbnailurl] = useState("");
+  const [vimeourl, setvimeourl] = useState("");
 
-  const [vimeovideo, setvimeovideo] = useState('');
+  const [vimeovideo, setvimeovideo] = useState("");
   const [videosdata, setvideoquestionsdata] = useState([]);
   const [videodetailsquestion, setvideodetailsquestion] = useState(null);
   const backAction = () => {
     updateAnalytics();
-    navigation.navigate('ActivityResources', {
+    navigation.navigate("ActivityResources", {
       topicItem: route.params.topicItem,
       chapterItem: route.params.chapterItem,
       subjectItem: route.params.subjectItem,
@@ -95,7 +95,7 @@ const VideoActivity = ({ route, navigation }) => {
           ? route.params.topicItem.topicId
           : null,
         activityStartedAt: activityStartTime,
-        activityEndedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
+        activityEndedAt: moment().format("YYYY-MM-DD HH:mm:ss"),
         videoWatchedInSec: duration,
         videoPausedAt: newdata,
       };
@@ -119,7 +119,7 @@ const VideoActivity = ({ route, navigation }) => {
       activityDimId: activityDimId,
       assignedActivityId: data.assignedActivityId,
     });
-    const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
+    const activityStartTime = moment().format("YYYY-MM-DD HH:mm:ss");
     setactivityStartTime(activityStartTime);
   }, [user]);
   useEffect(() => {
@@ -141,13 +141,13 @@ const VideoActivity = ({ route, navigation }) => {
 
   useEffect(() => {
     if (videoActivityData && Object.keys(videoActivityData).length > 0) {
-      if (data.activityType === 'conceptual_video') {
+      if (data.activityType === "conceptual_video") {
         const VIMEO_ID = getVideoId(videoActivityData?.url);
         if (VIMEO_ID.id) {
           fetch(`https://player.vimeo.com/video/${VIMEO_ID.id}/config`, {
-            method: 'GET',
+            method: "GET",
             headers: {
-              Referer: 'https://login.iqcandy.com/',
+              Referer: "https://login.iqcandy.com/",
             },
           })
             .then((res) => {
@@ -157,15 +157,13 @@ const VideoActivity = ({ route, navigation }) => {
               return res.json();
             })
             .then((res) => {
-              console.log('Vimeo Response:', res);
-
-              if (res.title === 'Sorry') {
+              if (res.title === "Sorry") {
                 // Handle case where video is restricted or unavailable
                 setnormalvideodata(videoActivityData);
               } else {
                 // Update state with Vimeo data
                 setnormalvideodata(videoActivityData);
-                setvimeothumbnailurl(res.video.thumbs['640']);
+                setvimeothumbnailurl(res.video.thumbs["640"]);
                 setvimeourl(
                   res.request.files.hls.cdns[res.request.files.hls.default_cdn]
                     .url
@@ -174,11 +172,11 @@ const VideoActivity = ({ route, navigation }) => {
               }
             })
             .catch((err) => {
-              console.error('Error fetching Vimeo data:', JSON.stringify(err));
+              console.error("Error fetching Vimeo data:", JSON.stringify(err));
               setnormalvideodata(videoActivityData); // Fallback to normal video data
             });
         } else {
-          console.error('Invalid Vimeo URL:', videoActivityData.url);
+          console.error("Invalid Vimeo URL:", videoActivityData.url);
           setnormalvideodata(videoActivityData); // Fallback to normal video data
         }
       } else {
@@ -204,7 +202,7 @@ const VideoActivity = ({ route, navigation }) => {
     }
 
     setTimeout(() => {
-      navigation.navigate('ActivityResources', {
+      navigation.navigate("ActivityResources", {
         topicItem: route.params.topicItem,
         chapterItem: route.params.chapterItem,
         subjectItem: route.params.subjectItem,
@@ -251,7 +249,7 @@ const VideoActivity = ({ route, navigation }) => {
     if (this.funcComRef) {
       setfullscreen(!showfullscreen);
       // setfullscreen((showfullscreen) => {
-      this.funcComRef('fullscreen', !showfullscreen);
+      this.funcComRef("fullscreen", !showfullscreen);
       //   return !showfullscreen;
       // });
     }
@@ -262,11 +260,11 @@ const VideoActivity = ({ route, navigation }) => {
     var index = route.params.index;
     if (newobj) {
       if (
-        newobj.activityType === 'obj' ||
-        newobj.activityType === 'post' ||
-        newobj.activityType === 'sub'
+        newobj.activityType === "obj" ||
+        newobj.activityType === "post" ||
+        newobj.activityType === "sub"
       ) {
-        navigation.navigate('PostAssessment', {
+        navigation.navigate("PostAssessment", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -276,13 +274,13 @@ const VideoActivity = ({ route, navigation }) => {
           from: route.params.from,
         });
       } else if (
-        newobj.activityType === 'pdf' ||
-        newobj.activityType === 'HTML5' ||
-        newobj.activityType === 'html5' ||
-        newobj.activityType === 'web' ||
-        newobj.activityType === 'games'
+        newobj.activityType === "pdf" ||
+        newobj.activityType === "HTML5" ||
+        newobj.activityType === "html5" ||
+        newobj.activityType === "web" ||
+        newobj.activityType === "games"
       ) {
-        navigation.navigate('NotesActivity', {
+        navigation.navigate("NotesActivity", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -291,8 +289,8 @@ const VideoActivity = ({ route, navigation }) => {
           topicItem: route.params.topicItem,
           from: route.params.from,
         });
-      } else if (newobj.activityType === 'pre') {
-        navigation.navigate('PreAssessment', {
+      } else if (newobj.activityType === "pre") {
+        navigation.navigate("PreAssessment", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -302,10 +300,10 @@ const VideoActivity = ({ route, navigation }) => {
           from: route.params.from,
         });
       } else if (
-        newobj.activityType === 'conceptual_video' ||
-        newobj.activityType === 'video'
+        newobj.activityType === "conceptual_video" ||
+        newobj.activityType === "video"
       ) {
-        navigation.navigate('VideoActivity', {
+        navigation.navigate("VideoActivity", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -314,8 +312,8 @@ const VideoActivity = ({ route, navigation }) => {
           topicItem: route.params.topicItem,
           from: route.params.from,
         });
-      } else if (newobj.activityType === 'youtube') {
-        navigation.navigate('YtVideoActivity', {
+      } else if (newobj.activityType === "youtube") {
+        navigation.navigate("YtVideoActivity", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -326,7 +324,7 @@ const VideoActivity = ({ route, navigation }) => {
         });
       }
     } else {
-      navigation.navigate('ActivityResources', {
+      navigation.navigate("ActivityResources", {
         topicItem: route.params.topicItem,
         chapterItem: route.params.chapterItem,
         subjectItem: route.params.subjectItem,
@@ -340,11 +338,11 @@ const VideoActivity = ({ route, navigation }) => {
     var index = route.params.index;
     if (newobj) {
       if (
-        newobj.activityType === 'obj' ||
-        newobj.activityType === 'post' ||
-        newobj.activityType === 'sub'
+        newobj.activityType === "obj" ||
+        newobj.activityType === "post" ||
+        newobj.activityType === "sub"
       ) {
-        navigation.navigate('PostAssessment', {
+        navigation.navigate("PostAssessment", {
           index: index - 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -354,13 +352,13 @@ const VideoActivity = ({ route, navigation }) => {
           from: route.params.from,
         });
       } else if (
-        newobj.activityType === 'pdf' ||
-        newobj.activityType === 'HTML5' ||
-        newobj.activityType === 'html5' ||
-        newobj.activityType === 'web' ||
-        newobj.activityType === 'games'
+        newobj.activityType === "pdf" ||
+        newobj.activityType === "HTML5" ||
+        newobj.activityType === "html5" ||
+        newobj.activityType === "web" ||
+        newobj.activityType === "games"
       ) {
-        navigation.navigate('NotesActivity', {
+        navigation.navigate("NotesActivity", {
           index: index - 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -369,18 +367,18 @@ const VideoActivity = ({ route, navigation }) => {
           topicItem: route.params.topicItem,
           from: route.params.from,
         });
-      } else if (newobj.activityType === 'pre') {
-        navigation.navigate('ActivityResources', {
+      } else if (newobj.activityType === "pre") {
+        navigation.navigate("ActivityResources", {
           topicItem: route.params.topicItem,
           chapterItem: route.params.chapterItem,
           subjectItem: route.params.subjectItem,
           from: route.params.from,
         });
       } else if (
-        newobj.activityType === 'conceptual_video' ||
-        newobj.activityType === 'video'
+        newobj.activityType === "conceptual_video" ||
+        newobj.activityType === "video"
       ) {
-        navigation.navigate('VideoActivity', {
+        navigation.navigate("VideoActivity", {
           index: index - 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -389,8 +387,8 @@ const VideoActivity = ({ route, navigation }) => {
           topicItem: route.params.topicItem,
           from: route.params.from,
         });
-      } else if (newobj.activityType === 'youtube') {
-        navigation.navigate('YtVideoActivity', {
+      } else if (newobj.activityType === "youtube") {
+        navigation.navigate("YtVideoActivity", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -401,7 +399,7 @@ const VideoActivity = ({ route, navigation }) => {
         });
       }
     } else {
-      navigation.navigate('ActivityResources', {
+      navigation.navigate("ActivityResources", {
         topicItem: route.params.topicItem,
         chapterItem: route.params.chapterItem,
         subjectItem: route.params.subjectItem,
@@ -413,15 +411,15 @@ const VideoActivity = ({ route, navigation }) => {
     setnewmodal(false);
 
     setvideodetailsquestion(null);
-    this.funcComRef('questionsubmit', value);
+    this.funcComRef("questionsubmit", value);
   };
   const onRewatch = () => {
     setnewmodal(false);
-    this.funcComRef('rewatch', newdata);
+    this.funcComRef("rewatch", newdata);
   };
   const onback = () => {
     if (this.funcComRef) {
-      this.funcComRef('gettime', 'Val');
+      this.funcComRef("gettime", "Val");
     } else {
       goBack(navigation);
     }
@@ -431,11 +429,11 @@ const VideoActivity = ({ route, navigation }) => {
   var height;
   if (showfullscreen) {
     stylefull = {
-      height: showfullscreen ? '100%' : '80%',
-      alignSelf: 'center',
-      backgroundColor: 'white',
+      height: showfullscreen ? "100%" : "80%",
+      alignSelf: "center",
+      backgroundColor: "white",
       borderRadius: 20,
-      width: '95%',
+      width: "95%",
     };
   } else {
     stylefull = {
@@ -459,7 +457,7 @@ const VideoActivity = ({ route, navigation }) => {
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
       {showfullscreen ? null : (
-        <Header backAction={onback} headerTitle={'Video Activity'} />
+        <Header backAction={onback} headerTitle={"Video Activity"} />
       )}
       <View style={stylefull}>
         {normalvideodata ? (
@@ -483,22 +481,22 @@ const VideoActivity = ({ route, navigation }) => {
           <View
             style={{
               flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <Text style={{ fontSize: 15 }}>{t('loading')}</Text>
+            <Text style={{ fontSize: 15 }}>{t("loading")}</Text>
           </View>
         )}
       </View>
       {showfullscreen ? null : (
         <View
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
+            flexDirection: "row",
+            justifyContent: "space-between",
             marginLeft: 10,
             marginRight: 10,
-            alignItems: 'center',
+            alignItems: "center",
           }}
         >
           <TouchableOpacity
@@ -506,20 +504,20 @@ const VideoActivity = ({ route, navigation }) => {
             style={{
               height: 30,
               borderRadius: 20,
-              backgroundColor: 'white',
+              backgroundColor: "white",
               paddingHorizontal: 20,
-              justifyContent: 'center',
-              alignItems: 'center',
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             <Text
               style={{
-                textAlign: 'center',
+                textAlign: "center",
                 fontSize: 14,
                 color: COLORS.appSecondaryColor,
               }}
             >
-              {t('previousactivity')}
+              {t("previousactivity")}
             </Text>
           </TouchableOpacity>
 
@@ -528,31 +526,31 @@ const VideoActivity = ({ route, navigation }) => {
             style={{
               height: 30,
               borderRadius: 20,
-              backgroundColor: 'white',
+              backgroundColor: "white",
               paddingHorizontal: 20,
-              justifyContent: 'center',
-              alignItems: 'center',
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             {route.params.smartres[route.params.index + 1] ? (
               <Text
                 style={{
-                  textAlign: 'center',
+                  textAlign: "center",
                   fontSize: 14,
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                {t('nextactivity')}
+                {t("nextactivity")}
               </Text>
             ) : (
               <Text
                 style={{
-                  textAlign: 'center',
+                  textAlign: "center",
                   fontSize: 14,
                   color: COLORS.appSecondaryColor,
                 }}
               >
-                {t('done')}
+                {t("done")}
               </Text>
             )}
           </TouchableOpacity>
@@ -562,8 +560,8 @@ const VideoActivity = ({ route, navigation }) => {
         <View
           style={{
             flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <VideoQuestionModal
@@ -582,13 +580,13 @@ const VideoActivity = ({ route, navigation }) => {
 
 export default VideoActivity;
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 const styless = StyleSheet.create({
   headerText: {
     fontSize: 16,
-    fontWeight: '700',
-    fontFamily: 'mulish-bold',
+    fontWeight: "700",
+    fontFamily: "mulish-bold",
     color: COLORS.whiteColor,
   },
   container: {

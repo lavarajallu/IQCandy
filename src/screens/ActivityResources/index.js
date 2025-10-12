@@ -150,7 +150,6 @@ const ActivityResources = ({ route, navigation }) => {
   useEffect(() => {
     //alert(JSON.stringify(Profactivities))
     if (Profactivities && Profactivities.length > 0) {
-      console.log("Profactivities", JSON.stringify(Profactivities));
       setprores(Profactivities);
     }
   }, [Profactivities]);
@@ -209,7 +208,6 @@ const ActivityResources = ({ route, navigation }) => {
           title: topicItem?.topicName,
         }),
       };
-      console.log("dmmm///////", payload);
       addtocalenderPost({
         dispatch,
         userId: user?.userInfo?.userId,
@@ -251,7 +249,6 @@ const ActivityResources = ({ route, navigation }) => {
         title: topicItem?.topicName,
       }),
     };
-    console.log("updateeeee", scheduledata.id, payload);
     addtocalenderPut({
       dispatch,
       userId: user?.userInfo?.userId,
@@ -363,7 +360,6 @@ const ActivityResources = ({ route, navigation }) => {
             title: topicItem?.topicName,
           }),
         };
-        console.log("dflkafkdf.dmf.,df", payload);
         addtocalenderPost({
           dispatch,
           userId: user?.userInfo?.userId,

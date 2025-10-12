@@ -1,5 +1,5 @@
 //Post Assessment
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,22 +10,22 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   Image,
-} from 'react-native';
-import { _ } from 'lodash';
-import { useSelector, useDispatch } from 'react-redux';
-import { goBack } from '../../../utils/navigationUtils';
-import { COLORS } from '../../../constants/colors';
-import Header from '../../../components/Header';
-import styles from './styles';
-import Modal from 'react-native-modal';
-import { useTranslation } from 'react-i18next';
+} from "react-native";
+import { _ } from "lodash";
+import { useSelector, useDispatch } from "react-redux";
+import { goBack } from "../../../utils/navigationUtils";
+import { COLORS } from "../../../constants/colors";
+import Header from "../../../components/Header";
+import styles from "./styles";
+import Modal from "react-native-modal";
+import { useTranslation } from "react-i18next";
 
-import { getValidaPackages } from '../../../api/validatePackages';
-import { selectValidatePackage } from '../../../store/student/validatePackages/selector';
-import { getPracticeChapters } from '../../../api/myLearning';
-import { selectMyLearning } from '../../../store/student/myLearning/selector';
-import { selectUser } from '../../../store/authManagement/selector';
-import i18n from '../../../i18n/index1';
+import { getValidaPackages } from "../../../api/validatePackages";
+import { selectValidatePackage } from "../../../store/student/validatePackages/selector";
+import { getPracticeChapters } from "../../../api/myLearning";
+import { selectMyLearning } from "../../../store/student/myLearning/selector";
+import { selectUser } from "../../../store/authManagement/selector";
+import i18n from "../../../i18n/index1";
 
 const MyPracticeChapters = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -43,7 +43,6 @@ const MyPracticeChapters = ({ route, navigation }) => {
   const { validatePackage } = useSelector(selectValidatePackage);
 
   useEffect(() => {
-    console.log('.....', user);
     if (user) {
       // getValidaPackages({
       //   dispatch,
@@ -65,9 +64,9 @@ const MyPracticeChapters = ({ route, navigation }) => {
         let testChapters = [];
         let uniqueTestChapters = _.uniqBy(
           previousTestsData?.userPracticeTest,
-          'chapterId'
+          "chapterId"
         );
-        var previousTestChapters = _.sortBy(uniqueTestChapters, 'chapterIndex');
+        var previousTestChapters = _.sortBy(uniqueTestChapters, "chapterIndex");
         for (l = 1; l < previousTestChapters.length; l++) {
           var pair = { attempts: 0 };
           previousTestChapters[l] = { ...previousTestChapters[l], ...pair };
@@ -96,8 +95,8 @@ const MyPracticeChapters = ({ route, navigation }) => {
             index: up.chapterIndex,
           });
         });
-        let listChapters = [{ name: 'Start', index: -1000 }, ...testChapters];
-        listChapters = _.sortBy(listChapters, 'index');
+        let listChapters = [{ name: "Start", index: -1000 }, ...testChapters];
+        listChapters = _.sortBy(listChapters, "index");
         setChaptersData(listChapters);
         setnewChapters(previousTestsData);
         setLoadingData(false);
@@ -124,7 +123,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
   const onEventPress = (data) => {};
   const onItem = (item, index, type, newindex) => {
     if (index === 1) {
-      if (item.testType === 'subject' || item.testType === 'Subject') {
+      if (item.testType === "subject" || item.testType === "Subject") {
         if (newindex > 0) {
           if (
             newchapters?.attempts
@@ -134,19 +133,19 @@ const MyPracticeChapters = ({ route, navigation }) => {
             setSelectedItem(item);
             setNewModal(true);
           } else {
-            navigation.navigate('PracticeAssesment', {
+            navigation.navigate("PracticeAssesment", {
               data: item,
               subjectData: subjectItem,
-              type: 'Subject',
+              type: "Subject",
               attempttime: 1,
             });
           }
         } else {
-          alert('Please complete before chapter first');
+          alert("Please complete before chapter first");
         }
       } else {
         if (newindex > 0) {
-          if (item.testType === 'chapter' || item.testType === 'Chapter') {
+          if (item.testType === "chapter" || item.testType === "Chapter") {
             if (
               newchapters?.attempts
                 ?.map((pta) => pta.chapterId)
@@ -157,28 +156,28 @@ const MyPracticeChapters = ({ route, navigation }) => {
             } else {
               // setSelectedItem(item);
               // setNewModal(true);
-              navigation.navigate('PracticeAssesment', {
+              navigation.navigate("PracticeAssesment", {
                 data: item,
                 subjectData: subjectItem,
-                type: 'Chapter',
+                type: "Chapter",
                 attempttime: 1,
               });
             }
           } else {
-            navigation.navigate('PracticeAssesment', {
+            navigation.navigate("PracticeAssesment", {
               data: item,
               subjectData: subjectItem,
-              type: 'Chapter',
+              type: "Chapter",
               attempttime: 1,
             });
           }
         } else {
-          alert('Please complete before chapter first');
+          alert("Please complete before chapter first");
         }
       }
     } else {
-      if (user?.role?.roleName !== 'General Student') {
-        if (item.testType === 'subject' || item.testType === 'Subject') {
+      if (user?.role?.roleName !== "General Student") {
+        if (item.testType === "subject" || item.testType === "Subject") {
           if (newindex > 0) {
             if (
               newchapters?.attempts
@@ -188,19 +187,19 @@ const MyPracticeChapters = ({ route, navigation }) => {
               setSelectedItem(item);
               setNewModal(true);
             } else {
-              navigation.navigate('PracticeAssesment', {
+              navigation.navigate("PracticeAssesment", {
                 data: item,
                 subjectData: subjectItem,
-                type: 'Subject',
+                type: "Subject",
                 attempttime: 1,
               });
             }
           } else {
-            alert('Please complete before chapter first');
+            alert("Please complete before chapter first");
           }
         } else {
           if (newindex > 0) {
-            if (item.testType === 'chapter' || item.testType === 'Chapter') {
+            if (item.testType === "chapter" || item.testType === "Chapter") {
               if (
                 newchapters?.attempts
                   ?.map((pta) => pta.chapterId)
@@ -209,27 +208,27 @@ const MyPracticeChapters = ({ route, navigation }) => {
                 setSelectedItem(item);
                 setNewModal(true);
               } else {
-                navigation.navigate('PracticeAssesment', {
+                navigation.navigate("PracticeAssesment", {
                   data: item,
                   subjectData: subjectItem,
-                  type: 'Chapter',
+                  type: "Chapter",
                   attempttime: 1,
                 });
               }
             } else {
-              navigation.navigate('PracticeAssesment', {
+              navigation.navigate("PracticeAssesment", {
                 data: item,
                 subjectData: subjectItem,
-                type: 'Chapter',
+                type: "Chapter",
                 attempttime: 1,
               });
             }
           } else {
-            alert('Please complete before chapter first');
+            alert("Please complete before chapter first");
           }
         }
       } else {
-        if (item.testType === 'subject' || item.testType === 'Subject') {
+        if (item.testType === "subject" || item.testType === "Subject") {
           if (newindex > 0) {
             if (
               newchapters?.attempts
@@ -239,19 +238,19 @@ const MyPracticeChapters = ({ route, navigation }) => {
               setSelectedItem(item);
               setNewModal(true);
             } else {
-              navigation.navigate('PracticeAssesment', {
+              navigation.navigate("PracticeAssesment", {
                 data: item,
                 subjectData: subjectItem,
-                type: 'Subject',
+                type: "Subject",
                 attempttime: 1,
               });
             }
           } else {
-            alert('Please complete before chapter first');
+            alert("Please complete before chapter first");
           }
         } else {
           if (newindex > 0) {
-            if (item.testType === 'chapter' || item.testType === 'Chapter') {
+            if (item.testType === "chapter" || item.testType === "Chapter") {
               if (
                 newchapters?.attempts
                   ?.map((pta) => pta.chapterId)
@@ -260,23 +259,23 @@ const MyPracticeChapters = ({ route, navigation }) => {
                 setSelectedItem(item);
                 setNewModal(true);
               } else {
-                navigation.navigate('PracticeAssesment', {
+                navigation.navigate("PracticeAssesment", {
                   data: item,
                   subjectData: subjectItem,
-                  type: 'Chapter',
+                  type: "Chapter",
                   attempttime: 1,
                 });
               }
             } else {
-              navigation.navigate('PracticeAssesment', {
+              navigation.navigate("PracticeAssesment", {
                 data: item,
                 subjectData: subjectItem,
-                type: 'Chapter',
+                type: "Chapter",
                 attempttime: 1,
               });
             }
           } else {
-            alert('Please complete before chapter first');
+            alert("Please complete before chapter first");
           }
         }
       }
@@ -285,16 +284,16 @@ const MyPracticeChapters = ({ route, navigation }) => {
   const onStarttext = () => {
     setNewModal(false);
 
-    navigation.navigate('PracticeAssesment', {
+    navigation.navigate("PracticeAssesment", {
       data: selectedItem,
       subjectData: subjectItem,
-      type: 'Chapter',
+      type: "Chapter",
       attempttime: 2,
     });
   };
   const onReview = () => {
     setNewModal(false);
-    navigation.navigate('ReviewPractice', {
+    navigation.navigate("ReviewPractice", {
       data: selectedItem,
       subjectData: subjectItem,
     });
@@ -316,7 +315,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
               <>
                 <View style={styles.firstRowView}>
                   <TouchableOpacity
-                    onPress={() => onItem(item, index, 'Chapter', index)}
+                    onPress={() => onItem(item, index, "Chapter", index)}
                     style={styles.firstRowMainView}
                   >
                     <View
@@ -348,7 +347,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
                       >
                         <Image
                           style={styles.imagestyles}
-                          source={require('../../../../assets/images/playbutton.png')}
+                          source={require("../../../../assets/images/playbutton.png")}
                         />
                       </View>
                     </View>
@@ -387,12 +386,12 @@ const MyPracticeChapters = ({ route, navigation }) => {
                         chaptersData[index - 1]?.attempts > 0 ? (
                           <Image
                             style={styles.imagestyles}
-                            source={require('../../../../assets/images/playbutton.png')}
+                            source={require("../../../../assets/images/playbutton.png")}
                           />
                         ) : (
                           <Image
                             style={styles.imagestyles}
-                            source={require('../../../../assets/images/lock.png')}
+                            source={require("../../../../assets/images/lock.png")}
                           />
                         )}
                       </View>
@@ -418,7 +417,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
                       ) : null} */}
                     </View>
                     <View style={styles.subjectview}>
-                      {chapterItem.testType === 'Subject' ? (
+                      {chapterItem.testType === "Subject" ? (
                         <Text
                           numberOfLines={2}
                           style={[
@@ -467,7 +466,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
                         },
                       ]}
                     >
-                      {chapterItem.testType === 'Subject' ? (
+                      {chapterItem.testType === "Subject" ? (
                         <Text
                           numberOfLines={2}
                           style={{ fontSize: headfont, marginLeft: 5 }}
@@ -497,12 +496,12 @@ const MyPracticeChapters = ({ route, navigation }) => {
                         {chaptersData[index - 1]?.attempts > 0 ? (
                           <Image
                             style={styles.imagestyles}
-                            source={require('../../../../assets/images/playbutton.png')}
+                            source={require("../../../../assets/images/playbutton.png")}
                           />
                         ) : (
                           <Image
                             style={styles.imagestyles}
-                            source={require('../../../../assets/images/lock.png')}
+                            source={require("../../../../assets/images/lock.png")}
                           />
                         )}
                       </View>
@@ -541,7 +540,7 @@ const MyPracticeChapters = ({ route, navigation }) => {
                   width: imagesize + 15,
                 },
               ]}
-              source={require('../../../../assets/images/start.png')}
+              source={require("../../../../assets/images/start.png")}
             />
           )}
         </View>
@@ -550,12 +549,12 @@ const MyPracticeChapters = ({ route, navigation }) => {
   };
   return (
     <SafeAreaView style={styles.safeareaview}>
-      <Header backAction={backAction} headerTitle={''} />
+      <Header backAction={backAction} headerTitle={""} />
       <View style={[styles.container, styles.shadowProp]}>
         <View style={styles.mainview}>
           {loadingData ? (
             <View>
-              <Text style={{ textAlign: 'center' }}>{t('loading')}</Text>
+              <Text style={{ textAlign: "center" }}>{t("loading")}</Text>
             </View>
           ) : (
             <View style={styles.mainView}>
@@ -570,51 +569,51 @@ const MyPracticeChapters = ({ route, navigation }) => {
         <TouchableWithoutFeedback onPress={() => setNewModal(false)}>
           <Modal
             isVisible={newmodal}
-            style={{ justifyContent: 'center', margin: 0 }}
+            style={{ justifyContent: "center", margin: 0 }}
             onBackdropPress={() => setNewModal(false)}
           >
-            <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+            <View style={{ flex: 1, justifyContent: "flex-end" }}>
               <View
                 style={{
                   padding: 20,
-                  backgroundColor: 'white',
+                  backgroundColor: "white",
                   borderTopLeftRadius: 15,
                   borderTopRightRadius: 15,
                 }}
               >
                 <Text style={{ marginLeft: 10, fontSize: 20 }}>
-                  {t('gowith')}
+                  {t("gowith")}
                 </Text>
                 <TouchableOpacity
                   onPress={onReview}
                   style={{
-                    flexDirection: 'row',
+                    flexDirection: "row",
                     marginLeft: 20,
                     marginTop: 10,
                   }}
                 >
                   <Image
-                    source={require('../../../../assets/images/icon_1.png')}
+                    source={require("../../../../assets/images/icon_1.png")}
                     style={{ width: 20, height: 20 }}
                   />
                   <Text style={{ marginLeft: 15, fontSize: 13 }}>
-                    {t('reviewprevioustest')}
+                    {t("reviewprevioustest")}
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={onStarttext}
                   style={{
-                    flexDirection: 'row',
+                    flexDirection: "row",
                     marginLeft: 20,
                     marginTop: 10,
                   }}
                 >
                   <Image
-                    source={require('../../../../assets/images/icon_2.png')}
+                    source={require("../../../../assets/images/icon_2.png")}
                     style={{ width: 20, height: 20 }}
                   />
                   <Text style={{ marginLeft: 15, fontSize: 13 }}>
-                    {t('startnewtest')}
+                    {t("startnewtest")}
                   </Text>
                 </TouchableOpacity>
               </View>

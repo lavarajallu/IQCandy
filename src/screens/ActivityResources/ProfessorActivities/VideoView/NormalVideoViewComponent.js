@@ -1,5 +1,5 @@
-import Slider from '@react-native-community/slider';
-import React, { useEffect, useRef, useState } from 'react';
+import Slider from "@react-native-community/slider";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Image,
   Platform,
@@ -7,16 +7,16 @@ import {
   TouchableOpacity,
   View,
   Dimensions,
-} from 'react-native';
+} from "react-native";
 
-import Video from 'react-native-video';
-import * as ScreenOrientation from 'expo-screen-orientation';
+import Video from "react-native-video";
+import * as ScreenOrientation from "expo-screen-orientation";
 
-import styles from './styles';
-import i18n from '../../../../i18n/index1';
-var windowWidth = Dimensions.get('window').width;
-var windowHeight = Dimensions.get('window').height;
-import { useTranslation } from 'react-i18next';
+import styles from "./styles";
+import i18n from "../../../../i18n/index1";
+var windowWidth = Dimensions.get("window").width;
+var windowHeight = Dimensions.get("window").height;
+import { useTranslation } from "react-i18next";
 const NormalVideoViewComponent = (props) => {
   const playerRef = useRef(null);
   const { questionsArray } = props;
@@ -68,17 +68,17 @@ const NormalVideoViewComponent = (props) => {
     }
   }, [questionsArray]);
   props.forwardRef((name, value) => {
-    if (name === 'rewatch') {
+    if (name === "rewatch") {
       onRewatch(value);
-    } else if (name === 'questionsubmit') {
+    } else if (name === "questionsubmit") {
       onquestionSubmit(value);
-    } else if (name === 'fullscreen') {
+    } else if (name === "fullscreen") {
       handlescreenfull(value);
-    } else if (name === 'gettime') {
+    } else if (name === "gettime") {
       getcurrentTime();
-    } else if (name === 'previous') {
+    } else if (name === "previous") {
       onPrevious();
-    } else if (name === 'next') {
+    } else if (name === "next") {
       onNext();
     }
   });
@@ -180,9 +180,9 @@ const NormalVideoViewComponent = (props) => {
     var seconds = sec_num % 60;
 
     return [hours, minutes, seconds]
-      .map((v) => (v < 10 ? '0' + v : v))
-      .filter((v, i) => v !== '00' || i > 0)
-      .join(':');
+      .map((v) => (v < 10 ? "0" + v : v))
+      .filter((v, i) => v !== "00" || i > 0)
+      .join(":");
   };
   // useEffect(()=>{
 
@@ -192,7 +192,7 @@ const NormalVideoViewComponent = (props) => {
   for (var i = 0; i < duration; i++) {
     arraydata.push({ value: i });
   }
-  const YOUR_API_KEY = 'paste yout api key here';
+  const YOUR_API_KEY = "paste yout api key here";
 
   var count = 0;
   {
@@ -203,7 +203,7 @@ const NormalVideoViewComponent = (props) => {
             //<Text style={{color: "white",fontSize:13}} >?</Text>
             <Image
               style={{ width: 10, height: 10 }}
-              source={require('../../../../../assets/images/videos/point.png')}
+              source={require("../../../../../assets/images/videos/point.png")}
               //resizeMode={FastImage.resizeMode.contain}
             />
             // <Image source={require('../../assets/images/videos/point.png')}
@@ -211,7 +211,7 @@ const NormalVideoViewComponent = (props) => {
           );
         } else {
           timesarray.push(
-            <Text style={{ color: 'transparent', fontSize: 13 }}>?</Text>
+            <Text style={{ color: "transparent", fontSize: 13 }}>?</Text>
           );
         }
       })
@@ -227,14 +227,14 @@ const NormalVideoViewComponent = (props) => {
   //   (fullimg = 30), (playicon = 25), (subfont = 18), (progrsheight = 40);
   // }
   return loading ? (
-    <Text>{t('loading')}</Text>
+    <Text>{t("loading")}</Text>
   ) : (
     <View style={styles.mainView}>
       <View
         style={{
-          width: '100%',
-          height: fullscreen ? '100%' : '100%',
-          backgroundColor: 'black',
+          width: "100%",
+          height: fullscreen ? "100%" : "100%",
+          backgroundColor: "black",
         }}
       >
         <View style={{ flex: 1 }}>
@@ -242,11 +242,11 @@ const NormalVideoViewComponent = (props) => {
             <Video
               source={{
                 uri:
-                  props.activityType === 'conceptual_video'
+                  props.activityType === "conceptual_video"
                     ? props.vimeourl
                     : normaldata.url,
                 headers: {
-                  Referer: 'https://login.iqcandy.com/',
+                  Referer: "https://login.iqcandy.com/",
                 },
               }} // Can be a URL or a local file.
               ref={playerRef}
@@ -254,7 +254,7 @@ const NormalVideoViewComponent = (props) => {
               //controls={true}
               // fullscreen={true}                          // Store referenc              // Callback when video cannot be loaded
               style={{
-                position: 'absolute',
+                position: "absolute",
                 top: 0,
                 left: 0,
                 bottom: 0,
@@ -263,8 +263,8 @@ const NormalVideoViewComponent = (props) => {
               }}
               progressUpdateInterval={900}
               onLoad={onLoad}
-              onError={(err) => console.log('errorrr', err)}
-              resizeMode={fullscreen ? 'cover' : 'contain'}
+              onError={(err) => console.log("errorrr", err)}
+              resizeMode={fullscreen ? "cover" : "contain"}
               onProgress={onProgress}
             />
             {/* This is video fullscreen or halfscreen icons */}
@@ -273,28 +273,28 @@ const NormalVideoViewComponent = (props) => {
               style={{
                 top: fullscreen ? 50 : 50,
                 elevation: 20,
-                position: 'absolute',
+                position: "absolute",
                 padding: 10,
-                backgroundColor: 'transparent',
+                backgroundColor: "transparent",
                 right: 10,
               }}
             >
               {fullscreen ? (
                 <Image
-                  source={require('../../../../../assets/images/videos/halfscreen.png')}
+                  source={require("../../../../../assets/images/videos/halfscreen.png")}
                   style={{
                     width: fullimg,
                     height: fullimg,
-                    tintColor: 'white',
+                    tintColor: "white",
                   }}
                 />
               ) : (
                 <Image
-                  source={require('../../../../../assets/images/videos/fullscreen.png')}
+                  source={require("../../../../../assets/images/videos/fullscreen.png")}
                   style={{
                     width: fullimg,
                     height: fullimg,
-                    tintColor: 'white',
+                    tintColor: "white",
                   }}
                 />
               )}
@@ -305,12 +305,12 @@ const NormalVideoViewComponent = (props) => {
                 { bottom: fullscreen ? 40 : 40, height: 40, borderRadius: 10 },
               ]}
             >
-              <View style={{ flex: 1, flexDirection: 'row' }}>
+              <View style={{ flex: 1, flexDirection: "row" }}>
                 <View
                   style={{
                     flex: 0.2,
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 />
                 <View style={{ flex: 0.65 }}>
@@ -321,9 +321,9 @@ const NormalVideoViewComponent = (props) => {
                 <View
                   style={{
                     flex: 0.15,
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 />
               </View>
@@ -335,43 +335,43 @@ const NormalVideoViewComponent = (props) => {
                   bottom: fullscreen ? 30 : 30,
                   height: progrsheight,
                   borderRadius: 20,
-                  backgroundColor: 'rgba(211,211,211,0.3)',
+                  backgroundColor: "rgba(211,211,211,0.3)",
                 },
               ]}
             >
-              <View style={{ flex: 1, flexDirection: 'row' }}>
+              <View style={{ flex: 1, flexDirection: "row" }}>
                 <View
                   style={{
                     flex: 0.2,
-                    justifyContent: 'space-evenly',
-                    alignItems: 'center',
-                    flexDirection: 'row',
+                    justifyContent: "space-evenly",
+                    alignItems: "center",
+                    flexDirection: "row",
                   }}
                 >
                   {duration > 0 ? (
                     <TouchableOpacity onPress={handleMainButtonTouch}>
                       {!isPlaying ? (
                         <Image
-                          source={require('../../../../../assets/images/pause.png')}
+                          source={require("../../../../../assets/images/pause.png")}
                           style={{
                             width: playicon,
                             height: playicon,
-                            tintColor: 'white',
+                            tintColor: "white",
                           }}
                         />
                       ) : (
                         <Image
-                          source={require('../../../../../assets/images/play.png')}
+                          source={require("../../../../../assets/images/play.png")}
                           style={{
                             width: playicon,
                             height: playicon,
-                            tintColor: 'white',
+                            tintColor: "white",
                           }}
                         />
                       )}
                     </TouchableOpacity>
                   ) : null}
-                  <Text style={{ color: 'white', fontSize: subfont }}>
+                  <Text style={{ color: "white", fontSize: subfont }}>
                     {toHHMMSS(currentTime)}
                   </Text>
                 </View>
@@ -379,19 +379,19 @@ const NormalVideoViewComponent = (props) => {
                   <View style={styles.subright}>
                     {duration > 0 ? (
                       <Slider
-                        style={{ width: '100%', height: fullimg }}
+                        style={{ width: "100%", height: fullimg }}
                         minimumValue={0}
                         maximumValue={duration}
-                        minimumTrackTintColor='#FFFFFF'
-                        maximumTrackTintColor='#000000'
+                        minimumTrackTintColor="#FFFFFF"
+                        maximumTrackTintColor="#000000"
                         thumbImage={
-                          Platform.OS === 'ios'
-                            ? require('../../../../../assets/images/thumb1.png')
-                            : require('../../../../../assets/images/thumb.png')
+                          Platform.OS === "ios"
+                            ? require("../../../../../assets/images/thumb1.png")
+                            : require("../../../../../assets/images/thumb.png")
                         }
                         value={currentTime} // Which is updated by videoRef.onProgress listener
                         onSlidingStart={(value) => {
-                          console.log('slidingstarte', value, currentTime);
+                          //  console.log('slidingstarte', value, currentTime);
                         }}
                         onValueChange={(value) => {
                           //  playerRef.current.seek(parseInt(currentTime));
@@ -424,12 +424,12 @@ const NormalVideoViewComponent = (props) => {
                 <View
                   style={{
                     flex: 0.15,
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    flexDirection: "row",
+                    justifyContent: "center",
+                    alignItems: "center",
                   }}
                 >
-                  <Text style={{ color: 'white', fontSize: subfont }}>
+                  <Text style={{ color: "white", fontSize: subfont }}>
                     {toHHMMSS(duration)}
                   </Text>
                 </View>

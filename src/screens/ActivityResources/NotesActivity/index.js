@@ -1,7 +1,7 @@
 //Post Assessment
 
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   View,
   SafeAreaView,
@@ -10,25 +10,25 @@ import {
   Text,
   TouchableOpacity,
   Platform,
-} from 'react-native';
-import { useTranslation } from 'react-i18next';
+} from "react-native";
+import { useTranslation } from "react-i18next";
 
-import Pdf from 'react-native-pdf';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Make sure to import AsyncStorage or the storage library you're using
+import Pdf from "react-native-pdf";
+import AsyncStorage from "@react-native-async-storage/async-storage"; // Make sure to import AsyncStorage or the storage library you're using
 
-import { goBack } from '../../../utils/navigationUtils';
-import { COLORS } from '../../../constants/colors';
-import Header from '../../../components/Header';
-import { textContent } from '../../../constants/content';
-import { selectUser } from '../../../store/authManagement/selector';
-import { selectMyCourses } from '../../../store/student/myCourses/selector';
+import { goBack } from "../../../utils/navigationUtils";
+import { COLORS } from "../../../constants/colors";
+import Header from "../../../components/Header";
+import { textContent } from "../../../constants/content";
+import { selectUser } from "../../../store/authManagement/selector";
+import { selectMyCourses } from "../../../store/student/myCourses/selector";
 import {
   getNotesActivityData,
   updateanalyticsNotes,
-} from '../../../api/myCourses';
-import { WebView } from 'react-native-webview';
-import moment from 'moment';
-import i18n from '../../../i18n/index1';
+} from "../../../api/myCourses";
+import { WebView } from "react-native-webview";
+import moment from "moment";
+import i18n from "../../../i18n/index1";
 const NotesActivity = ({ route, navigation }) => {
   const { questions } = textContent;
   const [page, setPage] = useState(null);
@@ -40,10 +40,10 @@ const NotesActivity = ({ route, navigation }) => {
 
   const { user } = useSelector(selectUser);
   const dispatch = useDispatch();
-  const [newnotesActvityData, setNotestActivitydata] = useState('');
+  const [newnotesActvityData, setNotestActivitydata] = useState("");
   const [laoding, setLoading] = useState(true);
   const [isHtml, setIshtml] = useState(false);
-  const [index, setIndex] = useState('0');
+  const [index, setIndex] = useState("0");
   const [isPdf, setIsPdf] = useState(false);
   const [nodataurl, setNodataUrl] = useState(false);
   const [pdfData, setPdfData] = useState({});
@@ -54,7 +54,7 @@ const NotesActivity = ({ route, navigation }) => {
   const backAction = () => {
     updateAnalytics();
     setTimeout(() => {
-      navigation.navigate('ActivityResources', {
+      navigation.navigate("ActivityResources", {
         topicItem: route.params.topicItem,
         chapterItem: route.params.chapterItem,
         subjectItem: route.params.subjectItem,
@@ -77,16 +77,16 @@ const NotesActivity = ({ route, navigation }) => {
       userId: user?.userInfo?.userId,
     });
 
-    const activityStartTime = moment().format('YYYY-MM-DD HH:mm:ss');
+    const activityStartTime = moment().format("YYYY-MM-DD HH:mm:ss");
     setactivityStartTime(activityStartTime);
   }, [route]);
   useEffect(() => {
     if (notesActivityData && Object.keys(notesActivityData).length > 0) {
       const data = notesActivityData;
-      if (notesActivityData.activityType === 'pdf') {
+      if (notesActivityData.activityType === "pdf") {
         var string = notesActivityData.validPdfPages;
         if (notesActivityData.url) {
-          var newarr = string.split(',');
+          var newarr = string.split(",");
           var newindex;
           var ibendex = newarr.findIndex(
             (x) => x === notesActivityData.pdfPagePausedAt.toString()
@@ -117,15 +117,15 @@ const NotesActivity = ({ route, navigation }) => {
           setSpinnerpdf(false);
         }
       } else if (
-        notesActivityData.activityType === 'html5' ||
-        notesActivityData.activityType === 'web' ||
-        notesActivityData.activityType === 'games'
+        notesActivityData.activityType === "html5" ||
+        notesActivityData.activityType === "web" ||
+        notesActivityData.activityType === "games"
       ) {
         setNotestActivitydata(notesActivityData.url);
         setIshtml(true);
         setSpinnerpdf(false);
         setIsPdf(false);
-        setPdfData('');
+        setPdfData("");
         setLoading(false);
       } else {
         setLoading(false);
@@ -139,7 +139,7 @@ const NotesActivity = ({ route, navigation }) => {
     var activityPdfPage;
 
     if (pdfpagesarray[index] === undefined) {
-      activityPdfPage = '1';
+      activityPdfPage = "1";
     } else {
       activityPdfPage = pdfpagesarray[index - 1];
     }
@@ -165,7 +165,7 @@ const NotesActivity = ({ route, navigation }) => {
           ? route.params.topicItem.topicId
           : null,
         activityStartedAt: activityStartTime,
-        activityEndedAt: moment().format('YYYY-MM-DD HH:mm:ss'),
+        activityEndedAt: moment().format("YYYY-MM-DD HH:mm:ss"),
         activityPdfPage,
         pdfPagePausedAt: pdfpagesarray[index],
       };
@@ -181,11 +181,11 @@ const NotesActivity = ({ route, navigation }) => {
     var index = route.params.index;
     if (newobj) {
       if (
-        newobj.activityType === 'obj' ||
-        newobj.activityType === 'post' ||
-        newobj.activityType === 'sub'
+        newobj.activityType === "obj" ||
+        newobj.activityType === "post" ||
+        newobj.activityType === "sub"
       ) {
-        navigation.navigate('PostAssessment', {
+        navigation.navigate("PostAssessment", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -195,13 +195,13 @@ const NotesActivity = ({ route, navigation }) => {
           from: route.params.from,
         });
       } else if (
-        newobj.activityType === 'pdf' ||
-        newobj.activityType === 'HTML5' ||
-        newobj.activityType === 'html5' ||
-        newobj.activityType === 'web' ||
-        newobj.activityType === 'games'
+        newobj.activityType === "pdf" ||
+        newobj.activityType === "HTML5" ||
+        newobj.activityType === "html5" ||
+        newobj.activityType === "web" ||
+        newobj.activityType === "games"
       ) {
-        navigation.navigate('NotesActivity', {
+        navigation.navigate("NotesActivity", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -210,8 +210,8 @@ const NotesActivity = ({ route, navigation }) => {
           topicItem: route.params.topicItem,
           from: route.params.from,
         });
-      } else if (newobj.activityType === 'pre') {
-        navigation.navigate('PreAssessment', {
+      } else if (newobj.activityType === "pre") {
+        navigation.navigate("PreAssessment", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -221,10 +221,10 @@ const NotesActivity = ({ route, navigation }) => {
           from: route.params.from,
         });
       } else if (
-        newobj.activityType === 'conceptual_video' ||
-        newobj.activityType === 'video'
+        newobj.activityType === "conceptual_video" ||
+        newobj.activityType === "video"
       ) {
-        navigation.navigate('VideoActivity', {
+        navigation.navigate("VideoActivity", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -233,8 +233,8 @@ const NotesActivity = ({ route, navigation }) => {
           topicItem: route.params.topicItem,
           from: route.params.from,
         });
-      } else if (newobj.activityType === 'youtube') {
-        navigation.navigate('YtVideoActivity', {
+      } else if (newobj.activityType === "youtube") {
+        navigation.navigate("YtVideoActivity", {
           index: index + 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -245,7 +245,7 @@ const NotesActivity = ({ route, navigation }) => {
         });
       }
     } else {
-      navigation.navigate('ActivityResources', {
+      navigation.navigate("ActivityResources", {
         topicItem: route.params.topicItem,
         chapterItem: route.params.chapterItem,
         subjectItem: route.params.subjectItem,
@@ -259,11 +259,11 @@ const NotesActivity = ({ route, navigation }) => {
     var index = route.params.index;
     if (newobj) {
       if (
-        newobj.activityType === 'obj' ||
-        newobj.activityType === 'post' ||
-        newobj.activityType === 'sub'
+        newobj.activityType === "obj" ||
+        newobj.activityType === "post" ||
+        newobj.activityType === "sub"
       ) {
-        navigation.navigate('PostAssessment', {
+        navigation.navigate("PostAssessment", {
           index: index - 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -273,13 +273,13 @@ const NotesActivity = ({ route, navigation }) => {
           from: route.params.from,
         });
       } else if (
-        newobj.activityType === 'pdf' ||
-        newobj.activityType === 'HTML5' ||
-        newobj.activityType === 'html5' ||
-        newobj.activityType === 'web' ||
-        newobj.activityType === 'games'
+        newobj.activityType === "pdf" ||
+        newobj.activityType === "HTML5" ||
+        newobj.activityType === "html5" ||
+        newobj.activityType === "web" ||
+        newobj.activityType === "games"
       ) {
-        navigation.navigate('NotesActivity', {
+        navigation.navigate("NotesActivity", {
           index: index - 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -288,18 +288,18 @@ const NotesActivity = ({ route, navigation }) => {
           topicItem: route.params.topicItem,
           from: route.params.from,
         });
-      } else if (newobj.activityType === 'pre') {
-        navigation.navigate('ActivityResources', {
+      } else if (newobj.activityType === "pre") {
+        navigation.navigate("ActivityResources", {
           topicItem: route.params.topicItem,
           chapterItem: route.params.chapterItem,
           subjectItem: route.params.subjectItem,
           from: route.params.from,
         });
       } else if (
-        newobj.activityType === 'conceptual_video' ||
-        newobj.activityType === 'video'
+        newobj.activityType === "conceptual_video" ||
+        newobj.activityType === "video"
       ) {
-        navigation.navigate('VideoActivity', {
+        navigation.navigate("VideoActivity", {
           index: index - 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -308,8 +308,8 @@ const NotesActivity = ({ route, navigation }) => {
           topicItem: route.params.topicItem,
           from: route.params.from,
         });
-      } else if (newobj.activityType === 'youtube') {
-        navigation.navigate('YtVideoActivity', {
+      } else if (newobj.activityType === "youtube") {
+        navigation.navigate("YtVideoActivity", {
           index: index - 1,
           smartres: route.params.smartres,
           data: newobj,
@@ -320,7 +320,7 @@ const NotesActivity = ({ route, navigation }) => {
         });
       }
     } else {
-      navigation.navigate('ActivityResources', {
+      navigation.navigate("ActivityResources", {
         topicItem: route.params.topicItem,
         chapterItem: route.params.chapterItem,
         subjectItem: route.params.subjectItem,
@@ -359,28 +359,28 @@ const NotesActivity = ({ route, navigation }) => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: COLORS.appSecondaryColor }}
     >
-      <Header backAction={backAction} headerTitle={'Notes Activity'} />
+      <Header backAction={backAction} headerTitle={"Notes Activity"} />
       <View style={[styles.container, styles.shadowProp]}>
         {laoding ? (
           <View
             style={{
               flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <Text style={{ fontSize: 14 }}>{t('loading')}</Text>
+            <Text style={{ fontSize: 14 }}>{t("loading")}</Text>
           </View>
         ) : isPdf ? (
           nodataurl ? (
             <View
               style={{
                 flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <Text style={{ fontSize: 14 }}>{t('nodata')}</Text>
+              <Text style={{ fontSize: 14 }}>{t("nodata")}</Text>
             </View>
           ) : (
             <View style={{ flex: 1 }}>
@@ -394,7 +394,7 @@ const NotesActivity = ({ route, navigation }) => {
                   scale={scalevalue}
                   source={{ uri: pdfData }}
                   //resourceType={resourceType}
-                  singlePage={Platform.OS === 'android' ? true : true}
+                  singlePage={Platform.OS === "android" ? true : true}
                   // horizontal={true}
                   maxScale={3.0}
                   onLoadComplete={(numberOfPages, filePath) => {
@@ -402,23 +402,23 @@ const NotesActivity = ({ route, navigation }) => {
                   }}
                   // onPageChanged={() => onPageChanged()}
                   onError={(error) => {
-                    console.log('ffffe', error);
+                    console.log("ffffe", error);
                   }}
                   onPressLink={(uri) => {
                     console.log(`Link presse: ${uri}`);
                   }}
                   //spacing={5}
                   style={{
-                    height: '100%',
-                    width: '100%',
+                    height: "100%",
+                    width: "100%",
                   }}
                 />
               </View>
               <View
                 style={{
-                  position: 'absolute',
+                  position: "absolute",
                   top: 30,
-                  flexDirection: 'row',
+                  flexDirection: "row",
                   right: 30,
                   borderRadius: 20,
                   borderWidth: 1,
@@ -429,7 +429,7 @@ const NotesActivity = ({ route, navigation }) => {
                   style={{
                     width: 35,
                     height: 35,
-                    alignItems: 'center',
+                    alignItems: "center",
                   }}
                 >
                   <Text style={{ fontSize: 25 }}>+</Text>
@@ -439,7 +439,7 @@ const NotesActivity = ({ route, navigation }) => {
                   style={{
                     width: 35,
                     height: 35,
-                    alignItems: 'center',
+                    alignItems: "center",
                     borderLeftWidth: 1,
                   }}
                 >
@@ -450,12 +450,12 @@ const NotesActivity = ({ route, navigation }) => {
                 <View
                   style={{
                     flex: 0.05,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
+                    flexDirection: "row",
+                    justifyContent: "space-between",
                     // marginLeft: 10,
                     // marginRight: 10,
 
-                    alignItems: 'center',
+                    alignItems: "center",
                   }}
                 >
                   {index === 1 ? (
@@ -464,30 +464,30 @@ const NotesActivity = ({ route, navigation }) => {
                     <View
                       style={{
                         flex: 0.5,
-                        justifyContent: 'flex-start',
-                        alignItems: 'center',
+                        justifyContent: "flex-start",
+                        alignItems: "center",
                       }}
                     >
                       <TouchableOpacity
                         style={{
-                          height: '100%',
+                          height: "100%",
                           borderRadius: 20,
-                          backgroundColor: 'white',
+                          backgroundColor: "white",
                           paddingHorizontal: 10,
-                          justifyContent: 'center',
-                          alignItems: 'center',
+                          justifyContent: "center",
+                          alignItems: "center",
                         }}
                         onPress={onPrevIndex}
                       >
                         <Text
                           style={{
-                            textAlign: 'center',
+                            textAlign: "center",
                             fontSize: 13,
                             color: COLORS.appSecondaryColor,
                           }}
                         >
-                          {'<'}
-                          {t('previous')}
+                          {"<"}
+                          {t("previous")}
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -507,30 +507,30 @@ const NotesActivity = ({ route, navigation }) => {
                       style={{
                         flex: 0.5,
                         //  backgroundColor: 'yellow',
-                        justifyContent: 'flex-start',
-                        alignItems: 'center',
+                        justifyContent: "flex-start",
+                        alignItems: "center",
                       }}
                     >
                       <TouchableOpacity
                         style={{
-                          height: '100%',
+                          height: "100%",
                           borderRadius: 20,
-                          backgroundColor: 'white',
+                          backgroundColor: "white",
                           paddingHorizontal: 10,
-                          justifyContent: 'center',
-                          alignItems: 'center',
+                          justifyContent: "center",
+                          alignItems: "center",
                         }}
                         onPress={onNextIndex}
                       >
                         <Text
                           style={{
-                            textAlign: 'center',
+                            textAlign: "center",
                             fontSize: 13,
                             color: COLORS.appSecondaryColor,
                           }}
                         >
-                          {t('next')}
-                          {'>'}
+                          {t("next")}
+                          {">"}
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -541,22 +541,22 @@ const NotesActivity = ({ route, navigation }) => {
           )
         ) : isHtml ? (
           <WebView
-            androidLayerType='hardware'
+            androidLayerType="hardware"
             style={{ minHeight: 1 }}
             source={{ uri: newnotesActvityData }}
-            mixedContentMode='always'
-            allowsInlineMediaPlayback='true'
-            userAgent='Mozilla/5.0 (Linux; Android 9; Redmi Note 8 Build/PKQ1.190616.001) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Mobile Safari/537.36'
+            mixedContentMode="always"
+            allowsInlineMediaPlayback="true"
+            userAgent="Mozilla/5.0 (Linux; Android 9; Redmi Note 8 Build/PKQ1.190616.001) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Mobile Safari/537.36"
           />
         ) : null}
       </View>
       <View
         style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
+          flexDirection: "row",
+          justifyContent: "space-between",
           marginLeft: 10,
           marginRight: 10,
-          alignItems: 'center',
+          alignItems: "center",
         }}
       >
         <TouchableOpacity
@@ -564,20 +564,20 @@ const NotesActivity = ({ route, navigation }) => {
           style={{
             height: 30,
             borderRadius: 20,
-            backgroundColor: 'white',
+            backgroundColor: "white",
             paddingHorizontal: 20,
-            justifyContent: 'center',
-            alignItems: 'center',
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <Text
             style={{
-              textAlign: 'center',
+              textAlign: "center",
               fontSize: 14,
               color: COLORS.appSecondaryColor,
             }}
           >
-            {t('previousactivity')}
+            {t("previousactivity")}
           </Text>
         </TouchableOpacity>
 
@@ -586,31 +586,31 @@ const NotesActivity = ({ route, navigation }) => {
           style={{
             height: 30,
             borderRadius: 20,
-            backgroundColor: 'white',
+            backgroundColor: "white",
             paddingHorizontal: 20,
-            justifyContent: 'center',
-            alignItems: 'center',
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           {route.params.smartres[route.params.index + 1] ? (
             <Text
               style={{
-                textAlign: 'center',
+                textAlign: "center",
                 fontSize: 14,
                 color: COLORS.appSecondaryColor,
               }}
             >
-              {t('nextactivity')}
+              {t("nextactivity")}
             </Text>
           ) : (
             <Text
               style={{
-                textAlign: 'center',
+                textAlign: "center",
                 fontSize: 14,
                 color: COLORS.appSecondaryColor,
               }}
             >
-              {t('done')}
+              {t("done")}
             </Text>
           )}
         </TouchableOpacity>
@@ -621,13 +621,13 @@ const NotesActivity = ({ route, navigation }) => {
 
 export default NotesActivity;
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   headerText: {
     fontSize: 16,
-    fontWeight: '700',
-    fontFamily: 'mulish-bold',
+    fontWeight: "700",
+    fontFamily: "mulish-bold",
     color: COLORS.whiteColor,
   },
   container: {

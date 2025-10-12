@@ -1,25 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import * as SplashScreen from 'expo-splash-screen';
-import { Provider } from 'react-redux';
+import React, { useState, useEffect } from "react";
+import * as SplashScreen from "expo-splash-screen";
+import { Provider } from "react-redux";
 
-import AppLoading from 'expo-app-loading';
-import * as Font from 'expo-font';
-import { NavigationContainer } from '@react-navigation/native';
-import AppNavigation from './src/navigation/AppNavigation';
-import StatusBarComponent from './src/components/StatusBarComponent';
-import store from './src/store';
+import AppLoading from "expo-app-loading";
+import * as Font from "expo-font";
+import { NavigationContainer } from "@react-navigation/native";
+import AppNavigation from "./src/navigation/AppNavigation";
+import StatusBarComponent from "./src/components/StatusBarComponent";
+import store from "./src/store";
+import { decode as atob } from "base-64";
+
 // import { AppProvider } from './src/hooks/AppContext';
-import './src/i18n';
+import "./src/i18n";
 const App = () => {
   let [fontsLoaded] = Font.useFonts({
-    'mulish-light': require('./assets/fonts/Mulish-Regular.ttf'),
-    'mulish-regular': require('./assets/fonts/Mulish-Regular.ttf'),
-    'mulish-bold': require('./assets/fonts/Mulish-Bold.ttf'),
-    'mulish-semibold': require('./assets/fonts/Mulish-SemiBold.ttf'),
-    'mulish-medium': require('./assets/fonts/Mulish-Medium.ttf'),
+    "mulish-light": require("./assets/fonts/Mulish-Regular.ttf"),
+    "mulish-regular": require("./assets/fonts/Mulish-Regular.ttf"),
+    "mulish-bold": require("./assets/fonts/Mulish-Bold.ttf"),
+    "mulish-semibold": require("./assets/fonts/Mulish-SemiBold.ttf"),
+    "mulish-medium": require("./assets/fonts/Mulish-Medium.ttf"),
   });
   const [isReady, setIsReady] = useState(false);
-
+  if (typeof global.atob === "undefined") {
+    global.atob = atob;
+  }
   useEffect(() => {
     // Load your assets or perform any necessary initialization here.
     // For demonstration purposes, we'll use a setTimeout to simulate loading.

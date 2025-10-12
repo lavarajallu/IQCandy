@@ -30,7 +30,6 @@ const TopicsInProgress = (props) => {
 
   useEffect(() => {
     if (user) {
-      console.log("a;llllllllllll....", user?.userOrg);
       const reqPayload = {
         universityId: user?.userOrg?.universityId,
         branchId: user?.userOrg?.branchId,

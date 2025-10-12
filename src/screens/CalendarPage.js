@@ -74,7 +74,6 @@ const CalendarPage = ({ route, navigation }) => {
     };
     monthsarraya.push(obj1);
     monthsarraya.push(obj2);
-    console.log("monthsarraya", monthsarraya);
     getevents(monthsarraya);
   }, []);
   const getmonts = (months) => {
@@ -84,12 +83,10 @@ const CalendarPage = ({ route, navigation }) => {
   };
 
   const getevents = (visiblemonths) => {
-    console.log("visiblemonths", visiblemonths[0]?.dateString);
     var startdate = moment(new Date(visiblemonths[0]?.dateString)); // Now
     var enddate = moment(
       new Date(visiblemonths[visiblemonths.length - 1]?.dateString)
     );
-    console.log("dkjnkjnjkdhkhkd", startdate);
     var data = {
       userId: user?.userInfo?.userId,
       fromDate: moment(startdate)
@@ -97,7 +94,6 @@ const CalendarPage = ({ route, navigation }) => {
         .format("YYYY-MM-DD HH:mm:ss"),
       toDate: moment(enddate).endOf("month").format("YYYY-MM-DD HH:mm:ss"),
     };
-    console.log("dfjdflkjdf", data);
     getschedulefiltered({
       dispatch,
       data: data,
@@ -109,7 +105,7 @@ const CalendarPage = ({ route, navigation }) => {
   };
   useEffect(() => {
     if (Object.keys(scheduledata).length) {
-    //  alert(JSON.stringify(scheduledata?.userSchedules));
+      //  alert(JSON.stringify(scheduledata?.userSchedules));
       setisspinner(true);
       var newobj = {};
       var newmarkedobjarr = {};
@@ -118,10 +114,6 @@ const CalendarPage = ({ route, navigation }) => {
         scheduledata?.userSchedules.map((res, i) => {
           newarray.push(moment.utc(res.scheduleDate).format("YYYY-MM-DD"));
         });
-        console.log(
-          "dkflasdfjlkdsflkdsjfdfd                    ",
-          scheduledata
-        );
         const uniqueAges = newarray?.filter(unique);
 
         var newmarkedarray = [];
@@ -203,7 +195,6 @@ const CalendarPage = ({ route, navigation }) => {
   const onDayPress = (day) => {
     //data => moment(data.scheduleDate).format('YYYY-MM-DD') === day.dateStringconst result
     var result = [];
-    // console.log('dattaaa', day, this.state.evemnsdata);
     if (Object.keys(evemnsdata).length > 0) {
       const keys = Object.keys(evemnsdata);
       keys.forEach((key, index) => {
@@ -211,7 +202,6 @@ const CalendarPage = ({ route, navigation }) => {
           result = evemnsdata[key];
         }
       });
-      console.log("result", result);
       //  if(result.length > 0){
       if (result[0]?.scheduleType === "topic") {
         setneweventsdata(result);
@@ -258,7 +248,6 @@ const CalendarPage = ({ route, navigation }) => {
     );
   };
   const renderEmptyDate = () => {
-    // console.log('dknkldnfdf');
     return (
       <View
         style={{ height: 15, flex: 1, alignItems: "center", marginTop: 30 }}
@@ -299,7 +288,6 @@ const CalendarPage = ({ route, navigation }) => {
     );
   };
   const newrenderitem = ({ item }) => {
-    //console.log('itemitem', item);
     var newdate = new Date(item.scheduleDate).setTime(
       new Date(item.scheduleDate).getTime() + 1 * 60 * 60 * 1000
     );
@@ -425,12 +413,10 @@ const CalendarPage = ({ route, navigation }) => {
     setSelectedItem(item);
     var subjectId = additionalitem?.subjectId;
     var chapterId = additionalitem?.chapterId;
-    console.log("user..........", user);
     var topicId = item.scheduleTypeId;
     var url =
       "https://api.iqcandy.com/api/iqcandy" +
       `/universities/${user?.userOrg?.universityId}/branches/${user?.userOrg?.branchId}/semesters/${user?.userOrg?.semesterId}/subjects/${subjectId}/chapters/${chapterId}`;
-    console.log("dckkd", url);
     fetch(url, {
       method: "GET",
       headers: {
@@ -440,16 +426,12 @@ const CalendarPage = ({ route, navigation }) => {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log("Dvnkdsvkl;sd", json);
         if (json) {
-          console.log("Dvnkdsvkl;sd", json);
-
           if (json.data) {
             var chapterDetails = json.data;
             var url =
               "https://api.iqcandy.com/api/iqcandy" +
               `/universities/${user?.userOrg?.universityId}/branches/${user?.userOrg?.branchId}/semesters/${user?.userOrg?.semesterId}/subjects/${subjectId}/chapters/${chapterId}/topics/${topicId}`;
-            console.log("dckkd,,,", url);
             fetch(url, {
               method: "GET",
               headers: {
@@ -460,8 +442,6 @@ const CalendarPage = ({ route, navigation }) => {
               .then((response) => response.json())
               .then((json) => {
                 if (json) {
-                  console.log("Dvnkdsvkl;sd", json);
-
                   if (json.data) {
                     additionalitem["topicId"] = item.scheduleTypeId;
                     additionalitem["image"] = json.data.image;

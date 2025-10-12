@@ -176,7 +176,6 @@ const addtocalenderPost = async (payload) => {
   // Check for success and handle accordingly
   if (response) {
     const { data } = response;
-    console.log("/////////", response);
     payload.dispatch(setCalenderData(data));
   }
 };
@@ -187,10 +186,8 @@ const addtocalenderPut = async (payload) => {
   const body = payload.data;
   const response = await makeApiCall(endpoint, method, body);
   // Check for success and handle accordingly
-  console.log("put.......", response);
   if (response) {
     const { data } = response;
-    console.log("put.......", response);
     payload.dispatch(setaddtocalenderPut(data));
   }
 };
@@ -395,14 +392,12 @@ const getVideoActivityDataProf = async (payload) => {
   }
 };
 const getassesmentsdata = async (payload) => {
-  console.log("kkkkkkk", payload);
   const { myCourses } = apiEndPoints;
   const endpoint = myCourses.getassesmentsdata(payload);
   const method = "GET";
   const body = payload.data;
   const response = await makeApiCall(endpoint, method, body);
   // Check for   success and handle accordingly
-  console.log("responseeeeee", response);
   if (response) {
     const { data } = response;
     payload.dispatch(setgetassesmentsdata(data));

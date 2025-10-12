@@ -47,7 +47,6 @@ const ReviewPractice = ({ route, navigation }) => {
     // return true;
   };
   useState(() => {
-    console.log("useruseruser", user);
     var userId = user?.userInfo.userId;
     var universityId = user?.userOrg.universityId
       ? user?.userOrg.universityId
@@ -68,7 +67,6 @@ const ReviewPractice = ({ route, navigation }) => {
       type = "Subject";
       url = `/${typename}/${universityId}/subjects/${subjectId}/practice-tests/${type}/list?userId=${userId}`;
     }
-    console.log("dlkflkdflkdflkdf//////////////////", url);
     getassesmentsdatapractice({
       dispatch,
       userId: user?.userInfo?.userId,

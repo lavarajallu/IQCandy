@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,26 +7,28 @@ import {
   Dimensions,
   Platform,
   TouchableOpacity,
-} from 'react-native';
-import AppIntroSlider from 'react-native-app-intro-slider';
-import { COLORS } from '../constants/colors';
-import styles from '../styles/onboardStyles';
-import { slides } from '../constants/config';
-import { setUser } from '../store/authManagement/slice';
-import { useSelector, useDispatch } from 'react-redux';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import i18n from '../i18n/index1';
-import { selectUser } from '../store/authManagement/selector';
-import { useTranslation } from 'react-i18next';
-
-var windowWidth = Dimensions.get('window').width;
-var windowHeight = Dimensions.get('window').height;
+} from "react-native";
+import AppIntroSlider from "react-native-app-intro-slider";
+import { COLORS } from "../constants/colors";
+import styles from "../styles/onboardStyles";
+import { slides } from "../constants/config";
+import { setUser } from "../store/authManagement/slice";
+import { useSelector, useDispatch } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import i18n from "../i18n/index1";
+import { selectUser } from "../store/authManagement/selector";
+import { useTranslation } from "react-i18next";
+import { jwtDecode } from "jwt-decode";
+import { clearUser } from "../store/authManagement/slice";
+var windowWidth = Dimensions.get("window").width;
+var windowHeight = Dimensions.get("window").height;
 function OnboardingScreen({ navigation }) {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const { user, loginthrought } = useSelector(selectUser);
   const [viewlanguage, setviewlanguage] = useState(false);
   const [thisscreen, setthisscreen] = useState(false);
   const { t, i18n } = useTranslation(); //i18n instance
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (loginthrought) {
@@ -36,9 +38,26 @@ function OnboardingScreen({ navigation }) {
       }, 7000);
     }
   }, []);
-  getData = () => {
+  getData = async () => {
     if (user) {
-      navigation.navigate('DrawerNavigation');
+      const token = user?.jwt;
+      try {
+        const decoded = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+        if (decoded.exp < currentTime) {
+          console.warn("access token expired");
+          await AsyncStorage.removeItem("userToken");
+          await AsyncStorage.removeItem("userInfo");
+          dispatch(clearUser());
+          navigation.replace("Login");
+        } else {
+          console.warn("access token notexpirresd");
+          navigation.navigate("DrawerNavigation");
+        }
+      } catch (err) {
+        console.error("Invalid token", err);
+        navigation.navigate("DrawerNavigation");
+      }
     } else {
       setviewlanguage(true);
       //navigation.navigate('Login');
@@ -48,51 +67,51 @@ function OnboardingScreen({ navigation }) {
   const onLanguage = async (value) => {
     // i18n.locale = value;
     i18n.changeLanguage(value);
-    await AsyncStorage.setItem('settings.lang', value);
-    navigation.navigate('Login');
+    await AsyncStorage.setItem("settings.lang", value);
+    navigation.navigate("Login");
   };
 
   return viewlanguage ? (
     <>
       <ImageBackground
-        source={require('./../../assets/images/Mobile_bg_1.png')}
-        style={{ width: '100%', height: '100%', opacity: 0.5 }}
+        source={require("./../../assets/images/Mobile_bg_1.png")}
+        style={{ width: "100%", height: "100%", opacity: 0.5 }}
       />
-      <View style={{ width: '100%', height: '100%', position: 'absolute' }}>
+      <View style={{ width: "100%", height: "100%", position: "absolute" }}>
         <View
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
           <Image
-            source={require('../../assets/images/iqlogo.png')}
-            style={{ width: 1048 / 10, height: 1048 / 10, alignSelf: 'center' }}
+            source={require("../../assets/images/iqlogo.png")}
+            style={{ width: 1048 / 10, height: 1048 / 10, alignSelf: "center" }}
           />
           <TouchableOpacity
-            onPress={() => onLanguage('en')}
+            onPress={() => onLanguage("en")}
             style={{
               height: 50,
               paddingHorizontal: 10,
               backgroundColor: COLORS.appSecondaryColor,
               width: 100,
-              justifyContent: 'center',
-              alignItems: 'center',
+              justifyContent: "center",
+              alignItems: "center",
               marginTop: 30,
             }}
           >
-            <Text style={{ color: 'white' }}>English</Text>
+            <Text style={{ color: "white" }}>English</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => onLanguage('th')}
+            onPress={() => onLanguage("th")}
             style={{
               height: 50,
               paddingHorizontal: 10,
               backgroundColor: COLORS.appSecondaryColor,
               width: 100,
               marginTop: 30,
-              justifyContent: 'center',
-              alignItems: 'center',
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <Text style={{ color: 'white' }}>Thai</Text>
+            <Text style={{ color: "white" }}>Thai</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -101,12 +120,12 @@ function OnboardingScreen({ navigation }) {
     <View
       style={{
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <Image
-        source={require('./../../assets/images/iqcandygif.gif')}
+        source={require("./../../assets/images/iqcandygif.gif")}
         style={{ width: windowWidth, height: windowHeight }}
       />
     </View>
